@@ -1,5 +1,7 @@
 var elixir = require('laravel-elixir');
 
+require('laravel-elixir-imagemin');
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -11,6 +13,7 @@ var elixir = require('laravel-elixir');
  |
  */
 
-elixir(function(mix) {
+elixir(function (mix) {
     mix.less('app.less');
+    mix.imagemin();
 });

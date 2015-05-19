@@ -879,7 +879,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -5501,7 +5501,7 @@ button.close {
   z-index: 1070;
   display: block;
   visibility: visible;
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: normal;
   line-height: 1.4;
@@ -5608,7 +5608,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -6226,8 +6226,218 @@ button.close {
     display: none !important;
   }
 }
-body,
-label,
-.checkbox label {
-  font-weight: 300;
+h2.dark,
+h3.dark {
+  color: #484f51;
 }
+h2 {
+  font-size: 35.69pt;
+}
+p {
+  font-family: "Open Sans Light", Helvetica, Arial, sans-serif;
+}
+#top-container {
+  background-color: #00aed7;
+  position: relative;
+}
+#top-container .navbar {
+  z-index: 2;
+}
+#top-container .navbar .navbar-header a {
+  display: block;
+  height: auto;
+}
+#top-container .navbar .navbar-header .navbar-toggle:hover,
+#top-container .navbar .navbar-header .navbar-toggle:focus {
+  background-color: #dddddd;
+}
+#top-container .navbar .navbar-header .navbar-toggle .icon-bar {
+  background-color: #888888;
+}
+#top-container .navbar .navbar-collapse ul.nav,
+#top-container .navbar .navbar-header ul.nav {
+  margin: 18px 0;
+}
+#top-container .navbar .navbar-collapse ul.nav a,
+#top-container .navbar .navbar-header ul.nav a {
+  color: #ffffff;
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  #top-container .navbar .navbar-collapse ul.nav a,
+  #top-container .navbar .navbar-header ul.nav a {
+    padding: 15px 10px;
+  }
+}
+#top-container .navbar .navbar-collapse ul.nav a:hover,
+#top-container .navbar .navbar-header ul.nav a:hover,
+#top-container .navbar .navbar-collapse ul.nav a:focus,
+#top-container .navbar .navbar-header ul.nav a:focus {
+  background-color: #ffffff;
+  color: #00aed7;
+}
+#top-container .navbar .navbar-collapse ul.nav li.sign-up,
+#top-container .navbar .navbar-header ul.nav li.sign-up {
+  background-color: #796f6c;
+}
+#top-container .navbar .navbar-collapse ul.nav li.sign-up a:hover,
+#top-container .navbar .navbar-header ul.nav li.sign-up a:hover,
+#top-container .navbar .navbar-collapse ul.nav li.sign-up a:focus,
+#top-container .navbar .navbar-header ul.nav li.sign-up a:focus {
+  background-color: #333333;
+  color: #ffffff;
+}
+#top-container .navbar .navbar-collapse ul.nav li.sign-in,
+#top-container .navbar .navbar-header ul.nav li.sign-in {
+  background-color: #ff9d3a;
+}
+#top-container .navbar .navbar-collapse ul.nav li.sign-in a:hover,
+#top-container .navbar .navbar-header ul.nav li.sign-in a:hover,
+#top-container .navbar .navbar-collapse ul.nav li.sign-in a:focus,
+#top-container .navbar .navbar-header ul.nav li.sign-in a:focus {
+  background-color: #cc6600;
+  color: #ffffff;
+}
+#top-container #splash {
+  position: absolute;
+  width: 100%;
+  height: 787px;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-image: url(/img/welcome/splash.png);
+  background-size: cover;
+}
+#top-container #splash #splash-contents {
+  z-index: 5;
+  position: relative;
+  top: 30%;
+  height: 0;
+}
+#top-container #splash #splash-contents h1 {
+  text-align: center;
+  color: white;
+  font-size: 55pt;
+}
+@media (max-width: 767px) {
+  #top-container #splash #splash-contents h1 {
+    font-size: 35pt;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  #top-container #splash #splash-contents h1 {
+    font-size: 40pt;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  #top-container #splash #splash-contents h1 {
+    font-size: 50pt;
+  }
+}
+#top-container #splash #splash-contents form {
+  margin: 50px auto auto;
+  width: 50%;
+  opacity: .9;
+}
+#top-container #splash #splash-contents form .form-group {
+  width: 100%;
+  margin: auto;
+}
+#top-container #splash #splash-contents form .form-group .input-group {
+  white-space: nowrap;
+  width: 100%;
+}
+@media (min-width: 992px) {
+  #top-container #splash #splash-contents form .form-group .input-group {
+    display: block;
+    width: 80%;
+    margin: auto;
+  }
+}
+#top-container #splash #splash-contents form .form-group .input-group .form-control {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  width: 80%;
+}
+@media (max-width: 767px) {
+  #top-container #splash #splash-contents form .form-group .input-group .form-control {
+    width: 60%;
+  }
+}
+#top-container #splash #splash-contents form .form-group .input-group .btn {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  width: 20%;
+}
+@media (max-width: 767px) {
+  #top-container #splash #splash-contents form .form-group .input-group .btn {
+    width: 40%;
+  }
+}
+#features {
+  margin-top: 10px;
+}
+#features .feature {
+  color: #5c5c5c;
+  padding: 30px;
+  margin-top: 10px;
+  text-align: center;
+}
+#features .feature:not(last-child) {
+  border-right: 1px solid #efefef;
+}
+#features .feature .feature-title {
+  color: #00aed7;
+  padding: auto;
+  font-size: 19.86pt;
+  min-height: 70px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  /* align horizontal */
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /* align vertical */
+}
+#features .feature .feature-icon {
+  color: white;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  padding: 10px;
+  font-size: 35pt;
+  border-radius: 50%;
+  background-color: #00aed7;
+}
+#features .feature .feature-contents {
+  font-size: 17px;
+}
+#coffee-shops {
+  padding-bottom: 50px;
+  background-color: #f3f3f1;
+}
+#coffee-shops h2 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#coffee-shops .featured-coffee-shop {
+  width: 100%;
+  height: 366px;
+  margin-top: 20px;
+  background-color: #00aed7;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  #coffee-shops .featured-coffee-shop {
+    height: 240px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  #coffee-shops .featured-coffee-shop {
+    height: 320px;
+  }
+}
+
+/*# sourceMappingURL=app.css.map */

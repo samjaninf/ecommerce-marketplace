@@ -1,8 +1,26 @@
 @import "bootstrap/bootstrap";
 
 @btn-font-weight: 300;
-@font-family-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
+@font-family-sans-serif: "Montserrat", Helvetica, Arial, sans-serif;
+@font-family-base: @font-family-sans-serif;
+@font-family-text: "Open Sans Light", Helvetica, Arial, sans-serif;
+@bg-color: #00aed7;
+@btn-primary: @bg-color;
+@dark-title-color: #484f51;
 
-body, label, .checkbox label {
-	font-weight: 300;
+h2, h3 {
+  &.dark {
+    color: @dark-title-color;
+  }
 }
+
+h2 {
+  font-size: 35.69pt;
+}
+
+p {
+  font-family : @font-family-text;
+}
+
+@import "top";
+@import "welcome";

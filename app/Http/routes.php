@@ -12,10 +12,11 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::post('search', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
 Route::get('home', 'HomeController@index');
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth'     => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);

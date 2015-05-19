@@ -1,36 +1,43 @@
 <?php namespace Koolbeans\Http\Controllers;
 
-class WelcomeController extends Controller {
+use Koolbeans\Repositories\EloquentCoffeeShopRepository;
 
-	/*
-	|--------------------------------------------------------------------------
-	| Welcome Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders the "marketing page" for the application and
-	| is configured to only allow guests. Like most of the other sample
-	| controllers, you are free to modify or remove it as you desire.
-	|
-	*/
+class WelcomeController extends Controller
+{
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('guest');
-	}
+    /*
+    |--------------------------------------------------------------------------
+    | Welcome Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller renders the "marketing page" for the application and
+    | is configured to only allow guests. Like most of the other sample
+    | controllers, you are free to modify or remove it as you desire.
+    |
+    */
 
-	/**
-	 * Show the application welcome screen to the user.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		return view('welcome');
-	}
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+    }
 
+    /**
+     * Show the application welcome screen to the user.
+     *
+     * @param \Koolbeans\Repositories\EloquentCoffeeShopRepository $coffeeShops
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index(EloquentCoffeeShopRepository $coffeeShops)
+    {
+        $featured    = array_fill(0, 7, null);
+        $coffeeShops = $coffeeShops->getFeatured();
+        foreach ($coffeeShops as $coffeeShop) {
+            $featured[ $coffeeShop->featured - 1 ] = $coffeeShop;
+        }
+
+        return view('welcome')->with('featuredShops', $featured);
+    }
 }
