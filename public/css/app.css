@@ -6236,6 +6236,9 @@ h2 {
 p {
   font-family: "Open Sans Light", Helvetica, Arial, sans-serif;
 }
+textarea {
+  resize: vertical;
+}
 #top-container {
   background-color: #00aed7;
   position: relative;
@@ -6296,6 +6299,15 @@ p {
 #top-container .navbar .navbar-header ul.nav li.sign-in a:focus {
   background-color: #cc6600;
   color: #ffffff;
+}
+#top-container .navbar .navbar-collapse ul.nav ul.dropdown-menu a,
+#top-container .navbar .navbar-header ul.nav ul.dropdown-menu a {
+  color: #00aed7;
+}
+#top-container .navbar .navbar-collapse ul.nav ul.dropdown-menu a:hover,
+#top-container .navbar .navbar-header ul.nav ul.dropdown-menu a:hover {
+  color: #ffffff;
+  background-color: #00aed7;
 }
 #top-container #splash {
   position: absolute;
@@ -6407,7 +6419,7 @@ p {
   width: 80px;
   height: 80px;
   margin: auto;
-  padding: 10px;
+  padding-top: 10px;
   font-size: 35pt;
   border-radius: 50%;
   background-color: #00aed7;
@@ -6438,6 +6450,9 @@ p {
   #coffee-shops .featured-coffee-shop {
     height: 320px;
   }
+}
+#maps-container {
+  height: 400px;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -28,7 +28,7 @@
     <div class="clearfix visible-xs-block"></div>
     <div class="col-xs-6 col-sm-3 feature">
         <div class="feature-icon">
-            <span class="glyphicon glyphicon-map-marker"></span>
+            <span class="glyphicon glyphicon-comment"></span>
         </div>
         <h3 class="feature-title">
             Trusted Reviews
@@ -41,7 +41,7 @@
     </div>
     <div class="col-xs-6 col-sm-3 feature">
         <div class="feature-icon">
-            <span class="glyphicon glyphicon-map-marker"></span>
+            <i class="fa fa-coffee"></i>
         </div>
         <h3 class="feature-title">
             Less queuing

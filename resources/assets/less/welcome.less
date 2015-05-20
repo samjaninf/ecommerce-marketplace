@@ -27,7 +27,7 @@
       width            : 80px;
       height           : 80px;
       margin           : auto;
-      padding          : 10px;
+      padding-top      : 10px;
       font-size        : 35pt;
       border-radius    : 50%;
       background-color : @bg-color;
@@ -40,12 +40,12 @@
 }
 
 #coffee-shops {
-  padding-bottom: 50px;
+  padding-bottom   : 50px;
   background-color : #f3f3f1;
 
   h2 {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top    : 20px;
+    padding-bottom : 20px;
   }
 
   .featured-coffee-shop {
@@ -54,12 +54,12 @@
     margin-top       : 20px;
     background-color : @bg-color;
 
-    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-      height: 240px;
+    @media (min-width : @screen-sm-min) and (max-width : @screen-sm-max) {
+      height : 240px;
     }
 
-    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-      height: 320px;
+    @media (min-width : @screen-md-min) and (max-width : @screen-md-max) {
+      height : 320px;
     }
   }
 }

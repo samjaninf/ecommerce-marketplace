@@ -26,4 +26,15 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
     {
         return $this->model->where('featured', '>', 0)->orderBy('featured', 'asc')->get();
     }
+
+    /**
+     * @param array $attributes
+     * @param bool  $exists
+     *
+     * @return static
+     */
+    public function newInstance($attributes = [], $exists = false)
+    {
+        return $this->model->newInstance($attributes, $exists);
+    }
 }

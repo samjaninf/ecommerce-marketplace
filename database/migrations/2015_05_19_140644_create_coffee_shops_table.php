@@ -18,10 +18,14 @@ class CreateCoffeeShopsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
+            $table->string('postal_code');
             $table->string('location');
             $table->double('latitude');
             $table->double('longitude');
-            $table->tinyInteger('featured');
+            $table->integer('featured');
+            $table->enum('status', ['requested', 'accepted', 'published', 'denied']);
+            $table->text('comment');
+            $table->string('place_id');
             $table->timestamps();
         });
     }

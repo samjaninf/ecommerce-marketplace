@@ -128,7 +128,6 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-        'Appitventures\Phpgmaps\PhpgmapsServiceProvider',
         /*
          * Application Service Providers...
          */
@@ -137,6 +136,7 @@ return [
         'Koolbeans\Providers\ConfigServiceProvider',
         'Koolbeans\Providers\EventServiceProvider',
         'Koolbeans\Providers\RouteServiceProvider',
+        'Koolbeans\Providers\ValidatorServiceProvider',
 
     ],
     /*
@@ -184,7 +184,6 @@ return [
         'URL'       => 'Illuminate\Support\Facades\URL',
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View'      => 'Illuminate\Support\Facades\View',
-        'Gmaps'     => 'Appitventures\Phpgmaps\Facades\Phpgmaps',
     ],
 
 ];

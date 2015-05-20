@@ -1,8 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers;
 
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\View\View;
-use Koolbeans\User;
+use Koolbeans\Http\Requests\RequestCoffeeShopRequest;
+use Koolbeans\Repositories\CoffeeShopRepository;
 
 class HomeController extends Controller
 {
@@ -29,17 +28,35 @@ class HomeController extends Controller
     /**
      * Show the application dashboard to the user.
      *
-     * @return View
+     * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShop
+     *
+     * @return \Illuminate\View\View
      */
-    public function index(Guard $auth)
+    public function index(CoffeeShopRepository $coffeeShop)
     {
-        /** @var User $user */
-        $user = $auth->user();
-
+        $user = current_user();
         if ($user->isOwner()) {
-            return view('home', $user);
+            return view('home', ['user' => $user]);
         }
 
-        return view('contact');
+        return view('contact', ['coffeeShop' => $coffeeShop->newInstance()]);
+    }
+
+    /**
+     * @param \Koolbeans\Repositories\CoffeeShopRepository      $coffeeShop
+     * @param \Koolbeans\Http\Requests\RequestCoffeeShopRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function contact(CoffeeShopRepository $coffeeShop, RequestCoffeeShopRequest $request)
+    {
+        $instance           = $coffeeShop->newInstance($request->all());
+        $instance->featured = -1;
+        $instance->status   = 'requested';
+        $instance->user()->associate(current_user());
+        $instance->save();
+
+        return redirect('/')->with('messages',
+            ['info' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
     }
 }

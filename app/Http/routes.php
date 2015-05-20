@@ -12,9 +12,10 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::post('search', ['as' => 'search', 'uses' => 'WelcomeController@search']);
+Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
 Route::get('home', 'HomeController@index');
+Route::post('contact', ['as' => 'contact', 'uses' => 'HomeController@contact']);
 
 Route::controllers([
     'auth'     => 'Auth\AuthController',
