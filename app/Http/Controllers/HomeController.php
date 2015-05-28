@@ -38,7 +38,7 @@ class HomeController extends Controller
         if ($user->isOwner()) {
             if ($user->coffee_shop->status === 'requested') {
                 return view('home', [
-                    'messages' => $session->has('messages') ? $session->get('messages') : [
+                    'messages' => [
                         'info' => 'Your shop has not been accepted yet. ' .
                                   'In the meantime, you can still look at the shops close to you ' .
                                   'and look for your concurrence!',

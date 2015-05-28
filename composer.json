@@ -11,6 +11,7 @@
     "laravel/framework": "5.0.*",
     "barryvdh/laravel-ide-helper": "2.*",
     "doctrine/dbal": "2.*",
+    "propaganistas/laravel-phone": "2.*",
     "guzzlehttp/guzzle": "~5.3",
     "laravel/cashier": "~5.0"
   },

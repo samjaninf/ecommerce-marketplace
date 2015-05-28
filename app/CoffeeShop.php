@@ -1,7 +1,7 @@
 <?php namespace Koolbeans;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Koolbeans\CoffeeShop
@@ -41,7 +41,16 @@ class CoffeeShop extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'location', 'latitude', 'longitude', 'comment', 'postal_code', 'place_id'];
+    protected $fillable = [
+        'name',
+        'location',
+        'latitude',
+        'longitude',
+        'comment',
+        'phone_number',
+        'postal_code',
+        'place_id',
+    ];
 
     /**
      * @var array

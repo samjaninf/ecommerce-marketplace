@@ -35,4 +35,40 @@ interface CoffeeShopRepository
      * @return CoffeeShop[]|Collection
      */
     public function getMostProfitable();
+
+    /**
+     * Find a coffee shop from its id.
+     *
+     * @param int $id
+     *
+     * @return CoffeeShop
+     */
+    public function find($id);
+
+    /**
+     * Get adjacent applications.
+     *
+     * @param CoffeeShop $coffeeShop
+     *
+     * @return CoffeeShop
+     */
+    public function findAdjacentApplications($coffeeShop);
+
+    /**
+     * Get next application.
+     *
+     * @param CoffeeShop $coffeeShop
+     *
+     * @return CoffeeShop
+     */
+    public function findNextApplication($coffeeShop);
+
+    /**
+     * Get previous application.
+     *
+     * @param CoffeeShop $coffeeShop
+     *
+     * @return CoffeeShop
+     */
+    public function findPreviousApplication($coffeeShop);
 }

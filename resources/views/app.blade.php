@@ -25,6 +25,20 @@
     @yield('splash')
 </header>
 
+@if(Session::has('messages'))
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                @foreach(Session::get('messages') as $type => $message)
+                    <p class="alert alert-{{$type}}">
+                        {{$message}}
+                    </p>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
 @if(isset($messages))
     <div class="container">
         <div class="row">
@@ -43,6 +57,25 @@
     @yield('content')
 </div>
 
+<div class="modal hide" id="modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Confirm
+            </div>
+            <div class="modal-body" id="modal-text"></div>
+            <div class="modal-footer">
+                <form method="post" id="modal-form">
+                    <button type="button" class="btn btn-default" id="modal-close">Cancel</button>
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
+                    <input type="hidden" name="_method" id="modal-method" value="">
+                    <input type="submit" class="btn btn-danger" value="Confirm">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -50,6 +83,7 @@
 @yield('vendor_scripts')
 
 <script src="{{ elixir('js/app.js') }}"></script>
+<script src="{{ elixir('js/modal.js') }}"></script>
 
 @yield('scripts')
 

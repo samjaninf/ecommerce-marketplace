@@ -21,24 +21,22 @@
                         </a>
                     </p>
 
-                    <table id="applications" class="table table-hover hide">
+                    <table id="applications" class="table table-hover hide no-heading">
+                        <caption>Applications</caption>
+                        <tbody>
                         @foreach($applications as $coffeeShop)
                             <tr>
                                 <td>{{$coffeeShop->name}}</td>
                                 <td>{{$coffeeShop->location}}</td>
-                                <td>{{$coffeeShop->phone_number}}</td>
                                 <td>
-                                    <a href="{{route('admin.coffee_shop.review', ['status' => 'accepted', 'coffee_shop' => $coffeeShop])}}"
-                                       class="btn btn-success btn-xs">
-                                        Accept
-                                    </a>
-                                    <a href="{{route('admin.coffee_shop.review', ['status' => 'denied', 'coffee_shop' => $coffeeShop])}}"
-                                       class="btn btn-danger btn-xs">
-                                        Decline
+                                    <a href="{{route('admin.coffee_shop.show', ['coffee_shop' => $coffeeShop])}}"
+                                       class="btn btn-primary btn-xs pull-right">
+                                        More info
                                     </a>
                                 </td>
                             </tr>
                         @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

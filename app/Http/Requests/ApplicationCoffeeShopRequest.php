@@ -36,12 +36,14 @@ class ApplicationCoffeeShopRequest extends Request
     public function rules()
     {
         return [
-            'name'        => 'required|unique:coffee_shops,name',
-            'location'    => 'required|regex:,.*,',
-            'postal_code' => 'required',
-            'latitude'    => 'required|numeric',
-            'longitude'   => 'required|numeric',
-            'place_id'    => 'required|google_place_id',
+            'name'                 => 'required|unique:coffee_shops,name',
+            'location'             => 'required|regex:,.*,',
+            'postal_code'          => 'required',
+            'phone_number'         => 'required|phone:GB',
+            'latitude'             => 'required|numeric',
+            'longitude'            => 'required|numeric',
+            'place_id'             => 'required|google_place_id',
+            'g-recaptcha-response' => 'required|google_recaptcha',
         ];
     }
 }

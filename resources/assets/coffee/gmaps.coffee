@@ -14,23 +14,23 @@ initializeMaps = (container) ->
       stylers: [visibility: "off"]
     ]
 
-  if container.dataset.position?
-    position = container.dataset.position.split ','
-    options.position = new google.maps.LatLng position[0], position[1]
-
   koolbeans.map = new google.maps.Map container, options
   koolbeans.marker = new google.maps.Marker
     map: koolbeans.map
     anchorPoint: new google.maps.Point 0, -29
   koolbeans.infoWindow = new google.maps.InfoWindow
 
-  useGeoLocation koolbeans.map if navigator.geolocation
+  if container.dataset.position?
+    position = container.dataset.position.split ','
+    location = new google.maps.LatLng position[0], position[1]
+    centerMapOnLocation location
+  else if navigator.geolocation
+    useGeoLocation koolbeans.map
 
-useGeoLocation = (map) ->
+useGeoLocation = () ->
   navigator.geolocation.getCurrentPosition (position) ->
     location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-    map.setCenter location
-    moveMarkerTo location
+    centerMapOnLocation location
 
 initializeAutoComplete = (locationField, map) ->
   autoComplete = new google.maps.places.Autocomplete locationField
@@ -49,7 +49,6 @@ placeChanged = (autoComplete) -> () ->
   return if !place.geometry
 
   centerMapOn place
-  moveMarkerTo place.geometry.location
   openInfoWindow place, koolbeans.marker
   changeFormFields place
 
@@ -60,9 +59,14 @@ hideMarkerAndWindow = () ->
 centerMapOn = (place) ->
   if place.geometry.viewport
     koolbeans.map.fitBounds place.geometry.viewport
+    moveMarkerTo place.geometry.location
   else
-    koolbeans.map.setCenter place.geometry.location
-    koolbeans.map.setZoom 17
+    centerMapOnLocation place.geometry.location
+
+centerMapOnLocation = (location) ->
+  koolbeans.map.setCenter location
+  koolbeans.map.setZoom 17
+  moveMarkerTo location
 
 moveMarkerTo = (position) ->
   koolbeans.marker.setPosition position
