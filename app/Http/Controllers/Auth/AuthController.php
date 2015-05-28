@@ -45,6 +45,10 @@ class AuthController extends Controller
             return '/';
         }
 
+        if ($this->getUser()->role === 'admin') {
+            return '/admin';
+        }
+
         return '/home';
     }
 

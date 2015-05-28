@@ -16,4 +16,9 @@ interface CoffeeShopRepository
      * @return CoffeeShop
      */
     public function newInstance($attributes = [], $exists = false);
+
+    /**
+     * @return CoffeeShop[]
+     */
+    public function getApplications();
 }

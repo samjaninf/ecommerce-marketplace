@@ -22,6 +22,10 @@ Route::group(['middleware' => 'auth'], function () {
         ['as' => 'coffee_shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 
     Route::resource('coffee_shop', 'CoffeeShopsController');
+
+    Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+        Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
+    });
 });
 
 /**

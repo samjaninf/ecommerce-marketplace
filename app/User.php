@@ -13,6 +13,7 @@ use Laravel\Cashier\Contracts\Billable as BillableContract;
  *
  * @property-read \Koolbeans\CoffeeShop $coffee_shop
  * @property integer                    $id
+ * @property string                     $role
  * @property string                     $name
  * @property string                     $email
  * @property string                     $password
@@ -38,6 +39,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * @var array
+     */
+    protected $attributes = [
+        'role' => 'customer',
+    ];
 
     /**
      * The attributes that are mass assignable.

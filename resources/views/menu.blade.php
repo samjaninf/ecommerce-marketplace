@@ -24,8 +24,11 @@
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                           aria-expanded="false">{{ current_user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            @if(current_user()->role === 'admin')
+                                <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
+                            @endif
                             <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                         </ul>
                     </li>

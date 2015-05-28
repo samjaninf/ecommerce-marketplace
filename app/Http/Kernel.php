@@ -25,6 +25,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'admin'      => 'Koolbeans\Http\Middleware\Admin',
         'auth'       => 'Koolbeans\Http\Middleware\Authenticate',
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest'      => 'Koolbeans\Http\Middleware\RedirectIfAuthenticated',

@@ -4,7 +4,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Koolbeans\User;
 
-class IsCoffeeShopOwner
+class Admin
 {
 
     /**
@@ -34,11 +34,11 @@ class IsCoffeeShopOwner
      */
     public function handle($request, Closure $next)
     {
-        if ( ! $this->getUser()->isOwner()) {
-            return redirect('/');
+        if ($this->getUser()->role === 'admin') {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/');
     }
 
     /**

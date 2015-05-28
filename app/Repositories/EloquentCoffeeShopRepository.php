@@ -37,4 +37,12 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
     {
         return $this->model->newInstance($attributes, $exists);
     }
+
+    /**
+     * @return CoffeeShop[]
+     */
+    public function getApplications()
+    {
+        // TODO: Implement getApplications() method.
+    }
 }
