@@ -1,5 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers;
 
+use Illuminate\Session\SessionManager;
+
 class HomeController extends Controller
 {
 
@@ -25,16 +27,18 @@ class HomeController extends Controller
     /**
      * Show the application dashboard to the user.
      *
+     * @param \Illuminate\Session\SessionManager $session
+     *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(SessionManager $session)
     {
         $user = current_user();
 
         if ($user->isOwner()) {
             if ($user->coffee_shop->status === 'requested') {
                 return view('home', [
-                    'messages' => \Session::has('messages') ? \Session::get('messages') : [
+                    'messages' => $session->has('messages') ? $session->get('messages') : [
                         'info' => 'Your shop has not been accepted yet. ' .
                                   'In the meantime, you can still look at the shops close to you ' .
                                   'and look for your concurrence!',
