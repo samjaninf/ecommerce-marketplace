@@ -85,5 +85,5 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="<?php echo secure_asset('/js/gmaps.js') ?>"></script>
+    <script type="text/javascript" src="{{ elixir('js/gmaps.js')}}"></script>
 @endsection

@@ -47,7 +47,7 @@
 
 @yield('vendor_scripts')
 
-<script src="<?php echo secure_asset('js/app.js') ?>"></script>
+<script src="{{ elixir('js/app.js') }}"></script>
 
 @yield('scripts')
 
