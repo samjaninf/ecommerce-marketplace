@@ -5,3 +5,6 @@
 .phpstorm.meta.php
 _ide_helper.php
 public/build
+public/css
+public/js
+public/img
