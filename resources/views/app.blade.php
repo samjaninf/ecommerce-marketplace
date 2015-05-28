@@ -25,13 +25,31 @@
     @yield('splash')
 </header>
 
+@if(isset($messages))
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                @foreach($messages as $type => $message)
+                    <p class="alert alert-{{$type}}">
+                        {{$message}}
+                    </p>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
 @yield('content')
 
 <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
 @yield('vendor_scripts')
-<script src="/js/app.js"></script>
+
+<script src="<?php echo secure_asset('js/app.js') ?>"></script>
+
 @yield('scripts')
+
 </body>
 </html>

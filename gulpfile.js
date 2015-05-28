@@ -17,4 +17,5 @@ elixir(function (mix) {
     mix.less('app.less');
     mix.coffee();
     mix.imagemin();
+    mix.version(['app.css', 'app.js', 'gmaps.js'])
 });

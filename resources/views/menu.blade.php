@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/home') }}">List Your Shop</a></li>
+                <li><a href="{{ route('coffee_shop.apply') }}">List Your Shop</a></li>
                 <li><a href="{{ url('/about') }}">About</a></li>
                 @if (Auth::guest())
                     <li class="sign-up"><a href="{{ url('/auth/register') }}">Register</a></li>

@@ -1,85 +1,48 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Koolbeans\Http\Requests;
+use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
+use Koolbeans\Repositories\CoffeeShopRepository;
 
 class CoffeeShopsController extends Controller
 {
+    /**
+     * @var \Koolbeans\Repositories\CoffeeShopRepository
+     */
+    private $coffeeShop;
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShop
      */
-    public function index()
+    public function __construct(CoffeeShopRepository $coffeeShop)
     {
-        //
+        $this->coffeeShop = $coffeeShop;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function apply()
     {
-        //
+        if (current_user()->isOwner()) {
+            return redirect('home');
+        }
+
+        return view('coffee_shop.apply', ['coffeeShop' => $this->coffeeShop->newInstance()]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param \Koolbeans\Http\Requests\ApplicationCoffeeShopRequest $request
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store()
+    public function storeApplication(ApplicationCoffeeShopRequest $request)
     {
-        //
-    }
+        $shop = $this->coffeeShop->newInstance($request->all());
+        $shop->user()->associate(current_user());
+        $shop->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect(route('home'))->with('messages',
+            ['info' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
     }
 }

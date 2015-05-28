@@ -14,13 +14,19 @@
 Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
-Route::get('home', 'HomeController@index');
-Route::get('stripe', 'HomeController@stripe');
-Route::get('charge', 'HomeController@stripeCharge');
-Route::post('stripe', 'HomeController@stripeHandler');
-Route::post('charge', 'HomeController@stripeHandler');
-Route::post('contact', ['as' => 'contact', 'uses' => 'HomeController@contact']);
+Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('coffee_shop/apply', ['as' => 'coffee_shop.apply', 'uses' => 'CoffeeShopsController@apply']);
+    Route::post('coffee_shop/apply',
+        ['as' => 'coffee_shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
+
+    Route::resource('coffee_shop', 'CoffeeShopsController');
+});
+
+/**
+ * Authentication controllers
+ */
 Route::controllers([
     'auth'     => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',

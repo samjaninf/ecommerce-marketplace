@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'url'             => 'http://localhost',
+    'url'             => env('APP_URL', 'https://koolbeans.app'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

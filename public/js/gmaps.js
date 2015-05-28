@@ -46,7 +46,10 @@
 
   useGeoLocation = function(map) {
     return navigator.geolocation.getCurrentPosition(function(position) {
-      return map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+      var location;
+      location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      map.setCenter(location);
+      return moveMarkerTo(location);
     });
   };
 
@@ -72,7 +75,7 @@
         return;
       }
       centerMapOn(place);
-      moveMarkerTo(place);
+      moveMarkerTo(place.geometry.location);
       openInfoWindow(place, koolbeans.marker);
       return changeFormFields(place);
     };
@@ -92,16 +95,9 @@
     }
   };
 
-  moveMarkerTo = function(place) {
-    koolbeans.marker.setPosition(place.geometry.location);
-    koolbeans.marker.setVisible(true);
-    return koolbeans.marker.setIcon({
-      url: place.icon,
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(35, 35)
-    });
+  moveMarkerTo = function(position) {
+    koolbeans.marker.setPosition(position);
+    return koolbeans.marker.setVisible(true);
   };
 
   openInfoWindow = function(place, marker) {

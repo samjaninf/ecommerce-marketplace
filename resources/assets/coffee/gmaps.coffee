@@ -28,7 +28,9 @@ initializeMaps = (container) ->
 
 useGeoLocation = (map) ->
   navigator.geolocation.getCurrentPosition (position) ->
-    map.setCenter new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+    location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+    map.setCenter location
+    moveMarkerTo location
 
 initializeAutoComplete = (locationField, map) ->
   autoComplete = new google.maps.places.Autocomplete locationField
@@ -47,7 +49,7 @@ placeChanged = (autoComplete) -> () ->
   return if !place.geometry
 
   centerMapOn place
-  moveMarkerTo place
+  moveMarkerTo place.geometry.location
   openInfoWindow place, koolbeans.marker
   changeFormFields place
 
@@ -62,15 +64,9 @@ centerMapOn = (place) ->
     koolbeans.map.setCenter place.geometry.location
     koolbeans.map.setZoom 17
 
-moveMarkerTo = (place) ->
-  koolbeans.marker.setPosition place.geometry.location
+moveMarkerTo = (position) ->
+  koolbeans.marker.setPosition position
   koolbeans.marker.setVisible true
-  koolbeans.marker.setIcon
-    url: place.icon,
-    size: new google.maps.Size(71, 71),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(17, 34),
-    scaledSize: new google.maps.Size(35, 35)
 
 openInfoWindow = (place, marker) ->
   address = [

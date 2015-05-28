@@ -1,9 +1,5 @@
 <?php namespace Koolbeans\Http\Controllers;
 
-use Koolbeans\Http\Requests\RequestCoffeeShopRequest;
-use Koolbeans\Repositories\CoffeeShopRepository;
-use Laravel\Cashier\StripeGateway;
-
 class HomeController extends Controller
 {
 
@@ -29,68 +25,33 @@ class HomeController extends Controller
     /**
      * Show the application dashboard to the user.
      *
-     * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShop
-     *
      * @return \Illuminate\View\View
      */
-    public function index(CoffeeShopRepository $coffeeShop)
+    public function index()
     {
         $user = current_user();
+
         if ($user->isOwner()) {
-            return view('home', ['user' => $user]);
+            if ($user->coffee_shop->status === 'requested') {
+                return view('home', [
+                    'messages' => \Session::has('messages') ? \Session::get('messages') : [
+                        'info' => 'Your shop has not been accepted yet. ' .
+                                  'In the meantime, you can still look at the shops close to you ' .
+                                  'and look for your concurrence!',
+                    ],
+                ]);
+            }
+
+            if ($user->coffee_shop->status === 'denied') {
+                return redirect(route('coffee_shop.apply'))->with('messages', [
+                    'alert' => 'Your shop has been denied. ' .
+                               'Please check the comment below to know why, and feel free to apply again!',
+                ]);
+            }
+
+            return view('dashboard', ['coffeeShop' => $user->coffee_shop]);
         }
 
-        return view('contact', ['coffeeShop' => $coffeeShop->newInstance()]);
-    }
-
-    /**
-     * @param \Koolbeans\Repositories\CoffeeShopRepository      $coffeeShop
-     * @param \Koolbeans\Http\Requests\RequestCoffeeShopRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function contact(CoffeeShopRepository $coffeeShop, RequestCoffeeShopRequest $request)
-    {
-        $instance = $coffeeShop->newInstance($request->all());
-        $instance->user()->associate(current_user());
-        $instance->save();
-
-        return redirect('/')->with('messages',
-            ['info' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
-    }
-
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function stripe()
-    {
-        return view('stripe');
-    }
-
-    public function stripeHandler()
-    {
-        $user = current_user();
-        if ( ! $user->hasStripeId()) {
-            $gateway = new StripeGateway($user);
-            $customer = $gateway->createStripeCustomer(\Input::get('stripeToken'));
-            $user->setStripeId($customer->id);
-            $user->save();
-        }
-
-        $user->transactions()->create(['amount' => 593]);
-
-        return view('stripe')->with('messages', ['info' => 'Payment successful']);
-    }
-
-    public function stripeCharge()
-    {
-        $user   = current_user();
-        $amount = $user->transactions()->sum('amount');
-
-        $user->charge($amount, ['currency' => 'gbp']);
-
-        $user->transactions()->delete();
-
-        return view('stripe')->with('messages', ['info' => 'User charged!']);
+        return view('home');
     }
 }

@@ -1,6 +1,6 @@
 <?php namespace Koolbeans\Http\Requests;
 
-class RequestCoffeeShopRequest extends Request
+class ApplicationCoffeeShopRequest extends Request
 {
 
     /**
