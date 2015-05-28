@@ -20,6 +20,5 @@ class CoffeeShopsController extends Controller
 
     public function index()
     {
-
     }
 }

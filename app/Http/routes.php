@@ -25,6 +25,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
+
+        Route::get('coffee_shop/{coffee_shop}/{status}',
+            ['as' => 'admin.coffee_shop.review', 'uses' => 'CoffeeShopsController@review']);
+        Route::resource('coffee_shop', 'CoffeeShopsController');
     });
 });
 

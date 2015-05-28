@@ -7,6 +7,7 @@
 @bg-color: #00aed7;
 @btn-primary: @bg-color;
 @dark-title-color: #484f51;
+@main-title-border-color: #aaaaaa;
 
 h2, h3 {
   &.dark {
@@ -14,12 +15,8 @@ h2, h3 {
   }
 }
 
-h2 {
-  font-size: 35.69pt;
-}
-
 p {
-  font-family : @font-family-text;
+  font-family: @font-family-text;
 }
 
 textarea {
@@ -31,4 +28,15 @@ textarea {
 
 #maps-container {
   height: 400px;
+}
+
+#content {
+  h1 {
+    border-bottom: 1px @main-title-border-color solid;
+    padding-bottom: 8px;
+  }
+
+  h2 span {
+    font-size: 60%;
+  }
 }

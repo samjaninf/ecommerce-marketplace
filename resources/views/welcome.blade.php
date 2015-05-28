@@ -10,15 +10,17 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid" id="features">
-        @include('welcome._features')
-    </div>
+    <div id="welcome">
+        <div class="container-fluid" id="features">
+            @include('welcome._features')
+        </div>
 
-    <div class="container-fluid" id="coffee-shops">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="container">
-                    @include('coffee_shop._featured')
+        <div class="container-fluid" id="coffee-shops">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="container">
+                        @include('coffee_shop._featured')
+                    </div>
                 </div>
             </div>
         </div>

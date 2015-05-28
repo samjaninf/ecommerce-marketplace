@@ -11,5 +11,71 @@
                 <h1>@yield('page-title')</h1>
             </div>
         </div>
+
+        @if(!$applications->isEmpty())
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="alert alert-info">
+                        <a href="#" id="showApplications">
+                            You have some new applications! Click here to go through them.
+                        </a>
+                    </p>
+
+                    <table id="applications" class="table table-hover hide">
+                        @foreach($applications as $coffeeShop)
+                            <tr>
+                                <td>{{$coffeeShop->name}}</td>
+                                <td>{{$coffeeShop->location}}</td>
+                                <td>{{$coffeeShop->phone_number}}</td>
+                                <td>
+                                    <a href="{{route('admin.coffee_shop.review', ['status' => 'accepted', 'coffee_shop' => $coffeeShop])}}"
+                                       class="btn btn-success btn-xs">
+                                        Accept
+                                    </a>
+                                    <a href="{{route('admin.coffee_shop.review', ['status' => 'denied', 'coffee_shop' => $coffeeShop])}}"
+                                       class="btn btn-danger btn-xs">
+                                        Decline
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        @endif
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Recent sales</h2>
+                <p class="alert alert-danger">No sales made in the last 48 hours</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>
+                    Most profitable coffee shops
+                    <span>
+                        <a href="{{route('admin.coffee_shop.create')}}">Add a new coffee shop</a>
+                    </span>
+                </h2>
+                @if(!$profitable->isEmpty())
+                    <ul class="list-group">
+                        @foreach($profitable as $coffeeShop)
+                            <li class="list-group-item">
+                                <span class="badge">{{$coffeeShop->sales}}</span>
+                                {{$coffeeShop->name}}
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="alert alert-warning">No coffee shop is registered yet.</p>
+                @endif
+            </div>
+        </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" src="{{ elixir('js/admin.js') }}"></script>
 @endsection

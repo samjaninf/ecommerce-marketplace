@@ -27,6 +27,22 @@ use Laravel\Cashier\Contracts\Billable as BillableContract;
  * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereRememberToken( $value )
  * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereCreatedAt( $value )
  * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereUpdatedAt( $value )
+ * @property boolean $stripe_active
+ * @property string $stripe_id
+ * @property string $stripe_subscription
+ * @property string $stripe_plan
+ * @property string $last_four
+ * @property \Carbon\Carbon $trial_ends_at
+ * @property \Carbon\Carbon $subscription_ends_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Koolbeans\Transaction[] $transactions
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereStripeActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereStripeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereStripeSubscription($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereStripePlan($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereLastFour($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereTrialEndsAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereSubscriptionEndsAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereRole($value)
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, BillableContract
 {

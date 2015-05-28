@@ -19,6 +19,7 @@ class CoffeeShopTableSeeder extends Seeder
                 'latitude'  => rand(-176000, 176000) / 1000,
                 'longitude' => rand(-176000, 176000) / 1000.,
                 'featured'  => $i === 1 ? 7 : $i - 5,
+                'status'    => 'accepted',
             ]);
         }
     }

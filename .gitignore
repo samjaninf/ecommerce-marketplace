@@ -8,3 +8,5 @@ public/build
 public/css
 public/js
 public/img
+resources/assets/**/*.css
+resources/assets/**/*.js
