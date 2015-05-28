@@ -52,6 +52,6 @@ class WelcomeController extends Controller
             $query = $this->request->get('query');
         }
 
-    return view('search.results');
+        return view('search.results');
     }
 }

@@ -15,6 +15,10 @@ Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
 Route::get('home', 'HomeController@index');
+Route::get('stripe', 'HomeController@stripe');
+Route::get('charge', 'HomeController@stripeCharge');
+Route::post('stripe', 'HomeController@stripeHandler');
+Route::post('charge', 'HomeController@stripeHandler');
 Route::post('contact', ['as' => 'contact', 'uses' => 'HomeController@contact']);
 
 Route::controllers([

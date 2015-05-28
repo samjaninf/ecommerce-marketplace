@@ -2,6 +2,7 @@
 
 use Koolbeans\Http\Requests\RequestCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
+use Laravel\Cashier\StripeGateway;
 
 class HomeController extends Controller
 {
@@ -50,13 +51,46 @@ class HomeController extends Controller
      */
     public function contact(CoffeeShopRepository $coffeeShop, RequestCoffeeShopRequest $request)
     {
-        $instance           = $coffeeShop->newInstance($request->all());
-        $instance->featured = -1;
-        $instance->status   = 'requested';
+        $instance = $coffeeShop->newInstance($request->all());
         $instance->user()->associate(current_user());
         $instance->save();
 
         return redirect('/')->with('messages',
             ['info' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function stripe()
+    {
+        return view('stripe');
+    }
+
+    public function stripeHandler()
+    {
+        $user = current_user();
+        if ( ! $user->hasStripeId()) {
+            $gateway = new StripeGateway($user);
+            $customer = $gateway->createStripeCustomer(\Input::get('stripeToken'));
+            $user->setStripeId($customer->id);
+            $user->save();
+        }
+
+        $user->transactions()->create(['amount' => 593]);
+
+        return view('stripe')->with('messages', ['info' => 'Payment successful']);
+    }
+
+    public function stripeCharge()
+    {
+        $user   = current_user();
+        $amount = $user->transactions()->sum('amount');
+
+        $user->charge($amount, ['currency' => 'gbp']);
+
+        $user->transactions()->delete();
+
+        return view('stripe')->with('messages', ['info' => 'User charged!']);
     }
 }

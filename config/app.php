@@ -128,6 +128,7 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'Laravel\Cashier\CashierServiceProvider',
         /*
          * Application Service Providers...
          */
