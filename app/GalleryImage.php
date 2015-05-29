@@ -8,7 +8,7 @@ class GalleryImage extends Model
     /**
      * @var array
      */
-    protected $fillable = ['image'];
+    protected $fillable = ['image', 'position'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

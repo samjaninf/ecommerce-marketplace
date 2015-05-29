@@ -64,14 +64,61 @@ class GalleryImagesController extends Controller
             $fileName  = date('Y_m_d_His') . '.' . $extension;
             $file->move($destinationPath, $fileName);
 
+            $last = $coffeeShop->gallery()->orderBy('position', 'desc')->first();
             $coffeeShop->gallery()->create([
-                'image' => $fileName,
+                'image'    => $fileName,
+                'position' => $last === null ? 1 : ( $last->position + 1 ),
             ]);
 
             return redirect(route('coffee-shop.gallery.index', ['coffeeShop' => $coffeeShop]));
         }
 
         return redirect(route('coffee-shop.gallery.create', ['coffeeShop' => $coffeeShop]));
+    }
+
+    /**
+     * @param $coffeeShopId
+     * @param $imageId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function moveUp($coffeeShopId, $imageId)
+    {
+        $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
+        $image      = $coffeeShop->gallery()->find($imageId);
+
+        if ($image->position !== 1) {
+            $image->position--;
+            $prev = $coffeeShop->gallery()->wherePosition($image->position)->first();
+            $prev->position++;
+            $prev->save();
+            $image->save();
+        }
+
+        return redirect()->back()->with('messages', ['success' => 'Image moved up!']);
+    }
+
+    /**
+     * @param $coffeeShopId
+     * @param $imageId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function moveDown($coffeeShopId, $imageId)
+    {
+        $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
+        $image      = $coffeeShop->gallery()->find($imageId);
+        $last       = $coffeeShop->gallery()->orderBy('position', 'desc')->first();
+
+        if ($image->position !== $last->position) {
+            $image->position++;
+            $next = $coffeeShop->gallery()->wherePosition($image->position)->first();
+            $next->position--;
+            $image->save();
+            $next->save();
+        }
+
+        return redirect()->back()->with('messages', ['success' => 'Image moved down!']);
     }
 
     /**

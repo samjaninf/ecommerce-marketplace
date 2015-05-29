@@ -22,6 +22,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
     Route::resource('coffee-shop', 'CoffeeShopsController');
+    Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
+        ['as' => 'coffee-shop.gallery.up', 'uses' => 'GalleryImagesController@moveUp']);
+    Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',
+        ['as' => 'coffee-shop.gallery.down', 'uses' => 'GalleryImagesController@moveDown']);
     Route::resource('coffee-shop.gallery', 'GalleryImagesController');
     Route::resource('coffee-shop.products', 'ProductsController');
 

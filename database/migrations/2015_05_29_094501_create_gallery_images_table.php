@@ -21,7 +21,6 @@ class CreateGalleryImagesTable extends Migration
             $table->integer('height')->unsigned();
             $table->integer('coffee_shop_id')->unsigned();
             $table->foreign('coffee_shop_id')->references('id')->on('coffee_shops');
-            $table->unique(['coffee_shop_id', 'position']);
             $table->timestamps();
         });
     }

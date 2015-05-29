@@ -18,7 +18,8 @@
                         <li>
                             <img src="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}" alt="{{$image->image}}">
                             <div class="pull-right">
-                                <a href="" class="btn btn-success"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                                <a href="{{ route('coffee-shop.gallery.up', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
+                                   class="btn btn-success"><i class="glyphicon glyphicon-arrow-up"></i></a>
 
                                 <form method="post"
                                       action="{{route('coffee-shop.gallery.destroy', ['coffee_shop' => $coffeeShop, 'gallery' => $image])}}">
@@ -29,7 +30,8 @@
                                     </button>
                                 </form>
 
-                                <a href="" class="btn btn-success"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                                <a href="{{ route('coffee-shop.gallery.down', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
+                                   class="btn btn-success"><i class="glyphicon glyphicon-arrow-down"></i></a>
                             </div>
                         </li>
                     @empty
