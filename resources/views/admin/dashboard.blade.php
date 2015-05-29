@@ -29,7 +29,7 @@
                                 <td>{{$coffeeShop->name}}</td>
                                 <td>{{$coffeeShop->location}}</td>
                                 <td>
-                                    <a href="{{route('admin.coffee_shop.show', ['coffee_shop' => $coffeeShop])}}"
+                                    <a href="{{route('admin.coffee-shop.show', ['coffee_shop' => $coffeeShop])}}"
                                        class="btn btn-primary btn-xs pull-right">
                                         More info
                                     </a>
@@ -54,7 +54,7 @@
                 <h2>
                     Most profitable coffee shops
                     <span>
-                        <a href="{{route('admin.coffee_shop.create')}}">Add a new coffee shop</a>
+                        <a href="{{route('admin.coffee-shop.create')}}">Add a new coffee shop</a>
                     </span>
                 </h2>
                 @if(!$profitable->isEmpty())

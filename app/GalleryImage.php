@@ -2,18 +2,19 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class GalleryImage extends Model
 {
+
     /**
      * @var array
      */
-    protected $fillable = ['amount'];
+    protected $fillable = ['image'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function coffee_shop()
     {
-        return $this->belongsTo('Koolbeans\User');
+        return $this->belongsTo('Koolbeans\CoffeeShop');
     }
 }

@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-lg-8">
             @include('shared/_form_errors')
-            <form class="form-horizontal" method="post" action="{{ route('coffee_shop.applied') }}">
+            <form class="form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
                 <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
                     <label for="name" class="col-sm-3 control-label">Name:</label>
 

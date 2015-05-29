@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
+                    data-target="#main-menu">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -13,13 +13,15 @@
             </a>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ route('home') }}">Home</a></li>
                 @if( ! Auth::guest() && current_user()->role === 'admin')
                     <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
+                @elseif( ! Auth::guest() && current_user()->hasValidCoffeeShop())
+                    <li><a href="{{ route('my-shop') }}">Your shop</a></li>
                 @else
-                    <li><a href="{{ route('coffee_shop.apply') }}">List Your Shop</a></li>
+                    <li><a href="{{ route('coffee-shop.apply') }}">List Your Shop</a></li>
                 @endif
                 <li><a href="{{ url('/about') }}">About</a></li>
                 @if (Auth::guest())

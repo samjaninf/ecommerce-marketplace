@@ -25,6 +25,7 @@ textarea {
 
 @import "top";
 @import "welcome";
+@import "gallery";
 
 #maps-container {
   height: 400px;
@@ -34,14 +35,25 @@ textarea {
   h1 {
     border-bottom: 1px @main-title-border-color solid;
     padding-bottom: 8px;
+
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+      font-size: 28px;
+    }
   }
 
   #page-actions {
     float: right;
+
+    @media (max-width: @screen-xs-max) {
+      & {
+        display: none;
+      }
+    }
   }
 
-  h2 span {
+  h1 span:not(.btn), h2 span:not(.btn) {
     font-size: 60%;
+    color: lighten(@dark-title-color, 10%);
   }
 
   table.no-heading {
@@ -49,4 +61,13 @@ textarea {
       border-top: none;
     }
   }
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.font-inherit {
+  font-size: inherit !important;
+  color: inherit !important;
 }
