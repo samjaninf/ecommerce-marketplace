@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Koolbeans\Http\Requests;
+use Koolbeans\Http\Requests\UploadFileRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
 
 class GalleryImagesController extends Controller
@@ -47,15 +48,16 @@ class GalleryImagesController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param \Koolbeans\Http\Requests\UploadFileRequest $request
+     * @param int                                        $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store($id)
+    public function store(UploadFileRequest $request, $id)
     {
         $coffeeShop = $this->coffeeShopRepository->find($id);
 
-        $file = \Request::file('image');
+        $file = $request->file('image');
         if ($file->isValid()) {
             $destinationPath = $coffeeShop->getUploadPath();
             \Storage::disk('local')->makeDirectory($destinationPath);

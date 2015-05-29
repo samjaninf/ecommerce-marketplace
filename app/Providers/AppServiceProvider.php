@@ -36,5 +36,15 @@ class AppServiceProvider extends ServiceProvider
             'Koolbeans\Repositories\CoffeeShopRepository',
             'Koolbeans\Repositories\EloquentCoffeeShopRepository'
         );
+
+        $this->app->bind(
+            'Koolbeans\Repositories\ProductRepository',
+            'Koolbeans\Repositories\EloquentProductRepository'
+        );
+
+        $this->app->bind(
+            'Koolbeans\Repositories\ProductTypeRepository',
+            'Koolbeans\Repositories\EloquentProductTypeRepository'
+        );
     }
 }

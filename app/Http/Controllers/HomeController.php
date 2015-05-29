@@ -15,7 +15,13 @@ class HomeController extends Controller
         $message = [];
         if ($user->isOwner()) {
             if ($user->hasValidCoffeeShop()) {
-                return view('dashboard', ['coffeeShop' => $user->coffee_shop]);
+                $images = $user->coffee_shop->gallery()->orderBy('position')->limit(3)->get();
+
+                return view('dashboard', [
+                    'coffeeShop' => $user->coffee_shop,
+                    'images'     => $images,
+                    'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+                ]);
             }
 
             $message = $user->coffee_shop->status === 'requested' ? [
