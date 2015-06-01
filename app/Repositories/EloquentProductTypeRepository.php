@@ -43,4 +43,25 @@ class EloquentProductTypeRepository implements ProductTypeRepository
     {
         return $this->model->whereType('food')->get();
     }
+
+    /**
+     * @param string[] $types
+     * @param string   $type
+     *
+     * @return bool
+     */
+    public function check($types, $type)
+    {
+        return $this->model->whereType($type)->whereIn('name', $types)->count() === count($types);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Koolbeans\ProductType
+     */
+    public function findByName($name)
+    {
+        return $this->model->whereName($name)->first();
+    }
 }

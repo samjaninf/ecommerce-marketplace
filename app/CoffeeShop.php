@@ -3,6 +3,41 @@
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Koolbeans\CoffeeShop
+ *
+ * @property integer $id 
+ * @property integer $user_id 
+ * @property string $name 
+ * @property string $postal_code 
+ * @property string $location 
+ * @property float $latitude 
+ * @property float $longitude 
+ * @property integer $featured 
+ * @property string $status 
+ * @property string $comment 
+ * @property string $place_id 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property string $phone_number 
+ * @property-read \Koolbeans\User $user 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Koolbeans\GalleryImage[] $gallery 
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePostalCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLocation($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLatitude($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLongitude($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereFeatured($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereComment($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePlaceId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePhoneNumber($value)
+ * @method static \Koolbeans\CoffeeShop published()
+ */
 class CoffeeShop extends Model
 {
 

@@ -1,6 +1,8 @@
 <?php namespace Koolbeans\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use Koolbeans\Http\Controllers\Controller;
+use Koolbeans\Http\Requests\StoreProductRequest;
 use Koolbeans\Repositories\ProductRepository;
 use Koolbeans\Repositories\ProductTypeRepository;
 
@@ -25,23 +27,64 @@ class ProductsController extends Controller
     public function index()
     {
         return view('admin.products.index',
-            ['food' => $this->productRepository->food(), 'drinks' => $this->productRepository->drinks()]);
+            ['food' => $this->productRepository->food(true), 'drinks' => $this->productRepository->drinks(true)]);
     }
 
     /**
      * @param \Koolbeans\Repositories\ProductTypeRepository $repository
-     * @param string                                        $type
+     * @param \Illuminate\Http\Request                      $request
      *
      * @return \Illuminate\View\View
      */
-    public function create(ProductTypeRepository $repository, $type = null)
+    public function create(ProductTypeRepository $repository, Request $request)
     {
         $product       = $this->productRepository->newInstance();
-        $product->type = $type;
+        $product->type = $request->get('type');
 
         return view('admin.products.create')
             ->with('product', $product)
             ->with('foodTypes', $repository->food())
             ->with('drinkTypes', $repository->drinks());
+    }
+
+    /**
+     * @param \Koolbeans\Http\Requests\StoreProductRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreProductRequest $request)
+    {
+        $product = $this->productRepository->create($request);
+
+        return redirect(route('admin.products.index'))->with('messages',
+            ['success' => "The $product->type $product->name has been created!"]);
+    }
+
+    /**
+     * @param \Koolbeans\Repositories\ProductRepository $productRepository
+     * @param int                                       $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(ProductRepository $productRepository, $id)
+    {
+        $product = $productRepository->disable($id);
+
+        return redirect(route('admin.products.index'))->with('messages',
+            ['warning' => "The $product->type $product->name has been correctly disabled."]);
+    }
+
+    /**
+     * @param \Koolbeans\Repositories\ProductRepository $productRepository
+     * @param int                                       $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function enable(ProductRepository $productRepository, $id)
+    {
+        $product = $productRepository->enable($id);
+
+        return redirect(route('admin.products.index'))->with('messages',
+            ['success' => "The $product->type $product->name has been correctly enabled."]);
     }
 }

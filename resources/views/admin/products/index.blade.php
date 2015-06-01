@@ -28,13 +28,25 @@
                     </thead>
                     <tbody>
                     @forelse($drinks as $drink)
-                        <tr>
-                            <td>{{$drink->id}}</td>
+                        <tr @if($drink->trashed()) class="warning" @endif>
+                            <td>{{$drink->name}}</td>
                             <td>#</td>
                             <td>#</td>
                             <td>#</td>
                             <td>
-                                #
+                                <a href="{{ route('admin.products.edit', ['product' => $drink] )}}"
+                                   class="btn btn-xs btn-primary">Edit</a>
+                                @if($drink->trashed())
+                                    <a href="{{ route('admin.products.enable', ['product' => $drink]) }}"
+                                       class="btn btn-xs btn-success">Enable</a>
+                                @else
+                                    <a href="{{ route('admin.products.destroy', ['product' => $drink]) }}"
+                                       class="btn btn-xs btn-danger"
+                                       data-method="delete"
+                                       data-confirm="Deleting a product is too dangerous and, therefore, you can only disable it. Are you sure to do it, though?">
+                                        Disable
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @empty
@@ -68,13 +80,23 @@
                     </thead>
                     <tbody>
                     @forelse($food as $product)
-                        <tr>
-                            <td>{{$product->id}}</td>
+                        <tr @if($product->trashed()) class="warning" @endif>
+                            <td>{{$product->name}}</td>
                             <td>#</td>
                             <td>#</td>
                             <td>#</td>
                             <td>
-                                #
+                                @if($product->trashed())
+                                    <a href="{{ route('admin.products.enable', ['product' => $product]) }}"
+                                       class="btn btn-xs btn-success">Enable</a>
+                                @else
+                                    <a href="{{ route('admin.products.destroy', ['product' => $product]) }}"
+                                       class="btn btn-xs btn-danger"
+                                       data-method="delete"
+                                       data-confirm="Deleting a product is too dangerous and, therefore, you can only disable it. Are you sure to do it, though?">
+                                        Disable
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @empty

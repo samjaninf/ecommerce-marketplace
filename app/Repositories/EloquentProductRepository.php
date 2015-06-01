@@ -1,6 +1,8 @@
 <?php namespace Koolbeans\Repositories;
 
+use Illuminate\Http\Request;
 use Koolbeans\Product;
+use Koolbeans\ProductType;
 
 class EloquentProductRepository implements ProductRepository
 {
@@ -8,29 +10,47 @@ class EloquentProductRepository implements ProductRepository
      * @var \Koolbeans\Product
      */
     private $model;
+    /**
+     * @var \Koolbeans\ProductType
+     */
+    private $types;
 
     /**
-     * @param \Koolbeans\Product $model
+     * @param \Koolbeans\Product     $model
+     * @param \Koolbeans\ProductType $types
      */
-    public function __construct(Product $model)
+    public function __construct(Product $model, ProductType $types)
     {
         $this->model = $model;
+        $this->types = $types;
     }
 
     /**
+     * @param bool $withDisabled
+     *
      * @return \Koolbeans\Product[]
      */
-    public function food()
+    public function food($withDisabled = false)
     {
-        return $this->model->whereType('food')->get();
+        $qry = $this->model->whereType('food');
+
+        if ($withDisabled) $qry->withTrashed();
+
+        return $qry->get();
     }
 
     /**
+     * @param bool $withDisabled
+     *
      * @return \Koolbeans\Product[]
      */
-    public function drinks()
+    public function drinks($withDisabled = false)
     {
-        return $this->model->whereType('drink')->get();
+        $qry = $this->model->whereType('drink');
+
+        if ($withDisabled) $qry->withTrashed();
+
+        return $qry->get();
     }
 
     /**
@@ -40,4 +60,48 @@ class EloquentProductRepository implements ProductRepository
     {
         return $this->model->newInstance();
     }
-}
+
+    /**
+     * @param \Illuminate\Http\Request $input
+     *
+     * @return \Koolbeans\Product
+     */
+    public function create(Request $input)
+    {
+        $product = $this->model->create($input->only('name', 'type'));
+
+        foreach ($input->get('product_type') as $name => $_i) {
+            $product->types()->attach($this->types->whereName($name)->first()->id);
+        }
+
+        return $product;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Koolbeans\Product
+     * @throws \Exception
+     */
+    public function disable($id)
+    {
+        $product = $this->model->find($id);
+
+        $product->delete();
+
+        return $product;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Koolbeans\Product
+     */
+    public function enable($id)
+    {
+        $product = $this->model->onlyTrashed()->find($id);
+
+        $product->restore();
+
+        return $product;
+    }}

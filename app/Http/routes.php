@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',
         ['as' => 'coffee-shop.gallery.down', 'uses' => 'GalleryImagesController@moveDown']);
     Route::resource('coffee-shop.gallery', 'GalleryImagesController');
-    Route::resource('coffee-shop.menu', 'MenuController');
+//    Route::resource('coffee-shop.menu', 'MenuController');
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
@@ -35,6 +35,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('coffee-shop/{coffee_shop}/{status}',
             ['as' => 'admin.coffee-shop.review', 'uses' => 'CoffeeShopsController@review']);
         Route::resource('coffee-shop', 'CoffeeShopsController');
+
+        Route::get('products/{products}/enable',
+            ['as' => 'admin.products.enable', 'uses' => 'ProductsController@enable']);
         Route::resource('products', 'ProductsController');
         Route::resource('product-types', 'ProductTypesController', ['only' => 'store']);
     });

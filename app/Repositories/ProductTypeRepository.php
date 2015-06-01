@@ -19,4 +19,19 @@ interface ProductTypeRepository
      * @return \Koolbeans\ProductType[]
      */
     public function food();
+
+    /**
+     * @param string[] $types
+     * @param string   $type
+     *
+     * @return bool
+     */
+    public function check($types, $type);
+
+    /**
+     * @param string $name
+     *
+     * @return \Koolbeans\ProductType
+     */
+    public function findByName($name);
 }
