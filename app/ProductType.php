@@ -37,4 +37,18 @@ class ProductType extends Model
     {
         return $this->belongsToMany('Koolbeans\Product', 'product_has_types');
     }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function hasProduct($id)
+    {
+        foreach ($this->products as $product) {
+            if ($product->id === $id) return true;
+        }
+
+        return false;
+    }
 }

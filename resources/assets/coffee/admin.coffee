@@ -17,7 +17,6 @@ typeChanged = (e, val) ->
   types = document.querySelectorAll('.checkbox.type-' + val)
   for type in types
     type.classList.remove 'hide' if type.classList.contains 'hide'
-    type.children[0].children[0].checked = false
   types = document.querySelectorAll('.checkbox.type-' + if val == 'drink' then 'food' else 'drink')
   for type in types
     type.classList.add 'hide' if not type.classList.contains 'hide'

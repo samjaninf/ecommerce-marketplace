@@ -32,9 +32,11 @@ class EloquentProductRepository implements ProductRepository
      */
     public function food($withDisabled = false)
     {
-        $qry = $this->model->whereType('food');
+        $qry = $this->model->with('types')->whereType('food');
 
-        if ($withDisabled) $qry->withTrashed();
+        if ($withDisabled) {
+            $qry->withTrashed();
+        }
 
         return $qry->get();
     }
@@ -46,9 +48,11 @@ class EloquentProductRepository implements ProductRepository
      */
     public function drinks($withDisabled = false)
     {
-        $qry = $this->model->whereType('drink');
+        $qry = $this->model->with('types')->whereType('drink');
 
-        if ($withDisabled) $qry->withTrashed();
+        if ($withDisabled) {
+            $qry->withTrashed();
+        }
 
         return $qry->get();
     }
@@ -73,6 +77,39 @@ class EloquentProductRepository implements ProductRepository
         foreach ($input->get('product_type') as $name => $_i) {
             $product->types()->attach($this->types->whereName($name)->first()->id);
         }
+
+        return $product;
+    }
+
+    /**
+     * @param int                      $id
+     * @param \Illuminate\Http\Request $input
+     *
+     * @return \Koolbeans\Product
+     */
+    public function update($id, Request $input)
+    {
+        $product = $this->find($id);
+
+        $product->name = $input->get('name');
+        $product->type = $input->get('type');
+
+        $product->load('types');
+
+        $types = [];
+
+        foreach ($input->get('product_type') as $name => $_i) {
+            $product->types()->attach($this->types->whereName($name)->first()->id);
+            $types[] = $name;
+        }
+
+        foreach ($product->types as $type) {
+            if ( ! in_array($type->name, $types)) {
+                $product->types()->detach($type);
+            }
+        }
+
+        $product->save();
 
         return $product;
     }
@@ -104,4 +141,15 @@ class EloquentProductRepository implements ProductRepository
         $product->restore();
 
         return $product;
-    }}
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Koolbeans\Product
+     */
+    public function find($id)
+    {
+        return $this->model->withTrashed()->find($id);
+    }
+}

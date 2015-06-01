@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\Http\Requests\StoreProductRequest;
+use Koolbeans\Http\Requests\UpdateProductRequest;
 use Koolbeans\Repositories\ProductRepository;
 use Koolbeans\Repositories\ProductTypeRepository;
 
@@ -48,6 +49,22 @@ class ProductsController extends Controller
     }
 
     /**
+     * @param \Koolbeans\Repositories\ProductTypeRepository $repository
+     * @param int                                           $id
+     *
+     * @return $this
+     */
+    public function edit(ProductTypeRepository $repository, $id)
+    {
+        $product = $this->productRepository->find($id);
+
+        return view('admin.products.edit')
+            ->with('product', $product)
+            ->with('foodTypes', $repository->food())
+            ->with('drinkTypes', $repository->drinks());
+    }
+
+    /**
      * @param \Koolbeans\Http\Requests\StoreProductRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -58,6 +75,20 @@ class ProductsController extends Controller
 
         return redirect(route('admin.products.index'))->with('messages',
             ['success' => "The $product->type $product->name has been created!"]);
+    }
+
+    /**
+     * @param \Koolbeans\Http\Requests\UpdateProductRequest $request
+     * @param int                                           $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateProductRequest $request, $id)
+    {
+        $product = $this->productRepository->update($id, $request);
+
+        return redirect(route('admin.products.index'))->with('messages',
+            ['success' => "The $product->type $product->name has been updated!"]);
     }
 
     /**

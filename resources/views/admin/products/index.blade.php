@@ -86,6 +86,8 @@
                             <td>#</td>
                             <td>#</td>
                             <td>
+                                <a href="{{ route('admin.products.edit', ['product' => $drink] )}}"
+                                   class="btn btn-xs btn-primary">Edit</a>
                                 @if($product->trashed())
                                     <a href="{{ route('admin.products.enable', ['product' => $product]) }}"
                                        class="btn btn-xs btn-success">Enable</a>

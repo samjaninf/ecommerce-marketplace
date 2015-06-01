@@ -43,4 +43,19 @@ interface ProductRepository
      * @return \Koolbeans\Product
      */
     public function enable($id);
+
+    /**
+     * @param int $id
+     *
+     * @return \Koolbeans\Product
+     */
+    public function find($id);
+
+    /**
+     * @param int                      $id
+     * @param \Illuminate\Http\Request $input
+     *
+     * @return \Koolbeans\Product
+     */
+    public function update($id, Request $input);
 }
