@@ -90,6 +90,14 @@ class CoffeeShop extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->status === 'published';
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Builder|\Koolbeans\CoffeeShop $query
      *
      * @return \Illuminate\Database\Eloquent\Builder

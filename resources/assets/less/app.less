@@ -9,6 +9,10 @@
 @dark-title-color: #484f51;
 @main-title-border-color: #aaaaaa;
 
+body {
+  margin-bottom: 1em;
+}
+
 h2, h3 {
   &.dark {
     color: @dark-title-color;
@@ -32,6 +36,10 @@ textarea {
 }
 
 #content {
+  .normal-pointer {
+    cursor: default;
+  }
+
   h1 {
     border-bottom: 1px @main-title-border-color solid;
     padding-bottom: 8px;
@@ -60,6 +68,20 @@ textarea {
     tr:first-child td {
       border-top: none;
     }
+  }
+
+  .list-group {
+    .list-group-item {
+      .label {
+        display: inline-block;
+        width: 100px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .featured-coffee-shop.active {
+    opacity: .7;
   }
 }
 

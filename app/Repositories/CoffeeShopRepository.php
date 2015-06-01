@@ -1,21 +1,20 @@
 <?php namespace Koolbeans\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use Koolbeans\CoffeeShop;
 
 interface CoffeeShopRepository
 {
     /**
      * Get all featured coffee shops.
      *
-     * @return CoffeeShop[]|Collection
+     * @return \Koolbeans\CoffeeShop[]|Collection
      */
     public function getFeatured();
 
     /**
      * Get all applications.
      *
-     * @return CoffeeShop[]|Collection
+     * @return \Koolbeans\CoffeeShop[]|Collection
      */
     public function getApplications();
 
@@ -25,14 +24,14 @@ interface CoffeeShopRepository
      * @param array $attributes
      * @param bool  $exists
      *
-     * @return CoffeeShop
+     * @return \Koolbeans\CoffeeShop
      */
     public function newInstance($attributes = [], $exists = false);
 
     /**
      * Get most profitable coffee shops.
      *
-     * @return CoffeeShop[]|Collection
+     * @return \Koolbeans\CoffeeShop[]|Collection
      */
     public function getMostProfitable();
 
@@ -41,34 +40,48 @@ interface CoffeeShopRepository
      *
      * @param int $id
      *
-     * @return CoffeeShop
+     * @return \Koolbeans\CoffeeShop
      */
     public function find($id);
 
     /**
      * Get adjacent applications.
      *
-     * @param CoffeeShop $coffeeShop
+     * @param \Koolbeans\CoffeeShop $coffeeShop
      *
-     * @return CoffeeShop
+     * @return \Koolbeans\CoffeeShop
      */
     public function findAdjacentApplications($coffeeShop);
 
     /**
      * Get next application.
      *
-     * @param CoffeeShop $coffeeShop
+     * @param \Koolbeans\CoffeeShop $coffeeShop
      *
-     * @return CoffeeShop
+     * @return \Koolbeans\CoffeeShop
      */
     public function findNextApplication($coffeeShop);
 
     /**
      * Get previous application.
      *
-     * @param CoffeeShop $coffeeShop
+     * @param \Koolbeans\CoffeeShop $coffeeShop
      *
-     * @return CoffeeShop
+     * @return \Koolbeans\CoffeeShop
      */
     public function findPreviousApplication($coffeeShop);
+
+    /**
+     * Proxy to model pagination
+     *
+     * @param integer $perPage
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginate($perPage);
+
+    /**
+     * @return \Koolbeans\CoffeeShop[]
+     */
+    public function featurable();
 }

@@ -21,13 +21,21 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection|CoffeeShop
+     */
+    public function featurable()
+    {
+        return $this->model->published()->get();
+    }
+
+    /**
      * Get all featured coffee shops.
      *
      * @return CoffeeShop[]|Collection
      */
     public function getFeatured()
     {
-        return $this->model->published()->where('featured', '>', 0)->orderBy('featured', 'asc')->get();
+        return $this->model->published()->whereFeatured(true)->orderByRaw('RAND()')->get();
     }
 
     /**
@@ -112,6 +120,16 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
                            ->where('id', '<', $coffeeShop->id)
                            ->orderBy('id', 'desc')
                            ->first();
+    }
+
+    /**
+     * @param int $perPage
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginate($perPage)
+    {
+        return $this->model->paginate($perPage);
     }
 
 }

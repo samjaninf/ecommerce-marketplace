@@ -29,7 +29,13 @@
                     <tbody>
                     @forelse($drinks as $drink)
                         <tr @if($drink->trashed()) class="warning" @endif>
-                            <td>{{$drink->name}}</td>
+                            <td>
+                                <a data-toggle="tooltip"
+                                   data-placement="top"
+                                   title="{{ $drink->getTypesName(', ') }}">
+                                    {{$drink->name}}
+                                </a>
+                            </td>
                             <td>#</td>
                             <td>#</td>
                             <td>#</td>
@@ -81,7 +87,13 @@
                     <tbody>
                     @forelse($food as $product)
                         <tr @if($product->trashed()) class="warning" @endif>
-                            <td>{{$product->name}}</td>
+                            <td>
+                                <a data-toggle="tooltip"
+                                   data-placement="top"
+                                   title="{{ $product->getTypesName(', ') }}">
+                                    {{$product->name}}
+                                </a>
+                            </td>
                             <td>#</td>
                             <td>#</td>
                             <td>#</td>

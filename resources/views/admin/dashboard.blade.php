@@ -59,15 +59,18 @@
                 <h2>
                     Most profitable coffee shops
                     <span>
-                        <a href="{{route('admin.coffee-shop.create')}}">Add a new coffee shop</a>
+                        <a href="{{ route('admin.coffee-shop.create') }}">Add a new coffee shop</a> |
+                        <a href="{{ route('admin.coffee-shop.index') }}">List all coffee shops</a>
                     </span>
                 </h2>
                 @if(!$profitable->isEmpty())
                     <ul class="list-group">
                         @foreach($profitable as $coffeeShop)
                             <li class="list-group-item">
-                                <span class="badge">{{$coffeeShop->sales}}</span>
-                                {{$coffeeShop->name}}
+                                <span class="badge">£ {{$coffeeShop->sales ?: 0}}</span>
+                                <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}">
+                                    {{$coffeeShop->name}}
+                                </a>
                             </li>
                         @endforeach
                     </ul>

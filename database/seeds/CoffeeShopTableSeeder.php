@@ -18,8 +18,8 @@ class CoffeeShopTableSeeder extends Seeder
                 'location'  => 'Canterbury, Kent',
                 'latitude'  => rand(-176000, 176000) / 1000,
                 'longitude' => rand(-176000, 176000) / 1000.,
-                'featured'  => $i === 1 ? 7 : $i - 5,
-                'status'    => 'accepted',
+                'featured'  => $i > 5 ? true : false,
+                'status'    => $i > 3 ? 'published' : 'accepted',
             ]);
         }
     }

@@ -32,9 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
 
+        Route::get('coffee-shop/{coffee_shop}/featured',
+            ['as' => 'admin.coffee-shop.featured', 'uses' => 'CoffeeShopsController@featured']);
+        Route::resource('coffee-shop', 'CoffeeShopsController');
         Route::get('coffee-shop/{coffee_shop}/{status}',
             ['as' => 'admin.coffee-shop.review', 'uses' => 'CoffeeShopsController@review']);
-        Route::resource('coffee-shop', 'CoffeeShopsController');
 
         Route::get('products/{products}/enable',
             ['as' => 'admin.products.enable', 'uses' => 'ProductsController@enable']);

@@ -32,8 +32,8 @@ class WelcomeController extends Controller
     {
         $featured    = array_fill(0, 7, null);
         $coffeeShops = $coffeeShops->getFeatured();
-        foreach ($coffeeShops as $coffeeShop) {
-            $featured[ $coffeeShop->featured - 1 ] = $coffeeShop;
+        foreach ($coffeeShops as $i => $coffeeShop) {
+            $featured[ $i ] = $coffeeShop;
         }
 
         return view('welcome')->with('featuredShops', $featured);

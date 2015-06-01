@@ -8,18 +8,24 @@ class CoffeeShopsController extends Controller
     /**
      * @var \Koolbeans\Repositories\CoffeeShopRepository
      */
-    private $coffeeShop;
+    private $coffeeShopRepository;
 
     /**
-     * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShop
+     * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShopRepository
      */
-    public function __construct(CoffeeShopRepository $coffeeShop)
+    public function __construct(CoffeeShopRepository $coffeeShopRepository)
     {
-        $this->coffeeShop = $coffeeShop;
+        $this->coffeeShopRepository = $coffeeShopRepository;
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
+        $shops = $this->coffeeShopRepository->paginate(15);
+
+        return view('admin.coffee_shop.index')->with('shops', $shops);
     }
 
     /**
@@ -30,7 +36,11 @@ class CoffeeShopsController extends Controller
      */
     public function review($id, $status)
     {
-        $coffeeShop         = $this->coffeeShop->find($id);
+        if ( ! in_array($status, ['requested', 'accepted', 'published', 'declined'])) {
+            return redirect()->back()->with('messages', ['danger' => "Status $status unknown."]);
+        }
+
+        $coffeeShop         = $this->coffeeShopRepository->find($id);
         $coffeeShop->status = $status;
         $coffeeShop->save();
 
@@ -40,15 +50,30 @@ class CoffeeShopsController extends Controller
                 ->with('messages', ['info' => "Coffee shop put on hold. You can safely review it."]);
         }
 
-        $next = $this->coffeeShop->findNextApplication($coffeeShop);
+        $next = $this->coffeeShopRepository->findNextApplication($coffeeShop);
 
         if ($next === null) {
             return redirect(route('admin.home'))->with('messages',
                 ['info' => "Coffee shop $status!", 'success' => 'You reviewed all applications!']);
         }
 
-        return redirect(route('admin.coffee_shop.show', ['coffee_shop' => $next]))->with('messages',
+        return redirect(route('admin.coffee-shop.show', ['coffee_shop' => $next]))->with('messages',
             ['info' => "Coffee shop $status!"]);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function featured($id)
+    {
+        $coffeeShop           = $this->coffeeShopRepository->find($id);
+        $coffeeShop->featured = ! $coffeeShop->featured;
+        $coffeeShop->save();
+        $text = $coffeeShop->featured ? 'featured' : 'not featured anymore';
+
+        return redirect()->back()->with('messages', ['info' => "Coffee shop now $text!"]);
     }
 
     /**
@@ -58,10 +83,10 @@ class CoffeeShopsController extends Controller
      */
     public function show($id)
     {
-        $coffeeShop = $this->coffeeShop->find($id);
+        $coffeeShop = $this->coffeeShopRepository->find($id);
 
         if ($coffeeShop->status === 'requested') {
-            list( $previous, $next ) = $this->coffeeShop->findAdjacentApplications($coffeeShop);
+            list( $previous, $next ) = $this->coffeeShopRepository->findAdjacentApplications($coffeeShop);
         }
 
         if (empty( $previous )) {
@@ -77,5 +102,25 @@ class CoffeeShopsController extends Controller
             'previous'   => $previous,
             'next'       => $next,
         ]);
+    }
+
+    public function create()
+    {
+        // @TODO
+    }
+
+    public function store()
+    {
+        // @TODO
+    }
+
+    public function edit($id)
+    {
+        // @TODO
+    }
+
+    public function update($id)
+    {
+        // @TODO
     }
 }

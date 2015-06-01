@@ -2,6 +2,7 @@ class Koolbeans
 
   constructor: ->
     @rewriteConfirmedLinks()
+    @initTooltips()
 
   cancelEvent: (e) ->
     e.preventDefault()
@@ -17,5 +18,8 @@ class Koolbeans
     link.onclick = (e) ->
       _.modal.open link
       _.cancelEvent e
+
+  initTooltips: ->
+    $('[data-toggle="tooltip"]').tooltip()
 
 window.koolbeans = new Koolbeans()

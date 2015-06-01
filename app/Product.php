@@ -38,4 +38,20 @@ class Product extends Model
         return $this->belongsToMany('Koolbeans\ProductType', 'product_has_types');
     }
 
+    /**
+     * @param null|string $glue
+     *
+     * @return array|string
+     */
+    public function getTypesName($glue = null)
+    {
+        $names = [];
+
+        foreach ($this->types as $type) {
+            $names[] = $type->name;
+        }
+
+        return $glue === null ? $names : implode($glue, $names);
+    }
+
 }
