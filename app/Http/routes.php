@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',
         ['as' => 'coffee-shop.gallery.down', 'uses' => 'GalleryImagesController@moveDown']);
     Route::resource('coffee-shop.gallery', 'GalleryImagesController');
-//    Route::resource('coffee-shop.menu', 'MenuController');
+    Route::resource('coffee-shop.products', 'MenuController');
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);

@@ -9,9 +9,9 @@
         @if(strpos(Route::getCurrentRoute()->getAction()['controller'], 'HomeController@index') === false)
             <a href="{{ route('my-shop') }}" class="btn btn-primary">Dashboard</a>
         @else
-            <a href="{{ route('coffee-shop.edit', ['coffeeshop' => $coffeeShop]) }}"
+            <a href="{{ route('coffee-shop.show', ['coffeeshop' => $coffeeShop]) }}"
                class="btn btn-primary">
-                Review your shop details
+                Review your shop
             </a>
             <a href="{{ route('coffee-shop.products.index', ['coffeeshop' => $coffeeShop]) }}"
                class="btn btn-success">

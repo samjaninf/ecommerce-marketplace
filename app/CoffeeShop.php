@@ -6,36 +6,36 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Koolbeans\CoffeeShop
  *
- * @property integer $id 
- * @property integer $user_id 
- * @property string $name 
- * @property string $postal_code 
- * @property string $location 
- * @property float $latitude 
- * @property float $longitude 
- * @property integer $featured 
- * @property string $status 
- * @property string $comment 
- * @property string $place_id 
- * @property \Carbon\Carbon $created_at 
- * @property \Carbon\Carbon $updated_at 
- * @property string $phone_number 
- * @property-read \Koolbeans\User $user 
- * @property-read \Illuminate\Database\Eloquent\Collection|\Koolbeans\GalleryImage[] $gallery 
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePostalCode($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLocation($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLatitude($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLongitude($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereFeatured($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereComment($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePlaceId($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePhoneNumber($value)
+ * @property integer                                                                 $id
+ * @property integer                                                                 $user_id
+ * @property string                                                                  $name
+ * @property string                                                                  $postal_code
+ * @property string                                                                  $location
+ * @property float                                                                   $latitude
+ * @property float                                                                   $longitude
+ * @property integer                                                                 $featured
+ * @property string                                                                  $status
+ * @property string                                                                  $comment
+ * @property string                                                                  $place_id
+ * @property \Carbon\Carbon                                                          $created_at
+ * @property \Carbon\Carbon                                                          $updated_at
+ * @property string                                                                  $phone_number
+ * @property-read \Koolbeans\User                                                    $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Koolbeans\GalleryImage[] $gallery
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereId( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUserId( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereName( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePostalCode( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLocation( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLatitude( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLongitude( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereFeatured( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereStatus( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereComment( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePlaceId( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereCreatedAt( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUpdatedAt( $value )
+ * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePhoneNumber( $value )
  * @method static \Koolbeans\CoffeeShop published()
  */
 class CoffeeShop extends Model
@@ -77,6 +77,39 @@ class CoffeeShop extends Model
     public function gallery()
     {
         return $this->hasMany('Koolbeans\GalleryImage');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function reviews()
+    {
+        return $this->belongsToMany('Koolbeans\User', 'coffee_shop_has_reviews')->withPivot('review');
+    }
+
+    /**
+     * @return int
+     */
+    public function getRating()
+    {
+        static $rating = -1;
+
+        if ($rating === -1) {
+            $rating = $this->getConnection()
+                           ->table($this->reviews()->getTable())
+                           ->where('coffee_shop_id', '=', $this->id)
+                           ->avg('rating');
+        }
+
+        return round($rating);
+    }
+
+    /**
+     * @return static|null
+     */
+    public function getBestReview()
+    {
+        return $this->reviews()->orderBy('rating', 'desc')->first();
     }
 
     /**
@@ -129,5 +162,15 @@ class CoffeeShop extends Model
     private function getUniqueUploadKey()
     {
         return sha1(( (string) $this->id ) . \Config::get('app.key'));
+    }
+
+    /**
+     * @return null
+     */
+    public function mainImage()
+    {
+        $image = $this->gallery->first();
+
+        return $image === null ? elixir('img/shared/default.png') : ( $this->getUploadUrl() . '/' . $image->image );
     }
 }

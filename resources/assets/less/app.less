@@ -9,10 +9,6 @@
 @dark-title-color: #484f51;
 @main-title-border-color: #aaaaaa;
 
-body {
-  margin-bottom: 1em;
-}
-
 h2, h3 {
   &.dark {
     color: @dark-title-color;
@@ -92,4 +88,83 @@ textarea {
 .font-inherit {
   font-size: inherit !important;
   color: inherit !important;
+}
+
+.rating-yes {
+  color: #eea236;
+}
+
+.rating-no {
+  color: #888;
+}
+
+#coffee-shop-info {
+  position: absolute;
+
+  @media (min-width: @screen-md-min) {
+    & {
+      left: 50%;
+
+      & > .row {
+        position: relative;
+        left: -50%;
+      }
+    }
+  }
+
+  .panel {
+    label, .btn {
+      width: 100%;
+      padding: 10px;
+      font-weight: normal;
+      border-radius: 1px;
+
+      .fa, .glyphicon {
+        width: 10%;
+      }
+
+      span.panel-input {
+        padding-left: 5px;
+      }
+
+      .panel-input {
+        width: 90%;
+        float: right;
+      }
+    }
+
+    label, .panel-input {
+      background-color: #e9e9e9;
+      border: 0;
+      border-radius: 1px;
+    }
+
+    label {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+#best-review-and-features-available {
+  background-color: #ebebe7;
+  position: relative;
+
+  z-index: 5;
+
+  padding: 35px 0;
+}
+
+#coffee-shop-description {
+  z-index: 10;
+  position: relative;
+
+  #coffee-shop-best-review {
+    background: url(/img/shared/review-quote.png) no-repeat 0 7px;
+    padding-left: 40px;
+    font-style: italic;
+    font-weight: normal;
+    color: #929191;
+    font-size: 16pt;
+    font-family: @font-family-text;
+  }
 }

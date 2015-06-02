@@ -43,6 +43,19 @@ class CoffeeShopsController extends Controller
         $shop->save();
 
         return redirect(route('home'))->with('messages',
-            ['info' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
+            ['success' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $coffeeShop = $this->coffeeShop->find($id);
+        $bestReview = $coffeeShop->getBestReview();
+
+        return view('coffee_shop.show', compact('coffeeShop', 'bestReview'));
     }
 }
