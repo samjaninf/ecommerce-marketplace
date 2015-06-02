@@ -8,6 +8,7 @@
 @btn-primary: @bg-color;
 @dark-title-color: #484f51;
 @main-title-border-color: #aaaaaa;
+@icon-font-path: '/fonts/';
 
 h2, h3 {
   &.dark {
@@ -98,19 +99,18 @@ textarea {
   color: #888;
 }
 
+#coffee-shop-presentation {
+  background-color: #f3f3f1;
+
+  #coffee-shop-about {
+    padding: 30px 10px;
+  }
+}
+
 #coffee-shop-info {
   position: absolute;
-
-  @media (min-width: @screen-md-min) {
-    & {
-      left: 50%;
-
-      & > .row {
-        position: relative;
-        left: -50%;
-      }
-    }
-  }
+  left: 0;
+  right: 0;
 
   .panel {
     label, .btn {
@@ -166,5 +166,12 @@ textarea {
     color: #929191;
     font-size: 16pt;
     font-family: @font-family-text;
+  }
+}
+
+#coffee-shop-about {
+  .btn {
+    margin-right: 10px;
+    margin-top: 10px;
   }
 }

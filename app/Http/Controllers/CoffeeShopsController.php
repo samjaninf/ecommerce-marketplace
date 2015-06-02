@@ -1,5 +1,6 @@
 <?php namespace Koolbeans\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
@@ -57,5 +58,20 @@ class CoffeeShopsController extends Controller
         $bestReview = $coffeeShop->getBestReview();
 
         return view('coffee_shop.show', compact('coffeeShop', 'bestReview'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return string
+     */
+    public function update(Request $request, $id)
+    {
+        $coffeeShop = $this->coffeeShop->find($id);
+        $coffeeShop->about = $request->input('about');
+        $coffeeShop->save();
+
+        return $coffeeShop->about;
     }
 }
