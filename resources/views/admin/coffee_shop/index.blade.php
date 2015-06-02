@@ -11,8 +11,8 @@
                 <h1>
                     @yield('page-title')
                     <span id="page-actions">
-                        <a href="{{ route('admin.coffee-shop.create') }}" class="btn btn-primary">
-                            Create a shop
+                        <a href="{{ route('admin.home') }}" class="btn btn-primary">
+                            Dashboard
                         </a>
                     </span>
                 </h1>
@@ -64,11 +64,6 @@
                             </td>
                         </tr>
                     @endforelse
-                    <tr class="success">
-                        <td colspan="5">
-                            <a href="{{ route('admin.coffee-shop.create') }}">Create a coffee shop</a>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
                 <div class="pull-right">

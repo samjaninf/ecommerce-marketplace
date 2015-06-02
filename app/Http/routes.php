@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('coffee-shop/{coffee_shop}/featured',
             ['as' => 'admin.coffee-shop.featured', 'uses' => 'CoffeeShopsController@featured']);
-        Route::resource('coffee-shop', 'CoffeeShopsController');
+        Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['create', 'store']]);
         Route::get('coffee-shop/{coffee_shop}/{status}',
             ['as' => 'admin.coffee-shop.review', 'uses' => 'CoffeeShopsController@review']);
 

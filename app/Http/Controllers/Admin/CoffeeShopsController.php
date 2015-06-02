@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers\Admin;
 
 use Koolbeans\Http\Controllers\Controller;
+use Koolbeans\Http\Requests\UpdateCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
 
 class CoffeeShopsController extends Controller
@@ -104,23 +105,30 @@ class CoffeeShopsController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        // @TODO
-    }
-
-    public function store()
-    {
-        // @TODO
-    }
-
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
-        // @TODO
+        $coffeeShop = $this->coffeeShopRepository->find($id);
+
+        return view('admin.coffee_shop.edit')->with('coffeeShop', $coffeeShop);
     }
 
-    public function update($id)
+    /**
+     * @param \Koolbeans\Http\Requests\UpdateCoffeeShopRequest $request
+     * @param int                                              $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateCoffeeShopRequest $request, $id)
     {
-        // @TODO
+        $coffeeShop = $this->coffeeShopRepository->find($id);
+        $coffeeShop->update($request->only(['name', 'location', 'postal_code', 'phone_number']));
+
+        return redirect(route('admin.coffee-shop.index'))->with('messages',
+            ['info' => "Coffee shop $coffeeShop->name updated!"]);
     }
 }

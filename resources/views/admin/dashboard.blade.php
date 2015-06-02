@@ -59,7 +59,6 @@
                 <h2>
                     Most profitable coffee shops
                     <span>
-                        <a href="{{ route('admin.coffee-shop.create') }}">Add a new coffee shop</a> |
                         <a href="{{ route('admin.coffee-shop.index') }}">List all coffee shops</a>
                     </span>
                 </h2>
