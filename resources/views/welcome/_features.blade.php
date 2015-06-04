@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-6 col-sm-3 feature">
+    <div class="col-xs-12 col-sm-3 feature">
         <div class="feature-icon">
             <span class="glyphicon glyphicon-map-marker"></span>
         </div>
@@ -12,7 +12,7 @@
             by reviews, distance or even the roastery.
         </p>
     </div>
-    <div class="col-xs-6 col-sm-3 feature">
+    <div class="col-xs-12 col-sm-3 feature">
         <div class="feature-icon">
             <span class="glyphicon glyphicon-time"></span>
         </div>
@@ -26,7 +26,7 @@
         </p>
     </div>
     <div class="clearfix visible-xs-block"></div>
-    <div class="col-xs-6 col-sm-3 feature">
+    <div class="col-xs-12 col-sm-3 feature">
         <div class="feature-icon">
             <span class="glyphicon glyphicon-comment"></span>
         </div>
@@ -39,7 +39,7 @@
             being told.
         </p>
     </div>
-    <div class="col-xs-6 col-sm-3 feature">
+    <div class="col-xs-12 col-sm-3 feature">
         <div class="feature-icon">
             <i class="fa fa-coffee"></i>
         </div>

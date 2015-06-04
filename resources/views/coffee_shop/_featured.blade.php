@@ -7,15 +7,7 @@
         @if($i === 0 || $i === 6)
             @include('coffee_shop._large', ['coffeeShop' => $shop])
         @else
-            @if($i === 2 || $i === 5)
-                <div class="row">
-                    @endif
-
-                    @include('coffee_shop._small', ['coffeeShop' => $shop])
-
-                    @if($i === 1 || $i === 4)
-                </div>
-            @endif
+            @include('coffee_shop._small', ['coffeeShop' => $shop, 'showXs' => $i === 1])
         @endif
     @endforeach
 </div>

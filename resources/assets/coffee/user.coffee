@@ -28,7 +28,14 @@ document.getElementById('add-review')?.onclick = (e) ->
 
   koolbeans.cancelEvent e
 
-document.getElementById('post-review').onsubmit = (e) ->
+document.getElementById('post-review')?.onsubmit = (e) ->
   if document.getElementById('rating-input').value == ''
     document.getElementById('empty-rating').classList.remove 'hide'
     koolbeans.cancelEvent e
+
+document.getElementById('show-more-reviews')?.onclick = (e) ->
+  @classList.add('hide')
+  for review in @parentNode.children
+    review.classList.remove 'hide' if review.classList.contains('hide') and review.nodeName == 'DIV'
+
+  koolbeans.cancelEvent e

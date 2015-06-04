@@ -16,22 +16,19 @@
         <div id="best-review-and-features-available">
             <div class="container" id="coffee-shop-info">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-9">
+                    <div class="col-xs-12 col-sm-12 col-md-9" id="coffee-shop-presentation-title">
                         <h1>@yield('page-title')</h1>
                         <h3>
                             <span class="glyphicon glyphicon-map-marker"></span>
                             {{$coffeeShop->location}}
-                            <hr class="hide visible-xs-block visible-sm-block">
-                            <br class="hide visible-md">
+                            <br class="hidden-lg">
+                            <br class="hidden-lg">
                             <span class="ratings">
                                 @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
                             </span>
-                            <a href="order" class="btn btn-success hide visible-xs-inline visible-sm-inline pull-right">
-                                Order a coffee
-                            </a>
                         </h3>
                     </div>
-                    <div class="col-md-3 hidden-xs hidden-sm">
+                    <div class="col-md-3 col-xs-12 col-sm-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading ">Order your coffee</div>
                             <div class="panel-body">
@@ -68,7 +65,10 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-9">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="hide visible-xs-block col-xs-12 above-best-review-xs">
+                                Images
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
                                 <div class="review-container">
                                     <div class="review">
                                         @if($bestReview !== null)
@@ -80,8 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-xs-6">
+                            <div class="col-sm-6 hidden-xs">
                                 Images
                             </div>
                         </div>
@@ -109,7 +108,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-9">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-sm-6">
                             <h4>About the shop</h4>
 
                             @if(current_user()->owns($coffeeShop))
@@ -123,7 +122,9 @@
                             </p>
                         </div>
 
-                        <div class="col-xs-6">
+                        <hr class="visible-xs-block">
+
+                        <div class="col-sm-6">
                             <h4>Current deals</h4>
                         </div>
                     </div>
@@ -202,6 +203,7 @@
                                         </div>
                                     </div>
                                 @endforeach
+                                <a href="#" id="show-more-reviews" class="hidden-xs">Show more...</a>
                             </div>
                         </div>
                     </div>

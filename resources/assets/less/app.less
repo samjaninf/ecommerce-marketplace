@@ -115,10 +115,20 @@ textarea {
   }
 }
 
+@media (max-width: @screen-xs-max) {
+  #coffee-shop-presentation-title {
+    height: 489px
+  }
+}
+
 #coffee-shop-info {
   position: absolute;
   left: 0;
   right: 0;
+
+  @media (max-width: @screen-sm-max) {
+    position: relative;
+  }
 
   .panel {
 
@@ -128,12 +138,12 @@ textarea {
 
     label, .btn {
       width: 100%;
-      padding: 10px;
       font-weight: normal;
       border-radius: 1px;
 
       .fa, .glyphicon {
         width: 10%;
+        padding: 10px 10px 10px 20px;
       }
 
       span.panel-input {
@@ -141,8 +151,10 @@ textarea {
       }
 
       .panel-input {
-        width: 90%;
+        width: 80%;
         float: right;
+        padding-top: 10px;
+        padding-bottom: 10px;
       }
     }
 
@@ -213,4 +225,21 @@ textarea {
 
 hr {
   border-color: #cccccc;
+}
+
+@media (max-width: @screen-xs-max) {
+  h4 {
+    text-align: center;
+    font-size: 24pt;
+  }
+
+  p {
+    text-align: center;
+    font-size: 15pt;
+  }
+}
+
+.above-best-review-xs {
+  padding: 10px;
+  border-bottom: @main-title-border-color solid 1px;
 }
