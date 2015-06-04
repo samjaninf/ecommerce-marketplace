@@ -22,5 +22,15 @@ class CoffeeShopTableSeeder extends Seeder
                 'status'    => $i > 3 ? 'published' : 'accepted',
             ]);
         }
+
+        CoffeeShop::create([
+            'user_id'   => 2,
+            'name'      => 'The white sugar',
+            'location'  => 'Canterbury, Kent',
+            'latitude'  => 51.2785451,
+            'longitude' => 1.0780975000000126,
+            'featured'  => false,
+            'status'    => 'accepted',
+        ]);
     }
 }

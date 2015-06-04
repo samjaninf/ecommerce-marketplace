@@ -24,7 +24,7 @@
                             <hr class="hide visible-xs-block visible-sm-block">
                             <br class="hide visible-md">
                             <span class="ratings">
-                                @include('coffee_shop._rating')
+                                @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
                             </span>
                             <a href="order" class="btn btn-success hide visible-xs-inline visible-sm-inline pull-right">
                                 Order a coffee
@@ -68,13 +68,17 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-9">
                         <div class="row">
-                            <div class="col-xs-6" id="coffee-shop-best-review">
-                                @if($bestReview !== null)
-                                    {{$bestReview->review}}
-                                @else
-                                    No review has been written yet!
-                                    <a href="review">Click here</a> to write one!
-                                @endif
+                            <div class="col-xs-6">
+                                <div class="review-container">
+                                    <div class="review">
+                                        @if($bestReview !== null)
+                                            {{$bestReview->pivot->review === '' ? 'No comment' : $bestReview->pivot->review}}
+                                        @else
+                                            No review has been written yet!
+                                            <a href="review">Click here</a> to write one!
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-xs-6">
@@ -123,11 +127,82 @@
                             <h4>Current deals</h4>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-xs-12">
                             <h4>Location</h4>
 
-                            MAPS
+                            <div id="maps-container" data-position="{{$coffeeShop->getPosition()}}"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>
+                                Reviews
+                                @if(Session::has('special-message'))
+                                    <p class="alert alert-{{key(Session::get('special-message'))}}" style="margin-top: 10px">
+                                        {{current(Session::get('special-message'))}}
+                                    </p>
+                                @endif
+
+                                @if(Auth::user())
+                                    @if ( ! $coffeeShop->reviews()->where('user_id', '=', current_user()->id)->count())
+                                        <a href="#" id="add-review">
+                                            Add your review
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ url('/auth/login') }}">Login to review this shop</a>
+                                @endif
+                            </h4>
+                            <div class="row hide" id="add-review-form">
+                                <div class="col-xs-12">
+                                    <h5>Add your own review</h5>
+                                    <p class="alert alert-danger hide" id="empty-rating">
+                                        Heya, you forgot to give a rating!
+                                    </p>
+                                    <span class="ratings select-rating">
+                                        Rating: @include('coffee_shop._rating', ['rating' => 0])
+                                    </span>
+
+                                    <form method="post"
+                                          id="post-review"
+                                          action="{{ route('coffee-shop.review', ['coffee_shop' => $coffeeShop]) }}">
+                                        <div class="form-group">
+                                            <textarea id="review" name="review" placeholder="Review..." class="form-control"></textarea>
+                                        </div>
+
+                                        <input type="hidden" name="rating" value="" id="rating-input">
+                                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary" value="Post review">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @foreach($coffeeShop->reviews as $i => $review)
+                                    <div class="col-xs-12 col-sm-6 {{$i > 3 ? 'hide' : ''}} @if(Auth::user() && $review->id === current_user()->id) your-review @endif ">
+                                        <div class="review-container">
+                                            <div class="review">
+                                                {{$review->pivot->review === '' ? "No comment" : $review->pivot->review }}
+                                            </div>
+
+                                            <div class="additional-details">
+                                                {{$review->pivot->created_at->format('jS M Y')}}<br>
+                                                <div class="author">
+                                                    {{$review->name}}
+                                                </div>
+                                            </div>
+
+                                            <span class="ratings">
+                                                @include('coffee_shop._rating', ['rating' => $review->pivot->rating])
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,8 +211,15 @@
     </div>
 @endsection
 
+@section('vendor_scripts')
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+@endsection
+
 @section('scripts')
     @if(current_user()->owns($coffeeShop))
         <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
     @endif
+
+    <script type="text/javascript" src="{{ elixir('js/user.js') }}"></script>
+    <script type="text/javascript" src="{{ elixir('js/gmaps.js') }}"></script>
 @endsection

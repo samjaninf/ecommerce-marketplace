@@ -20,7 +20,7 @@
     <![endif]-->
 </head>
 <body>
-<header id="top-container"@if(app('request')->is('/')) style="height: 787px"@endif>
+<header id="top-container" @if(app('request')->is('/')) style="height: 787px"@endif>
     @include('menu')
     @yield('splash')
 </header>

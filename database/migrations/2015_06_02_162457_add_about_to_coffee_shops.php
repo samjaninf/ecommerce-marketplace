@@ -26,7 +26,7 @@ class AddAboutToCoffeeShops extends Migration
     public function down()
     {
         Schema::table('coffee_shops', function (Blueprint $table) {
-            $table->drop('about');
+            $table->dropColumn('about');
         });
     }
 

@@ -91,12 +91,20 @@ textarea {
   color: inherit !important;
 }
 
+#post-review {
+  margin-top: 10px;
+}
+
 .rating-yes {
   color: #eea236;
 }
 
 .rating-no {
   color: #888;
+}
+
+.your-review {
+  background-color: @alert-success-bg;
 }
 
 #coffee-shop-presentation {
@@ -113,6 +121,11 @@ textarea {
   right: 0;
 
   .panel {
+
+    .panel-heading {
+      font-size: larger;
+    }
+
     label, .btn {
       width: 100%;
       padding: 10px;
@@ -151,27 +164,53 @@ textarea {
 
   z-index: 5;
 
-  padding: 35px 0;
+  padding: 15px 0;
 }
 
 #coffee-shop-description {
   z-index: 10;
   position: relative;
+}
 
-  #coffee-shop-best-review {
-    background: url(/img/shared/review-quote.png) no-repeat 0 7px;
-    padding-left: 40px;
+#submit-edit-about, #cancel-edit-about {
+  margin-top: 10px;
+}
+
+#cancel-edit-about {
+  margin-left: 10px;
+}
+
+.review-container {
+  padding-left: 40px;
+  padding-bottom: 20px;
+  background: url(/img/shared/review-quote.png) no-repeat 0 7px;
+
+  .review {
     font-style: italic;
     font-weight: normal;
     color: #929191;
     font-size: 16pt;
     font-family: @font-family-text;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .additional-details {
+    margin-bottom: 10px;
+
+    .author {
+      font-weight: 300;
+    }
+  }
+
+  #coffee-shop-about {
+    .btn {
+      margin-right: 10px;
+      margin-top: 10px;
+    }
   }
 }
 
-#coffee-shop-about {
-  .btn {
-    margin-right: 10px;
-    margin-top: 10px;
-  }
+hr {
+  border-color: #cccccc;
 }

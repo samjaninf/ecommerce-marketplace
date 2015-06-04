@@ -84,7 +84,8 @@ class CoffeeShop extends Model
      */
     public function reviews()
     {
-        return $this->belongsToMany('Koolbeans\User', 'coffee_shop_has_reviews')->withPivot('review');
+        return $this->belongsToMany('Koolbeans\User', 'coffee_shop_has_reviews')
+                    ->withPivot('review', 'rating', 'created_at');
     }
 
     /**
@@ -171,6 +172,29 @@ class CoffeeShop extends Model
     {
         $image = $this->gallery->first();
 
-        return $image === null ? elixir('img/shared/default.png') : ( $this->getUploadUrl() . '/' . $image->image );
+        return $image === null ? ( '/img/shared/default.png' ) : ( $this->getUploadUrl() . '/' . $image->image );
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->latitude . ',' . $this->longitude;
+    }
+
+    /**
+     * @param string $contents
+     * @param int    $rating
+     */
+    public function addReview($contents, $rating)
+    {
+        $review                 = new Review();
+        $review->review         = $contents;
+        $review->rating         = $rating;
+        $review->user_id        = current_user()->id;
+        $review->coffee_shop_id = $this->id;
+
+        $review->save();
     }
 }

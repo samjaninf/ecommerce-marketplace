@@ -20,6 +20,7 @@ elixir(function (mix) {
     mix.version([
         'css/app.css',
         'js/app.js',
+        'js/user.js',
         'js/modal.js',
         'js/gmaps.js',
         'js/admin.js',

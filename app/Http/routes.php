@@ -13,6 +13,7 @@
 
 Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
+Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
@@ -21,7 +22,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
-    Route::resource('coffee-shop', 'CoffeeShopsController');
+    Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
+    Route::post('coffee-shop/{coffee_shop}/review',
+        ['as' => 'coffee-shop.review', 'uses' => 'CoffeeShopsController@storeReview']);
     Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
         ['as' => 'coffee-shop.gallery.up', 'uses' => 'GalleryImagesController@moveUp']);
     Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',

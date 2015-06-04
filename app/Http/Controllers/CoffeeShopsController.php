@@ -48,6 +48,27 @@ class CoffeeShopsController extends Controller
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeReview(Request $request, $id)
+    {
+        $rating = $request->input('rating');
+        $review = $request->input('review');
+
+        if ($rating > 5 || $rating < 1) {
+            return redirect()->back()->with('special-message', ['warning' => "An error occured. Please review again."]);
+        }
+
+        $coffeeShop = $this->coffeeShop->find($id);
+        $coffeeShop->addReview($review, $rating);
+
+        return redirect()->back()->with('special-message', ['success' => "Your review has been delivered!"]);
+    }
+
+    /**
      * @param int $id
      *
      * @return \Illuminate\View\View
@@ -68,7 +89,7 @@ class CoffeeShopsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $coffeeShop = $this->coffeeShop->find($id);
+        $coffeeShop        = $this->coffeeShop->find($id);
         $coffeeShop->about = $request->input('about');
         $coffeeShop->save();
 
