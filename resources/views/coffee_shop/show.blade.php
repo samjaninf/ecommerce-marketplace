@@ -87,7 +87,7 @@
         </div>
 
         <div class="container" id="coffee-shop-about">
-            @if(current_user()->coffee_shop->id === $coffeeShop->id || current_user()->role === 'admin')
+            @if(current_user()->owns($coffeeShop) || current_user()->role === 'admin')
                 <div class="row">
                     <div class="col-xs-12">
                         @if(current_user()->role === 'admin')
@@ -108,7 +108,7 @@
                         <div class="col-xs-6">
                             <h4>About the shop</h4>
 
-                            @if(current_user()->coffee_shop->id === $coffeeShop->id)
+                            @if(current_user()->owns($coffeeShop))
                                 <a href="#" id="edit-coffeeshop-about-helper">Change description</a>
                                 <p id="edit-coffeeshop-about"
                                    data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
@@ -137,5 +137,7 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
+    @if(current_user()->owns($coffeeShop))
+        <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
+    @endif
 @endsection

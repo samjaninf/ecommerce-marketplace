@@ -113,4 +113,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany('Koolbeans\Transaction');
     }
+
+    /**
+     * @param \Koolbeans\CoffeeShop $coffeeShop
+     *
+     * @return bool
+     */
+    public function owns(CoffeeShop $coffeeShop)
+    {
+        return $this->isOwner() && $this->coffee_shop->id === $coffeeShop->id;
+    }
 }
