@@ -14,13 +14,16 @@ class CreateCoffeeShopHasProductsTable extends Migration
     public function up()
     {
         Schema::create('coffee_shop_has_products', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('coffee_shop_id')->unsigned();
             $table->foreign('coffee_shop_id')->references('id')->on('coffee_shops');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->string('display_name');
-            $table->integer('sizes_activated')->unsigned();
+            $table->string('name');
+            $table->integer('xs')->default(-1);
+            $table->integer('sm')->default(-1);
+            $table->integer('md')->default(-1);
+            $table->integer('lg')->default(-1);
+            $table->primary(['coffee_shop_id', 'product_id']);
         });
     }
 

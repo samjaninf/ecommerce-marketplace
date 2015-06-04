@@ -21,16 +21,20 @@ Route::group(['middleware' => 'auth'], function () {
         ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
-    Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
-    Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
+
+    Route::group(['middleware' => 'owner'], function () {
+        Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
+            ['as' => 'coffee-shop.gallery.up', 'uses' => 'GalleryImagesController@moveUp']);
+        Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',
+            ['as' => 'coffee-shop.gallery.down', 'uses' => 'GalleryImagesController@moveDown']);
+        Route::resource('coffee-shop.gallery', 'GalleryImagesController');
+        Route::resource('coffee-shop.products', 'MenuController');
+        Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
+        Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
+    });
+
     Route::post('coffee-shop/{coffee_shop}/review',
         ['as' => 'coffee-shop.review', 'uses' => 'CoffeeShopsController@storeReview']);
-    Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
-        ['as' => 'coffee-shop.gallery.up', 'uses' => 'GalleryImagesController@moveUp']);
-    Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',
-        ['as' => 'coffee-shop.gallery.down', 'uses' => 'GalleryImagesController@moveDown']);
-    Route::resource('coffee-shop.gallery', 'GalleryImagesController');
-    Route::resource('coffee-shop.products', 'MenuController');
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);

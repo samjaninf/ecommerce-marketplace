@@ -152,4 +152,12 @@ class EloquentProductRepository implements ProductRepository
     {
         return $this->model->withTrashed()->find($id);
     }
+
+    /**
+     * @return \Koolbeans\Product[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function all()
+    {
+        return $this->model->all();
+    }
 }

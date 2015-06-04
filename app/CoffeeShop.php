@@ -22,21 +22,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                                                                  $phone_number
  * @property-read \Koolbeans\User                                                    $user
  * @property-read \Illuminate\Database\Eloquent\Collection|\Koolbeans\GalleryImage[] $gallery
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereId( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUserId( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereName( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePostalCode( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLocation( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLatitude( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereLongitude( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereFeatured( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereStatus( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereComment( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePlaceId( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereCreatedAt( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop whereUpdatedAt( $value )
- * @method static \Illuminate\Database\Query\Builder|\Koolbeans\CoffeeShop wherePhoneNumber( $value )
- * @method static \Koolbeans\CoffeeShop published()
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereId( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereUserId( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereName( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop wherePostalCode( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereLocation( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereLatitude( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereLongitude( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereFeatured( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereStatus( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereComment( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop wherePlaceId( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereCreatedAt( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop whereUpdatedAt( $value )
+ * @method static \Illuminate\Database\Query\Builder|CoffeeShop wherePhoneNumber( $value )
+ * @method static CoffeeShop published()
  */
 class CoffeeShop extends Model
 {
@@ -132,7 +132,7 @@ class CoffeeShop extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Koolbeans\CoffeeShop $query
+     * @param \Illuminate\Database\Eloquent\Builder|CoffeeShop $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -196,5 +196,37 @@ class CoffeeShop extends Model
         $review->coffee_shop_id = $this->id;
 
         $review->save();
+    }
+
+    /**
+     * @param \Koolbeans\Product $product
+     * @param string             $size
+     *
+     * @return int
+     */
+    public function priceFor(Product $product, $size = null)
+    {
+        $sizes = $this->products()->find($product->id);
+
+        if ($sizes === null) {
+            return '#';
+        }
+
+        $price = $sizes->pivot->$size;
+
+        if ($price === -1) {
+            return '#';
+        }
+
+        return '£ ' . $price / 100.;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany('Koolbeans\Product', 'coffee_shop_has_products')
+                    ->withPivot('name', 'xs', 'sm', 'md', 'lg');
     }
 }

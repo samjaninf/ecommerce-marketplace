@@ -61,6 +61,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="container" id="coffee-shop-description">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-9">
@@ -75,7 +76,7 @@
                                             {{$bestReview->pivot->review === '' ? 'No comment' : $bestReview->pivot->review}}
                                         @else
                                             No review has been written yet!
-                                            <a href="review">Click here</a> to write one!
+                                            <a href="#reviews-for-coffeeshop">Click here</a> to write one!
                                         @endif
                                     </div>
                                 </div>
@@ -137,7 +138,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row">
+                    <div class="row" id="reviews-for-coffeeshop">
                         <div class="col-xs-12">
                             <h4>
                                 Reviews

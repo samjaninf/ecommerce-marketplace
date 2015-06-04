@@ -58,4 +58,9 @@ interface ProductRepository
      * @return \Koolbeans\Product
      */
     public function update($id, Request $input);
+
+    /**
+     * @return \Koolbeans\Product[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function all();
 }
