@@ -51,6 +51,9 @@ revertToText = (e) ->
   koolbeans.cancelEvent e
 
 editAboutSection = (e) ->
+  document.getElementById('submit-edit-about').classList.add 'disabled'
+  document.getElementById('cancel-edit-about').classList.add 'disabled'
+
   $.ajax
     url: target
     data: { about: source.value }
