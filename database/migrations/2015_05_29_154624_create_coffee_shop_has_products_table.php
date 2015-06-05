@@ -19,10 +19,15 @@ class CreateCoffeeShopHasProductsTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
             $table->string('name');
-            $table->integer('xs')->default(-1);
-            $table->integer('sm')->default(-1);
-            $table->integer('md')->default(-1);
-            $table->integer('lg')->default(-1);
+            $table->boolean('activated')->default(true);
+            $table->boolean('xs_activated')->default(false);
+            $table->boolean('sm_activated')->default(false);
+            $table->boolean('md_activated')->default(false);
+            $table->boolean('lg_activated')->default(false);
+            $table->integer('xs')->unsigned();
+            $table->integer('sm')->unsigned();
+            $table->integer('md')->unsigned();
+            $table->integer('lg')->unsigned();
             $table->primary(['coffee_shop_id', 'product_id']);
         });
     }

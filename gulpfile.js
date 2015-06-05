@@ -17,6 +17,8 @@ elixir(function (mix) {
     mix.less('app.less');
     mix.coffee();
     mix.imagemin();
+    mix.scripts(['bootstrap-switch.js'], 'public/js/vendor.js');
+
     mix.version([
         'css/app.css',
         'js/app.js',
@@ -24,7 +26,7 @@ elixir(function (mix) {
         'js/modal.js',
         'js/gmaps.js',
         'js/admin.js',
-        'js/admin-featured.js',
-        'js/shop_owner.js'
-    ])
+        'js/shop_owner.js',
+        'js/vendor.js'
+    ]);
 });

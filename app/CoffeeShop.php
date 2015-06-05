@@ -206,19 +206,37 @@ class CoffeeShop extends Model
      */
     public function priceFor(Product $product, $size = null)
     {
+        $price = $this->hasActivated($product, $size, true);
+
+        return $price === false ? '#' : '£ ' . number_format($price / 100., 2);
+    }
+
+    /**
+     * @param \Koolbeans\Product $product
+     * @param string             $size
+     * @param bool               $forceGetPrice
+     *
+     * @return bool|int
+     */
+    public function hasActivated(Product $product, $size = null, $forceGetPrice = false)
+    {
         $sizes = $this->products()->find($product->id);
 
-        if ($sizes === null) {
-            return '#';
+        if ($sizes === null || $sizes->pivot->activated == false && $size == null) {
+            return false;
+        }
+
+        if ($size === null) {
+            return true;
         }
 
         $price = $sizes->pivot->$size;
 
-        if ($price === -1) {
-            return '#';
+        if ( ! $forceGetPrice && ( $price === -1 || $sizes->pivot->{$size . '_activated'} == false )) {
+            return false;
         }
 
-        return '£ ' . $price / 100.;
+        return $price;
     }
 
     /**
@@ -227,6 +245,58 @@ class CoffeeShop extends Model
     public function products()
     {
         return $this->belongsToMany('Koolbeans\Product', 'coffee_shop_has_products')
-                    ->withPivot('name', 'xs', 'sm', 'md', 'lg');
+                    ->withPivot('name', 'xs', 'sm', 'md', 'lg', 'activated', 'xs_activated', 'sm_activated',
+                        'md_activated', 'lg_activated');
+    }
+
+    /**
+     * @param $product
+     * @param $size
+     */
+    public function toggleActivated($product, $size)
+    {
+        $p = $this->findProduct($product->id);
+
+        if ($size === null) {
+            $p->pivot->activated = ! $p->pivot->activated;
+        } else {
+            $p->pivot->{$size . '_activated'} = ! $p->pivot->{$size . '_activated'};
+        }
+
+        $p->pivot->save();
+    }
+
+    /**
+     * @param $product
+     *
+     * @return mixed
+     */
+    public function getNameFor($product)
+    {
+        $p = $this->products()->find($product->id);
+
+        if ($p && $p->pivot->name) {
+            return $p->pivot->name;
+        }
+
+        return $product->name;
+    }
+
+    /**
+     * @param $productId
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
+     */
+    public function findProduct($productId)
+    {
+        $p = $this->products()->find($productId);
+
+        if ($p === null) {
+            $this->products()->attach($productId);
+            $p                   = $this->products()->find($productId);
+            $p->pivot->activated = false;
+        }
+
+        return $p;
     }
 }

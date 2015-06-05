@@ -9,5 +9,5 @@ public/css
 public/js
 public/img
 public/uploads
-resources/assets/**/*.css
-resources/assets/**/*.js
+resources/assets/less/**/*.css
+resources/assets/coffee/**/*.js

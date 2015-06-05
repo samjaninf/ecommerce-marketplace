@@ -22,7 +22,9 @@ class ProductTableSeeder extends Seeder
 
         $coffeeShop = \Koolbeans\CoffeeShop::find(11);
         $coffeeShop->products()->attach($product);
-        $coffeeShop->products[0]->pivot->xs = '134';
+        $coffeeShop->products[0]->pivot->activated    = true;
+        $coffeeShop->products[0]->pivot->xs_activated = true;
+        $coffeeShop->products[0]->pivot->xs           = 134;
         $coffeeShop->products[0]->pivot->save();
     }
 }

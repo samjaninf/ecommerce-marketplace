@@ -6,6 +6,25 @@
 
 @section('content')
     <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Instructions
+                    </div>
+                    <div class="panel-body">
+                        Each product can be activated by clicking on the "On/Off" button.<br>
+                        You have to set up a price for each of the product's sizes you want activated.<br>
+                        You are not required to activate all the sizes, but you must enter a price above 0 for each one
+                        activated, otherwise they wont show up in your menu.<br>
+                        You can change the price by clicking on it and press "Enter", "Tab" or just click
+                        out the field to save it.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
@@ -18,47 +37,22 @@
         </div>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="drinks">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th><a href="changeTerm">Small</a></th>
-                        <th><a href="changeTerm">Medium</a></th>
-                        <th><a href="changeTerm">Large</a></th>
-                        <th><a href="changeTerm">Extra Large</a></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($drinks as $drink)
-                        <tr>
-                            <td>
-                                <a href="#" class="activates" data-drink="{{ $drink->id }}"></a>
-                                <a href="changeDisplayName">{{ $drink->name }}</a>
-                            </td>
-                            <td>
-                                <a href="#" class="activates" data-drink="{{ $drink->id }}" data-size="xs"></a>
-                                <a href="changePrice">{{ current_user()->coffee_shop->priceFor($drink, 'xs') }}</a>
-                            </td>
-                            <td>
-                                <a href="#" class="activates" data-drink="{{ $drink->id }}" data-size="sm"></a>
-                                <a href="changePrice">{{ current_user()->coffee_shop->priceFor($drink, 'sm') }}</a>
-                            </td>
-                            <td>
-                                <a href="#" class="activates" data-drink="{{ $drink->id }}" data-size="md"></a>
-                                <a href="changePrice">{{ current_user()->coffee_shop->priceFor($drink, 'md') }}</a>
-                            </td>
-                            <td>
-                                <a href="#" class="activates" data-drink="{{ $drink->id }}" data-size="lg"></a>
-                                <a href="changePrice">{{ current_user()->coffee_shop->priceFor($drink, 'lg') }}</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                @include('products._products_table', ['products' => $drinks, 'sizes' => ['xs', 'sm', 'md', 'lg']])
             </div>
             <div role="tabpanel" class="tab-pane" id="food">
-
+                @include('products._products_table', ['products' => $food, 'sizes' => ['sm']])
             </div>
         </div>
     </div>
 @stop
+
+@section('scripts')
+    <script type="text/javascript">
+        $('.activates').each(function () {
+            $.fn.bootstrapSwitch.defaults.onColor = 'success';
+            $(this).bootstrapSwitch();
+        });
+    </script>
+
+    <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
+@endsection
