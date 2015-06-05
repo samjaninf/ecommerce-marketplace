@@ -87,6 +87,12 @@ for price in prices
   price.onclick = (e) ->
     triggerChangePrice this, e
 
+addLinks = document.getElementsByClassName('add-product')
+for link in addLinks
+  link.onclick = (e) ->
+    e.preventDefault()
+    document.getElementById(this.dataset.target).classList.remove 'hide'
+
 triggerRenameProduct = (link, e) ->
   e.preventDefault()
   createInput link, e, 'text', renameProduct

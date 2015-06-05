@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\Repositories\ProductRepository;
+use Koolbeans\Repositories\ProductTypeRepository;
 
 class MenuController extends Controller
 {
@@ -14,15 +15,23 @@ class MenuController extends Controller
      * @var \Koolbeans\Repositories\CoffeeShopRepository
      */
     private $coffeeShopRepository;
+    /**
+     * @var \Koolbeans\Repositories\ProductTypeRepository
+     */
+    private $productTypeRepository;
 
     /**
-     * @param \Koolbeans\Repositories\ProductRepository    $productRepository
-     * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShopRepository
+     * @param \Koolbeans\Repositories\ProductRepository     $productRepository
+     * @param \Koolbeans\Repositories\CoffeeShopRepository  $coffeeShopRepository
+     * @param \Koolbeans\Repositories\ProductTypeRepository $productTypeRepository
      */
-    public function __construct(ProductRepository $productRepository, CoffeeShopRepository $coffeeShopRepository)
-    {
+    public function __construct(
+        ProductRepository $productRepository, CoffeeShopRepository $coffeeShopRepository,
+        ProductTypeRepository $productTypeRepository
+    ) {
         $this->productRepository    = $productRepository;
         $this->coffeeShopRepository = $coffeeShopRepository;
+        $this->productTypeRepository = $productTypeRepository;
     }
 
     /**
@@ -33,8 +42,10 @@ class MenuController extends Controller
         $drinks     = $this->productRepository->drinks();
         $food       = $this->productRepository->food();
         $coffeeShop = current_user()->coffee_shop;
+        $drinkTypes = $this->productTypeRepository->drinks();
+        $foodTypes = $this->productTypeRepository->food();
 
-        return view('products.index')->with(compact('drinks', 'food', 'coffeeShop'));
+        return view('products.index')->with(compact('drinks', 'food', 'coffeeShop', 'drinkTypes', 'foodTypes'));
     }
 
     /**
@@ -75,9 +86,9 @@ class MenuController extends Controller
      */
     public function reprice(Request $request, $coffeeShopId, $productId, $size)
     {
-        $price      = (int) $request->input('price');
-        $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
-        $product    = $coffeeShop->findProduct($productId);
+        $price                 = (int) $request->input('price');
+        $coffeeShop            = $this->coffeeShopRepository->find($coffeeShopId);
+        $product               = $coffeeShop->findProduct($productId);
         $product->pivot->$size = $price;
         $product->pivot->save();
 

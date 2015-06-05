@@ -37,10 +37,10 @@
         </div>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="drinks">
-                @include('products._products_table', ['products' => $drinks, 'sizes' => ['xs', 'sm', 'md', 'lg']])
+                @include('products._products_table', ['products' => $drinks, 'types' => $drinkTypes, 'sizes' => ['xs', 'sm', 'md', 'lg']])
             </div>
             <div role="tabpanel" class="tab-pane" id="food">
-                @include('products._products_table', ['products' => $food, 'sizes' => ['sm']])
+                @include('products._products_table', ['products' => $food, 'types' => $foodTypes, 'sizes' => ['sm']])
             </div>
         </div>
     </div>

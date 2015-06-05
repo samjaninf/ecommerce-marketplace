@@ -97,12 +97,16 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(ProductRepository $productRepository, $id)
+    public function destroy(ProductRepository $productRepository, $id, $force = false)
     {
-        $product = $productRepository->disable($id);
+        if ($force) {
+            $product = $productRepository->delete($id);
+        } else {
+            $product = $productRepository->disable($id);
+        }
 
         return redirect(route('admin.products.index'))->with('messages',
-            ['warning' => "The $product->type $product->name has been correctly disabled."]);
+            ['warning' => "The $product->type $product->name has been correctly ". ($force ? 'deleted' : 'disabled') ."."]);
     }
 
     /**

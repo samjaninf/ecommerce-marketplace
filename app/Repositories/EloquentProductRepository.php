@@ -36,6 +36,8 @@ class EloquentProductRepository implements ProductRepository
 
         if ($withDisabled) {
             $qry->withTrashed();
+        } else {
+            $qry->whereStatus('accepted');
         }
 
         return $qry->get();
@@ -52,6 +54,8 @@ class EloquentProductRepository implements ProductRepository
 
         if ($withDisabled) {
             $qry->withTrashed();
+        } else {
+            $qry->whereStatus('accepted');
         }
 
         return $qry->get();
@@ -125,6 +129,25 @@ class EloquentProductRepository implements ProductRepository
         $product = $this->model->find($id);
 
         $product->delete();
+
+        return $product;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Koolbeans\Product
+     * @throws \Exception
+     */
+    public function delete($id)
+    {
+        $product = $this->model->find($id);
+
+        foreach ($product->types as $type) {
+            $type->pivot->delete();
+        }
+
+        $product->forceDelete();
 
         return $product;
     }

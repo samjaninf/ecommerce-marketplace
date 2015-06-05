@@ -56,5 +56,48 @@
             @endforeach
         </tr>
     @endforeach
+    <tr>
+        <td class="success" colspan="{{count($sizes) + 1}}">
+            <a href="#" data-target="form-add-{{count($sizes) == 4 ? 'drink' : 'food' }}" class="add-product">Add a new product</a>
+
+            <form action="{{ route('products.store') }}" id="form-add-{{count($sizes) == 4 ? 'drink' : 'food' }}" class="hide" method="post">
+                <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
+                    <label for="name" class="col-sm-2 control-label">Name:</label>
+
+                    <div class="col-sm-10 col-md-6">
+                        <input id="name"
+                               name="name"
+                               type="text"
+                               placeholder="Name..."
+                               class="form-control"
+                               value="{{old('name')}}">
+                    </div>
+                </div>
+
+                <div class="form-group @if($errors->any()) {{$errors->has('product_types') ? 'has-error' : 'has-success'}} @endif">
+                    <div class="col-sm-offset-2 col-sm-10" id="product-types-list">
+                        @foreach($types as $type)
+                            <div class="type-drink checkbox">
+                                <label for="product_type-{{$type->name}}">
+                                    <input type="checkbox"
+                                           id="product_type-{{$type->name}}"
+                                           name="product_type[{{$type->name}}]"
+                                           @if(old('product_types.'.$type->name)) checked @endif> {{$type->name}}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="hidden" name="type" value="{{ count($sizes) == 4 ? 'drink' : 'food' }}" id="type-field">
+                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                        <input type="submit" class="btn btn-success" value="Add a product">
+                    </div>
+                </div>
+            </form>
+        </td>
+    </tr>
     </tbody>
 </table>

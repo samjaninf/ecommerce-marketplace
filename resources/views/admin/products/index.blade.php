@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                     @forelse($drinks as $drink)
-                        <tr @if($drink->trashed()) class="warning" @endif>
+                        <tr @if($drink->trashed()) class="warning" @elseif($drink->status == 'requested') class="danger" @endif>
                             <td>
                                 <a data-toggle="tooltip"
                                    data-placement="top"
@@ -52,6 +52,13 @@
                                 @if($drink->trashed())
                                     <a href="{{ route('admin.products.enable', ['product' => $drink]) }}"
                                        class="btn btn-xs btn-success">Enable</a>
+                                @elseif($drink->status == 'requested')
+                                    <a href="{{ route('admin.products.destroy', ['product' => $drink, 'force' => true]) }}"
+                                       class="btn btn-xs btn-danger"
+                                       data-method="delete"
+                                       data-confirm="Confirm deletion.">
+                                        Delete
+                                    </a>
                                 @else
                                     <a href="{{ route('admin.products.destroy', ['product' => $drink]) }}"
                                        class="btn btn-xs btn-danger"
@@ -93,7 +100,7 @@
                     </thead>
                     <tbody>
                     @forelse($food as $product)
-                        <tr @if($product->trashed()) class="warning" @endif>
+                        <tr @if($product->trashed()) class="warning" @elseif($product->status == 'requested') class="danger" @endif>
                             <td>
                                 <a data-toggle="tooltip"
                                    data-placement="top"
@@ -110,6 +117,13 @@
                                 @if($product->trashed())
                                     <a href="{{ route('admin.products.enable', ['product' => $product]) }}"
                                        class="btn btn-xs btn-success">Enable</a>
+                                @elseif($product->status == 'requested')
+                                    <a href="{{ route('admin.products.destroy', ['product' => $drink, 'force' => true]) }}"
+                                       class="btn btn-xs btn-danger"
+                                       data-method="delete"
+                                       data-confirm="Confirm deletion.">
+                                    Delete
+                                    </a>
                                 @else
                                     <a href="{{ route('admin.products.destroy', ['product' => $product]) }}"
                                        class="btn btn-xs btn-danger"

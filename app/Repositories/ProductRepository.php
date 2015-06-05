@@ -63,4 +63,11 @@ interface ProductRepository
      * @return \Koolbeans\Product[]|\Illuminate\Database\Eloquent\Collection
      */
     public function all();
+
+    /**
+     * @param int $id
+     *
+     * @return \Koolbeans\Product
+     */
+    public function delete($id);
 }

@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('coffee-shop/{coffee_shop}/review',
         ['as' => 'coffee-shop.review', 'uses' => 'CoffeeShopsController@storeReview']);
 
+    Route::resource('products', 'ProductsController', ['only' => 'store']);
+
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
 
@@ -53,7 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('products/{products}/enable',
             ['as' => 'admin.products.enable', 'uses' => 'ProductsController@enable']);
-        Route::resource('products', 'ProductsController');
+        Route::resource('products', 'ProductsController', ['except' => 'destroy']);
+        Route::delete('products/{products}/{force?}',
+            ['as' => 'admin.products.destroy', 'uses' => 'ProductsController@destroy']);
         Route::resource('product-types', 'ProductTypesController', ['only' => 'store']);
     });
 });
