@@ -19,7 +19,8 @@
                 </h3>
                 <div class="list-group collapse navbar-collapse" id="dashboard-menu">
                     <a href="#" class="list-group-item">Your account</a>
-                    <a href="#" class="list-group-item">Menu</a>
+                    <a href="{{ route('coffee-shop.products.index', ['coffeeshop' => $coffeeShop]) }}"
+                       class="list-group-item">Menu</a>
                     <a href="#" class="list-group-item">Reporting</a>
                     <a href="#" class="list-group-item">Order history</a>
                     <hr class="hidden-xs">

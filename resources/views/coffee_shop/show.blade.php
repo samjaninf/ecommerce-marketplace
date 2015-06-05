@@ -42,16 +42,19 @@
 
                                     <label>
                                         <i class="fa fa-coffee"></i>
-                                        <select name="" class="panel-input">
+                                        <select name="drink" class="panel-input">
                                             <option value="">Select your drink</option>
+                                            @foreach($coffeeShop->products as $product)
+                                                <option value="{{$product->id}}">{{$coffeeShop->getNameFor($product)}}</option>
+                                            @endforeach
                                         </select>
                                     </label>
 
                                     <label>
                                         <span class="glyphicon glyphicon-time"></span>
-                                        <select name="" class="panel-input">
-                                            <option value="">Pickup time</option>
-                                        </select>
+                                        <input class="panel-input"
+                                               name="time"
+                                               placeholder="{{\Carbon\Carbon::now()->format('H:i')}}">
                                     </label>
 
                                     <input type="submit" class="btn btn-success" value="Place order">
@@ -76,7 +79,6 @@
                                             {{$bestReview->pivot->review === '' ? 'No comment' : $bestReview->pivot->review}}
                                         @else
                                             No review has been written yet!
-                                            <a href="#reviews-for-coffeeshop">Click here</a> to write one!
                                         @endif
                                     </div>
                                 </div>

@@ -77,9 +77,12 @@ class EloquentProductRepository implements ProductRepository
     public function create(Request $input)
     {
         $product = $this->model->create($input->only('name', 'type'));
+        $types   = $input->get('product_type');
 
-        foreach ($input->get('product_type') as $name => $_i) {
-            $product->types()->attach($this->types->whereName($name)->first()->id);
+        if (is_array($types)) {
+            foreach ($types as $name => $_i) {
+                $product->types()->attach($this->types->whereName($name)->first()->id);
+            }
         }
 
         return $product;
