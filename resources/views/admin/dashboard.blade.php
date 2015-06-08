@@ -50,7 +50,22 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2>Recent sales</h2>
-                <p class="alert alert-danger">No sales made in the last 48 hours</p>
+                @if($orders)
+                    <ul class="list-group">
+                        @foreach($orders as $order)
+                            <li class="list-group-item">
+                                <span class="info-price-dashboard">
+                                    £ {{$order->price / 100.}}
+                                </span> in {{$order->coffee_shop->name}}, {{$order->coffee_shop->location}}
+                                <span class="pull-right">
+                                    {{$order->created_at->format('Y-m-d H:i')}}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="alert alert-danger">No sales made in the last 48 hours</p>
+                @endif
             </div>
         </div>
 
@@ -66,8 +81,8 @@
                     <ul class="list-group">
                         @foreach($profitable as $coffeeShop)
                             <li class="list-group-item">
-                                <span class="badge">£ {{$coffeeShop->sales ?: 0}}</span>
-                                <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}">
+                                <span class="badge">£ {{($coffeeShop->aggregate / 100.) ?: 0}}</span>
+                                <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop->id]) }}">
                                     {{$coffeeShop->name}}
                                 </a>
                             </li>

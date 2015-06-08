@@ -57,6 +57,10 @@
     @yield('content')
 </div>
 
+<footer>
+    @include('shared._footer')
+</footer>
+
 <div class="modal hide" id="modal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

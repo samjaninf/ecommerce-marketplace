@@ -26,3 +26,13 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        (function ($) {
+            $('#main-menu').find('> ul > li > a').each(function () {
+                this.style.color = '#fff';
+            });
+        })(jQuery);
+    </script>
+@stop

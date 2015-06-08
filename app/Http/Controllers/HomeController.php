@@ -21,6 +21,20 @@ class HomeController extends Controller
                     'coffeeShop' => $user->coffee_shop,
                     'images'     => $images,
                     'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+                    'orders'     => $user->coffee_shop->orders()
+                                                      ->where('paid', true)
+                                                      ->where('status', '!=', 'collected')
+                                                      ->orderBy('id', 'desc')
+                                                      ->get(),
+                    'mostBought' => \DB::select(<<<RAW
+SELECT COUNT(*) as aggregate, product_id
+FROM order_lines JOIN orders ON orders.id = order_lines.order_id
+WHERE coffee_shop_id = {$user->coffee_shop->id}
+GROUP BY product_id
+ORDER BY aggregate DESC
+LIMIT 15
+RAW
+                    ),
                 ]);
             }
 

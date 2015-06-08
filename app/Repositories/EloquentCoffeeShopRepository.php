@@ -68,7 +68,14 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
      */
     public function getMostProfitable()
     {
-        return $this->model->published()->limit(5)->get();
+        return new Collection(\DB::select(<<<RAW
+SELECT c.*, SUM(o.price) as aggregate
+FROM coffee_shops c LEFT JOIN orders o ON c.id = o.coffee_shop_id
+GROUP BY c.id
+ORDER BY aggregate DESC
+LIMIT 5
+RAW
+        ));
     }
 
     /**

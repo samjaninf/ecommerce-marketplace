@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Koolbeans\Http\Requests;
 use Koolbeans\Order;
 use Koolbeans\OrderLine;
+use Koolbeans\Product;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Laravel\Cashier\StripeGateway;
 use Stripe\Charge;
@@ -31,6 +32,20 @@ class OrdersController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * @param $orderId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function nextStatus($orderId)
+    {
+        $order = Order::find($orderId);
+        $order->status = $order->getNextStatus();
+        $order->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -79,12 +94,14 @@ class OrdersController extends Controller
 
         $order          = new Order;
         $order->user_id = current_user()->id;
+        $order->coffee_shop_id = $coffeeShopId;
 
         $order->pickup_time = $request->input('time');
 
         $lines   = [];
         $sizeIdx = 0;
         foreach ($productIds as $productId) {
+            /** @var Product $product */
             $product = $coffeeShop->products()->find($productId);
 
             $lines[]                 = $currentLine = new OrderLine;

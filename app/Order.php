@@ -16,9 +16,33 @@ class Order extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function coffee_shop()
+    {
+        return $this->belongsTo('Koolbeans\CoffeeShop');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo('Koolbeans\User');
+    }
+
+    /**
+     * @return string
+     */
+    public function getNextStatus()
+    {
+        if ($this->status == 'waiting') {
+            return 'preparing';
+        }
+
+        if ($this->status == 'preparing') {
+            return 'ready';
+        }
+
+        return 'collected';
     }
 
 }

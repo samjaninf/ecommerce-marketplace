@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
     Route::group(['middleware' => 'owner'], function () {
+        Route::get('order/{order}/nextStatus', ['as' => 'next-order-status', 'uses' => 'OrdersController@nextStatus']);
         Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
             ['as' => 'coffee-shop.gallery.up', 'uses' => 'GalleryImagesController@moveUp']);
         Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/down',

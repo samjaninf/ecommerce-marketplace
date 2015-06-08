@@ -1,6 +1,8 @@
 <?php namespace Koolbeans\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Koolbeans\Http\Controllers\Controller;
+use Koolbeans\Order;
 use Koolbeans\Repositories\CoffeeShopRepository;
 
 class AdminController extends Controller
@@ -14,6 +16,10 @@ class AdminController extends Controller
     {
         return view('admin.dashboard')
             ->with('applications', $coffeeShop->getApplications())
-            ->with('profitable', $coffeeShop->getMostProfitable());
+            ->with('profitable', $coffeeShop->getMostProfitable())
+            ->with('orders', Order::where('created_at', '>', Carbon::now()->subMonth(2))
+                                  ->wherePaid(true)
+                                  ->orderBy('id', 'desc')
+                                  ->get());
     }
 }
