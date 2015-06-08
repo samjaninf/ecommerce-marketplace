@@ -32,7 +32,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading ">Order your coffee</div>
                             <div class="panel-body">
-                                <form action="order">
+                                <form action="{{ route('coffee-shop.order.create', ['coffee_shop' => $coffeeShop]) }}">
                                     <label>
                                         <span class="glyphicon glyphicon-map-marker"></span>
                                         <span class="panel-input">
@@ -93,7 +93,7 @@
         </div>
 
         <div class="container" id="coffee-shop-about">
-            @if(current_user()->owns($coffeeShop) || current_user()->role === 'admin')
+            @if(! Auth::guest() && (current_user()->owns($coffeeShop) || current_user()->role === 'admin'))
                 <div class="row">
                     <div class="col-xs-12">
                         @if(current_user()->role === 'admin')
@@ -114,7 +114,7 @@
                         <div class="col-sm-6">
                             <h4>About the shop</h4>
 
-                            @if(current_user()->owns($coffeeShop))
+                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
                                 <a href="#" id="edit-coffeeshop-about-helper">Change description</a>
                                 <p id="edit-coffeeshop-about"
                                    data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
@@ -150,7 +150,7 @@
                                     </p>
                                 @endif
 
-                                @if(Auth::user())
+                                @if(! Auth::guest())
                                     @if ( ! $coffeeShop->reviews()->where('user_id', '=', current_user()->id)->count())
                                         <a href="#" id="add-review">
                                             Add your review
@@ -206,7 +206,11 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <a href="#" id="show-more-reviews" class="hidden-xs">Show more...</a>
+                                <div class="col-xs-12">
+                                    @if($coffeeShop->reviews->count() > 3)
+                                        <a href="#" id="show-more-reviews" class="hidden-xs">Show more...</a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,7 +225,7 @@
 @endsection
 
 @section('scripts')
-    @if(current_user()->owns($coffeeShop))
+    @if(! Auth::guest() && current_user()->owns($coffeeShop))
         <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
     @endif
 

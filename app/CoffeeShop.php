@@ -64,6 +64,21 @@ class CoffeeShop extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $hidden = [
+        'status',
+        'featured',
+        'created_at',
+        'updated_at',
+        'user_id',
+        'place_id',
+        'id',
+        'about',
+        'comment',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -298,5 +313,15 @@ class CoffeeShop extends Model
         }
 
         return $p;
+    }
+
+    /**
+     * @param string $size
+     *
+     * @return string
+     */
+    public function getSizeDisplayName($size)
+    {
+        return $this->{'display_' . $size};
     }
 }

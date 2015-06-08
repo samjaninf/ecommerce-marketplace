@@ -22,7 +22,7 @@ class Transaction extends Model
     /**
      * @var array
      */
-    protected $fillable = ['amount'];
+    protected $fillable = ['amount', 'charged', 'stripe_charge_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

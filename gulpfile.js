@@ -23,6 +23,7 @@ elixir(function (mix) {
         'css/app.css',
         'js/app.js',
         'js/user.js',
+        'js/order.js',
         'js/modal.js',
         'js/gmaps.js',
         'js/admin.js',

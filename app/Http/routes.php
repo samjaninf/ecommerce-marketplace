@@ -13,7 +13,6 @@
 
 Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
-Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
@@ -41,6 +40,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('coffee-shop/{coffee_shop}/review',
         ['as' => 'coffee-shop.review', 'uses' => 'CoffeeShopsController@storeReview']);
+    Route::resource('coffee-shop.order', 'OrdersController');
+    Route::post('coffee-shop/{coffee_shop}/order/{order}/checkout',
+        ['as' => 'coffee-shop.order.checkout', 'uses' => 'OrdersController@checkout']);
 
     Route::resource('products', 'ProductsController', ['only' => 'store']);
 
@@ -61,6 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('product-types', 'ProductTypesController', ['only' => 'store']);
     });
 });
+
+Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
 
 /**
  * Authentication controllers
