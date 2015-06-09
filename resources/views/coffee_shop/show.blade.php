@@ -104,6 +104,11 @@
                             <a href="{{ route('my-shop') }}" class="btn btn-primary">
                                 Manage your shop
                             </a>
+                            @if($coffeeShop->status === 'accepted')
+                                <a href="{{ route('publish-my-shop') }}" class="btn btn-success">
+                                    Publish your shop
+                                </a>
+                            @endif
                         @endif
                     </div>
                 </div>

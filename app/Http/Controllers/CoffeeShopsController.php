@@ -95,4 +95,28 @@ class CoffeeShopsController extends Controller
 
         return $coffeeShop->about;
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function publish()
+    {
+        $coffeeShop = current_user()->coffee_shop;
+        if ($coffeeShop->status != 'accepted') {
+            return redirect()->back();
+        }
+
+        $products   = $coffeeShop->products;
+        foreach ($products as $product) {
+            if ($coffeeShop->hasActivated($product)) {
+                $coffeeShop->status = 'published';
+                $coffeeShop->save();
+
+                return redirect()->back()->with('messages', ['success' => 'Coffee shop published!']);
+            }
+        }
+
+        return redirect(route('coffee-shop.products.index', ['coffeeShop' => $coffeeShop]))->with('messages',
+            ['warning' => 'You need a menu with at least 1 product before publishing!']);
+    }
 }

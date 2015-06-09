@@ -160,10 +160,142 @@ createLink = (input, cls, data, cb) ->
   input.parentNode.classList.remove 'has-error'
 
 if document.getElementById('creating-offers')?
-  changeProductSel = (e) ->
-    for o in this.options
-      this.removeChild o if o.value == ''
+  productNb = 1
 
-  pSel = document.getElementsByName('select')
-  for sel in pSel
-    sel.onchange = changeProductSel
+  addOrderDetail = (e) ->
+    e.preventDefault()
+
+    select = createProductSelect()
+    radios = createRadios()
+    sizes = document.createElement 'div'
+    sizes.classList.add 'sizes'
+    sizes.id = 'sizes-' + productNb
+
+    details = document.getElementById('offer-details')
+    details.appendChild document.createElement 'hr'
+    details.appendChild select
+    details.appendChild radios
+    details.appendChild sizes
+    productNb += 1
+
+  createProductSelect = () ->
+    div = document.createElement 'div'
+    div.classList.add 'form-group'
+
+    label = document.createElement 'label'
+    label.for = 'referenced_product-' + productNb
+    label.classList.add 'col-sm-2'
+    label.classList.add 'control-label'
+    label.innerHTML = 'Referenced product (opt):'
+
+    selectContainer = document.createElement 'div'
+    selectContainer.classList.add 'col-sm-10'
+    selectContainer.classList.add 'col-md-6'
+
+    select = document.createElement 'select'
+    select.id = label.for
+    select.name = 'referenced_product[' + productNb + ']'
+    select.classList.add 'form-control'
+    select.onchange = selectReferencedProductChanged
+
+    for p in products
+      opt = document.createElement 'option'
+      opt.value = p.id
+      opt.innerHTML = if p.pivot.name != '' then p.pivot.name else p.name
+      select.appendChild opt
+
+    p = document.createElement 'p'
+    p.classList.add 'help-block'
+    p.innerHTML = 'If you do not set a referenced product here, the base product will be reduced.'
+
+    selectContainer.appendChild select
+    selectContainer.appendChild p
+    div.appendChild label
+    div.appendChild selectContainer
+
+    return div
+
+  createRadios = () ->
+    div = document.createElement 'div'
+    div.classList.add 'form-group'
+
+    div.appendChild createRadio('free', 'The referenced product will be free.')
+    div.appendChild createRadio('flat',
+      'The referenced product will be reduced by a fixed amount. You can specify the amount below, for each size (if it is a drink).')
+    div.appendChild createRadio('percent',
+      'The referenced product will be reduced by a percentage. You can specify the amount below, for each size (if it is a drink).')
+
+    return div
+
+  createRadio = (value, text) ->
+    div = document.createElement 'div'
+    div.classList.add 'radio'
+    div.classList.add 'col-sm-10'
+    div.classList.add 'col-md-6'
+    div.classList.add 'col-sm-offset-2'
+    div.classList.add 'col-md-offset-2'
+
+    label = document.createElement 'label'
+
+    input = document.createElement 'input'
+    input.type = 'radio'
+    input.name = 'type[' + productNb + ']'
+    input.value = value
+
+    label.appendChild input
+    label.appendChild document.createTextNode text
+
+    div.appendChild label
+
+    return div
+
+  selectReferencedProductChanged = () ->
+    sizesContainer = document.getElementById('sizes-' + this.id.substr(-1))
+    sizesContainer.innerHTML = ''
+
+    sizes = createSizesFor(this.options[this.selectedIndex].value)
+    console.log(sizes)
+    sizesContainer.appendChild size for size in sizes
+
+  createSizesFor = (productId) ->
+    for product in products
+      if product.id == productId
+        console.log(product.id)
+        console.log(product.id)
+        sizes = []
+        for size in ['xs', 'sm', 'md', 'lg']
+          sizes.push createSizeInput product, size if product.pivot[size + '_activated'] and product.pivot[size] > 0
+        return sizes
+
+  createSizeInput = (product, size) ->
+    text = if product.type == 'food' then 'Reduction:' else coffeeShop['display_' + size]
+
+    div = document.createElement 'div'
+    div.classList.add 'form-group'
+
+    label = document.createElement 'label'
+    label.for = "size-#{size}-#{productNb}"
+    label.classList.add 'col-sm-2'
+    label.classList.add 'control-label'
+    label.textContent = text
+
+    inputContainer = document.createElement 'div'
+    inputContainer.classList.add 'col-sm-10'
+    inputContainer.classList.add 'col-md-6'
+
+    input = document.createElement 'input'
+    input.id = label.for
+    input.name = "size-#{size}[#{productNb}"
+    input.type = 'number'
+    input.placeholder = '10'
+    input.classList.add 'form-control'
+
+    inputContainer.appendChild input
+    div.appendChild label
+    div.appendChild inputContainer
+
+    return div
+
+  addLink = document.getElementById 'add-offer-detail'
+  addLink.onclick = addOrderDetail
+

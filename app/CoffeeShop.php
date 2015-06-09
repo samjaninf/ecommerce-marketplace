@@ -253,7 +253,7 @@ class CoffeeShop extends Model
     {
         $sizes = $this->products()->find($product->id);
 
-        if ($sizes === null || $sizes->pivot->activated == false && $size == null) {
+        if ($sizes->pivot->activated == false) {
             return false;
         }
 
