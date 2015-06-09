@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <form action="{{ route('offers.store') }}" class="form-horizontal">
+                <form action="{{ route('offers.store') }}" method="post" class="form-horizontal">
                     <div class="form-group @if($errors->any()) {{$errors->has('product') ? 'has-error' : 'has-success'}} @endif">
                         <label for="product" class="col-sm-2 control-label">Product:</label>
 
@@ -89,8 +89,21 @@
                     <hr/>
 
                     <div class="form-group">
-                        <a href="#" id="add-offer-detail" class="col-sm-10 col-sm-offset-2">Add offer detail</a>
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <a href="#" id="add-offer-detail">Add offer detail</a>
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-2">
+                            <input type="submit" class="btn btn-success" value="Add this offer">
+                        </div>
+                        <div class="col-sm-4">
+                            <p class="well well-sm">The offer will be available immediately.</p>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                 </form>
             </div>
         </div>
