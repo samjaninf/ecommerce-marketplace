@@ -158,3 +158,12 @@ createLink = (input, cls, data, cb) ->
 
   input.parentNode.replaceChild link, input
   input.parentNode.classList.remove 'has-error'
+
+if document.getElementById('creating-offers')?
+  changeProductSel = (e) ->
+    for o in this.options
+      this.removeChild o if o.value == ''
+
+  pSel = document.getElementsByName('select')
+  for sel in pSel
+    sel.onchange = changeProductSel

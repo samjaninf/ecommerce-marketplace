@@ -85,10 +85,7 @@
 </div>
 @stop
 
-@section('scripts')
-    <script type="text/javascript">
-        var products = {!! json_encode($products) !!};
-        var coffeeShop = {!! $coffeeShop->toJson() !!};
-    </script>
-    <script type="text/javascript" src="{{ elixir('js/order.js') }}"></script>
-@stop
+<script type="text/javascript">
+    var products = {!! json_encode($products) !!};
+    var coffeeShop = {!! $coffeeShop->toJson() !!};
+</script>

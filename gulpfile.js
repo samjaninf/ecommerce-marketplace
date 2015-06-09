@@ -14,20 +14,13 @@ require('laravel-elixir-imagemin');
  */
 
 elixir(function (mix) {
-    mix.less('app.less');
-    mix.coffee();
-    mix.imagemin();
-    mix.scripts(['bootstrap-switch.js'], 'public/js/vendor.js');
-
-    mix.version([
-        'css/app.css',
-        'js/app.js',
-        'js/user.js',
-        'js/order.js',
-        'js/modal.js',
-        'js/gmaps.js',
-        'js/admin.js',
-        'js/shop_owner.js',
-        'js/vendor.js'
-    ]);
+    mix.less('app.less')
+        .coffee()
+        .imagemin()
+        .scripts(['bootstrap-switch.js'], 'public/js/vendor.js')
+        .version([
+            'css/app.css',
+            'js/app.js',
+            'js/vendor.js'
+        ]);
 });

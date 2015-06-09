@@ -29,8 +29,8 @@ class MenuController extends Controller
         ProductRepository $productRepository, CoffeeShopRepository $coffeeShopRepository,
         ProductTypeRepository $productTypeRepository
     ) {
-        $this->productRepository    = $productRepository;
-        $this->coffeeShopRepository = $coffeeShopRepository;
+        $this->productRepository     = $productRepository;
+        $this->coffeeShopRepository  = $coffeeShopRepository;
         $this->productTypeRepository = $productTypeRepository;
     }
 
@@ -43,9 +43,11 @@ class MenuController extends Controller
         $food       = $this->productRepository->food();
         $coffeeShop = current_user()->coffee_shop;
         $drinkTypes = $this->productTypeRepository->drinks();
-        $foodTypes = $this->productTypeRepository->food();
+        $foodTypes  = $this->productTypeRepository->food();
+        $offers     = $coffeeShop->offers()->with('details');
 
-        return view('products.index')->with(compact('drinks', 'food', 'coffeeShop', 'drinkTypes', 'foodTypes'));
+        return view('products.index')->with(compact('drinks', 'food', 'coffeeShop', 'drinkTypes', 'foodTypes',
+            'offers'));
     }
 
     /**

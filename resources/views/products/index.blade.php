@@ -33,6 +33,9 @@
                 <li role="presentation">
                     <a href="#food" aria-controls="food" role="tab" data-toggle="tab">Food</a>
                 </li>
+                <li role="presentation">
+                    <a href="#offers" aria-controls="offers" role="tab" data-toggle="tab">Offers</a>
+                </li>
             </ul>
         </div>
         <div class="tab-content">
@@ -41,6 +44,9 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="food">
                 @include('products._products_table', ['products' => $food, 'types' => $foodTypes, 'sizes' => ['sm']])
+            </div>
+            <div role="tabpanel" class="tab-pane" id="offers">
+                @include('offers._offers_table')
             </div>
         </div>
     </div>
@@ -53,6 +59,4 @@
             $(this).bootstrapSwitch();
         });
     </script>
-
-    <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
 @endsection

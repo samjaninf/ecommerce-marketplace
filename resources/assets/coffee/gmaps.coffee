@@ -90,4 +90,4 @@ changeFormFields = (place) ->
   document.getElementById('longitude-field').setAttribute 'value', place.geometry.location.lng()
   document.getElementById('place-id-field').setAttribute 'value', place.place_id
 
-google.maps.event.addDomListener window, 'load', initialize
+google.maps.event.addDomListener window, 'load', initialize if google?

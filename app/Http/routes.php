@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
             ['as' => 'coffee-shop.products.reprice', 'uses' => 'MenuController@reprice']);
         Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
+
+        Route::resource('offers', 'OffersController');
     });
 
     Route::post('coffee-shop/{coffee_shop}/review',

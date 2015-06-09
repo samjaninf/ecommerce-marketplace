@@ -31,7 +31,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">{{ current_user()->name }} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
+                        <ul class="dropdown-menu" role="menu" style="position: relative">
                             @if(current_user()->role === 'admin')
                                 <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
                             @endif

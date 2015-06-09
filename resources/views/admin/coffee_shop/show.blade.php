@@ -96,7 +96,3 @@
 @section('vendor_scripts')
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 @endsection
-
-@section('scripts')
-    <script type="text/javascript" src="{{ elixir('js/gmaps.js')}}"></script>
-@endsection

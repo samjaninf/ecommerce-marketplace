@@ -223,12 +223,3 @@
 @section('vendor_scripts')
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 @endsection
-
-@section('scripts')
-    @if(! Auth::guest() && current_user()->owns($coffeeShop))
-        <script type="text/javascript" src="{{ elixir('js/shop_owner.js') }}"></script>
-    @endif
-
-    <script type="text/javascript" src="{{ elixir('js/user.js') }}"></script>
-    <script type="text/javascript" src="{{ elixir('js/gmaps.js') }}"></script>
-@endsection

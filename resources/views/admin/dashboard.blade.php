@@ -95,7 +95,3 @@
         </div>
     </div>
 @endsection
-
-@section('scripts')
-    <script type="text/javascript" src="{{ elixir('js/admin.js') }}"></script>
-@endsection

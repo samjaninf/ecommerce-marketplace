@@ -11,7 +11,7 @@ if document.getElementById('order')
       price = createPriceInfo this, opt
 
     for o in select.options
-      select.removeChild o if o.value == ''
+      return select.removeChild o if o.value == ''
 
 
   removeSecondPartProduct = (select) ->

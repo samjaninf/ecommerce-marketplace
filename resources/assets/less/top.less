@@ -223,6 +223,14 @@
     padding: 0;
     text-align: center;
     border-bottom: 1px #bdbdbd solid;
+    width: 100%;
+
+    @media (min-width: @screen-md-min) {
+      width: 50%;
+      margin: auto;
+    }
+
+
     li {
       display: inline;
       a {
@@ -273,9 +281,13 @@
   }
 
   h1 {
-    font-size: 55pt !important;
+    font-size: 45pt !important;
     margin-bottom: 0;
     margin-top: 0;
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      font-size: 35pt !important;
+    }
   }
 
   h3 {

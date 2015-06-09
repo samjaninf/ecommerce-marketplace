@@ -112,6 +112,14 @@ class CoffeeShop extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function offers()
+    {
+        return $this->hasMany('Koolbeans\Offer');
+    }
+
+    /**
      * @return int
      */
     public function getRating()
