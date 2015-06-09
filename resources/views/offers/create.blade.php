@@ -83,37 +83,6 @@
                         </div>
 
                         <div class="sizes" id="sizes-0">
-                            {{--@if($products[0]->type == 'food')--}}
-                                {{--<div class="form-group">--}}
-                                    {{--<label for="size-sm-0" class="col-sm-2 control-label">Reduction: </label>--}}
-
-                                    {{--<div class="col-sm-10 col-md-6">--}}
-                                        {{--<input id="size-sm-0"--}}
-                                               {{--name="size-sm[]"--}}
-                                               {{--type="number"--}}
-                                               {{--placeholder="10"--}}
-                                               {{--class="form-control"--}}
-                                               {{--value="{{old('size-sm')}}">--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--@else--}}
-                                {{--@foreach(['xs', 'sm', 'md', 'lg'] as $size)--}}
-                                    {{--@if ($coffeeShop->hasActivated($products[0], $size))--}}
-                                        {{--<div class="form-group">--}}
-                                            {{--<label for="size-{{$size}}-0" class="col-sm-2 control-label">{{ $coffeeShop->getSizeDisplayName($size) }}: </label>--}}
-
-                                            {{--<div class="col-sm-10 col-md-6">--}}
-                                                {{--<input id="size-{{$size}}-0"--}}
-                                                       {{--name="size-{{$size}}[]"--}}
-                                                       {{--type="number"--}}
-                                                       {{--placeholder="10"--}}
-                                                       {{--class="form-control"--}}
-                                                       {{--value="{{old('size-'.$size)}}">--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--@endif--}}
-                                {{--@endforeach--}}
-                            {{--@endif--}}
                         </div>
                     </div>
 

@@ -186,7 +186,7 @@ if document.getElementById('creating-offers')?
     label.for = 'referenced_product-' + productNb
     label.classList.add 'col-sm-2'
     label.classList.add 'control-label'
-    label.innerHTML = 'Referenced product (opt):'
+    label.innerHTML = 'Referenced product:'
 
     selectContainer = document.createElement 'div'
     selectContainer.classList.add 'col-sm-10'
@@ -241,6 +241,8 @@ if document.getElementById('creating-offers')?
     input.type = 'radio'
     input.name = 'type[' + productNb + ']'
     input.value = value
+    input.onchange = offerTypeChanged
+    input.checked = true if value == 'free'
 
     label.appendChild input
     label.appendChild document.createTextNode text
@@ -249,19 +251,42 @@ if document.getElementById('creating-offers')?
 
     return div
 
+  offerTypeChanged = () ->
+    sizesContainer = document.getElementById('sizes-' + this.name.substr(-2, 1))
+    sizesContainer.innerHTML = ''
+
+    if this.value isnt 'free'
+      select = document.getElementById('referenced_product-' + this.name.substr(-2, 1))
+      sizes = createSizesFor(select.options[select.selectedIndex].value)
+      sizesContainer.appendChild size for size in sizes
+
+  baseProductChanged = () ->
+    select = document.getElementById('referenced_product-0')
+    if select.options[select.selectedIndex].value is ''
+      sizesContainer = document.getElementById('sizes-0')
+      sizesContainer.innerHTML = ''
+
+      selector = 'input[type=radio][name=type\\[0\\]]:checked'
+      checkedRatio = document.querySelector(selector)
+      if checkedRatio? and checkedRatio.value isnt 'free'
+        sizes = createSizesFor(this.options[this.selectedIndex].value)
+        sizesContainer.appendChild size for size in sizes
+
   selectReferencedProductChanged = () ->
     sizesContainer = document.getElementById('sizes-' + this.id.substr(-1))
     sizesContainer.innerHTML = ''
 
-    sizes = createSizesFor(this.options[this.selectedIndex].value)
-    console.log(sizes)
-    sizesContainer.appendChild size for size in sizes
+    selector = 'input[type=radio][name=type\\[' + this.id.substr(-1) + '\\]]:checked'
+    checkedRatio = document.querySelector(selector)
+    if checkedRatio? and checkedRatio.value isnt 'free'
+      sizes = createSizesFor(this.options[this.selectedIndex].value)
+      sizesContainer.appendChild size for size in sizes
 
   createSizesFor = (productId) ->
+    if productId == ''
+      productId = document.querySelector('select#product').options[document.querySelector('select#product').selectedIndex].value
     for product in products
-      if product.id == productId
-        console.log(product.id)
-        console.log(product.id)
+      if product.id == parseInt(productId)
         sizes = []
         for size in ['xs', 'sm', 'md', 'lg']
           sizes.push createSizeInput product, size if product.pivot[size + '_activated'] and product.pivot[size] > 0
@@ -298,4 +323,9 @@ if document.getElementById('creating-offers')?
 
   addLink = document.getElementById 'add-offer-detail'
   addLink.onclick = addOrderDetail
+  document.getElementById('referenced_product-0').onchange = selectReferencedProductChanged
+  document.getElementById('product').onchange = baseProductChanged
+  firstRowTypes = document.querySelectorAll('input[type=radio][name=type\\[0\\]]')
+  for t in firstRowTypes
+    t.onchange = offerTypeChanged
 

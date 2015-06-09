@@ -34,7 +34,7 @@
     @endforeach
     <tr>
         <td class="success" colspan="5">
-            <a href="{{ route('offers.create', [ 'coffeeShop' => $coffeeShop ]) }}">
+            <a href="{{ route('offers.create') }}">
                 Add an offer
             </a>
         </td>
