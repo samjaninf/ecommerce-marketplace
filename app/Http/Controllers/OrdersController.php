@@ -1,5 +1,6 @@
 <?php namespace Koolbeans\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Koolbeans\Http\Requests;
 use Koolbeans\Order;
@@ -8,6 +9,7 @@ use Koolbeans\Product;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Laravel\Cashier\StripeGateway;
 use Stripe\Charge;
+use Stripe\Error\Card;
 
 class OrdersController extends Controller
 {
@@ -26,12 +28,9 @@ class OrdersController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -41,7 +40,7 @@ class OrdersController extends Controller
      */
     public function nextStatus($orderId)
     {
-        $order = Order::find($orderId);
+        $order         = Order::find($orderId);
         $order->status = $order->getNextStatus();
         $order->save();
 
@@ -68,6 +67,8 @@ class OrdersController extends Controller
 
         if (( $time = $request->get('time') )) {
             $order->time = $time;
+        } else {
+            $order->time = Carbon::now()->addHour(1);
         }
 
         return view('coffee_shop.order.create', [
@@ -92,8 +93,8 @@ class OrdersController extends Controller
         $productIds = $request->input('products');
         $sizes      = $request->input('productSizes');
 
-        $order          = new Order;
-        $order->user_id = current_user()->id;
+        $order                 = new Order;
+        $order->user_id        = current_user()->id;
         $order->coffee_shop_id = $coffeeShopId;
 
         $order->pickup_time = $request->input('time');
@@ -109,13 +110,13 @@ class OrdersController extends Controller
             $currentLine->size       = null;
 
             if ( ! $product) {
-                return redirect()->back();
+                return redirect()->back()->with('messages', ['danger' => 'Error during your order. Please try again.']);
             }
 
             if ($product->type == 'drink') {
                 $size = $sizes[ $sizeIdx++ ];
                 if ($size == null || ! $coffeeShop->hasActivated($product, $size)) {
-                    return redirect()->back();
+                    return redirect()->back()->with('messages', ['danger' => 'Error during your order. Please try again.']);
                 }
                 $currentLine->size  = $size;
                 $currentLine->price = $product->pivot->$size;
@@ -149,8 +150,19 @@ class OrdersController extends Controller
         $order = Order::find($orderId);
 
         if ( ! $user->hasStripeId()) {
-            $gateway  = new StripeGateway($user);
-            $customer = $gateway->createStripeCustomer($request->input('stripeToken'));
+            try {
+                $gateway  = new StripeGateway($user);
+                $customer = $gateway->createStripeCustomer($request->input('stripeToken'));
+            } catch (Card $e) {
+                return view('coffee_shop.order.review', [
+                    'order'      => $order,
+                    'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                ])->with('messages', [
+                    'danger' => 'There was a problem during the authorization. ' .
+                                'It should not happen unless you cannot afford your order. Please try again.',
+                ]);
+            }
+
             $user->setStripeId($customer->id);
             $user->save();
         }
@@ -162,8 +174,24 @@ class OrdersController extends Controller
         $amount   = $order->price;
 
         if ($amount + $previous > 1500) {
-            if ( ! $user->charge($amount + $previous, ['currency' => 'gbp'])) {
-                return redirect()->back();
+            try {
+                if ( ! $user->charge($amount + $previous, ['currency' => 'gbp'])) {
+                    return view('coffee_shop.order.review', [
+                        'order'      => $order,
+                        'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                    ])->with('messages', [
+                        'danger' => 'There was a problem during the authorization. ' .
+                                    'It should not happen unless you cannot afford your order. Please try again.',
+                    ]);
+                }
+            } catch (Card $e) {
+                return view('coffee_shop.order.review', [
+                    'order'      => $order,
+                    'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                ])->with('messages', [
+                    'danger' => 'There was a problem during the authorization. ' .
+                                'It should not happen unless you cannot afford your order. Please try again.',
+                ]);
             }
 
             $user->transactions()->create(['amount' => $amount, 'charged' => true]);
@@ -175,18 +203,50 @@ class OrdersController extends Controller
                     $charge = Charge::retrieve($stripe_charge_id);
                     $charge->refunds->create();
                 }
+
                 $t->charged = true;
                 $t->save();
             }
+
+            $charged = true;
         } else {
-            if (! $previous && ! $charge = $user->charge(1500, ['currency' => 'gbp', 'capture' => false])) {
-                return redirect()->back();
+            try {
+                if ( ! $previous && ! $charge = $user->charge(1500, ['currency' => 'gbp', 'capture' => false])) {
+                    return view('coffee_shop.order.review', [
+                        'order'      => $order,
+                        'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                    ])->with('messages', [
+                        'danger' => 'There was a problem during the authorization. ' .
+                                    'It should not happen unless you cannot afford your order. Please try again.',
+                    ]);
+                }
+            } catch (Card $e) {
+                return view('coffee_shop.order.review', [
+                    'order'      => $order,
+                    'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                ])->with('messages', [
+                    'danger' => 'There was a problem during the authorization. ' .
+                                'It should not happen unless you cannot afford your order. Please try again.',
+                ]);
             }
 
-            $user->transactions()->create(['amount' => $amount, 'charged' => false, 'stripe_charge_id' => (isset($charge) ? $charge : null)]);
+            $user->transactions()->create([
+                'amount'           => $amount,
+                'charged'          => false,
+                'stripe_charge_id' => ( isset( $charge ) ? $charge : null ),
+            ]);
         }
 
-        return view('coffee_shop.order.success');
+        $chargedMessage = 'You have been correctly charged for your order. Here is your receipt.';
+        $warningMessage = 'An authorization of £ 15 has been made to your bank. ' .
+                          'However, we will not charge you for that amount. ' .
+                          'You wont be charged until you spend more than £ 15 in our shops. ' .
+                          'In 6 days, you will automatically be charged for the correct amount. ';
+        $successMessage = 'Your order has been added to your tip!';
+        $warningMessage = ( $previous ) ? ( $warningMessage ) : $successMessage;
+
+        return view('coffee_shop.order.success')->with('messages',
+            ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage]);
     }
 
     /**
