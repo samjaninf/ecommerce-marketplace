@@ -284,7 +284,7 @@ class CoffeeShop extends Model
      * @param $product
      * @param $size
      */
-    public function toggleActivated($product, $size)
+    public function toggleActivated($product, $size = null)
     {
         $p = $this->findProduct($product->id);
 
@@ -304,6 +304,7 @@ class CoffeeShop extends Model
      */
     public function getNameFor($product)
     {
+        if (!is_object($product)) dd($product);
         $p = $this->products()->find($product->id);
 
         if ($p && $p->pivot->name) {

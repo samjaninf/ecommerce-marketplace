@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
 
         Route::resource('offers', 'OffersController');
+        Route::get('offers/{offer}/toggleActivation',
+            ['as' => 'offers.toggle-activation', 'uses' => 'OffersController@toggleActivation']);
     });
 
     Route::post('coffee-shop/{coffee_shop}/review',

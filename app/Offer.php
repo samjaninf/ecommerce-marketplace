@@ -6,6 +6,11 @@ class Offer extends Model
 {
 
     /**
+     * @var array
+     */
+    protected $fillable = ['coffee_shop_id', 'product_id', 'finish_at'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function coffee_shop()

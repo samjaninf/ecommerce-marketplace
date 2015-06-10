@@ -44,7 +44,7 @@ class MenuController extends Controller
         $coffeeShop = current_user()->coffee_shop;
         $drinkTypes = $this->productTypeRepository->drinks();
         $foodTypes  = $this->productTypeRepository->food();
-        $offers     = $coffeeShop->offers()->with('details');
+        $offers     = $coffeeShop->offers()->with('details')->get();
 
         return view('products.index')->with(compact('drinks', 'food', 'coffeeShop', 'drinkTypes', 'foodTypes',
             'offers'));

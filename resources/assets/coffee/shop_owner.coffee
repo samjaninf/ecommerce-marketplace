@@ -257,7 +257,7 @@ if document.getElementById('creating-offers')?
 
     if this.value isnt 'free'
       select = document.getElementById('referenced_product-' + this.name.substr(-2, 1))
-      sizes = createSizesFor(select.options[select.selectedIndex].value)
+      sizes = createSizesFor(select.options[select.selectedIndex].value, this.name.substr(-2, 1))
       sizesContainer.appendChild size for size in sizes
 
   baseProductChanged = () ->
@@ -269,7 +269,7 @@ if document.getElementById('creating-offers')?
       selector = 'input[type=radio][name=type\\[0\\]]:checked'
       checkedRatio = document.querySelector(selector)
       if checkedRatio? and checkedRatio.value isnt 'free'
-        sizes = createSizesFor(this.options[this.selectedIndex].value)
+        sizes = createSizesFor(this.options[this.selectedIndex].value, 0)
         sizesContainer.appendChild size for size in sizes
 
   selectReferencedProductChanged = () ->
@@ -279,27 +279,27 @@ if document.getElementById('creating-offers')?
     selector = 'input[type=radio][name=type\\[' + this.id.substr(-1) + '\\]]:checked'
     checkedRatio = document.querySelector(selector)
     if checkedRatio? and checkedRatio.value isnt 'free'
-      sizes = createSizesFor(this.options[this.selectedIndex].value)
+      sizes = createSizesFor(this.options[this.selectedIndex].value, this.id.substr(-1))
       sizesContainer.appendChild size for size in sizes
 
-  createSizesFor = (productId) ->
+  createSizesFor = (productId, nbProd) ->
     if productId == ''
       productId = document.querySelector('select#product').options[document.querySelector('select#product').selectedIndex].value
     for product in products
       if product.id == parseInt(productId)
         sizes = []
         for size in ['xs', 'sm', 'md', 'lg']
-          sizes.push createSizeInput product, size if product.pivot[size + '_activated'] and product.pivot[size] > 0
+          sizes.push createSizeInput product, size, nbProd if product.pivot[size + '_activated'] and product.pivot[size] > 0
         return sizes
 
-  createSizeInput = (product, size) ->
+  createSizeInput = (product, size, nbProd) ->
     text = if product.type == 'food' then 'Reduction:' else coffeeShop['display_' + size]
 
     div = document.createElement 'div'
     div.classList.add 'form-group'
 
     label = document.createElement 'label'
-    label.for = "size-#{size}-#{productNb}"
+    label.for = "size-#{size}-#{nbProd}"
     label.classList.add 'col-sm-2'
     label.classList.add 'control-label'
     label.textContent = text
@@ -310,8 +310,9 @@ if document.getElementById('creating-offers')?
 
     input = document.createElement 'input'
     input.id = label.for
-    input.name = "size-#{size}[#{productNb}"
+    input.name = "size-#{size}[#{nbProd}]"
     input.type = 'number'
+    input.step = '0.01'
     input.placeholder = '10'
     input.classList.add 'form-control'
 

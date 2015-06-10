@@ -1,7 +1,7 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Referenced product</th>
+        <th>Product</th>
         <th>Linked products</th>
         <th>Offer type</th>
         <th>Reductions</th>
@@ -11,24 +11,46 @@
     <tbody>
     @foreach($offers as $offer)
         <tr>
-            <td>{{ $coffeeShop->getNameFor($product) }}</td>
+            <td>{{ $coffeeShop->getNameFor($offer->product) }}</td>
             <td>
-                @foreach($offers->details as $detail)
-                    {{ $coffeeShop->getNameFor($detail->product) }}
+                @foreach($offer->details as $detail)
+                    {{ $coffeeShop->getNameFor($detail->product) }}<br>
                 @endforeach
             </td>
             <td>
-                @foreach($offers->details as $detail)
-                    {{ $detail->getTypeDisplay() }}
+                @foreach($offer->details as $detail)
+                    {{ $detail->getTypeDisplay() }}<br>
                 @endforeach
             </td>
             <td>
-                @foreach($offers->details as $detail)
-                    {{ $coffeeShop->getSizeDisplayName('xs') }}: {{ $detail->amount_xs }} -
-                    {{ $coffeeShop->getSizeDisplayName('sm') }}: {{ $detail->amount_sm }} -
-                    {{ $coffeeShop->getSizeDisplayName('md') }}: {{ $detail->amount_md }} -
-                    {{ $coffeeShop->getSizeDisplayName('lg') }}: {{ $detail->amount_lg }}
+                @foreach($offer->details as $detail)
+                    @if ($detail->type == 'free')
+                        100%<br>
+                    @else
+                        @if($detail->amount_xs) {{ $coffeeShop->getSizeDisplayName('xs') }}
+                        : {{ $detail->amount('xs') }} @endif
+                        @if($detail->amount_sm) {{ $coffeeShop->getSizeDisplayName('sm') }}
+                        : {{ $detail->amount('sm') }} @endif
+                        @if($detail->amount_md) {{ $coffeeShop->getSizeDisplayName('md') }}
+                        : {{ $detail->amount('md') }} @endif
+                        @if($detail->amount_lg) {{ $coffeeShop->getSizeDisplayName('lg') }}
+                        : {{ $detail->amount('lg') }} @endif
+                    @endif
+                    <br>
                 @endforeach
+            </td>
+            <td>
+                @if($offer->activated)
+                    <a href="{{ route('offers.toggle-activation', ['offer' => $offer]) }}"
+                       class="btn btn-warning">Deactivate</a>
+                @else
+                    <a href="{{ route('offers.toggle-activation', ['offer' => $offer]) }}"
+                       class="btn btn-success">Activate</a>
+                @endif
+                <a href="{{ route('offers.destroy', ['offer' => $offer]) }}"
+                   class="btn btn-danger"
+                   data-confirm="Are you sure you want to delete this offer?"
+                   data-method="delete">Delete</a>
             </td>
         </tr>
     @endforeach

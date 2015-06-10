@@ -6,11 +6,24 @@ class OfferDetail extends Model
 {
 
     /**
+     * @var array
+     */
+    protected $fillable = ['type', 'product_id'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function order()
+    public function offer()
     {
         return $this->belongsTo('Koolbeans\Offer');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo('Koolbeans\Product');
     }
 
     /**
@@ -29,4 +42,12 @@ class OfferDetail extends Model
         return 'Percentage reduction';
     }
 
+    public function amount($size)
+    {
+        if ($this->type === 'percentage') {
+            return $this->{'amount_' . $size} . '%';
+        }
+
+        return '£ ' . $this->{'amount_' . $size} / 100.;
+    }
 }
