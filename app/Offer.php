@@ -34,4 +34,40 @@ class Offer extends Model
         return $this->hasMany('Koolbeans\OfferDetail');
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        $detail = $this->details()->first();
+        if ($detail->type == 'free') {
+            return 'FREE';
+        }
+
+        if ($detail->amount_xs) {
+            $amount = $detail->amount_xs;
+        } elseif ($detail->amount_sm) {
+            $amount = $detail->amount_sm;
+        } elseif ($detail->amount_sm) {
+            $amount = $detail->amount_md;
+        } else {
+            $amount = $detail->amount_lg;
+        }
+
+        if ($this->type == 'flat') {
+            return number_format($amount / 100, 2) . ' £';
+        }
+
+        return $amount . '%';
+    }
+
+    /**
+     * @return Product
+     */
+    public function productOnDeal()
+    {
+        $detail = $this->details()->first();
+        return $detail->product ? $detail->product : $this->product;
+    }
+
 }

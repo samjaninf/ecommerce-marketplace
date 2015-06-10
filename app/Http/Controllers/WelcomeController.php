@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Koolbeans\Offer;
 use Koolbeans\Repositories\CoffeeShopRepository;
 
 class WelcomeController extends Controller
@@ -42,7 +43,12 @@ class WelcomeController extends Controller
             }
         }
 
-        return view('welcome')->with('featuredShops', $featured);
+        $offers = Offer::whereActivated(true)->get();
+        while ($offers->count() < 4) {
+            $offers->add(new Offer);
+        }
+
+        return view('welcome')->with('featuredShops', $featured)->with('offers', $offers->random(4));
     }
 
     /**

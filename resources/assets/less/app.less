@@ -272,3 +272,65 @@ hr {
     padding-left: 10px;
   }
 }
+
+#deals-and-news {
+  > div > div {
+    height: 480px;
+
+    @media (max-width: @screen-md-max) {
+      height: 680px;
+    }
+  }
+}
+
+.offer {
+  margin: 10px auto;
+  padding: 10px 20px;
+  color: white;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+  width: 300px;
+  height: 170px;
+
+  .border {
+    height: 80%;
+    width: 80%;
+    margin: 15px auto;
+    -webkit-box-shadow: 0 0 1px 3px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0 0 1px 3px rgba(255, 255, 255, 1);
+    box-shadow: 0 0 1px 3px rgba(255, 255, 255, 1);
+    font-weight: 100;
+
+    h4 {
+      margin: 0 !important;
+      font-family: "Courier New", monospace;
+      font-size: 25.16pt;
+    }
+
+    b {
+      font-size: 15.77pt;
+    }
+
+    i {
+      font-size: 11.83pt;
+    }
+  }
+
+  &.bg-1 {
+    background-image: url(/img/shared/offer-1.png);
+  }
+
+  &.bg-2 {
+    background-image: url(/img/shared/offer-2.png);
+  }
+
+  &.bg-3 {
+    background-image: url(/img/shared/offer-3.png);
+  }
+
+  &.bg-4 {
+    background-image: url(/img/shared/offer-4.png);
+  }
+}
