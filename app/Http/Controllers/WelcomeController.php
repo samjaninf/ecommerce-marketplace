@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Koolbeans\CoffeeShop;
 use Koolbeans\Offer;
 use Koolbeans\Repositories\CoffeeShopRepository;
 
@@ -54,16 +55,31 @@ class WelcomeController extends Controller
     /**
      * @param \Koolbeans\Repositories\CoffeeShopRepository $coffeeShops
      * @param null                                         $query
-     * @param int                                          $page
      *
      * @return \Illuminate\View\View
      */
-    public function search(CoffeeShopRepository $coffeeShops, $query = null, $page = 1)
+    public function search(CoffeeShopRepository $coffeeShops, $query = null)
     {
         if ($this->request->method() === 'POST') {
             $query = $this->request->get('query');
         }
+        $baseQuery = $query;
 
-        return view('search.results');
+        $pos = mb_strpos($query, ',');
+        $pos = $pos == false ? mb_strpos($query, ' ') : $pos;
+        $pos = $pos == false ? 0 : ( $pos + 1 );
+
+        $subQuery = trim(mb_substr($query, $pos));
+        $places   = app('places')->nearby($subQuery . ', United Kingdom');
+        $city     = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
+        $query    = '%' . str_replace(' ', '%', $query) . '%';
+
+        $orderByRaw = 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
+                      abs($city['geometry']['location']['lng']) . ') asc';
+
+        $shops    = CoffeeShop::where('location', 'like', $query)->orderByRaw($orderByRaw)->paginate(8);
+        $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
+
+        return view('search.results', compact('shops', 'position'))->with('query', $baseQuery);
     }
 }

@@ -2,7 +2,6 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use Koolbeans\CoffeeShop;
 use Koolbeans\User;
 
 class IsCoffeeShopOwner
@@ -37,7 +36,7 @@ class IsCoffeeShopOwner
     {
         $id = $request->route()->getParameter('coffee_shop');
 
-        if ( ! $this->getUser()->isOwner() || ($id !== null && $this->getUser()->coffee_shop->id != (int) $id)) {
+        if ( ! $this->getUser()->isOwner() || ( $id !== null && $this->getUser()->coffee_shop->id != (int) $id )) {
             return redirect('/');
         }
 

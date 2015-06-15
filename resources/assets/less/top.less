@@ -3,6 +3,7 @@
   position: relative;
 
   .navbar {
+    margin-bottom: 0;
     z-index: 2;
 
     .navbar-header {
@@ -31,6 +32,11 @@
 
           @media (min-width: @screen-sm-min) and (max-width: @screen-md-max) {
             padding: 15px 10px;
+          }
+
+          @media (min-width: @screen-lg-min) {
+            padding-bottom: 5px;
+            padding-top: 5px;
           }
         }
 

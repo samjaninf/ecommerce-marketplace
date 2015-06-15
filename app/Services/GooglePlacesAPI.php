@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Support\Facades\Hash;
 
 class GooglePlacesAPI
 {
@@ -43,17 +44,39 @@ class GooglePlacesAPI
     }
 
     /**
-     * @param $placeId
+     * @param string $placeId
      *
      * @return bool
      */
     public function has($placeId)
     {
-        $response = $this->cache->remember('place.' . $placeId, Carbon::now()->addMonth(), function () use ($placeId) {
+        $place = $this->getPlace($placeId);
+
+        return $place['status'] === 'OK';
+    }
+
+    /**
+     * @param string $placeId
+     *
+     * @return mixed
+     */
+    public function getPlace($placeId)
+    {
+        return $this->cache->remember('place.' . $placeId, 3600 * 24 * 31, function () use ($placeId) {
             return $this->httpGet('details/json', ['placeid' => $placeId]);
         });
+    }
 
-        return $response['status'] === 'OK';
+    /**
+     * @param string $input
+     *
+     * @return mixed
+     */
+    public function nearby($input)
+    {
+        return $this->cache->remember('nearby.' . Hash::make($input), 3600 * 24 * 7, function () use ($input) {
+            return $this->httpGet('autocomplete/json', ['input' => $input, 'types' => 'geocode']);
+        });
     }
 
     /**
@@ -66,6 +89,8 @@ class GooglePlacesAPI
     {
         $params['key'] = $this->key;
 
-        return $this->client->get("$this->url/$path?" . http_build_query($params))->json();
+        $url = "$this->url/$path?" . http_build_query($params);
+
+        return $this->client->get($url)->json();
     }
 }

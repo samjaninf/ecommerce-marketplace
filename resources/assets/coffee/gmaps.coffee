@@ -1,11 +1,13 @@
 initialize = ->
-  container = document.getElementById 'maps-container'
+  containers = document.querySelectorAll '#maps-container,.maps-container'
   locationField = document.getElementById 'field-maps-location'
 
-  initializeMaps container if container?
+  for cont in containers
+    initializeMaps cont
   initializeAutoComplete locationField, koolbeans.map if locationField?
 
 initializeMaps = (container) ->
+  return if container.offsetParent == null
   options =
     zoom: 15
     styles: [
