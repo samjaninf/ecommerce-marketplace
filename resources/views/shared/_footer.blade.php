@@ -41,4 +41,15 @@
             </li>
         @endif
     </ul>
+
+    <div class="social">
+        <a href="#"><i class="fa fa-facebook circle"></i></a>
+        <a href="#"><i class="fa fa-instagram circle"></i></a>
+        <a href="#"><i class="fa fa-twitter circle"></i></a>
+    </div>
+
+    <div class="copyright">
+        &copy; 2015 Koolbeans. All rights reserved.<br>
+        Website by <a href="#">The Workroom</a>.
+    </div>
 </div>
