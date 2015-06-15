@@ -147,6 +147,7 @@ class OrdersController extends Controller
 
         if (\Session::has('offer-used')) {
             $offer = Offer::find(\Session::get('offer-used'));
+            $order->offer_id = $offer->id;
             $this->applyOfferOnOrder($offer, $lines);
         }
 
