@@ -59,6 +59,32 @@
                 </div>
             </div>
         </div>
+
+        <div class="container-fluid are-you-a-coffee-shop">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="text-center">Are you a coffee shop?</h2>
+                    <h4 class="text-center">People are changing the way they buy, so join them...</h4>
+                </div>
+                <p class="col-xs-12 col-sm-6 col-md-6 col-lg-offset-3 col-lg-3">
+                    KoolBeans puts your Coffee Shop online 24 hours a day, 7 days a week.
+                    By listing your business with KoolBeans,
+                    you’re gaining access to millions of UK coffee drinkers
+                    who browse and purchase online everyday of the week.
+                </p>
+
+                <p class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                    We’ll get you listed in no time with our easy to use system – we’ll upload your menu,
+                    handle your online orders and even sort out the payment,
+                    so all you need to do is to serve the coffee.
+                </p>
+
+                <div class="col-xs-12 text-center">
+                    <a href="{{ url('/auth/register') }}" class="btn btn-primary">Sign up now</a><br/>
+                    <a href="#" class="btn btn-default">More info</a>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

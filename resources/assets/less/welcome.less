@@ -125,3 +125,47 @@
     background-image: url(/img/welcome/news-welcome.png);
   }
 }
+
+.are-you-a-coffee-shop {
+  background: url(/img/welcome/are-you-a-coffee-shop.png) no-repeat center;
+  background-size: cover;
+  border: 15px solid white;
+  padding: 2em 9em;
+
+  @media (min-width: @screen-lg-min) {
+    padding: 8em 0;
+  }
+
+  * {
+    color: white;
+  }
+
+  .btn {
+    padding: .5em 1.5em;
+
+    &:first-child {
+      padding: 1em 2.5em;
+      margin-bottom: 1em;
+    }
+  }
+
+  .btn-default {
+    color: #3e3e3e;
+  }
+
+  h2 {
+    font-size: 55pt;
+  }
+
+  h4 {
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 22pt;
+    font-style: italic;
+    margin: .5em 0;
+  }
+
+  p {
+    margin-top: 2em;
+  }
+}

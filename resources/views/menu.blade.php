@@ -18,9 +18,7 @@
                 <li><a href="{{ route('home') }}">Home</a></li>
                 @if( ! Auth::guest() && current_user()->role === 'admin')
                     <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
-                @elseif( ! Auth::guest() && current_user()->hasValidCoffeeShop())
-                    <li><a href="{{ route('my-shop') }}">Your shop</a></li>
-                @else
+                @elseif( ! Auth::guest() && ! current_user()->hasValidCoffeeShop())
                     <li><a href="{{ route('coffee-shop.apply') }}">List Your Shop</a></li>
                 @endif
                 <li><a href="{{ url('/about') }}">About</a></li>
