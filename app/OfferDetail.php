@@ -42,6 +42,11 @@ class OfferDetail extends Model
         return 'Percentage reduction';
     }
 
+    /**
+     * @param string $size
+     *
+     * @return string
+     */
     public function amount($size)
     {
         if ($this->type === 'percentage') {

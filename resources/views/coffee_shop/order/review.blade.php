@@ -31,11 +31,15 @@
                     @endforeach
                 </table>
 
+                <p class="offers">
+                    Current offer applying:<br>
+                    {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
+                </p>
+
                 <h4>Pickup time: {{$order->pickup_time}}</h4>
-                @if(!current_user()->hasStripeId())
                     <form accept-charset="UTF-8"
                           action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}"
-                          class="require-validation"
+                          class="require-validation @if(current_user()->hasStripeId()) hide @endif"
                           data-cc-on-file="false"
                           id="payment-form"
                           method="post">
@@ -95,13 +99,14 @@
                         </div>
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                     </form>
-                @else
                     <form method="post"
+                          class="@if(!current_user()->hasStripeId()) hide @endif"
+                          id="existingCardForm"
                           action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                         <button class="btn btn-primary" type="submit">Submit Payment</button>
+                        <a href="#" class="btn btn-default" id="changeCard">Change card</a>
                     </form>
-                @endif
             </div>
         </div>
     </div>
@@ -114,7 +119,16 @@
 @section('scripts')
     <script type="text/javascript">
         Stripe.setPublishableKey('{{ env('STRIPE_PUB') }}');
+
         jQuery(function($) {
+            $('#changeCard').click(function (event) {
+                event.preventDefault();
+
+                $('#payment-form').removeClass('hide');
+                $('#existingCardForm').addClass('hide');
+
+                return false;
+            });
             $('#payment-form').submit(function(event) {
                 var $form = $(this);
 

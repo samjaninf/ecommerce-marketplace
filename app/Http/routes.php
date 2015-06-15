@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
         ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
 
     Route::group(['middleware' => 'owner'], function () {
         Route::get('order/{order}/nextStatus', ['as' => 'next-order-status', 'uses' => 'OrdersController@nextStatus']);

@@ -81,7 +81,7 @@
 
                 <div class="col-xs-12 text-center">
                     <a href="{{ url('/auth/register') }}" class="btn btn-primary">Sign up now</a><br/>
-                    <a href="#" class="btn btn-default">More info</a>
+                    <a href="{{ url('/about') }}" class="btn btn-default">More info</a>
                 </div>
             </div>
         </div>

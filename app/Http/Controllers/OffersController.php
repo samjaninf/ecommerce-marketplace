@@ -36,6 +36,11 @@ class OffersController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function toggleActivation($id)
     {
         $offer = Offer::find($id);

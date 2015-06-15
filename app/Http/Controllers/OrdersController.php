@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Koolbeans\Http\Requests;
+use Koolbeans\Offer;
 use Koolbeans\Order;
 use Koolbeans\OrderLine;
 use Koolbeans\Product;
@@ -45,6 +46,21 @@ class OrdersController extends Controller
         $order->save();
 
         return redirect()->back();
+    }
+
+    /**
+     * @param int $offerId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function applyOffer($offerId)
+    {
+        \Session::put('offer-used', $offerId);
+        $offer      = Offer::find($offerId);
+        $coffeeShop = $offer->coffee_shop;
+
+        return redirect(route('coffee-shop.order.create',
+            ['coffee_shop' => $coffeeShop, 'drink' => $offer->product->id]));
     }
 
     /**
@@ -116,14 +132,22 @@ class OrdersController extends Controller
             if ($product->type == 'drink') {
                 $size = $sizes[ $sizeIdx++ ];
                 if ($size == null || ! $coffeeShop->hasActivated($product, $size)) {
-                    return redirect()->back()->with('messages', ['danger' => 'Error during your order. Please try again.']);
+                    return redirect()
+                        ->back()
+                        ->with('messages', ['danger' => 'Error during your order. Please try again.']);
                 }
+
                 $currentLine->size  = $size;
                 $currentLine->price = $product->pivot->$size;
             } else {
                 $currentLine->size  = 'sm';
                 $currentLine->price = $product->pivot->sm;
             }
+        }
+
+        if (\Session::has('offer-used')) {
+            $offer = Offer::find(\Session::get('offer-used'));
+            $this->applyOfferOnOrder($offer, $lines);
         }
 
         $order->save();
@@ -165,10 +189,9 @@ class OrdersController extends Controller
 
             $user->setStripeId($customer->id);
             $user->save();
+        } elseif ($request->has('stripeToken')) {
+            $user->updateCard($request->input('stripeToken'));
         }
-
-        $order->paid = true;
-        $order->save();
 
         $previous = $user->transactions()->where('charged', '=', false)->sum('amount');
         $amount   = $order->price;
@@ -237,6 +260,9 @@ class OrdersController extends Controller
             ]);
         }
 
+        $order->paid = true;
+        $order->save();
+
         $chargedMessage = 'You have been correctly charged for your order. Here is your receipt.';
         $warningMessage = 'An authorization of £ 15 has been made to your bank. ' .
                           'However, we will not charge you for that amount. ' .
@@ -295,6 +321,37 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param \Koolbeans\Offer       $offer
+     * @param \Koolbeans\OrderLine[] $order
+     */
+    private function applyOfferOnOrder(Offer $offer, array $order)
+    {
+        $valid = false;
+        foreach ($order as $orderLine) {
+            if ($orderLine->product == $offer->product) {
+                $valid = true;
+                break;
+            }
+        }
+
+        if ($valid) {
+            foreach ($offer->details as $detail) {
+                foreach ($order as $orderLine) {
+                    if ($orderLine->product == $detail->product) {
+                        if ($detail->type == 'free') {
+                            $orderLine->price = 0;
+                        } elseif ($detail->type == 'flat') {
+                            $orderLine->price -= $detail->{'amount_' . $orderLine->size};
+                        } else {
+                            $orderLine->price *= $detail->{'amount_' . $orderLine->size} / 100.;
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -20,10 +20,10 @@
                     <label for="time">Pickup time:</label>
                     <input id="time"
                            name="time"
-                           type="text"
+                           type="time"
                            placeholder="12:34"
                            class="form-control"
-                           value="{{old('time', $order->time)}}">
+                           value="{{old('time', $order->time->format('H:i'))}}">
                 </div>
 
                 <div class="form-group @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
@@ -46,7 +46,8 @@
                                         @foreach(['xs', 'sm', 'md', 'lg'] as $size)
                                             @if($coffeeShop->hasActivated($orderProduct, $size))
                                                 <option value="{{ $size }}">
-                                                    {{$coffeeShop->getSizeDisplayName($size)}} (£ {{$orderProduct->pivot->$size / 100}})
+                                                    {{$coffeeShop->getSizeDisplayName($size)}}
+                                                    (£ {{$orderProduct->pivot->$size / 100}})
                                                 </option>
                                             @endif
                                         @endforeach
@@ -72,10 +73,14 @@
                                 <span></span>
                             </span>
                         @endif
-
                     </label>
                     <a href="#" class="row" id="add-product">Add a product</a>
                 </div>
+
+                <p class="offers">
+                    Current offer applying:<br>
+                    {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
+                </p>
 
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                 <button type="submit" class="btn btn-success">Proceed to checkout</button>
