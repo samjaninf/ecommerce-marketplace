@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
             ['as' => 'coffee-shop.gallery.down', 'uses' => 'GalleryImagesController@moveDown']);
         Route::resource('coffee-shop.gallery', 'GalleryImagesController');
         Route::resource('coffee-shop.products', 'MenuController');
+        Route::get('coffee-shop/{coffee_shop}/toggle-spec/{spec}',
+            ['as' => 'coffee-shop.toggle-spec', 'uses' => 'CoffeeShopsController@toggleSpec']);
         Route::get('coffee-shop/{coffee_shop}/products/{product}/toggle/{size?}',
             ['as' => 'coffee-shop.products.toggle', 'uses' => 'MenuController@toggle']);
         Route::post('coffee-shop/{coffee_shop}/products/{product}/rename',

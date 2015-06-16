@@ -143,26 +143,102 @@
                         <hr class="visible-xs-block">
 
                         <div class="col-sm-6 specs">
-                            @if($coffeeShop->spec_independent)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
-                            @endif
-                            @if($coffeeShop->spec_food_available)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
-                            @endif
-                            @if($coffeeShop->spec_dog_friendly)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
-                            @endif
-                            @if($coffeeShop->spec_free_wifi)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
-                            @endif
-                            @if($coffeeShop->spec_geek_friendly)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
-                            @endif
-                            @if($coffeeShop->spec_meeting_friendly)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
-                            @endif
-                            @if($coffeeShop->spec_charging_ports)
-                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
+                                <h4>Active:</h4>
+                                @if($coffeeShop->spec_independent)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if($coffeeShop->spec_food_available)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if($coffeeShop->spec_dog_friendly)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if($coffeeShop->spec_free_wifi)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if($coffeeShop->spec_geek_friendly)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if($coffeeShop->spec_meeting_friendly)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if($coffeeShop->spec_charging_ports)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+
+                                <h4>Inactive:</h4>
+                                @if(! $coffeeShop->spec_independent)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if(! $coffeeShop->spec_food_available)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if(! $coffeeShop->spec_dog_friendly)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if(! $coffeeShop->spec_free_wifi)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if(! $coffeeShop->spec_geek_friendly)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if(! $coffeeShop->spec_meeting_friendly)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                                @if(! $coffeeShop->spec_charging_ports)
+                                    <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => 'independent']) }}">
+                                        <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                    </a>
+                                @endif
+                            @else
+                                @if($coffeeShop->spec_independent)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
+                                @if($coffeeShop->spec_food_available)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
+                                @if($coffeeShop->spec_dog_friendly)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
+                                @if($coffeeShop->spec_free_wifi)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
+                                @if($coffeeShop->spec_geek_friendly)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
+                                @if($coffeeShop->spec_meeting_friendly)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
+                                @if($coffeeShop->spec_charging_ports)
+                                    <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                                @endif
                             @endif
                         </div>
                     </div>

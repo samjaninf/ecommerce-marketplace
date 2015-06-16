@@ -97,8 +97,22 @@ class CoffeeShopsController extends Controller
             return $value;
         }
 
-
         return response('Error', 500);
+    }
+
+    /**
+     * @param int    $coffeeShopId
+     * @param string $spec
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggleSpec($coffeeShopId, $spec)
+    {
+        $coffeeShop                    = $this->coffeeShop->find($coffeeShopId);
+        $coffeeShop->{'spec_' . $spec} = ! $coffeeShop->{'spec_' . $spec};
+        $coffeeShop->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -111,7 +125,7 @@ class CoffeeShopsController extends Controller
             return redirect()->back();
         }
 
-        $products   = $coffeeShop->products;
+        $products = $coffeeShop->products;
         foreach ($products as $product) {
             if ($coffeeShop->hasActivated($product)) {
                 $coffeeShop->status = 'published';
