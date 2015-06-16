@@ -15,6 +15,8 @@ Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
 Route::get('about', 'WelcomeController@about');
+Route::get('contact-us', 'WelcomeController@contactUs');
+Route::post('contact', 'WelcomeController@contact');
 Route::post('about', 'WelcomeController@updateAbout');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -44,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
         Route::get('publish-my-shop', ['as' => 'publish-my-shop', 'uses' => 'CoffeeShopsController@publish']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
+        Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
 
         Route::resource('offers', 'OffersController');
         Route::get('offers/{offer}/toggleActivation',
@@ -56,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('coffee-shop/{coffee_shop}/order/{order}/checkout',
         ['as' => 'coffee-shop.order.checkout', 'uses' => 'OrdersController@checkout']);
     Route::get('order/{order}/review', ['as' => 'order.success', 'uses' => 'OrdersController@show']);
+    Route::get('order', ['as' => 'order.index', 'uses' => 'OrdersController@index']);
 
     Route::resource('products', 'ProductsController', ['only' => 'store']);
 

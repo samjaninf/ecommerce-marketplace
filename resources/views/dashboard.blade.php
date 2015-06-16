@@ -19,13 +19,14 @@
                 </h3>
                 <div class="list-group collapse navbar-collapse" id="dashboard-menu">
                     <a href="#" class="list-group-item">Your account</a>
-                    <a href="{{ route('coffee-shop.products.index', ['coffeeshop' => $coffeeShop]) }}"
+                    <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => $coffeeShop]) }}"
                        class="list-group-item">Menu</a>
                     <a href="#" class="list-group-item">Reporting</a>
-                    <a href="#" class="list-group-item">Order history</a>
+                    <a href="{{ route('order.history', ['coffee_shop' => $coffeeShop]) }}" class="list-group-item">
+                        Order history
+                    </a>
                     <hr class="hidden-xs">
-                    <a href="#" class="list-group-item">Support</a>
-                    <a href="#" class="list-group-item">Contact us</a>
+                    <a href="{{ url('contact-us') }}" class="list-group-item">Contact us</a>
                 </div>
             </div>
             <div class="col-sm-9">

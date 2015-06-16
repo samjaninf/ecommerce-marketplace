@@ -99,6 +99,23 @@ class WelcomeController extends Controller
     }
 
     /**
+     * @return \Illuminate\View\View
+     */
+    public function contactUs()
+    {
+        return view('contact');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function contact()
+    {
+        //@todo send email
+        return redirect()->back()->with('messages', ['success' => 'Your message have been sent.']);
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse

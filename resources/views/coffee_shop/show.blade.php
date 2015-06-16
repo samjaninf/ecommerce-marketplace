@@ -91,9 +91,9 @@
                                            data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
                                     @else
                                         <p>
-                                            @endif
-                                            {!! nl2br(e($coffeeShop->opening_times)) !!}
-                                        </p>
+                                    @endif
+                                        {!! nl2br(e($coffeeShop->opening_times)) !!}
+                                    </p>
                                 </div>
                             </div>
                         </div>

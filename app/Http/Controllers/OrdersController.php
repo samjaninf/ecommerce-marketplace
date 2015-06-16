@@ -30,8 +30,18 @@ class OrdersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($coffeeShopId = null)
     {
+        if (current_user()->role == 'admin') {
+            $orders = Order::all();
+        } elseif ($coffeeShopId === null) {
+            $orders = current_user()->orders;
+        } else {
+            $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
+            $orders = $coffeeShop->orders;
+        }
+
+        return view('order.index', compact('orders'));
     }
 
     /**
