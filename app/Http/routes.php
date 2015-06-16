@@ -14,6 +14,9 @@
 Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
+Route::get('about', 'WelcomeController@about');
+Route::post('about', 'WelcomeController@updateAbout');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
     Route::post('coffee-shop/apply',

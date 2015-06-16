@@ -1,5 +1,6 @@
 <?php namespace Koolbeans\Http\Controllers;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Koolbeans\CoffeeShop;
 use Koolbeans\Offer;
@@ -81,5 +82,33 @@ class WelcomeController extends Controller
         $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
 
         return view('search.results', compact('shops', 'position'))->with('query', $baseQuery);
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function about()
+    {
+        try {
+            $about = \File::get(storage_path('app/about.txt'));
+        } catch (FileNotFoundException $e) {
+            $about = 'Write me!';
+        }
+
+        return view('about')->with('about', $about);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAbout(Request $request)
+    {
+        if (current_user()->role == 'admin') {
+            \File::put(storage_path('app/about.txt'), $request->input('about'));
+        }
+
+        return redirect()->back();
     }
 }

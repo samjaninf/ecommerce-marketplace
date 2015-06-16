@@ -257,7 +257,7 @@ class OrdersController extends Controller
             $user->transactions()->create([
                 'amount'           => $amount,
                 'charged'          => false,
-                'stripe_charge_id' => ( isset( $charge ) ? $charge : null ),
+                'stripe_charge_id' => ( isset( $charge ) ? $charge['id'] : null ),
             ]);
         }
 
