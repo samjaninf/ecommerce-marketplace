@@ -1,23 +1,18 @@
-## Laravel PHP Framework
+# Requirements
+ 1. \>=PHP5.5.9
+ 2. NodeJS and NPM
+ 3. Composer (run `curl -sS https://getcomposer.org/installer | php`)
+ 4. MySQL
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+# Deployment
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
-
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
-
-## Official Documentation
-
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+ 1. `cd /var/www && git clone ...`
+ 2. make sure that /var/www/koolbeans/public is the source directory of the web server 
+ 3. run `mv .env.example .env`
+ 4. change the configuration values in .env to what is necessary
+ 6. run `composer install`
+ 7. run `npm install`
+ 5. run `gulp`
+ 6. run `php artisan migrate` (if you need to install the database)
+ 7. run `php artisan optimize`
+ 8. run `php artisan route:cache`
