@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('coffee-shop.order', 'OrdersController');
     Route::post('coffee-shop/{coffee_shop}/order/{order}/checkout',
         ['as' => 'coffee-shop.order.checkout', 'uses' => 'OrdersController@checkout']);
+    Route::get('order/{order}/review', ['as' => 'order.success', 'uses' => 'OrdersController@show']);
 
     Route::resource('products', 'ProductsController', ['only' => 'store']);
 

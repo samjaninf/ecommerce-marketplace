@@ -272,7 +272,7 @@ class OrdersController extends Controller
         $successMessage = 'Your order has been added to your tip!';
         $warningMessage = ( $previous ) ? ( $warningMessage ) : $successMessage;
 
-        return view('coffee_shop.order.success')->with('messages',
+        return redirect(route('order.success', ['order' => $order]))->with('messages',
             ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage]);
     }
 
@@ -281,11 +281,14 @@ class OrdersController extends Controller
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+        $coffeeShop = $order->coffee_shop;
+
+        return view('coffee_shop.order.success', compact('order', 'coffeeShop'));
     }
 
     /**
