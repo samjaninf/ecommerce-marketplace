@@ -15,4 +15,4 @@
  5. run `gulp`
  6. run `php artisan migrate` (if you need to install the database)
  7. run `php artisan optimize`
- 8. run `php artisan route:cache`
+ 8. run `php artisan route:cache` (if it doesn't work, that's fine, app is not that big anyway)
