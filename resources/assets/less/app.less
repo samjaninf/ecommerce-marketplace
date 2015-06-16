@@ -34,7 +34,22 @@ textarea {
   height: 400px;
 }
 
+#messages-top {
+  position: absolute;
+  top: 100px;
+  z-index: 100;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
 #content {
+
+  .main-content-padded {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
   .normal-pointer {
     cursor: default;
   }
@@ -190,7 +205,6 @@ textarea {
 
 #banner-home-user {
   background-color: #00aed7;
-  margin-top: -20px;
   text-align: center;
   height: 400px;
 }
@@ -247,6 +261,17 @@ textarea {
   }
 }
 
+#show-coffee-shop-offers {
+  .offer {
+    margin-left: 0;
+    margin-right: 0;
+
+    h4 {
+      padding-top: 10px !important;
+    }
+  }
+}
+
 hr {
   border-color: #cccccc;
 }
@@ -284,6 +309,13 @@ hr {
   }
 }
 
+.specs {
+  padding: 0;
+  img {
+    margin: 5px;
+  }
+}
+
 .offer {
   margin: 10px auto;
   padding: 10px 20px;
@@ -315,6 +347,7 @@ hr {
     }
 
     b {
+      font-weight: 200;
       font-size: 15.77pt;
     }
 
@@ -343,7 +376,7 @@ hr {
 .social {
   margin: 2.5em 0;
 
-  .fa.circle{
+  .fa.circle {
     border-radius: 50%;
     margin: 0.15em;
     font-size: 3em;

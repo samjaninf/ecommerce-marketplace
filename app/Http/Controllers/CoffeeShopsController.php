@@ -89,11 +89,16 @@ class CoffeeShopsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $coffeeShop        = $this->coffeeShop->find($id);
-        $coffeeShop->about = $request->input('about');
-        $coffeeShop->save();
+        foreach ($request->all() as $name => $value) {
+            $coffeeShop        = $this->coffeeShop->find($id);
+            $coffeeShop->$name = $value;
+            $coffeeShop->save();
 
-        return $coffeeShop->about;
+            return $value;
+        }
+
+
+        return response('Error', 500);
     }
 
     /**

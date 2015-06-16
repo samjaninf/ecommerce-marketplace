@@ -67,7 +67,7 @@
 
             <div class="container" id="coffee-shop-description">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-9">
+                    <div class="col-xs-12 col-sm-12 col-md-9" style="z-index: 50">
                         <div class="row">
                             <div class="hide visible-xs-block col-xs-12 above-best-review-xs">
                                 Images
@@ -84,7 +84,17 @@
                                 </div>
                             </div>
                             <div class="col-sm-6 hidden-xs">
-                                Images
+                                <div>
+                                    @if(! Auth::guest() && current_user()->owns($coffeeShop))
+                                        <a href="#" id="edit-coffeeshop-times-helper">Change opening times</a>
+                                        <p id="edit-coffeeshop-times"
+                                           data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
+                                    @else
+                                        <p>
+                                            @endif
+                                            {!! nl2br(e($coffeeShop->opening_times)) !!}
+                                        </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,18 +135,51 @@
                                    data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
                             @else
                                 <p>
-                            @endif
-                                {{ ! $coffeeShop->about ? 'No information.' : $coffeeShop->about }}
-                            </p>
+                                    @endif
+                                    {{ ! $coffeeShop->about ? 'No information.' : $coffeeShop->about }}
+                                </p>
                         </div>
 
                         <hr class="visible-xs-block">
 
-                        <div class="col-sm-6">
-                            <h4>Current deals</h4>
+                        <div class="col-sm-6 specs">
+                            @if($coffeeShop->spec_independent)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
+                            @if($coffeeShop->spec_food_available)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
+                            @if($coffeeShop->spec_dog_friendly)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
+                            @if($coffeeShop->spec_free_wifi)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
+                            @if($coffeeShop->spec_geek_friendly)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
+                            @if($coffeeShop->spec_meeting_friendly)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
+                            @if($coffeeShop->spec_charging_ports)
+                                <img src="/img/coffee_shops/spec_food_available.png" alt="Food available"/>
+                            @endif
                         </div>
                     </div>
                     <hr>
+                    <div class="row">
+                        <div class="col-xs-12" id="show-coffee-shop-offers">
+                            <h4>Current deals</h4>
+
+                            <div class="row">
+                                @foreach($coffeeShop->offers as $i => $offer)
+                                    <div class="col-xs-12 col-sm-6">
+                                        @include('offers._short', ['bgNum' => ($i % 4) + 1])
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-12">
                             <h4>Location</h4>
@@ -150,7 +193,8 @@
                             <h4>
                                 Reviews
                                 @if(Session::has('special-message'))
-                                    <p class="alert alert-{{key(Session::get('special-message'))}}" style="margin-top: 10px">
+                                    <p class="alert alert-{{key(Session::get('special-message'))}}"
+                                       style="margin-top: 10px">
                                         {{current(Session::get('special-message'))}}
                                     </p>
                                 @endif
@@ -168,6 +212,7 @@
                             <div class="row hide" id="add-review-form">
                                 <div class="col-xs-12">
                                     <h5>Add your own review</h5>
+
                                     <p class="alert alert-danger hide" id="empty-rating">
                                         Heya, you forgot to give a rating!
                                     </p>
@@ -179,11 +224,18 @@
                                           id="post-review"
                                           action="{{ route('coffee-shop.review', ['coffee_shop' => $coffeeShop]) }}">
                                         <div class="form-group">
-                                            <textarea id="review" name="review" placeholder="Review..." class="form-control"></textarea>
+                                            <textarea id="review"
+                                                      name="review"
+                                                      placeholder="Review..."
+                                                      class="form-control"></textarea>
                                         </div>
 
                                         <input type="hidden" name="rating" value="" id="rating-input">
-                                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                                        <input type="hidden"
+                                               name="_token"
+                                               id="csrf-token"
+                                               value="{{ Session::token() }}">
+
                                         <div class="form-group">
                                             <input type="submit" class="btn btn-primary" value="Post review">
                                         </div>
@@ -200,6 +252,7 @@
 
                                             <div class="additional-details">
                                                 {{$review->pivot->created_at->format('jS M Y')}}<br>
+
                                                 <div class="author">
                                                     {{$review->name}}
                                                 </div>

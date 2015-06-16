@@ -1,52 +1,48 @@
-source = document.getElementById 'edit-coffeeshop-about'
-helper = document.getElementById 'edit-coffeeshop-about-helper'
-container = source?.parentNode
-savedValue = source?.textContent
-target = source?.dataset.target
+sourceAbout = document.getElementById 'edit-coffeeshop-about'
+helperAbout = document.getElementById 'edit-coffeeshop-about-helper'
+containerAbout = sourceAbout?.parentNode
+savedValueAbout = sourceAbout?.textContent
+targetAbout = sourceAbout?.dataset.target
 
-changeAboutSection = (e) ->
-  replacement = document.createElement 'textarea'
-  replacement.classList.add 'form-control'
-  replacement.value = source.textContent.trim()
-  replacement.id = 'edit-coffeeshop-about-field'
+sourceTimes = document.getElementById 'edit-coffeeshop-times'
+helperTimes = document.getElementById 'edit-coffeeshop-times-helper'
+containerTimes = sourceTimes?.parentNode
+savedValueTimes = sourceTimes?.textContent
+targetTimes = sourceTimes?.dataset.target
 
-  submit = document.createElement 'a'
-  submit.onclick = editAboutSection
-  submit.classList.add 'btn'
-  submit.classList.add 'btn-success'
-  submit.textContent = 'Submit'
-  submit.id = 'submit-edit-about'
+showAboutSection = (e) ->
+  replacement = createTextArea 'about', sourceAbout, 'Add some information here...'
+  submit = createSubmit 'about', editAboutSection
+  cancel = createCancel 'about', revertAboutSection
 
-  cancel = document.createElement 'a'
-  cancel.onclick = revertToText
-  cancel.classList.add 'btn'
-  cancel.classList.add 'btn-default'
-  cancel.textContent = 'Cancel'
-  cancel.id = 'cancel-edit-about'
-
-  container.replaceChild replacement, source
-  helper.onclick = revertToText
-
-  source = replacement
-
-  container.appendChild submit
-  container.appendChild cancel
+  showElementsForEdition containerAbout, helperAbout, replacement, sourceAbout, submit, cancel, revertAboutSection
+  sourceAbout = replacement
 
   koolbeans.cancelEvent e
 
-revertToText = (e) ->
-  text = document.createElement 'p'
-  text.onclick = changeAboutSection
-  text.id = 'edit-coffeeshop-about'
-  text.textContent = savedValue
+revertAboutSection = (e) ->
+  replacement = createParagraph 'about', savedValueAbout, showAboutSection
 
-  container.replaceChild text, source
-  helper.onclick = changeAboutSection
+  revertElementsFromEdition containerAbout, helperAbout, replacement, sourceAbout, 'about', showAboutSection
+  sourceAbout = replacement
 
-  source = text
+  koolbeans.cancelEvent e
 
-  container.removeChild document.getElementById 'submit-edit-about'
-  container.removeChild document.getElementById 'cancel-edit-about'
+showTimesSection = (e) ->
+  replacement = createTextArea 'times', sourceTimes, 'Mon-Fri: 09am-03pm'
+  submit = createSubmit 'times', editTimesSection
+  cancel = createCancel 'times', revertTimesSection
+
+  showElementsForEdition containerTimes, helperTimes, replacement, sourceTimes, submit, cancel, revertTimesSection
+  sourceTimes = replacement
+
+  koolbeans.cancelEvent e
+
+revertTimesSection = (e) ->
+  replacement = createParagraph 'times', savedValueTimes, showTimesSection
+
+  revertElementsFromEdition containerTimes, helperTimes, replacement, sourceTimes, 'times', showTimesSection
+  sourceTimes = replacement
 
   koolbeans.cancelEvent e
 
@@ -55,17 +51,80 @@ editAboutSection = (e) ->
   document.getElementById('cancel-edit-about').classList.add 'disabled'
 
   $.ajax
-    url: target
-    data: {about: source.value}
+    url: targetAbout
+    data: {about: sourceAbout.value}
     method: 'put'
     success: (data) ->
-      savedValue = data
+      savedValueAbout = data
 
-      revertToText e
+      revertAboutSection e
 
   koolbeans.cancelEvent e
 
-helper?.onclick = source?.onclick = changeAboutSection
+editTimesSection = (e) ->
+  document.getElementById('submit-edit-times').classList.add 'disabled'
+  document.getElementById('cancel-edit-times').classList.add 'disabled'
+
+  $.ajax
+    url: targetTimes
+    data: {opening_times: sourceTimes.value}
+    method: 'put'
+    success: (data) ->
+      savedValueTimes = data
+
+      revertTimesSection e
+
+  koolbeans.cancelEvent e
+
+createParagraph = (id, content, cb) ->
+  text = document.createElement 'p'
+  text.onclick = cb
+  text.id = 'edit-coffeeshop-' + id
+  text.textContent = content
+  text
+
+createTextArea = (id, source, placeholder) ->
+  replacement = document.createElement 'textarea'
+  replacement.placeholder = placeholder
+  replacement.classList.add 'form-control'
+  replacement.value = source.textContent.trim()
+  replacement.id = "edit-coffeeshop-#{id}-field"
+  replacement
+
+createSubmit = (id, cb) ->
+  submit = document.createElement 'a'
+  submit.onclick = cb
+  submit.classList.add 'btn'
+  submit.classList.add 'btn-success'
+  submit.textContent = 'Submit'
+  submit.id = 'submit-edit-' + id
+  submit
+
+createCancel = (id, cb) ->
+  cancel = document.createElement 'a'
+  cancel.onclick = cb
+  cancel.classList.add 'btn'
+  cancel.classList.add 'btn-default'
+  cancel.textContent = 'Cancel'
+  cancel.id = 'cancel-edit-' + id
+  cancel
+
+showElementsForEdition = (container, helper, replacement, source, submit, cancel, callback) ->
+  container.replaceChild replacement, source
+  helper.onclick = callback
+
+  container.appendChild submit
+  container.appendChild cancel
+
+revertElementsFromEdition = (container, helper, replacement, source, id, callback) ->
+  container.replaceChild replacement, source
+  helper.onclick = callback
+
+  container.removeChild document.getElementById 'submit-edit-' + id
+  container.removeChild document.getElementById 'cancel-edit-' + id
+
+helperAbout?.onclick = sourceAbout?.onclick = showAboutSection
+helperTimes?.onclick = sourceAbout?.onclick = showTimesSection
 
 activators = document.getElementsByClassName('activates')
 for activator in activators

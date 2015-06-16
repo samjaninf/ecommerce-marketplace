@@ -53,6 +53,13 @@ class CoffeeShop extends Model
         'phone_number',
         'postal_code',
         'place_id',
+        'spec_independent',
+        'spec_food_available',
+        'spec_dog_friendly',
+        'spec_free_wifi',
+        'spec_geek_friendly',
+        'spec_meeting_friendly',
+        'spec_charging_ports',
     ];
 
     /**

@@ -58,6 +58,10 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
      */
     public function newInstance($attributes = [], $exists = false)
     {
+        foreach ($attributes as $name => $value) {
+            $attributes[$name] = $value === 'on' ? true : $value;
+        }
+
         return $this->model->newInstance($attributes, $exists);
     }
 

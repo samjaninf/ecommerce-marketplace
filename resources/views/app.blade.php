@@ -25,8 +25,8 @@
     @yield('splash')
 </header>
 
-@if(Session::has('messages'))
-    <div class="container">
+<div class="container" id="messages-top">
+    @if(Session::has('messages'))
         <div class="row">
             <div class="col-xs-12">
                 @foreach(Session::get('messages') as $type => $message)
@@ -36,11 +36,9 @@
                 @endforeach
             </div>
         </div>
-    </div>
-@endif
+    @endif
 
-@if(isset($messages))
-    <div class="container">
+    @if(isset($messages))
         <div class="row">
             <div class="col-xs-12">
                 @foreach($messages as $type => $message)
@@ -50,8 +48,8 @@
                 @endforeach
             </div>
         </div>
-    </div>
-@endif
+    @endif
+</div>
 
 <div id="content">
     @yield('content')
