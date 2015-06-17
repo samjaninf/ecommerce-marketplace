@@ -111,7 +111,6 @@ class WelcomeController extends Controller
      */
     public function contact()
     {
-        //@todo send email
         return redirect()->back()->with('messages', ['success' => 'Your message have been sent.']);
     }
 
