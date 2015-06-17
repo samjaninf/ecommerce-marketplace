@@ -86,7 +86,7 @@
                             <h3>Recommended coffee shops for you</h3>
 
                             <div class="row">
-                                @foreach(current_user()->coffee_shops->take(6) as $coffeeShop)
+                                @foreach(current_user()->coffee_shops->unique()->take(6) as $coffeeShop)
                                     <div class="col-xs-6 col-sm-4">
                                         <div class="featured-coffee-shop" style="background-image: url({{$coffeeShop->mainImage() }})">
                                             <div class="info small-featured">
