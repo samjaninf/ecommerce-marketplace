@@ -32,7 +32,7 @@
                     @foreach($orders as $order)
                         <tr>
                             <td>{{ $order->created_at }}</td>
-                            <td>{{ $order->price }}</td>
+                            <td>£ {{ number_format($order->price / 100., 2) }}</td>
                             <td>
                                 <a href="{{ route('order.success', ['order' => $order]) }}"
                                    class="btn btn-primary btn-xs">

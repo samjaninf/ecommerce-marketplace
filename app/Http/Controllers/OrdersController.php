@@ -362,6 +362,8 @@ class OrdersController extends Controller
                         } else {
                             $orderLine->price *= $detail->{'amount_' . $orderLine->size} / 100.;
                         }
+
+                        break;
                     }
                 }
             }

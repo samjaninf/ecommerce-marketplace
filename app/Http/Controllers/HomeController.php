@@ -48,6 +48,15 @@ RAW
             ];
         }
 
-        return view('home')->with('messages', $message);
+        $orders = current_user()
+            ->orders()
+            ->with('order_lines.product')
+            ->with('coffee_shop')
+            ->wherePaid(true)
+            ->orderBy('created_at', 'desc')
+            ->limit(4)
+            ->get();
+
+        return view('home', compact('orders'))->with('messages', $message);
     }
 }

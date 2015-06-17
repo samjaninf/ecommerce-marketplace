@@ -207,6 +207,73 @@ textarea {
   background-color: #00aed7;
   text-align: center;
   height: 400px;
+
+  h1 {
+    border: none;
+    color: white;
+    margin-top: 150px;
+    font-size: 55pt;
+  }
+}
+
+#home-user {
+  background-color: #f3f3f1;
+}
+
+#home-user-tabs {
+  margin-top: -80px;
+
+  ul {
+    background-color: #f3f3f1;
+
+    li {
+      -webkit-box-shadow: 1.5px 0 1px -1px rgba(0, 0, 0, 0.51);
+      -moz-box-shadow: 1.5px 0 1px -1px rgba(0, 0, 0, 0.51);
+      box-shadow: 1.5px 0 1px -1px rgba(0, 0, 0, 0.51);
+      position: relative;
+
+      a {
+        color: #555555 !important;
+        padding: 15px 30px;
+      }
+
+      &:not(.active) {
+        background-color: #f3f3f1;
+      }
+
+      &.active {
+        a {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    position: relative;
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 0 3px 3px 3px;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+
+    h3 {
+      border-bottom: 1px solid #f3f3f1;
+      padding-bottom: 10px;
+    }
+
+    .panel {
+
+      .panel-body {
+        background-color: #f3f3f1;
+
+        span, i {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
 }
 
 #best-review-and-features-available {

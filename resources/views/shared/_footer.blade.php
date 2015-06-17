@@ -10,7 +10,7 @@
                 <input id="query"
                        name="query"
                        type="text"
-                       placeholder="Use my location..."
+                       placeholder="Enter your location to find a shop..."
                        class="form-control input-lg"
                        value="{{old('query')}}">
 

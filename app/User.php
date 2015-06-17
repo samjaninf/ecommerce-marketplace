@@ -87,7 +87,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function coffee_shop()
     {
-        return $this->hasOne('Koolbeans\CoffeeShop');
+        return $this->hasOne(CoffeeShop::class);
+    }
+
+    /**
+     * @return CoffeeShop[]
+     */
+    public function getCoffeeShopsAttribute()
+    {
+        return $this->orders()->with('coffee_shop')->get()->map(function ($order) { return $order->coffee_shop; });
+    }
+
+    /**
+     * @return Offer[]
+     */
+    public function getOffersAttribute()
+    {
+        return $this->orders()->with('offer')->get()->map(function ($order) { return $order->offer; });
     }
 
     /**

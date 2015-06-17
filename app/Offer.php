@@ -15,7 +15,7 @@ class Offer extends Model
      */
     public function coffee_shop()
     {
-        return $this->belongsTo('Koolbeans\CoffeeShop');
+        return $this->belongsTo(CoffeeShop::class);
     }
 
     /**
@@ -23,7 +23,7 @@ class Offer extends Model
      */
     public function product()
     {
-        return $this->belongsTo('Koolbeans\Product');
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -31,7 +31,15 @@ class Offer extends Model
      */
     public function details()
     {
-        return $this->hasMany('Koolbeans\OfferDetail');
+        return $this->hasMany(OfferDetail::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     /**

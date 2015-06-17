@@ -30,6 +30,14 @@ class Order extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
+
+    /**
      * @return string
      */
     public function getNextStatus()
