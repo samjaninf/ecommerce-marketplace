@@ -75,7 +75,7 @@
                         <div class="col-xs-12 col-xs-12 col-md-4">
                             <h3>Your offers</h3>
 
-                            @foreach(current_user()->offers->take(4) as $i => $offer)
+                            @foreach(current_user()->offers->unique()->take(4) as $i => $offer)
                                 @include('offers._short', ['bgNum' => $i % 4 + 1])
                             @endforeach
                         </div>
