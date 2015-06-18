@@ -49,6 +49,20 @@
                     </div>
                 </div>
 
+                .
+                <div class="form-group @if($errors->any()) {{$errors->has('county') ? 'has-error' : 'has-success'}} @endif">
+                    <label for="county" class="col-sm-3 control-label">County:</label>
+
+                    <div class="col-sm-9 col-md-6">
+                        <input id="county"
+                               name="county"
+                               type="text"
+                               placeholder="County..."
+                               class="form-control"
+                               value="{{old('county', $coffeeShop->county)}}">
+                    </div>
+                </div>
+
                 <div class="form-group @if($errors->any()) {{$errors->has('phone_number') ? 'has-error' : 'has-success'}} @endif">
                     <label for="phone_number" class="col-sm-3 control-label">Phone number:</label>
 

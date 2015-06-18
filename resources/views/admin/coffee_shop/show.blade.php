@@ -72,6 +72,11 @@
                             Postal code
                         </span> {{$coffeeShop->postal_code ?: '#'}}
                     </li>
+                    <li class="list-group-item">
+                        <span class="label label-{{$coffeeShop->isPublished() ? 'success' : 'default'}} hidden-xs">
+                            County
+                        </span> {{$coffeeShop->county ?: '#'}}
+                    </li>
                     @if($coffeeShop->isValid() && ! $coffeeShop->isPublished())
                         <li class="list-group-item list-group-item-warning">
                             This coffee shop has been accepted but is not yet published.

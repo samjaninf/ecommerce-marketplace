@@ -35,7 +35,7 @@ useGeoLocation = () ->
     centerMapOnLocation location
 
 initializeAutoComplete = (locationField, map) ->
-  autoComplete = new google.maps.places.Autocomplete locationField
+  autoComplete = new google.maps.places.Autocomplete locationField, { types: ['address'] }
 
   bindMapToAutoComplete autoComplete, map if map?
 
@@ -81,11 +81,15 @@ openInfoWindow = (place, marker) ->
     (place.address_components[2] && place.address_components[2].short_name || '')
   ].join(' ')
 
+  console.log(place)
+
   koolbeans.infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
   koolbeans.infoWindow.open(koolbeans.map, marker);
 
 changeFormFields = (place) ->
   for component in place.address_components
+    if component.types.indexOf("administrative_area_level_2") != -1 or component.types.indexOf("administrative_area_level_1") != -1
+      document.getElementById('county').setAttribute 'value', component.long_name
     if component.types.indexOf('postal_code') != -1
       document.getElementById('postal_code').setAttribute 'value', component.short_name
   document.getElementById('latitude-field').setAttribute 'value', place.geometry.location.lat()

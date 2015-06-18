@@ -78,7 +78,7 @@ class WelcomeController extends Controller
         $orderByRaw = 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
                       abs($city['geometry']['location']['lng']) . ') asc';
 
-        $shops    = CoffeeShop::where('location', 'like', $query)->orderByRaw($orderByRaw)->paginate(8);
+        $shops    = CoffeeShop::where('location', 'like', $query)->orWhere('county', 'like', $query)->orderByRaw($orderByRaw)->paginate(8);
         $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
 
         return view('search.results', compact('shops', 'position'))->with('query', $baseQuery);
