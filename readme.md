@@ -18,3 +18,11 @@
  7. run `php artisan optimize`
  8. run `php artisan route:cache` (if it doesn't work, that's fine, app is not that big anyway)
  8. run `crontab -e` as root and add `* * * * * php /path/to/artisan schedule:run 1>> /dev/null 2>&1`
+
+# Issues
+
+ If Xero stops working suddendly, upload a new keypair as stated
+ http://developer.xero.com/documentation/advanced-docs/public-private-keypair/ and
+ http://developer.xero.com/documentation/getting-started/private-applications/
+ 
+ The pem file should be stored as /etc/ssl/certs/koolbeans.pem

@@ -216,6 +216,14 @@ class CoffeeShop extends Model
     /**
      * @return string
      */
+    public function getXeroName()
+    {
+        return $this->name . '_IID_' . $this->id;
+    }
+
+    /**
+     * @return string
+     */
     public function getPosition()
     {
         return $this->latitude . ',' . $this->longitude;
