@@ -97,11 +97,13 @@ class OrdersController extends Controller
             $order->time = Carbon::now()->addHour(1);
         }
 
+        $products = $coffeeShop->products()->orderBy('type', 'desc')->get();
+
         return view('coffee_shop.order.create', [
             'coffeeShop'   => $coffeeShop,
             'order'        => $order,
             'orderProduct' => $orderProduct,
-            'products'     => $coffeeShop->products()->orderBy('type', 'desc')->get(),
+            'products'     => $products,
         ]);
     }
 

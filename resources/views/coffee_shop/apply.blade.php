@@ -23,6 +23,41 @@
                     </div>
                 </div>
 
+                @if(Auth::guest())
+                    <div class="form-group @if($errors->any()) {{$errors->has('email') ? 'has-error' : 'has-success'}} @endif">
+                        <label for="email" class="col-sm-3 control-label">E-Mail Address</label>
+
+                        <div class="col-sm-9">
+                            <input type="email"
+                                   class="form-control"
+                                   placeholder="email@domain.com"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   id="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3 control-label">Password</label>
+
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirmation" class="col-sm-3 control-label">Confirm Password</label>
+
+                        <div class="col-sm-9">
+                            <input type="password"
+                                   class="form-control"
+                                   name="password_confirmation"
+                                   id="password_confirmation">
+                        </div>
+                    </div>
+
+                @endif
+
                 <div class="form-group @if($errors->any()) {{$errors->has('location') ? 'has-error' : 'has-success'}} @endif">
                     <label for="field-maps-location" class="col-sm-3 control-label">Address:</label>
 

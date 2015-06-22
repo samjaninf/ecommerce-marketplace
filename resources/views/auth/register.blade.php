@@ -2,11 +2,13 @@
 
 @section('content')
 <div class="container-fluid">
-	<div class="row">
+	<div class="row main-content-padded">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
+				<div class="panel-heading">Welcome to Koolbeans!</div>
 				<div class="panel-body">
+                    <p>30 Seconds to register to start finding great coffee, from great coffee shops.</p>
+
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -51,6 +53,7 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
+                                <a href="{{ route('coffee-shop.apply') }}">Are you a coffee shop?</a><br><br>
 								<button type="submit" class="btn btn-primary">
 									Register
 								</button>

@@ -12,7 +12,7 @@ class ApplicationCoffeeShopRequest extends Request
     {
         $user = current_user();
 
-        return $user !== null && ! $user->isOwner();
+        return $user === null || ! $user->isOwner();
     }
 
     /**
@@ -35,7 +35,7 @@ class ApplicationCoffeeShopRequest extends Request
      */
     public function rules()
     {
-        return [
+        $arr = [
             'name'                 => 'required|unique:coffee_shops,name',
             'location'             => 'required|regex:,.*,',
             'postal_code'          => 'required',
@@ -45,5 +45,14 @@ class ApplicationCoffeeShopRequest extends Request
             'place_id'             => 'required|google_place_id',
             'g-recaptcha-response' => 'required|google_recaptcha',
         ];
+
+        if (\Auth::guest()) {
+            $arr = array_merge($arr, [
+                'email'    => 'required|email|max:255|unique:users',
+                'password' => 'required|confirmed|min:6',
+            ]);
+        }
+
+        return $arr;
     }
 }

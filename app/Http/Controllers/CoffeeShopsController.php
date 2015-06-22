@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
+use Koolbeans\User;
 
 class CoffeeShopsController extends Controller
 {
@@ -25,7 +26,7 @@ class CoffeeShopsController extends Controller
      */
     public function apply()
     {
-        if (current_user()->isOwner()) {
+        if (\Auth::check() && current_user()->isOwner()) {
             return redirect('home');
         }
 
@@ -39,8 +40,20 @@ class CoffeeShopsController extends Controller
      */
     public function storeApplication(ApplicationCoffeeShopRequest $request)
     {
-        $shop = $this->coffeeShop->newInstance($request->all());
-        $shop->user()->associate(current_user());
+        if (\Auth::guest()) {
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => bcrypt($request->input('password')),
+            ]);
+
+            \Auth::login($user);
+        } else {
+            $user = current_user();
+        }
+
+        $shop = $this->coffeeShop->newInstance($request->except(['name', 'email', 'password']));
+        $shop->user()->associate($user);
         $shop->save();
 
         return redirect(route('home'))->with('messages',
