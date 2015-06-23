@@ -4,6 +4,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Koolbeans\Console\Commands\ChargeAwaitingRecentTransactionsCommand;
 use Koolbeans\Console\Commands\CreateXeroBillsCommand;
+use Koolbeans\Console\Commands\SendEmailsCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         ChargeAwaitingRecentTransactionsCommand::class,
         CreateXeroBillsCommand::class,
+        SendEmailsCommand::class
     ];
 
     /**
@@ -29,6 +31,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('transactions:charge')->daily();
         $schedule->command('transactions:xero')->daily();
+        $schedule->command('emails:send')->weekly(7);
     }
 
 }

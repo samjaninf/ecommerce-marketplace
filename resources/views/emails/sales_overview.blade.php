@@ -1,7 +1,7 @@
 @extends('emails._main')
 
 @section('mail')
-    Here is an overview of your best sales.
+    Here is an overview of your best sales this week.<br><br>
 
     <table>
         <thead>
@@ -13,10 +13,9 @@
         @foreach($mostBought as $product)
             <tr>
                 <td>
-                    {{ $coffeeShop->getNameFor($product) }}
                     {{$coffeeShop->getNameFor($coffeeShop->findProduct($product->product_id))}}:
-                    {{$product->aggregate}} times
                 </td>
+                <td>{{$product->aggregate}} times</td>
             </tr>
         @endforeach
     </table>
