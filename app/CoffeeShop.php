@@ -479,7 +479,7 @@ class CoffeeShop extends Model
         ];
 
         foreach ($list as $day => $v) {
-            if (in_array($day, $days)) {
+            if (in_array(strtolower($day), $days)) {
                 $list[ $day ] = true;
             }
         }
@@ -489,7 +489,11 @@ class CoffeeShop extends Model
         $formatted = [];
         foreach ($list as $day => $active) {
             if ($keep) {
-                if ( ! $active) {
+                if ( ! $active || $day === 'Sun') {
+                    if ($day === 'Sun' && $active) {
+                        $previous = $day;
+                    }
+
                     if ($previous === $keep) {
                         $formatted[] = $keep;
                     } else {
@@ -503,10 +507,6 @@ class CoffeeShop extends Model
             }
 
             $previous = $day;
-        }
-
-        if ($keep) {
-            $formatted[] = $keep;
         }
 
         return implode(", ", $formatted);
