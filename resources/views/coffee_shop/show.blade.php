@@ -279,8 +279,6 @@
                                             Add your review
                                         </a>
                                     @endif
-                                @else
-                                    <a href="{{ url('/auth/login') }}">Login to review this shop</a>
                                 @endif
                             </h4>
                             <div class="row hide" id="add-review-form">

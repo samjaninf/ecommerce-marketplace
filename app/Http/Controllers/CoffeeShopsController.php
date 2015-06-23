@@ -2,7 +2,6 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Koolbeans\CoffeeShop;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
@@ -78,6 +77,14 @@ class CoffeeShopsController extends Controller
         }
 
         $coffeeShop = $this->coffeeShop->find($id);
+
+        if ( ! current_user()->canReview($coffeeShop)) {
+            return redirect()
+                ->back()
+                ->with('messages',
+                    ['warning' => "You cannot review this coffee shop because you haven't made any order there."]);
+        }
+
         $coffeeShop->addReview($review, $rating);
 
         return redirect()->back()->with('special-message', ['success' => "Your review has been delivered!"]);
@@ -175,10 +182,10 @@ class CoffeeShopsController extends Controller
         $days       = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
         foreach ($days as $day) {
             if ($request->has($day)) {
-                $time = $coffeeShop->opening_times()->firstOrNew(['day_of_week' => mb_substr($day, 0, 3)]);
+                $time             = $coffeeShop->opening_times()->firstOrNew(['day_of_week' => mb_substr($day, 0, 3)]);
                 $time->start_hour = new Carbon($request->input('start_time_' . $day) . ':00');
                 $time->stop_hour  = new Carbon($request->input('stop_time_' . $day) . ':00');
-                $time->active = true;
+                $time->active     = true;
                 $time->save();
             } else {
                 $time = $coffeeShop->opening_times()->whereDayOfWeek(mb_substr($day, 0, 3))->first();

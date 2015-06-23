@@ -26,7 +26,7 @@ class OrdersController extends Controller
     {
         $this->coffeeShopRepository = $coffeeShopRepository;
 
-        $this->middleware('open', ['only' => ['store', 'create', 'checkout']]);
+        $this->middleware('open', ['only' => ['store', 'create']]);
     }
 
     /**

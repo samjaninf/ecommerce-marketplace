@@ -147,4 +147,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->isOwner() && $this->coffee_shop->id === $coffeeShop->id;
     }
+
+    /**
+     * @param \Koolbeans\CoffeeShop $coffeeShop
+     *
+     * @return bool
+     */
+    public function canReview(CoffeeShop $coffeeShop)
+    {
+        return ($this->orders()->whereCoffeeShopId($coffeeShop->id)->wherePaid(true)->count() > 0);
+    }
 }
