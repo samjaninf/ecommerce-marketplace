@@ -19,7 +19,7 @@ return [
         'secret' => '',
     ],
     'mandrill' => [
-        'secret' => '',
+        'secret' => 'NamYd7YGxAMJ-PcpxLp-vQ',
     ],
     'places'   => [
         'secret' => 'AIzaSyB2rg8AsguVnUDfFOKE_4SjIyoRGEZNDis',

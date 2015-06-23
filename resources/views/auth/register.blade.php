@@ -28,6 +28,7 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>
+                            <a href="{{ route('coffee-shop.apply') }}" class="col-md-2 btn btn-default">Are you a coffee shop?</a><br><br>
 						</div>
 
 						<div class="form-group">
@@ -53,7 +54,6 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-                                <a href="{{ route('coffee-shop.apply') }}">Are you a coffee shop?</a><br><br>
 								<button type="submit" class="btn btn-primary">
 									Register
 								</button>

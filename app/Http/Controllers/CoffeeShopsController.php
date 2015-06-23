@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
@@ -56,6 +57,11 @@ class CoffeeShopsController extends Controller
         $shop = $this->coffeeShop->newInstance($request->except(['name', 'email', 'password']));
         $shop->user()->associate($user);
         $shop->save();
+
+        \Mail::send('emails.coffeeshop_registration', ['user' => current_user()], function (Message $m) use ($user) {
+            $m->to($user->email, $user->name)
+              ->subject('Thank you for applying your shop to Koolbeans!');
+        });
 
         return redirect(route('home'))->with('messages',
             ['success' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);

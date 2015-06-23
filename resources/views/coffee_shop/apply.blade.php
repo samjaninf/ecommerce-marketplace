@@ -111,17 +111,6 @@
                     </div>
                 </div>
 
-                <div class="form-group @if($errors->any()) {{$errors->has('opening_times') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="opening_times" class="col-sm-3 control-label">Opening times:</label>
-
-                    <div class="col-sm-9 col-md-6">
-                        <textarea id="opening_times"
-                                  name="opening_times"
-                                  placeholder="Mon-Wed: 09am-05pm, Fri-Sun: 09am-06pm"
-                                  class="form-control">{{old('opening_times', $coffeeShop->opening_times)}}</textarea>
-                    </div>
-                </div>
-
                 <div class="form-group @if($errors->any()) {{$errors->has('comment') ? 'has-error' : 'has-success'}} @endif">
                     <label for="comment" class="col-sm-3 control-label">Comment:</label>
 

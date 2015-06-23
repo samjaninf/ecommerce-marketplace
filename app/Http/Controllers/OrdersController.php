@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Koolbeans\Http\Requests;
 use Koolbeans\Offer;
 use Koolbeans\Order;
@@ -40,7 +41,7 @@ class OrdersController extends Controller
             $orders = current_user()->orders;
         } else {
             $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
-            $orders = $coffeeShop->orders;
+            $orders     = $coffeeShop->orders;
         }
 
         return view('order.index', compact('orders'));
@@ -94,7 +95,7 @@ class OrdersController extends Controller
         }
 
         if (( $time = $request->get('time') )) {
-            $order->time = new Carbon($time .':00');
+            $order->time = new Carbon($time . ':00');
         } else {
             $order->time = Carbon::now()->addHour(1);
         }
@@ -160,7 +161,7 @@ class OrdersController extends Controller
         }
 
         if (\Session::has('offer-used')) {
-            $offer = Offer::find(\Session::get('offer-used'));
+            $offer           = Offer::find(\Session::get('offer-used'));
             $order->offer_id = $offer->id;
             $this->applyOfferOnOrder($offer, $lines);
         }
@@ -188,6 +189,8 @@ class OrdersController extends Controller
         $user  = current_user();
         $order = Order::find($orderId);
 
+        $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
+
         if ( ! $user->hasStripeId()) {
             try {
                 $gateway  = new StripeGateway($user);
@@ -195,7 +198,7 @@ class OrdersController extends Controller
             } catch (Card $e) {
                 return view('coffee_shop.order.review', [
                     'order'      => $order,
-                    'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                    'coffeeShop' => $coffeeShop,
                 ])->with('messages', [
                     'danger' => 'There was a problem during the authorization. ' .
                                 'It should not happen unless you cannot afford your order. Please try again.',
@@ -216,7 +219,7 @@ class OrdersController extends Controller
                 if ( ! $user->charge($amount + $previous, ['currency' => 'gbp'])) {
                     return view('coffee_shop.order.review', [
                         'order'      => $order,
-                        'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                        'coffeeShop' => $coffeeShop,
                     ])->with('messages', [
                         'danger' => 'There was a problem during the authorization. ' .
                                     'It should not happen unless you cannot afford your order. Please try again.',
@@ -225,7 +228,7 @@ class OrdersController extends Controller
             } catch (Card $e) {
                 return view('coffee_shop.order.review', [
                     'order'      => $order,
-                    'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                    'coffeeShop' => $coffeeShop,
                 ])->with('messages', [
                     'danger' => 'There was a problem during the authorization. ' .
                                 'It should not happen unless you cannot afford your order. Please try again.',
@@ -235,6 +238,7 @@ class OrdersController extends Controller
             $user->transactions()->create(['amount' => $amount, 'charged' => true]);
             $transactions = $user->transactions()->where('charged', '=', false)->get();
 
+            $refund = 0;
             foreach ($transactions as $t) {
                 $stripe_charge_id = $t->stripe_charge_id;
                 if ($stripe_charge_id) {
@@ -244,15 +248,22 @@ class OrdersController extends Controller
 
                 $t->charged = true;
                 $t->save();
+                $refund += $t->amount;
             }
 
             $charged = true;
+
+            \Mail::send('emails.payment_charged',
+                ['user' => current_user(), 'amount' => $amount  /100., 'refund' => $refund / 100.],
+                function (Message $m) use ($user) {
+                    $m->to($user->email, $user->name)->subject('You have been charged.');
+                });
         } else {
             try {
                 if ( ! $previous && ! $charge = $user->charge(1500, ['currency' => 'gbp', 'capture' => false])) {
                     return view('coffee_shop.order.review', [
                         'order'      => $order,
-                        'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                        'coffeeShop' => $coffeeShop,
                     ])->with('messages', [
                         'danger' => 'There was a problem during the authorization. ' .
                                     'It should not happen unless you cannot afford your order. Please try again.',
@@ -261,7 +272,7 @@ class OrdersController extends Controller
             } catch (Card $e) {
                 return view('coffee_shop.order.review', [
                     'order'      => $order,
-                    'coffeeShop' => $this->coffeeShopRepository->find($coffeeShopId),
+                    'coffeeShop' => $coffeeShop,
                 ])->with('messages', [
                     'danger' => 'There was a problem during the authorization. ' .
                                 'It should not happen unless you cannot afford your order. Please try again.',
@@ -286,6 +297,12 @@ class OrdersController extends Controller
         $successMessage = 'Your order has been added to your tip!';
         $warningMessage = ( $previous ) ? ( $warningMessage ) : $successMessage;
 
+        \Mail::send('emails.order_completed',
+            ['user' => current_user(), 'order' => $order, 'coffeeShop' => $coffeeShop],
+            function (Message $m) use ($user) {
+                $m->to($user->email, $user->name)->subject('Your order has been sent!');
+            });
+
         return redirect(route('order.success', ['order' => $order]))->with('messages',
             ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage]);
     }
@@ -299,7 +316,7 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order      = Order::find($id);
         $coffeeShop = $order->coffee_shop;
 
         return view('coffee_shop.order.success', compact('order', 'coffeeShop'));

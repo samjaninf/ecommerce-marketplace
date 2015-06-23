@@ -4,6 +4,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Billable;
 use Laravel\Cashier\Contracts\Billable as BillableContract;
@@ -103,7 +104,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getOffersAttribute()
     {
-        return $this->orders()->with('offer')->get()->map(function ($order) { return $order->offer; });
+        return $this->orders()->with('offer')->whereNotNull('offer_id')->get()->map(function ($order) { return $order->offer; });
     }
 
     /**

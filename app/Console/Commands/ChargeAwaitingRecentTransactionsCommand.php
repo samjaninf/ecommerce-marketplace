@@ -4,7 +4,9 @@ namespace Koolbeans\Console\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Mail\Message;
 use Koolbeans\Transaction;
+use Koolbeans\User;
 use Stripe\Charge;
 use Stripe\Stripe;
 
@@ -39,40 +41,83 @@ class ChargeAwaitingRecentTransactionsCommand extends Command
      */
     public function handle()
     {
-        Stripe::setApiKey(config('services.stripe.secret'));
-        $transactions = Transaction::whereCharged(false)->orderByRaw('user_id, created_at')->get();
+        try {
+            Stripe::setApiKey(config('services.stripe.secret'));
+            $transactions = Transaction::whereCharged(false)->orderByRaw('user_id, created_at')->get();
 
-        $stripe_charge_id = null;
-        $amount           = 0;
-        $userId           = -1;
-        foreach ($transactions as $transaction) {
-            if ($userId != -1 && $userId !== $transaction->user_id) {
-                $charge = Charge::retrieve($stripe_charge_id);
-                $charge->capture(['amount' => $amount]);
+            $stripe_charge_id = null;
+            $amount           = 0;
+            $userId           = -1;
+            $user             = null;
+            $saved            = null;
+            foreach ($transactions as $transaction) {
+                echo $transaction->id . PHP_EOL;
+                if ($userId != -1 && $userId !== $transaction->user_id) {
+                    $charge = Charge::retrieve($stripe_charge_id);
+                    $charge->capture(['amount' => $amount]);
 
-                $userId           = -1;
-                $stripe_charge_id = null;
-                $amount           = 0;
-            }
+                    $saved->charged = true;
+                    $saved->save();
 
-            if ($transaction->stripe_charge_id) {
-                $currentDate = Carbon::now();
-                if ($currentDate->diffInDays($transaction->created_at) < 6) {
-                    continue;
+                    $userId           = -1;
+                    $stripe_charge_id = null;
+                    $amount           = 0;
+
+                    \Mail::send('emails.payment_charged', [
+                        'user'    => $user,
+                        'amount'  => $amount / 100.,
+                        'refund'  => ( 1500 - $amount ) / 100.,
+                        'initial' => 15.00,
+                    ], function (Message $m) use ($user) {
+                        $m->to($user->email, $user->name)->subject('You have been charged.');
+                    });
                 }
 
-                $stripe_charge_id = $transaction->stripe_charge_id;
-                $userId           = $transaction->user_id;
+                if ($transaction->stripe_charge_id) {
+                    $currentDate = Carbon::now();
+                    if ($currentDate->diffInDays($transaction->created_at) < 6) {
+                        continue;
+                    }
+
+                    $amount += $transaction->amount;
+
+                    $saved            = $transaction;
+                    $stripe_charge_id = $transaction->stripe_charge_id;
+                    $userId           = $transaction->user_id;
+                    $user             = User::find($userId);
+                } elseif ($stripe_charge_id != null) {
+                    $amount += $transaction->amount;
+
+                    $saved->amount += $transaction->amount;
+                    $saved->save();
+
+                    $transaction->charged = true;
+                    $transaction->save();
+                }
             }
 
             if ($stripe_charge_id != null) {
-                $amount += $transaction->amount;
+                $charge = Charge::retrieve($stripe_charge_id);
+                $charge->capture(['amount' => $amount]);
+
+                \Mail::send('emails.payment_charged', [
+                    'user'    => $user,
+                    'amount'  => $amount / 100.,
+                    'refund'  => ( 1500 - $amount ) / 100.,
+                    'initial' => 15.00,
+                ], function (Message $m) use ($user) {
+                    $m->to($user->email, $user->name)->subject('You have been charged.');
+                });
+
+                $saved->charged = true;
+                $saved->save();
             }
+
+            return 0;
+        } catch (\Exception $e) {
+            \Mail::send('emails.FAILURE', [], function (Message $m) {
+                $m->to('contact@thomasruiz.eu');
+            });
         }
-
-        $charge = Charge::retrieve($stripe_charge_id);
-        $charge->capture(['amount' => $amount]);
-
-        return 0;
     }
 }

@@ -1,6 +1,8 @@
 <?php namespace Koolbeans\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\User;
 use Validator;
@@ -19,7 +21,9 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers;
+    use AuthenticatesAndRegistersUsers {
+        AuthenticatesAndRegistersUsers::postRegister as private _postRegister;
+    }
 
     /**
      * Create a new authentication controller instance.
@@ -32,14 +36,15 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -47,14 +52,15 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
+     *
      * @return User
      */
     public function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
@@ -81,5 +87,22 @@ class AuthController extends Controller
     protected function getUser()
     {
         return current_user();
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        $redirection = $this->_postRegister($request);
+
+        \Mail::send('emails.registration', ['user' => current_user()], function (Message $m) use ($request) {
+            $m->to($request->input('email'), $request->input('name'))
+              ->subject('Thank you for registering to Koolbeans!');
+        });
+
+        return $redirection;
     }
 }
