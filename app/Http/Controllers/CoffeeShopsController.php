@@ -1,6 +1,8 @@
 <?php namespace Koolbeans\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Koolbeans\CoffeeShop;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
@@ -42,8 +44,8 @@ class CoffeeShopsController extends Controller
     {
         if (\Auth::guest()) {
             $user = User::create([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
+                'name'     => $request->input('name'),
+                'email'    => $request->input('email'),
                 'password' => bcrypt($request->input('password')),
             ]);
 
@@ -150,5 +152,43 @@ class CoffeeShopsController extends Controller
 
         return redirect(route('coffee-shop.products.index', ['coffeeShop' => $coffeeShop]))->with('messages',
             ['warning' => 'You need a menu with at least 1 product before publishing!']);
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function openingTimes()
+    {
+        $coffeeShop = current_user()->coffee_shop;
+
+        return view('coffee_shop.opening_times', compact('coffeeShop'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateOpeningTimes(Request $request)
+    {
+        $coffeeShop = current_user()->coffee_shop;
+        $days       = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        foreach ($days as $day) {
+            if ($request->has($day)) {
+                $time = $coffeeShop->opening_times()->firstOrNew(['day_of_week' => mb_substr($day, 0, 3)]);
+                $time->start_hour = new Carbon($request->input('start_time_' . $day) . ':00');
+                $time->stop_hour  = new Carbon($request->input('stop_time_' . $day) . ':00');
+                $time->active = true;
+                $time->save();
+            } else {
+                $time = $coffeeShop->opening_times()->whereDayOfWeek(mb_substr($day, 0, 3))->first();
+                if ($time && $time->active) {
+                    $time->active = false;
+                    $time->save();
+                }
+            }
+        }
+
+        return redirect()->back();
     }
 }

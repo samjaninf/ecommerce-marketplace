@@ -25,6 +25,8 @@ class OrdersController extends Controller
     public function __construct(CoffeeShopRepository $coffeeShopRepository)
     {
         $this->coffeeShopRepository = $coffeeShopRepository;
+
+        $this->middleware('open', ['only' => ['store', 'create', 'checkout']]);
     }
 
     /**
@@ -92,7 +94,7 @@ class OrdersController extends Controller
         }
 
         if (( $time = $request->get('time') )) {
-            $order->time = $time;
+            $order->time = new Carbon($time .':00');
         } else {
             $order->time = Carbon::now()->addHour(1);
         }

@@ -1,5 +1,6 @@
 <?php namespace Koolbeans;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -108,6 +109,14 @@ class CoffeeShop extends Model
     public function orders()
     {
         return $this->hasMany('Koolbeans\Order');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function opening_times()
+    {
+        return $this->hasMany('Koolbeans\OpeningTime');
     }
 
     /**
@@ -320,7 +329,9 @@ class CoffeeShop extends Model
      */
     public function getNameFor($product)
     {
-        if (!is_object($product)) dd($product);
+        if ( ! is_object($product)) {
+            dd($product);
+        }
         $p = $this->products()->find($product->id);
 
         if ($p && $p->pivot->name) {
@@ -356,5 +367,148 @@ class CoffeeShop extends Model
     public function getSizeDisplayName($size)
     {
         return $this->{'display_' . $size};
+    }
+
+    public function showOpeningTimes()
+    {
+        $openingTimes = $this->opening_times()->whereActive(true)->get();
+
+        if ($openingTimes->count() > 0) {
+            $times = [];
+            foreach ($openingTimes as $openingTime) {
+                $found = false;
+
+                foreach ($times as $i => $time) {
+                    if ($openingTime->start_hour->eq($time['start']) && $openingTime->stop_hour->eq($time['end'])) {
+                        $times[ $i ]['days'][] = $openingTime->day_of_week;
+                        $found                 = true;
+                        break;
+                    }
+                }
+
+                if ( ! $found) {
+                    $times[] = [
+                        'start' => $openingTime->start_hour,
+                        'end'   => $openingTime->stop_hour,
+                        'days'  => [$openingTime->day_of_week],
+                    ];
+                }
+            }
+
+            return implode("\n", array_map(function ($time) {
+                $days = $this->formatDays($time['days']);
+
+                return $days . " " . $time['start']->format("H:i") . "-" . $time['end']->format("H:i");
+            }, $times));
+        }
+
+        return "No opening time has been set.";
+    }
+
+    /**
+     * @param string $day
+     *
+     * @return bool
+     */
+    public function isOpenOn($day)
+    {
+        return $this->opening_times()->whereDayOfWeek(mb_substr($day, 0, 3))->whereActive(true)->count() > 0;
+    }
+
+    /**
+     * @param string $day
+     *
+     * @return string
+     */
+    public function getStartingHour($day)
+    {
+        $ins = $this->opening_times()
+                    ->whereDayOfWeek(mb_substr($day, 0, 3))
+                    ->first();
+
+        if ($ins === null) {
+            return '08:00';
+        }
+
+        return $ins->start_hour->format('H:i');
+    }
+
+    /**
+     * @param \Carbon\Carbon $time
+     *
+     * @return bool
+     */
+    public function isOpen(Carbon $time)
+    {
+        $opened = $this->opening_times()->whereDayOfWeek($time->format('D'))->first();
+
+        return ($opened && $opened->start_hour->lte($time) && $opened->stop_hour->gte($time));
+    }
+
+    /**
+     * @param string $day
+     *
+     * @return string
+     */
+    public function getStoppingHour($day)
+    {
+        $ins = $this->opening_times()
+                    ->whereDayOfWeek(mb_substr($day, 0, 3))
+                    ->first();
+
+        if ($ins === null) {
+            return '19:00';
+        }
+
+        return $ins->stop_hour->format('H:i');
+    }
+
+    /**
+     * @param array $days
+     */
+    private function formatDays(array $days)
+    {
+        $list = [
+            'Mon' => false,
+            'Tue' => false,
+            'Wed' => false,
+            'Thu' => false,
+            'Fri' => false,
+            'Sat' => false,
+            'Sun' => false,
+        ];
+
+        foreach ($list as $day => $v) {
+            if (in_array($day, $days)) {
+                $list[ $day ] = true;
+            }
+        }
+
+        $keep      = null;
+        $previous  = null;
+        $formatted = [];
+        foreach ($list as $day => $active) {
+            if ($keep) {
+                if ( ! $active) {
+                    if ($previous === $keep) {
+                        $formatted[] = $keep;
+                    } else {
+                        $formatted[] = "$keep-$previous";
+                    }
+
+                    $keep = null;
+                }
+            } elseif ($active) {
+                $keep = $day;
+            }
+
+            $previous = $day;
+        }
+
+        if ($keep) {
+            $formatted[] = $keep;
+        }
+
+        return implode(", ", $formatted);
     }
 }

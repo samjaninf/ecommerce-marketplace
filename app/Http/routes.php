@@ -20,9 +20,7 @@ Route::post('contact', 'WelcomeController@contact');
 Route::post('about', 'WelcomeController@updateAbout');
 
 Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
-Route::post('coffee-shop/apply',
-    ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
-
+Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
@@ -48,6 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('publish-my-shop', ['as' => 'publish-my-shop', 'uses' => 'CoffeeShopsController@publish']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
         Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
+
+        Route::get('coffee-shop/opening-times',
+            ['as' => 'coffee-shop.opening-times', 'uses' => 'CoffeeShopsController@openingTimes']);
+        Route::post('coffee-shop/opening-times', ['uses' => 'CoffeeShopsController@updateOpeningTimes']);
 
         Route::resource('offers', 'OffersController');
         Route::get('offers/{offer}/toggleActivation',

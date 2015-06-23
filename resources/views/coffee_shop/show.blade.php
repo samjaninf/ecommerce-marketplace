@@ -86,13 +86,10 @@
                             <div class="col-sm-6 hidden-xs">
                                 <div>
                                     @if(! Auth::guest() && current_user()->owns($coffeeShop))
-                                        <a href="#" id="edit-coffeeshop-times-helper">Change opening times</a>
-                                        <p id="edit-coffeeshop-times"
-                                           data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
-                                    @else
-                                        <p>
+                                        <a href="{{ route('coffee-shop.opening-times') }}">Change opening times</a>
                                     @endif
-                                        {!! nl2br(e($coffeeShop->opening_times)) !!}
+                                    <p>
+                                        {!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
                                     </p>
                                 </div>
                             </div>
@@ -276,7 +273,7 @@
                                     </p>
                                 @endif
 
-                                @if(! Auth::guest())
+                                @if(! Auth::guest() && current_user()->canReview($coffeeShop))
                                     @if ( ! $coffeeShop->reviews()->where('user_id', '=', current_user()->id)->count())
                                         <a href="#" id="add-review">
                                             Add your review

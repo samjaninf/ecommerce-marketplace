@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Koolbeans\Http\Middleware\CoffeeShopIsOpenMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -30,6 +31,7 @@ class Kernel extends HttpKernel
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest'      => 'Koolbeans\Http\Middleware\RedirectIfAuthenticated',
         'owner'      => 'Koolbeans\Http\Middleware\IsCoffeeShopOwner',
+        'open'       => CoffeeShopIsOpenMiddleware::class,
     ];
 
 }
