@@ -92,6 +92,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function mobile_tokens()
+    {
+        return $this->hasMany(MobileToken::class);
+    }
+
+    /**
      * @return CoffeeShop[]
      */
     public function getCoffeeShopsAttribute()

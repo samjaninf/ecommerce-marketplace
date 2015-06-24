@@ -3,8 +3,10 @@
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Koolbeans\CoffeeShop;
+use Koolbeans\MobileToken;
 use Koolbeans\Offer;
 use Koolbeans\Repositories\CoffeeShopRepository;
+use Koolbeans\User;
 
 class WelcomeController extends Controller
 {
@@ -78,7 +80,10 @@ class WelcomeController extends Controller
         $orderByRaw = 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
                       abs($city['geometry']['location']['lng']) . ') asc';
 
-        $shops    = CoffeeShop::where('location', 'like', $query)->orWhere('county', 'like', $query)->orderByRaw($orderByRaw)->paginate(8);
+        $shops    = CoffeeShop::where('location', 'like', $query)
+                              ->orWhere('county', 'like', $query)
+                              ->orderByRaw($orderByRaw)
+                              ->paginate(8);
         $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
 
         return view('search.results', compact('shops', 'position'))->with('query', $baseQuery);
@@ -126,5 +131,71 @@ class WelcomeController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
+    public function pushToken(Request $request)
+    {
+        $user = User::find($request->db_id);
+        if ($request->has('unregister')) {
+            $user->mobile_tokens()->delete();
+
+            return;
+        }
+
+        $token = $user->mobile_tokens()->firstOrNew(['device' => $request->user_id]);
+        if ($request->has('_push')) {
+            $tokens = null;
+        } else {
+            $token->delete();
+        }
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function auth(Request $request)
+    {
+        if (\Auth::attempt($request->only(['email', 'password']))) {
+            return current_user()->id;
+        }
+
+        return response('Bad credentials.', 403);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function validateId(Request $request)
+    {
+        if ($request->id != '') {
+            $user = User::find($request->id);
+
+            if ($user) {
+                return '';
+            }
+        }
+
+        return response('', 403);
+    }
+
+    /**
+     * @param $token
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
+     */
+    public function validateToken($token)
+    {
+        if (MobileToken::whereToken($token)->count() > 0) {
+            return '';
+        }
+
+        return response('', 403);
     }
 }

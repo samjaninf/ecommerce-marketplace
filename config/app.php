@@ -128,6 +128,7 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+        'Barryvdh\Cors\CorsServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
 

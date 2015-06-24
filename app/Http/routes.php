@@ -14,6 +14,11 @@
 Route::get('/', 'WelcomeController@index');
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
+Route::any('webhooks/push-token', 'WelcomeController@pushToken');
+Route::post('webhooks/auth', 'WelcomeController@auth');
+Route::post('webhooks/validate', 'WelcomeController@validateId');
+Route::get('webhooks/validate/{token}', 'WelcomeController@validateToken');
+
 Route::get('about', 'WelcomeController@about');
 Route::get('contact-us', 'WelcomeController@contactUs');
 Route::post('contact', 'WelcomeController@contact');
@@ -21,8 +26,8 @@ Route::post('about', 'WelcomeController@updateAbout');
 
 Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
 Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
-Route::group(['middleware' => 'auth'], function () {
 
+Route::group(['middleware' => 'auth'], function () {
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
 

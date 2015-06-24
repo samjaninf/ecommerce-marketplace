@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+use Illuminate\Support\Str;
 
 class VerifyCsrfToken extends BaseVerifier
 {
@@ -17,7 +18,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     public function handle($request, Closure $next)
     {
-        if ($request->ajax()) {
+        if ($request->ajax() || Str::contains($request->getUri(), 'webhooks')) {
             return $next($request);
         }
 
