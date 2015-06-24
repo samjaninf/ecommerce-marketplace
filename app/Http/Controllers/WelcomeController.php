@@ -138,17 +138,24 @@ class WelcomeController extends Controller
      */
     public function pushToken(Request $request)
     {
-        $user = User::find($request->db_id);
+        $user = User::find($request->user_id);
         if ($request->has('unregister')) {
-            $user->mobile_tokens()->delete();
+            $requestTokens =
+                $request->has('_push.ios_token') ? $request->get('_push.ios_token') : $request->get('_push.android_token');
+            $user->mobile_tokens()->whereTokenIn($requestTokens)->delete();
 
             return;
         }
 
-        $token = $user->mobile_tokens()->firstOrNew(['device' => $request->user_id]);
         if ($request->has('_push')) {
-            $tokens = null;
+            $requestTokens =
+                $request->has('_push.ios_token') ? $request->get('_push.ios_token') : $request->get('_push.android_token');
+            foreach ($requestTokens as $requestToken) {
+                $user->mobile_tokens()->firstOrCreate(['token' => $requestToken]);
+            }
         } else {
+            $requestToken = $request->has('ios_token') ? $request->ios_token : $request->android_token;
+            $token        = $user->mobile_tokens()->firstOrNew(['token' => $requestToken]);
             $token->delete();
         }
     }
