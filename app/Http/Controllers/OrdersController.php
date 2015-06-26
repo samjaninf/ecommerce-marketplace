@@ -1,6 +1,8 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Carbon\Carbon;
+use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Koolbeans\Http\Requests;
@@ -253,11 +255,14 @@ class OrdersController extends Controller
 
             $charged = true;
 
-            \Mail::send('emails.payment_charged',
-                ['user' => current_user(), 'amount' => $amount  /100., 'refund' => $refund / 100.],
-                function (Message $m) use ($user) {
-                    $m->to($user->email, $user->name)->subject('You have been charged.');
-                });
+            \Mail::send('emails.payment_charged', [
+                'user'    => current_user(),
+                'amount'  => $amount / 100.,
+                'refund'  => $refund / 100.,
+                'initial' => '15.00',
+            ], function (Message $m) use ($user) {
+                $m->to($user->email, $user->name)->subject('You have been charged.');
+            });
         } else {
             try {
                 if ( ! $previous && ! $charge = $user->charge(1500, ['currency' => 'gbp', 'capture' => false])) {
@@ -295,13 +300,52 @@ class OrdersController extends Controller
                           'You wont be charged until you spend more than £ 15 in our shops. ' .
                           'In 6 days, you will automatically be charged for the correct amount. ';
         $successMessage = 'Your order has been added to your tip!';
-        $warningMessage = ( $previous ) ? ( $warningMessage ) : $successMessage;
+        $warningMessage = ( ! $previous ) ? ( $warningMessage ) : $successMessage;
 
         \Mail::send('emails.order_completed',
             ['user' => current_user(), 'order' => $order, 'coffeeShop' => $coffeeShop],
             function (Message $m) use ($user) {
                 $m->to($user->email, $user->name)->subject('Your order has been sent!');
             });
+
+        $tokens = $user->mobile_tokens;
+        if ($tokens->isEmpty()) {
+            \Mail::send('emails.no_active_token_found', ['user' => $coffeeShop->user],
+                function (Message $m) use ($coffeeShop) {
+                    $m->to($coffeeShop->user->email, $coffeeShop->user->name)
+                      ->subject('Make sure to install the application');
+                });
+        } else {
+            $notification = json_encode([
+                'tokens'       => $tokens->map(function ($token) {
+                    return $token->token;
+                })->all(),
+                'notification' => [
+                    'alert'   => 'You have a new order! Pickup time: ' .
+                                 (new Carbon($order->pickup_time))->format('H:i'),
+                    'android' => [
+                        'payload' => $payload = [
+                            'orderId' => $order->id,
+                        ],
+                    ],
+                ],
+            ]);
+            $ionic        = new Client([
+                'base_url' => 'https://push.ionic.io/api/v1/',
+                'defaults' => [
+                    'auth'    => [config('services.ionic.app_secret'), ''],
+                    'headers' => [
+                        'Content-Type'           => 'application/json',
+                        'X-Ionic-Application-Id' => config('services.ionic.app_id'),
+                    ],
+                ],
+            ]);
+
+            try {
+                $ionic->post('push', ['body' => $notification]);
+            } catch (Exception $e) {
+            }
+        }
 
         return redirect(route('order.success', ['order' => $order]))->with('messages',
             ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage]);

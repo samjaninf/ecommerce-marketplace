@@ -33,8 +33,7 @@ return [
         'model'  => 'App\User',
         'secret' => env('STRIPE_KEY'),
     ],
-
-    'xero' => [
+    'xero'     => [
         'application_type'    => "Private",
         'oauth_callback'      => "oob",
         'user_agent'          => "XeroOAuth-PHP Private Koolbeans",
@@ -47,6 +46,10 @@ return [
         'file_version'        => '1.0',
         'rsa_private_key'     => '/etc/ssl/certs/koolbeans.pem',
         'rsa_public_key'      => '/etc/ssl/certs/koolbeans.cer',
-    ]
+    ],
+    'ionic'    => [
+        'app_id'     => 'ee60e96a',
+        'app_secret' => '9b2ce71b9906a0165b782799ed1261efc4293c6cd895de7f',
+    ],
 
 ];

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Koolbeans\CoffeeShop;
 use Koolbeans\MobileToken;
 use Koolbeans\Offer;
+use Koolbeans\Order;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\User;
 
@@ -190,6 +191,38 @@ class WelcomeController extends Controller
         }
 
         return response('', 403);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function getOrder($id)
+    {
+        $order = Order::whereId($id)->with('order_lines', 'order_lines.product', 'coffee_shop')->first();
+
+        $return = [];
+        foreach ($order->order_lines as $line) {
+            $name = $order->coffee_shop->getNameFor($line->product);
+            if ( ! isset( $return[ $name ] )) {
+                $return[ $name ] = [];
+            }
+
+            $size = $order->coffee_shop->getSizeDisplayName($line->size);
+            if ( ! isset( $return[ $name ][ $size ] )) {
+                $return[ $name ][ $size ] = 0;
+            }
+
+            $return[ $name ][ $size ] += 1;
+        }
+
+        $return = [
+            'products'    => $return,
+            'pickup_time' => $order->pickup_time,
+        ];
+
+        return $return;
     }
 
     /**
