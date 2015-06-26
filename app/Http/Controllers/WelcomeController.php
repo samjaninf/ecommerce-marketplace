@@ -142,7 +142,7 @@ class WelcomeController extends Controller
         $user = User::find($request->user_id);
         if ($request->has('unregister')) {
             $requestTokens =
-                $request->has('_push.ios_token') ? $request->get('_push.ios_token') : $request->get('_push.android_token');
+                $request->has('_push.ios_tokens') ? $request->_push['ios_tokens'] : $request->_push['android_tokens'];
             $user->mobile_tokens()->whereTokenIn($requestTokens)->delete();
 
             return;
@@ -150,7 +150,7 @@ class WelcomeController extends Controller
 
         if ($request->has('_push')) {
             $requestTokens =
-                $request->has('_push.ios_token') ? $request->get('_push.ios_token') : $request->get('_push.android_token');
+                $request->has('_push.ios_tokens') ? $request->_push['ios_tokens'] : $request->_push['android_tokens'];
             foreach ($requestTokens as $requestToken) {
                 $user->mobile_tokens()->firstOrCreate(['token' => $requestToken]);
             }
