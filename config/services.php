@@ -31,7 +31,7 @@ return [
     ],
     'stripe'   => [
         'model'  => 'App\User',
-        'secret' => env('STRIPE_KEY'),
+        'secret' => 'pk_test_fg6G19SE70C5qtDD0QGYbFWg',
     ],
     'xero'     => [
         'application_type'    => "Private",
