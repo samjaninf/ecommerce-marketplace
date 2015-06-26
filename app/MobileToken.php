@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class MobileToken extends Model
 {
     /**
+     * @var array
+     */
+    protected $fillable = ['token'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
