@@ -143,7 +143,7 @@ class WelcomeController extends Controller
         if ($request->has('unregister')) {
             $requestTokens =
                 $request->has('_push.ios_tokens') ? $request->_push['ios_tokens'] : $request->_push['android_tokens'];
-            $user->mobile_tokens()->whereTokenIn($requestTokens)->delete();
+            $user->mobile_tokens()->whereIn('token', $requestTokens)->delete();
 
             return;
         }
