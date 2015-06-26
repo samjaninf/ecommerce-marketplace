@@ -36,6 +36,15 @@
                     {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
                 </p>
 
+                @if($order->price < 1500 && current_user()->transactions()->orderBy('id', 'desc')->first()->charged == true)
+                    <p>
+                        An authorization of £ 15 will be made to your bank.
+                        However, we will not charge you for that amount.
+                        You wont be charged until you spend more than £ 15 in total in our shops.
+                        In 6 days, you will automatically be charged for the amount accumulated over the week.
+                    </p>
+                @endif
+
                 <h4>Pickup time: {{$order->pickup_time}}</h4>
                     <form accept-charset="UTF-8"
                           action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}"

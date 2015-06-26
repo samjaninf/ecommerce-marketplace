@@ -61,7 +61,7 @@
                                                 </p>
                                             </div>
                                             <div class="panel-footer">
-                                                Total: <span class="pull-right">£ {{ $order->price }}</span>
+                                                Total: <span class="pull-right">£ {{ number_format($order->price / 100., 2) }}</span>
                                             </div>
                                             <div class="panel-footer">
                                                 <a href="#" class="btn btn-primary">Re-Order</a>

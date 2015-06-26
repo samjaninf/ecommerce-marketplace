@@ -12,6 +12,7 @@ use Koolbeans\OrderLine;
 use Koolbeans\Product;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Laravel\Cashier\StripeGateway;
+use Session;
 use Stripe\Charge;
 use Stripe\Error\Card;
 
@@ -295,12 +296,8 @@ class OrdersController extends Controller
         $order->save();
 
         $chargedMessage = 'You have been correctly charged for your order. Here is your receipt.';
-        $warningMessage = 'An authorization of £ 15 has been made to your bank. ' .
-                          'However, we will not charge you for that amount. ' .
-                          'You wont be charged until you spend more than £ 15 in our shops. ' .
-                          'In 6 days, you will automatically be charged for the correct amount. ';
         $successMessage = 'Your order has been added to your tip!';
-        $warningMessage = ( ! $previous ) ? ( $warningMessage ) : $successMessage;
+        $warningMessage = $successMessage;
 
         \Mail::send('emails.order_completed',
             ['user' => current_user(), 'order' => $order, 'coffeeShop' => $coffeeShop],
@@ -325,7 +322,7 @@ class OrdersController extends Controller
                                  (new Carbon($order->pickup_time))->format('H:i'),
                     'android' => [
                         'payload' => $payload = [
-                            'orderId' => $order->id,
+                            'orderId' => $order->id
                         ],
                     ],
                 ],
@@ -347,8 +344,9 @@ class OrdersController extends Controller
             }
         }
 
-        return redirect(route('order.success', ['order' => $order]))->with('messages',
-            ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage]);
+        return redirect(route('order.success', ['order' => $order]))
+            ->with('messages', ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage])
+            ->with('newauth', $previous ? 'no' : 'yes');
     }
 
     /**

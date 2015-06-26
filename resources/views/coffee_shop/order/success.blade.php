@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('page-title')
-    Order correctly sent!
+    Order successfully placed!
 @stop
 
 @section('content')
@@ -13,6 +13,14 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
+                @if(Session::has('newauth') && session('newauth') == 'yes')
+                    <p>
+                        An authorization of £ 15 has been made to your bank.
+                        However, we will not charge you for that amount.
+                        You wont be charged until you spend more than £ 15 in total in our shops.
+                        In 6 days, you will automatically be charged for the amount accumulated over the week.
+                    </p>
+                @endif
                 <table class="table table-hover">
                     <thead>
                     <tr>

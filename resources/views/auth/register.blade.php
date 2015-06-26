@@ -7,7 +7,10 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Welcome to Koolbeans!</div>
 				<div class="panel-body">
-                    <p>30 Seconds to register to start finding great coffee, from great coffee shops.</p>
+                    <p>30 Seconds to register to start finding great coffee, from great coffee shops.
+
+                        <a href="{{ route('coffee-shop.apply') }}" class="btn btn-default pull-right">Are you a coffee shop?</a><br><br>
+                    </p>
 
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
@@ -28,7 +31,6 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>
-                            <a href="{{ route('coffee-shop.apply') }}" class="col-md-2 btn btn-default">Are you a coffee shop?</a><br><br>
 						</div>
 
 						<div class="form-group">
