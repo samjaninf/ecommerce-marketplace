@@ -118,7 +118,7 @@
 
 @section('scripts')
     <script type="text/javascript">
-        Stripe.setPublishableKey('sk_test_hEINyCSDxOyifGNXcNzhtNDF');
+        Stripe.setPublishableKey('pk_test_SFOyFoTWJB3TTq0zUKH1Ajla');
 
         jQuery(function($) {
             $('#changeCard').click(function (event) {
