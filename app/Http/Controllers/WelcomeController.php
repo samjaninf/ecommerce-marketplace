@@ -218,12 +218,27 @@ class WelcomeController extends Controller
         }
 
         $return = [
+            'order_id'    => $order->id,
             'products'    => $return,
             'pickup_time' => $order->pickup_time,
             'name'        => $order->user->name,
         ];
 
         return $return;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function orderSent($id)
+    {
+        $order = Order::find($id);
+        $order->status = 'collected';
+        $order->save();
+
+        return response();
     }
 
     /**
