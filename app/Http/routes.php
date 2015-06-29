@@ -19,7 +19,7 @@ Route::post('webhooks/auth', 'WelcomeController@auth');
 Route::post('webhooks/validate', 'WelcomeController@validateId');
 Route::get('webhooks/validate/{token}', 'WelcomeController@validateToken');
 Route::get('webhooks/get-order/{id}', 'WelcomeController@getOrder');
-Route::post('webhooks/order-sent/{$id}', 'WelcomeController@orderSent');
+Route::post('webhooks/order-sent/{id}', 'WelcomeController@orderSent');
 
 Route::get('about', 'WelcomeController@about');
 Route::get('contact-us', 'WelcomeController@contactUs');

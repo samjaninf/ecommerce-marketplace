@@ -238,7 +238,7 @@ class WelcomeController extends Controller
         $order->status = 'collected';
         $order->save();
 
-        return response();
+        return '';
     }
 
     /**
