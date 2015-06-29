@@ -200,7 +200,7 @@ class WelcomeController extends Controller
      */
     public function getOrder($id)
     {
-        $order = Order::whereId($id)->with('order_lines', 'order_lines.product', 'coffee_shop')->first();
+        $order = Order::whereId($id)->with('order_lines', 'order_lines.product', 'coffee_shop', 'user')->first();
 
         $return = [];
         foreach ($order->order_lines as $line) {
@@ -220,6 +220,7 @@ class WelcomeController extends Controller
         $return = [
             'products'    => $return,
             'pickup_time' => $order->pickup_time,
+            'name'        => $order->user->name,
         ];
 
         return $return;
