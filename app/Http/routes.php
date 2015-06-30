@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
+        Route::resource('post', 'PostsController');
 
         Route::get('coffee-shop/{coffee_shop}/featured',
             ['as' => 'admin.coffee-shop.featured', 'uses' => 'CoffeeShopsController@featured']);
