@@ -12,6 +12,7 @@
                     @yield('page-title')
                     <span id="page-actions">
                         <a href="{{ route('admin.products.index') }}" class="btn btn-primary">All products</a>
+                        <a href="{{ route('admin.post.index') }}" class="btn btn-primary">All posts</a>
                     </span>
                 </h1>
             </div>
