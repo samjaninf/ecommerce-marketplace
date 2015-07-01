@@ -29,6 +29,8 @@ Route::post('about', 'WelcomeController@updateAbout');
 Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
 Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 
+Route::resource('posts', 'PostsController');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);

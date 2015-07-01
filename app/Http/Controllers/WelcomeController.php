@@ -6,6 +6,7 @@ use Koolbeans\CoffeeShop;
 use Koolbeans\MobileToken;
 use Koolbeans\Offer;
 use Koolbeans\Order;
+use Koolbeans\Post;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\User;
 
@@ -53,7 +54,9 @@ class WelcomeController extends Controller
             $offers->add(new Offer);
         }
 
-        return view('welcome')->with('featuredShops', $featured)->with('offers', $offers->random(4));
+        $posts = Post::orderBy('created_at', 'desc')->limit(2)->get();
+
+        return view('welcome')->with('featuredShops', $featured)->with('posts', $posts)->with('offers', $offers->random(4));
     }
 
     /**

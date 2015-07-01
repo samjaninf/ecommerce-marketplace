@@ -53,6 +53,14 @@
                     <div class="row">
                         <div class="col-xs-12 text-center">
                             <h2>Latest news</h2>
+
+                            <div style="position: relative">
+                                @foreach($posts as $post)
+                                    @include('posts._small')
+                                @endforeach
+                            </div>
+
+                            <a href="{{ route('posts.index') }}" class="btn btn-default" style="margin-top: 30px">View all news</a>
                         </div>
                     </div>
 
