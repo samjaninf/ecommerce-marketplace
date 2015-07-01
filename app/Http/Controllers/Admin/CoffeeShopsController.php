@@ -1,5 +1,6 @@
 <?php namespace Koolbeans\Http\Controllers\Admin;
 
+use Illuminate\Mail\Message;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\Http\Requests\UpdateCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
@@ -44,6 +45,13 @@ class CoffeeShopsController extends Controller
         $coffeeShop         = $this->coffeeShopRepository->find($id);
         $coffeeShop->status = $status;
         $coffeeShop->save();
+
+        if ($status === 'accepted') {
+            \Mail::send('emails.application', ['user' => $coffeeShop->user], function (Message $m) use ($coffeeShop) {
+                $m->to($coffeeShop->user->email, $coffeeShop->name)
+                  ->subject('Your shop has been accepted!');
+            });
+        }
 
         if ($status === 'requested') {
             return redirect()

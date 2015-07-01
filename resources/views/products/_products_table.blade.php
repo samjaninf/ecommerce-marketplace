@@ -4,9 +4,9 @@
         <th>Name</th>
         @if(count($sizes) === 4)
             <th><a href="#">Small</a></th>
-            <th><a href="changeTerm">Medium</a></th>
-            <th><a href="changeTerm">Large</a></th>
-            <th><a href="changeTerm">Extra Large</a></th>
+            <th><a href="#">Medium</a></th>
+            <th><a href="#">Large</a></th>
+            <th><a href="#">Extra Large</a></th>
         @else
             <th><a href="#">Price</a></th>
         @endif
@@ -18,7 +18,7 @@
             <td>
                 <label for="product-{{$product->id}}">
                     <input id="product-{{$product->id}}"
-                           class="activates"
+                           class="activates "
                            type="checkbox"
                            value="{{$product->id}}"
                            data-target="{{ route('coffee-shop.products.toggle', ['coffeeShop' => $coffeeShop, 'product' => $product]) }}"

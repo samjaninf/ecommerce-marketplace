@@ -50,6 +50,11 @@ class CoffeeShopsController extends Controller
             ]);
 
             \Auth::login($user);
+
+            \Mail::send('emails.registration', ['user' => current_user()], function (Message $m) use ($request) {
+                $m->to($request->input('email'), $request->input('name'))
+                  ->subject('Thank you for registering to Koolbeans!');
+            });
         } else {
             $user = current_user();
         }

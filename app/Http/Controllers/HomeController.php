@@ -59,4 +59,26 @@ RAW
 
         return view('home', compact('orders'))->with('messages', $message);
     }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function reporting()
+    {
+        $id = current_user()->id;
+        $sql = <<<SQL
+SELECT DATE_FORMAT(orders.created_at, '%M %Y') as actual_date, SUM(price) as price
+FROM coffee_shops
+JOIN orders
+  ON orders.coffee_shop_id = coffee_shops.id
+WHERE coffee_shops.user_id = $id
+AND paid = true
+GROUP BY actual_date
+ORDER BY actual_date DESC
+SQL;
+        $reporting = \DB::connection()->select($sql);
+
+        return view('reporting', compact('reporting'));
+    }
+
 }

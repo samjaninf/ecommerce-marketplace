@@ -14,7 +14,14 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12">
+            @if(current_user()->isOwner())
+                <div class="col-sm-3">
+                    @include('dashboard._menu')
+                </div>
+                <div class="col-sm-9">
+            @else
+                <div class="col-xs-12">
+            @endif
                 <form action="{{ url('contact') }}" class="form-horizontal" method="post">
                     <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
                         <label for="name" class="col-sm-2 control-label">Your name:</label>

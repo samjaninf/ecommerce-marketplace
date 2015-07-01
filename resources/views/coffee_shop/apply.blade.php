@@ -117,7 +117,7 @@
                     <div class="col-sm-9">
                         <textarea id="comment"
                                   name="comment"
-                                  placeholder="Anything particular to say?"
+                                  placeholder="Do you have any questions for Koolbeans?"
                                   class="form-control">{{old('comment', $coffeeShop->comment)}}</textarea>
                     </div>
                 </div>

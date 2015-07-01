@@ -42,13 +42,13 @@
             <td>
                 @if($offer->activated)
                     <a href="{{ route('offers.toggle-activation', ['offer' => $offer]) }}"
-                       class="btn btn-warning">Deactivate</a>
+                       class="btn btn-warning btn-xs">Deactivate</a>
                 @else
                     <a href="{{ route('offers.toggle-activation', ['offer' => $offer]) }}"
-                       class="btn btn-success">Activate</a>
+                       class="btn btn-success btn-xs">Activate</a>
                 @endif
                 <a href="{{ route('offers.destroy', ['offer' => $offer]) }}"
-                   class="btn btn-danger"
+                   class="btn btn-danger btn-xs"
                    data-confirm="Are you sure you want to delete this offer?"
                    data-method="delete">Delete</a>
             </td>

@@ -1,12 +1,11 @@
 @extends('app')
 
 @section('page-title')
-    List of orders
+    Reporting
 @stop
 
 @section('content')
     <div class="container main-content-padded">
-
         <div class="row">
             <div class="col-xs-12">
                 <h1>
@@ -24,31 +23,24 @@
             </div>
 
             <div class="col-sm-9">
-                <table class="table table-hovered">
+                <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>Date</th>
                         <th>Total</th>
-                        <th>Actions</th>
                     </tr>
                     </thead>
+
                     <tbody>
-                    @foreach($orders as $order)
+                    @foreach($reporting as $report)
                         <tr>
-                            <td>{{ $order->created_at }}</td>
-                            <td>£ {{ number_format($order->price / 100., 2) }}</td>
-                            <td>
-                                <a href="{{ route('order.success', ['order' => $order]) }}"
-                                   class="btn btn-primary btn-xs">
-                                    Review
-                                </a>
-                            </td>
+                            <td>{{ $report->actual_date }}</td>
+                            <td>£ {{ number_format($report->price / 100., 2) }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 @stop

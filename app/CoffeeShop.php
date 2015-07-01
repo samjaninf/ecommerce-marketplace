@@ -264,7 +264,7 @@ class CoffeeShop extends Model
     {
         $price = $this->hasActivated($product, $size, true);
 
-        return $price === false ? '#' : '£ ' . number_format($price / 100., 2);
+        return $price === false ? '£' : '£ ' . number_format($price / 100., 2);
     }
 
     /**

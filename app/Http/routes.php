@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
 
     Route::group(['middleware' => 'owner'], function () {
+        Route::get('reporting', ['as' => 'reporting', 'uses' => 'HomeController@reporting']);
         Route::get('order/{order}/nextStatus', ['as' => 'next-order-status', 'uses' => 'OrdersController@nextStatus']);
         Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
             ['as' => 'coffee-shop.gallery.up', 'uses' => 'GalleryImagesController@moveUp']);

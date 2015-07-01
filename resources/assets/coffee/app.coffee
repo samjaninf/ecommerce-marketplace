@@ -24,6 +24,6 @@ class Koolbeans
     $('[data-toggle="tooltip"]').tooltip()
 
   fadeOutMessages: ->
-    jQuery('#messages-top')?.delay(3000).fadeOut()
+    jQuery('#messages-top')?.delay(8000).fadeOut()
 
 window.koolbeans = new Koolbeans()
