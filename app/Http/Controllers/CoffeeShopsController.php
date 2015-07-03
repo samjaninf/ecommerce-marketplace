@@ -64,8 +64,7 @@ class CoffeeShopsController extends Controller
         $shop->save();
 
         \Mail::send('emails.coffeeshop_registration', ['user' => current_user()], function (Message $m) use ($user) {
-            $m->to($user->email, $user->name)
-              ->subject('Thank you for applying your shop to Koolbeans!');
+            $m->to($user->email, $user->name)->subject('Thank you for applying your shop to Koolbeans!');
         });
 
         return redirect(route('home'))->with('messages',
@@ -106,12 +105,22 @@ class CoffeeShopsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $coffeeShop = $this->coffeeShop->find($id);
+
+        if (null == $request->cookie('seen-' . $coffeeShop->id)) {
+            $coffeeShop->views += 1;
+            $coffeeShop->save();
+        }
+
+        $coffeeShop->save();
         $bestReview = $coffeeShop->getBestReview();
 
-        return view('coffee_shop.show', compact('coffeeShop', 'bestReview'));
+        $response = new \Illuminate\Http\Response(view('coffee_shop.show', compact('coffeeShop', 'bestReview')));
+        $response->withCookie(cookie()->forever('seen-' . $coffeeShop->id, 'yes'));
+
+        return $response;
     }
 
     /**

@@ -12,6 +12,13 @@
                 @include('dashboard._menu')
             </div>
             <div class="col-sm-9">
+                @if($coffeeShop->views > 10)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>You had {{ $coffeeShop->views }} visitors in total!</h4>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-xs-12">
                         <h2>Current orders</h2>
@@ -46,7 +53,8 @@
                                     <td>
                                         {{ $order->status }}
                                         <a href="{{ route('next-order-status', [ $order ]) }}"
-                                           class="btn btn-success btn-xs pull-right">Set as {{ $order->getNextStatus() }}</a>
+                                           class="btn btn-success btn-xs pull-right">Set
+                                            as {{ $order->getNextStatus() }}</a>
                                     </td>
                                 </tr>
                             @endforeach
