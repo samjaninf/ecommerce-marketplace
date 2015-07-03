@@ -30,7 +30,12 @@
                        data-target="{{ route('coffee-shop.products.rename', ['coffeeShop' => $coffeeShop, 'product' => $product]) }}">
                         {{ $coffeeShop->getNameFor($product) }}
                     </a>
-                    (Default: {{ $product->name }})
+                    (Default: {{ $product->name }})<br>
+                    Description: <a href="#"
+                                    class="change-description"
+                                    data-target="{{ route('coffee-shop.products.change-description', ['coffeeShop' => $coffeeShop, 'product' => $product]) }}">
+                        {{ $coffeeShop->getDescriptionFor($product) }}
+                    </a>
                 </span>
             </td>
             @foreach($sizes as $size)
@@ -57,10 +62,14 @@
         </tr>
     @endforeach
     <tr>
-        <td class="success" colspan="{{count($sizes) + 1}}">
-            <a href="#" data-target="form-add-{{count($sizes) == 4 ? 'drink' : 'food' }}" class="add-product">Add a new product</a>
+        <td class="success" colspan="{{count($sizes) + 2}}">
+            <a href="#" data-target="form-add-{{count($sizes) == 4 ? 'drink' : 'food' }}" class="add-product">Add a new
+                product</a>
 
-            <form action="{{ route('products.store') }}" id="form-add-{{count($sizes) == 4 ? 'drink' : 'food' }}" class="hide" method="post">
+            <form action="{{ route('products.store') }}"
+                  id="form-add-{{count($sizes) == 4 ? 'drink' : 'food' }}"
+                  class="hide"
+                  method="post">
                 <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
                     <label for="name" class="col-sm-2 control-label">Name:</label>
 
@@ -88,10 +97,13 @@
                         @endforeach
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <input type="hidden" name="type" value="{{ count($sizes) == 4 ? 'drink' : 'food' }}" id="type-field">
+                        <input type="hidden"
+                               name="type"
+                               value="{{ count($sizes) == 4 ? 'drink' : 'food' }}"
+                               id="type-field">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                         <input type="submit" class="btn btn-success" value="Add a product">
                     </div>

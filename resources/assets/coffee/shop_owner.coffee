@@ -141,6 +141,11 @@ for rename in renames
   rename.onclick = (e) ->
     triggerRenameProduct this, e
 
+descs = document.getElementsByClassName('change-description')
+for desc in descs
+  desc.onclick = (e) ->
+    triggerChangeDescription this, e
+
 prices = document.getElementsByClassName('change-price')
 for price in prices
   price.onclick = (e) ->
@@ -155,6 +160,10 @@ for link in addLinks
 triggerRenameProduct = (link, e) ->
   e.preventDefault()
   createInput link, e, 'text', renameProduct
+
+triggerChangeDescription = (link, e) ->
+  e.preventDefault()
+  createInput link, e, 'text', changeDescription
 
 triggerChangePrice = (link, e) ->
   e.preventDefault()
@@ -192,6 +201,17 @@ renameProduct = (input, e) ->
     success: (data) ->
       createLink input, 'change-display-name', data, triggerRenameProduct
 
+changeDescription = (input, e) ->
+  e.preventDefault()
+  input.disable = true
+
+  $.ajax
+    url: input.dataset.target
+    method: 'post'
+    data: { description: input.value }
+    success: (data) ->
+      createLink input, 'change-description', data, triggerChangeDescription
+
 changePrice = (input, e) ->
   e.preventDefault()
   input.disabled = true
@@ -216,9 +236,10 @@ createLink = (input, cls, data, cb) ->
     cb this, e
 
   input.parentNode.replaceChild link, input
-  input.parentNode.classList.remove 'has-error'
+  link.parentNode.classList.remove 'has-error'
 
 if document.getElementById('creating-offers')?
+  console.log document.getElementById('creating-offers')
   productNb = 1
 
   addOrderDetail = (e) ->

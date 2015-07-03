@@ -28,7 +28,16 @@
 
                 <div class="form-group @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
                     <h5>Products:</h5>
-                    <label class="row full-width">
+                    <a href="#" onclick="showMenuDescription(this)">View menu description</a>
+                    <div class="well well-sm hide" id="menu-description">
+                        <dl>
+                            @foreach($coffeeShop->products as $product)
+                                <dt>{{ $coffeeShop->getNameFor($product) }}</dt>
+                                <dd>{{ $coffeeShop->getDisplayDescriptionFor($product) }}</dd><br>
+                            @endforeach
+                        </dl>
+                    </div>
+                    <label class="row full-width" style="margin-top: 10px">
                         @if($orderProduct !== null)
                             <span class="col-xs-12 col-sm-6">
                                 <select id="product-1" name="products[]" class="form-control">
@@ -93,4 +102,10 @@
 <script type="text/javascript">
     var products = {!! json_encode($products) !!};
     var coffeeShop = {!! $coffeeShop->toJson() !!};
+
+    function showMenuDescription(el) {
+        event.preventDefault();
+        document.getElementById('menu-description').classList.remove('hide');
+        el.parentNode.removeChild(el)
+    }
 </script>

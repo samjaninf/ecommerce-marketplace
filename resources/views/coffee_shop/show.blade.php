@@ -104,7 +104,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         @if(current_user()->role === 'admin')
-                            <a href="{{ route('admin.coffee-shops.show') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}" class="btn btn-primary">
                                 Review performances
                             </a>
                         @else

@@ -48,10 +48,14 @@ Route::group(['middleware' => 'auth'], function () {
             ['as' => 'coffee-shop.toggle-spec', 'uses' => 'CoffeeShopsController@toggleSpec']);
         Route::get('coffee-shop/{coffee_shop}/products/{product}/toggle/{size?}',
             ['as' => 'coffee-shop.products.toggle', 'uses' => 'MenuController@toggle']);
+
         Route::post('coffee-shop/{coffee_shop}/products/{product}/rename',
             ['as' => 'coffee-shop.products.rename', 'uses' => 'MenuController@rename']);
+        Route::post('coffee-shop/{coffee_shop}/products/{product}/change-description',
+            ['as' => 'coffee-shop.products.change-description', 'uses' => 'MenuController@changeDescription']);
         Route::post('coffee-shop/{coffee_shop}/products/{product}/reprice/{size}',
             ['as' => 'coffee-shop.products.reprice', 'uses' => 'MenuController@reprice']);
+
         Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
         Route::get('publish-my-shop', ['as' => 'publish-my-shop', 'uses' => 'CoffeeShopsController@publish']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
@@ -78,6 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
+        Route::get('reporting/{from?}', ['as' => 'admin.reporting', 'uses' => 'AdminController@reporting']);
         Route::resource('post', 'PostsController');
 
         Route::get('coffee-shop/{coffee_shop}/featured',
@@ -94,7 +99,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('product-types', 'ProductTypesController', ['only' => 'store']);
     });
 });
-
 Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
 
 /**

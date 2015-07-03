@@ -10,7 +10,7 @@
             <div class="col-sm-3">
                 @include('dashboard._menu')
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9 main-content-padded">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-primary">

@@ -302,7 +302,7 @@ class CoffeeShop extends Model
     {
         return $this->belongsToMany('Koolbeans\Product', 'coffee_shop_has_products')
                     ->withPivot('name', 'xs', 'sm', 'md', 'lg', 'activated', 'xs_activated', 'sm_activated',
-                        'md_activated', 'lg_activated');
+                        'md_activated', 'lg_activated', 'description');
     }
 
     /**
@@ -329,9 +329,6 @@ class CoffeeShop extends Model
      */
     public function getNameFor($product)
     {
-        if ( ! is_object($product)) {
-            dd($product);
-        }
         $p = $this->products()->find($product->id);
 
         if ($p && $p->pivot->name) {
@@ -339,6 +336,38 @@ class CoffeeShop extends Model
         }
 
         return $product->name;
+    }
+
+    /**
+     * @param $product
+     *
+     * @return string
+     */
+    public function getDescriptionFor($product)
+    {
+        $p = $this->products()->find($product->id);
+
+        if ($p && $p->pivot->description) {
+            return $p->pivot->description;
+        }
+
+        return 'DESC';
+    }
+
+    /**
+     * @param $product
+     *
+     * @return string
+     */
+    public function getDisplayDescriptionFor($product)
+    {
+        $desc = $this->getDescriptionFor($product);
+
+        if ($desc == 'DESC') {
+            return '';
+        }
+
+        return $desc;
     }
 
     /**
@@ -422,9 +451,7 @@ class CoffeeShop extends Model
      */
     public function getStartingHour($day)
     {
-        $ins = $this->opening_times()
-                    ->whereDayOfWeek(mb_substr($day, 0, 3))
-                    ->first();
+        $ins = $this->opening_times()->whereDayOfWeek(mb_substr($day, 0, 3))->first();
 
         if ($ins === null) {
             return '08:00';
@@ -442,7 +469,7 @@ class CoffeeShop extends Model
     {
         $opened = $this->opening_times()->whereDayOfWeek($time->format('D'))->first();
 
-        return ($opened && $opened->start_hour->lte($time) && $opened->stop_hour->gte($time));
+        return ( $opened && $opened->start_hour->lte($time) && $opened->stop_hour->gte($time) );
     }
 
     /**
@@ -452,9 +479,7 @@ class CoffeeShop extends Model
      */
     public function getStoppingHour($day)
     {
-        $ins = $this->opening_times()
-                    ->whereDayOfWeek(mb_substr($day, 0, 3))
-                    ->first();
+        $ins = $this->opening_times()->whereDayOfWeek(mb_substr($day, 0, 3))->first();
 
         if ($ins === null) {
             return '19:00';

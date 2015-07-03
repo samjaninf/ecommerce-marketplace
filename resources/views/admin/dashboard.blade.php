@@ -50,6 +50,32 @@
 
         <div class="row">
             <div class="col-xs-12">
+                <h2>
+                    Most profitable coffee shops
+                    <span>
+                        <a href="{{ route('admin.coffee-shop.index') }}">List all coffee shops</a> |
+                        <a href="{{ route('admin.reporting') }}">Reporting</a>
+                    </span>
+                </h2>
+                @if(!$profitable->isEmpty())
+                    <ul class="list-group">
+                        @foreach($profitable as $coffeeShop)
+                            <li class="list-group-item">
+                                <span class="badge">£ {{($coffeeShop->aggregate / 100.) ?: 0}}</span>
+                                <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop->id]) }}">
+                                    {{$coffeeShop->name}}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="alert alert-warning">No coffee shop is registered yet.</p>
+                @endif
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
                 <h2>Recent sales</h2>
                 @if($orders)
                     <ul class="list-group">
@@ -66,31 +92,6 @@
                     </ul>
                 @else
                     <p class="alert alert-danger">No sales made in the last 48 hours</p>
-                @endif
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>
-                    Most profitable coffee shops
-                    <span>
-                        <a href="{{ route('admin.coffee-shop.index') }}">List all coffee shops</a>
-                    </span>
-                </h2>
-                @if(!$profitable->isEmpty())
-                    <ul class="list-group">
-                        @foreach($profitable as $coffeeShop)
-                            <li class="list-group-item">
-                                <span class="badge">£ {{($coffeeShop->aggregate / 100.) ?: 0}}</span>
-                                <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop->id]) }}">
-                                    {{$coffeeShop->name}}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @else
-                    <p class="alert alert-warning">No coffee shop is registered yet.</p>
                 @endif
             </div>
         </div>

@@ -81,6 +81,27 @@ class MenuController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
+     * @param                          $coffeeShopId
+     * @param                          $productId
+     *
+     * @return string
+     */
+    public function changeDescription(Request $request, $coffeeShopId, $productId)
+    {
+        if ($request->input('description') == 'DESC' || $request->input('description') == '') {
+            return 'DESC';
+        }
+
+        $coffeeShop                  = $this->coffeeShopRepository->find($coffeeShopId);
+        $product                     = $coffeeShop->findProduct($productId);
+        $product->pivot->description = $request->input('description');
+        $product->pivot->save();
+
+        return $product->pivot->description;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
      * @param int                      $coffeeShopId
      * @param int                      $productId
      *
