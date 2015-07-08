@@ -65,8 +65,8 @@ RAW
      */
     public function reporting()
     {
-        $id = current_user()->id;
-        $sql = <<<SQL
+        $id         = current_user()->id;
+        $sql        = <<<SQL
 SELECT DATE_FORMAT(orders.created_at, '%M %Y') as actual_date, SUM(price) as price
 FROM coffee_shops
 JOIN orders
@@ -76,9 +76,14 @@ AND paid = true
 GROUP BY actual_date
 ORDER BY actual_date DESC
 SQL;
-        $reporting = \DB::connection()->select($sql);
+        $reporting  = \DB::connection()->select($sql);
+        $coffeeShop = current_user()->coffee_shop;
+        $images     = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
 
-        return view('reporting', compact('reporting'));
+        return view('reporting', compact('reporting', 'coffeeShop'))->with([
+            'images'     => $images,
+            'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+        ]);
     }
 
 }

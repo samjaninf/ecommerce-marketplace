@@ -45,6 +45,12 @@ class OrdersController extends Controller
         } else {
             $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
             $orders     = $coffeeShop->orders;
+            $images     = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
+
+            return view('order.index', compact('orders', 'coffeeShop'))->with([
+                'images'     => $images,
+                'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+            ]);
         }
 
         return view('order.index', compact('orders'));
@@ -322,7 +328,7 @@ class OrdersController extends Controller
                                  (new Carbon($order->pickup_time))->format('H:i'),
                     'android' => [
                         'payload' => $payload = [
-                            'orderId' => $order->id
+                            'orderId' => $order->id,
                         ],
                     ],
                 ],

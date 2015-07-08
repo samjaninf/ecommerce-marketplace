@@ -5,18 +5,21 @@
 @stop
 
 @section('content')
-    <div class="container main-content-padded">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h1>
-                    @yield('page-title')
-                    <span class="page-actions">
-                        <a href="{{ URL::previous() }}" class="btn btn-success">Go back</a>
-                    </span>
-                </h1>
+    <div class="{{ current_user()->isOwner() ? 'container-fluid' : 'container main-content-padded' }}">
+        @if(current_user()->isOwner())
+            @include('dashboard._header')
+        @else
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>
+                        @yield('page-title')
+                        <span class="page-actions">
+                            <a href="{{ URL::previous() }}" class="btn btn-success">Go back</a>
+                        </span>
+                    </h1>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="row">
             <div class="col-sm-3">

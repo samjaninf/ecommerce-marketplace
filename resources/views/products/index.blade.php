@@ -5,7 +5,8 @@
 @stop
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
+        @include('dashboard._header')
         <div class="row">
             <div class="col-sm-3">
                 @include('dashboard._menu')

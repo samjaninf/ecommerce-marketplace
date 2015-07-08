@@ -45,9 +45,13 @@ class MenuController extends Controller
         $drinkTypes = $this->productTypeRepository->drinks();
         $foodTypes  = $this->productTypeRepository->food();
         $offers     = $coffeeShop->offers()->with('details')->get();
+        $images     = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
 
         return view('products.index')->with(compact('drinks', 'food', 'coffeeShop', 'drinkTypes', 'foodTypes',
-            'offers'));
+            'offers'))->with([
+            'images'     => $images,
+            'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+        ]);
     }
 
     /**

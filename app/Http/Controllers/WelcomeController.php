@@ -56,7 +56,10 @@ class WelcomeController extends Controller
 
         $posts = Post::orderBy('created_at', 'desc')->limit(2)->get();
 
-        return view('welcome')->with('featuredShops', $featured)->with('posts', $posts)->with('offers', $offers->random(4));
+        return view('welcome')
+            ->with('featuredShops', $featured)
+            ->with('posts', $posts)
+            ->with('offers', $offers->random(4));
     }
 
     /**
@@ -112,7 +115,13 @@ class WelcomeController extends Controller
      */
     public function contactUs()
     {
-        return view('contact');
+        $coffeeShop = current_user()->coffee_shop;
+        $images     = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
+
+        return view('contact', compact('coffeeShop'))->with([
+            'images'     => $images,
+            'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+        ]);
     }
 
     /**
@@ -120,7 +129,9 @@ class WelcomeController extends Controller
      */
     public function contact()
     {
-        return redirect()->back()->with('messages', ['success' => 'Your message have been sent.']);
+        return redirect()->back()->with('messages', [
+            'success'    => 'Your message have been sent.'
+        ]);
     }
 
     /**
@@ -237,7 +248,7 @@ class WelcomeController extends Controller
      */
     public function orderSent($id)
     {
-        $order = Order::find($id);
+        $order         = Order::find($id);
         $order->status = 'collected';
         $order->save();
 
