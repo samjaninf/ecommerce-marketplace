@@ -1,4 +1,15 @@
 if document.getElementById('order')
+  removeProduct = (e) ->
+    e.preventDefault()
+
+    return if (document.querySelectorAll('.order-products > label').length == 1)
+
+    toRemove = this.parentNode.parentNode
+    toRemove.parentNode.removeChild(toRemove)
+
+  links = document.querySelectorAll('a.remove-product')
+  for link in links
+    link.onclick = removeProduct
 
   productSelected = () ->
     opt = select.options[this.selectedIndex]
@@ -74,7 +85,23 @@ if document.getElementById('order')
 
     priceSpan = document.createElement 'span'
     priceSpan.classList.add 'col-xs-12'
-    priceSpan.classList.add 'col-sm-6'
+    priceSpan.classList.add 'col-sm-5'
+
+    removeSpan = document.createElement 'span'
+    removeSpan.classList.add 'col-xs-12'
+    removeSpan.classList.add 'col-sm-1'
+
+    removeLink = document.createElement 'a'
+    removeLink.href = '#'
+    removeLink.classList.add 'btn'
+    removeLink.classList.add 'btn-danger'
+    removeLink.classList.add 'remove-product'
+    removeLink.classList.add 'form-control'
+    removeLink.id = "remove-product-#{idx}"
+    removeLink.innerHTML = '×'
+    removeLink.onclick = removeProduct
+
+    removeSpan.appendChild removeLink
 
     select = document.createElement 'select'
     select.classList.add 'form-control'
@@ -97,6 +124,7 @@ if document.getElementById('order')
 
     newProduct.appendChild productSpan
     newProduct.appendChild priceSpan
+    newProduct.appendChild removeSpan
 
     this.parentElement.insertBefore newProduct, this
     (productSelected.bind(select))()

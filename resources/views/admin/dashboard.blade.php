@@ -54,7 +54,7 @@
                     Most profitable coffee shops
                     <span>
                         <a href="{{ route('admin.coffee-shop.index') }}">List all coffee shops</a> |
-                        <a href="{{ route('admin.reporting') }}">Reporting</a>
+                        <a href="{{ route('admin.reporting') }}">Product sales</a>
                     </span>
                 </h2>
                 @if(!$profitable->isEmpty())

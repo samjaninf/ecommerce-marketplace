@@ -25,12 +25,13 @@ class AdminController extends Controller
 
     /**
      * @param null $from
+     *
+     * @return \Illuminate\View\View|\Response
      */
     public function reporting($from = null)
     {
-
         $sales =
-            Order::selectRaw('suM(orders.price) as aggregate, order_lines.product_id as product_id, products.name as product_name')
+            Order::selectRaw('count(*) as cnt, sum(orders.price) as aggregate, order_lines.product_id as product_id, products.name as product_name')
                  ->join('order_lines', function ($join) {
                      $join->on('orders.id', '=', 'order_lines.order_id');
                  })
@@ -44,7 +45,7 @@ class AdminController extends Controller
             $sales->where('orders.created_at', '>=', $from->format('Y-m-d'));
         }
 
-        $sales = $sales->groupBy('product_id')->orderBy('orders.created_at', 'desc')->get();
+        $sales = $sales->groupBy('product_id')->orderBy('aggregate', 'desc')->get();
 
         return view('admin.reporting', compact('sales'));
     }

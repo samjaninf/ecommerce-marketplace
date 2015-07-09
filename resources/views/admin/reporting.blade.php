@@ -40,6 +40,7 @@
                     <tr>
                         <th>Product</th>
                         <th>Total sold for</th>
+                        <th>Number sold</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,6 +48,7 @@
                         <tr>
                             <td>{{ $sale->product_name }}</td>
                             <td>£ {{ number_format($sale->aggregate / 100., 2) }}</td>
+                            <td>{{ number_format($sale->cnt) }}</td>
                         </tr>
                     @endforeach
                     </tbody>

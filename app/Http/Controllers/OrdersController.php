@@ -160,8 +160,7 @@ class OrdersController extends Controller
         $order->pickup_time = $request->input('time');
 
         $lines   = [];
-        $sizeIdx = 0;
-        foreach ($productIds as $productId) {
+        foreach ($productIds as $i => $productId) {
             /** @var Product $product */
             $product = $coffeeShop->products()->find($productId);
 
@@ -174,7 +173,7 @@ class OrdersController extends Controller
             }
 
             if ($product->type == 'drink') {
-                $size = $sizes[ $sizeIdx++ ];
+                $size = $sizes[ $i ];
                 if ($size == null || ! $coffeeShop->hasActivated($product, $size)) {
                     return redirect()
                         ->back()

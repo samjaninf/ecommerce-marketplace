@@ -74,12 +74,15 @@
                                         </p>
                                     @endif
                                 </span>
+                                <span class="col-xs-12 col-sm-1">
+                                    <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-{{$i}}">×</a>
+                                </span>
                             </label>
                         @endforeach
                     @else
                         <label class="row full-width" style="margin-top: 10px">
                             <span class="col-xs-12 col-sm-6">
-                                <select id="product-1" name="products[0]" class="form-control choose-product-select">
+                                <select id="product-0" name="products[0]" class="form-control choose-product-select">
                                     <option value=""></option>
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}" data-type="{{ $product->type }}">
@@ -88,8 +91,11 @@
                                     @endforeach
                                 </select>
                             </span>
-                            <span class="col-xs-12 col-sm-6">
+                            <span class="col-xs-12 col-sm-5">
                                 <span></span>
+                            </span>
+                            <span class="col-xs-12 col-sm-1">
+                                <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-0">×</a>
                             </span>
                         </label>
                     @endif
