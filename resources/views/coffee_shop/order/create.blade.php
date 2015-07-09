@@ -26,7 +26,7 @@
                            value="{{old('time', $order->time->format('H:i'))}}">
                 </div>
 
-                <div class="form-group @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
+                <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
                     <h5>Products:</h5>
                     <a href="#" onclick="showMenuDescription(this)">View menu description</a>
 
@@ -44,7 +44,7 @@
                         @foreach($orderProducts as $i => $orderProduct)
                             <label class="row full-width" style="margin-top: 10px">
                                 <span class="col-xs-12 col-sm-6">
-                                    <select id="product-1" name="products[]" class="form-control">
+                                    <select id="product-{{ $i }}" name="products[{{$i}}]" class="form-control choose-product-select">
                                         @foreach($products as $product)
                                             @if($coffeeShop->hasActivated($product))
                                                 <option @if($orderProduct->id == $product->id) selected @endif
@@ -55,18 +55,19 @@
                                         @endforeach
                                     </select>
                                 </span>
-                                <span class="col-xs-12 col-sm-6">
+                                <span class="col-xs-12 col-sm-5">
                                     @if($orderProduct->type == 'drink')
-                                        <select id="productSize-1" name="productSizes[]" class="form-control">
+                                        <span class="sizes">
                                             @foreach(['xs', 'sm', 'md', 'lg'] as $size)
                                                 @if($coffeeShop->hasActivated($orderProduct, $size))
-                                                    <option value="{{ $size }}">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="productSizes[{{$i}}]" value="{{$size}}">
                                                         {{$coffeeShop->getSizeDisplayName($size)}}
                                                         (£ {{$orderProduct->pivot->$size / 100}})
-                                                    </option>
+                                                    </label>
                                                 @endif
                                             @endforeach
-                                        </select>
+                                        </span>
                                     @else
                                         <p class="info-price">
                                             Price: £ {{$orderProduct->pivot->sm}}
@@ -78,7 +79,7 @@
                     @else
                         <label class="row full-width" style="margin-top: 10px">
                             <span class="col-xs-12 col-sm-6">
-                                <select id="product-1" name="products[]" class="form-control">
+                                <select id="product-1" name="products[0]" class="form-control choose-product-select">
                                     <option value=""></option>
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}" data-type="{{ $product->type }}">

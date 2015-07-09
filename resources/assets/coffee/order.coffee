@@ -6,7 +6,7 @@ if document.getElementById('order')
     removeSecondPartProduct this
 
     if opt.dataset.type == 'drink'
-      sizes = createSizesSelect this, opt
+      sizes = createSizesInputs this, opt
     else
       price = createPriceInfo this, opt
 
@@ -18,23 +18,30 @@ if document.getElementById('order')
     secondPart = select.parentNode.nextElementSibling
     secondPart.removeChild secondPart.children[0]
 
-  createSizesSelect = (sel, opt) ->
-    newSelect = document.createElement 'select'
-    newSelect.id = sel.id.replace 'product-', 'productSize-'
-    newSelect.name = 'productSizes[]'
-    newSelect.classList.add 'form-control'
+  createSizesInputs = (sel, opt) ->
+    container = document.createElement 'span'
+    container.classList.add 'sizes'
 
     product = findProduct opt
 
     for size in ['xs', 'sm', 'md', 'lg']
       if product.pivot[size + '_activated'] == 1 and product.pivot[size] != 0
-        option = document.createElement 'option'
-        option.value = size
-        option.innerHTML = coffeeShop['display_' + size] + ' (£ ' + (product.pivot[size] / 100) + ')'
+        label = document.createElement 'label'
+        label.classList.add 'radio-inline'
 
-        newSelect.appendChild(option)
+        input = document.createElement 'input'
+        input.type = 'radio'
+        input.name = sel.name.replace 's[', 'Sizes['
+        input.value = size
 
-    sel.parentNode.nextElementSibling.appendChild newSelect
+        text = document.createTextNode coffeeShop['display_' + size] + ' (£ ' + (product.pivot[size] / 100) + ')'
+
+        label.appendChild input
+        label.appendChild text
+
+        container.appendChild(label)
+
+    sel.parentNode.nextElementSibling.appendChild container
 
   findProduct = (opt) ->
     for product in products
@@ -53,6 +60,10 @@ if document.getElementById('order')
   addProduct.onclick = (e) ->
     e.preventDefault()
 
+    selects = document.querySelectorAll('.choose-product-select:last-of-type')
+    idx = selects[selects.length - 1].id.replace('product-', '')
+    idx = parseInt(idx) + 1
+
     newProduct = document.createElement 'label'
     newProduct.classList.add 'row'
     newProduct.classList.add 'full-width'
@@ -67,8 +78,9 @@ if document.getElementById('order')
 
     select = document.createElement 'select'
     select.classList.add 'form-control'
-    select.name = 'products[]'
-    select.id = 'product-'
+    select.classList.add 'choose-product-select'
+    select.name = "products[#{idx}]"
+    select.id = 'product-' + idx
 
     for prod in products
       pOpt = document.createElement 'option'
