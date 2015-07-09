@@ -540,9 +540,9 @@ class CoffeeShop extends Model
     /**
      * @return array
      */
-    public function getSpecs()
+    public static function getSpecs($type = null)
     {
-        return [
+        $attributes = [
             'techy',
             'student',
             'quiet',
@@ -550,6 +550,9 @@ class CoffeeShop extends Model
             'urban',
             'alternative',
             'artisan',
+        ];
+
+        $ammenties = [
             'food_available',
             'free_wifi',
             'payable_wifi',
@@ -558,5 +561,11 @@ class CoffeeShop extends Model
             'in_and_out_seating',
             'inside_seating',
         ];
+
+        if ($type) {
+            return ${$type};
+        }
+
+        return array_merge($attributes, $ammenties);
     }
 }

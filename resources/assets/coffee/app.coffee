@@ -27,3 +27,9 @@ class Koolbeans
     jQuery('#messages-top')?.delay(8000).fadeOut()
 
 window.koolbeans = new Koolbeans()
+
+filters = document.querySelectorAll('.search-filter')
+for filter in filters
+  filter.onclick = (e) ->
+    e.stopPropagation()
+    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add 'open'

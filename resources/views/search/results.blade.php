@@ -24,7 +24,7 @@
         </div>
 
         <div class="hidden-xs row">
-            <div class="col-sm-6">
+            <div class="col-sm-6" style="padding: 0">
                 <div class="search-results-title">
                     @include('search._result_title')
                 </div>

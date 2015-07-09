@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Koolbeans\CoffeeShop;
 use Koolbeans\MobileToken;
@@ -68,8 +69,9 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function search(CoffeeShopRepository $coffeeShops, $query = null)
+    public function search($query = null)
     {
+        $query = \Input::get('q', $query);
         if ($this->request->method() === 'POST') {
             $query = $this->request->get('query');
         }
@@ -87,13 +89,21 @@ class WelcomeController extends Controller
         $orderByRaw = 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
                       abs($city['geometry']['location']['lng']) . ') asc';
 
-        $shops    = CoffeeShop::where('location', 'like', $query)
-                              ->orWhere('county', 'like', $query)
-                              ->orderByRaw($orderByRaw)
-                              ->paginate(8);
+        $filters = \Input::get('f', []);
+
+        $shops = CoffeeShop::where(function (Builder $q) use ($query) {
+            $q->where('location', 'like', $query)->orWhere('county', 'like', $query);
+        })->where(function (Builder $query) use ($filters) {
+            foreach ($filters as $filter => $_) {
+                if(in_array($filter, CoffeeShop::getSpecs())) {
+                    $query->where('spec_' . $filter, '=', true);
+                }
+            }
+        })->orderByRaw($orderByRaw)->paginate(8);
+
         $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
 
-        return view('search.results', compact('shops', 'position'))->with('query', $baseQuery);
+        return view('search.results', compact('shops', 'position'))->with('query', $baseQuery)->with('filters', array_keys($filters));
     }
 
     /**
@@ -130,7 +140,7 @@ class WelcomeController extends Controller
     public function contact()
     {
         return redirect()->back()->with('messages', [
-            'success'    => 'Your message have been sent.'
+            'success' => 'Your message have been sent.',
         ]);
     }
 
