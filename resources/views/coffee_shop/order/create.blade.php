@@ -40,7 +40,7 @@
                             @endforeach
                         </dl>
                     </div>
-                    @if($orderProducts !== null)
+                    @if(!$orderProducts->isEmpty())
                         @foreach($orderProducts as $i => $orderProduct)
                             <label class="row full-width" style="margin-top: 10px">
                                 <span class="col-xs-12 col-sm-6">
