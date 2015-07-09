@@ -62,6 +62,8 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
             $attributes[$name] = $value === 'on' ? true : $value;
         }
 
+        $attributes['status'] = 'accepted';
+
         return $this->model->newInstance($attributes, $exists);
     }
 

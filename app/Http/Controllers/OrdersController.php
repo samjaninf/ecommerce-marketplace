@@ -3,8 +3,10 @@
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
+use Illuminate\Support\Collection as CollectionBase;
 use Koolbeans\Http\Requests;
 use Koolbeans\Offer;
 use Koolbeans\Order;
@@ -97,10 +99,21 @@ class OrdersController extends Controller
     {
         $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
 
-        $order        = new Order;
-        $orderProduct = null;
-        if (( $id = $request->get('drink') )) {
-            $orderProduct = $coffeeShop->products()->find($id);
+        $order = new Order;
+        $id    = $request->get('id');
+
+        $orderProduct = new Collection;
+        if ($id) {
+            if ( ! is_array($id)) {
+                $id = new CollectionBase($id);
+            }
+
+            foreach ($id as $i) {
+                $item = $coffeeShop->products()->find($i);
+                if ($item) {
+                    $orderProduct->add($item);
+                }
+            }
         }
 
         if (( $time = $request->get('time') )) {
@@ -111,11 +124,18 @@ class OrdersController extends Controller
 
         $products = $coffeeShop->products()->orderBy('type', 'desc')->get();
 
+        $fp = new Collection();
+        foreach ($products as $product) {
+            if ($coffeeShop->hasActivated($product)) {
+                $fp->add($product);
+            }
+        }
+
         return view('coffee_shop.order.create', [
-            'coffeeShop'   => $coffeeShop,
-            'order'        => $order,
-            'orderProduct' => $orderProduct,
-            'products'     => $products,
+            'coffeeShop'    => $coffeeShop,
+            'order'         => $order,
+            'orderProducts' => $orderProduct,
+            'products'      => $fp,
         ]);
     }
 

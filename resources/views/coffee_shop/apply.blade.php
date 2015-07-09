@@ -7,6 +7,20 @@
 @section('content')
 <div class="container main-content-padded">
     <div class="row">
+        <div class="col-xs-12">
+            <h2 class="text-center">
+                KoolBeans puts your Coffee Shop online<br>
+                24 hours a day, 7 days a week
+            </h2>
+
+            <h3 class="text-center" style="font-weight: 100">
+                by listing your business with KoolBeans,
+                you’re gaining access to millions of UK coffee drinkers who browse and purchase online everyday of
+                the week.
+            </h3>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
         <div class="col-lg-8">
             @include('shared/_form_errors')
             <form class="form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
@@ -246,7 +260,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" class="btn btn-primary" value="Send your request">
+                        <input type="submit" class="btn btn-primary" value="Register your coffee shop">
                     </div>
                 </div>
             </form>

@@ -34,21 +34,18 @@
                             <div class="panel-body">
                                 <form action="{{ route('coffee-shop.order.create', ['coffee_shop' => $coffeeShop]) }}">
                                     <label>
-                                        <span class="glyphicon glyphicon-map-marker"></span>
-                                        <span class="panel-input">
-                                            {{$coffeeShop->name}}
-                                        </span>
-                                    </label>
-
-                                    <label>
                                         <i class="fa fa-coffee"></i>
-                                        <select name="drink" class="panel-input">
-                                            <option value="">Select your drink</option>
+                                        <select name="id[]" class="panel-input">
+                                            <option value="">Select your item</option>
                                             @foreach($coffeeShop->products as $product)
-                                                <option value="{{$product->id}}">{{$coffeeShop->getNameFor($product)}}</option>
+                                                @if($coffeeShop->hasActivated($product))
+                                                    <option value="{{$product->id}}">{{$coffeeShop->getNameFor($product)}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </label>
+
+                                    <a href="#" class="btn btn-default" id="add-another-item">Add another item</a>
 
                                     <label>
                                         <span class="glyphicon glyphicon-time"></span>
@@ -59,6 +56,10 @@
 
                                     <input type="submit" class="btn btn-success" value="Place order">
                                 </form>
+                            </div>
+                            <div class="panel-footer">
+                                <a href="{{ route('coffee-shop.order.create', ['coffee_shop' => $coffeeShop]) }}"
+                                   class="btn btn-default view-full-menu">View full menu</a>
                             </div>
                         </div>
                     </div>
@@ -348,8 +349,28 @@
             </div>
         </div>
     </div>
-@endsection
+@stop
 
 @section('vendor_scripts')
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-@endsection
+@stop
+
+@section('scripts')
+    <script>
+        (function ($) {
+            $('a#add-another-item').click(function () {
+                var contents =
+                    '<label><i class="fa fa-coffee"></i><select name="id[]" class="panel-input"><option value="">Select your item</option>' +
+                        @foreach($coffeeShop->products as $product)
+                            @if($coffeeShop->hasActivated($product))
+                                '<option value="{{$product->id}}">{{$coffeeShop->getNameFor($product)}}</option>' +
+                            @endif
+                        @endforeach
+                    '</select></i></label>';
+
+                $(contents).insertBefore(this);
+                return false;
+            })
+        })(jQuery);
+    </script>
+@stop

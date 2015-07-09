@@ -41,6 +41,7 @@ textarea {
   margin: auto;
   left: 0;
   right: 0;
+  font-size: 18pt !important;
 }
 
 #content {
@@ -180,21 +181,27 @@ textarea {
         padding-left: 5px;
       }
 
-      .panel-input {
+      .panel-input, a {
         width: 80%;
         float: right;
         padding-top: 10px;
         padding-bottom: 10px;
       }
+
+      select {
+        -webkit-appearance: none;
+        background: url(/img/coffee_shops/select-menu.png) no-repeat right #e9e9e9 !important;
+        overflow: hidden;
+      }
     }
 
-    label, .panel-input {
+    label, .panel-input, a {
       background-color: #e9e9e9;
       border: 0;
       border-radius: 1px;
     }
 
-    label {
+    label, a {
       margin-bottom: 15px;
     }
   }
@@ -534,4 +541,15 @@ hr {
 
 .news-content {
   font-size: larger;
+}
+
+.view-full-menu {
+  background-color: #786288 !important;
+  color: white !important;
+}
+
+.proceed-to-checkout {
+  font-size: 24pt;
+  white-space: normal;
+  padding: 15px 30px;
 }

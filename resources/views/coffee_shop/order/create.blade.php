@@ -29,45 +29,54 @@
                 <div class="form-group @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
                     <h5>Products:</h5>
                     <a href="#" onclick="showMenuDescription(this)">View menu description</a>
+
                     <div class="well well-sm hide" id="menu-description">
                         <dl>
                             @foreach($coffeeShop->products as $product)
-                                <dt>{{ $coffeeShop->getNameFor($product) }}</dt>
-                                <dd>{{ $coffeeShop->getDisplayDescriptionFor($product) }}</dd><br>
+                                @if($coffeeShop->hasActivated($product))
+                                    <dt>{{ $coffeeShop->getNameFor($product) }}</dt>
+                                    <dd>{{ $coffeeShop->getDisplayDescriptionFor($product) }}</dd><br>
+                                @endif
                             @endforeach
                         </dl>
                     </div>
-                    <label class="row full-width" style="margin-top: 10px">
-                        @if($orderProduct !== null)
-                            <span class="col-xs-12 col-sm-6">
-                                <select id="product-1" name="products[]" class="form-control">
-                                    @foreach($products as $product)
-                                        <option @if($orderProduct->id == $product->id) selected @endif
-                                        value="{{ $product->id }}" data-type="{{ $product->type }}">
-                                            {{ $coffeeShop->getNameFor($product) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </span>
-                            <span class="col-xs-12 col-sm-6">
-                                @if($orderProduct->type == 'drink')
-                                    <select id="productSize-1" name="productSizes[]" class="form-control">
-                                        @foreach(['xs', 'sm', 'md', 'lg'] as $size)
-                                            @if($coffeeShop->hasActivated($orderProduct, $size))
-                                                <option value="{{ $size }}">
-                                                    {{$coffeeShop->getSizeDisplayName($size)}}
-                                                    (£ {{$orderProduct->pivot->$size / 100}})
+                    @if($orderProducts !== null)
+                        @foreach($orderProducts as $i => $orderProduct)
+                            <label class="row full-width" style="margin-top: 10px">
+                                <span class="col-xs-12 col-sm-6">
+                                    <select id="product-1" name="products[]" class="form-control">
+                                        @foreach($products as $product)
+                                            @if($coffeeShop->hasActivated($product))
+                                                <option @if($orderProduct->id == $product->id) selected @endif
+                                                value="{{ $product->id }}" data-type="{{ $product->type }}">
+                                                    {{ $coffeeShop->getNameFor($product) }}
                                                 </option>
                                             @endif
                                         @endforeach
                                     </select>
-                                @else
-                                    <p class="info-price">
-                                        Price: £ {{$orderProduct->pivot->sm}}
-                                    </p>
-                                @endif
-                            </span>
-                        @else
+                                </span>
+                                <span class="col-xs-12 col-sm-6">
+                                    @if($orderProduct->type == 'drink')
+                                        <select id="productSize-1" name="productSizes[]" class="form-control">
+                                            @foreach(['xs', 'sm', 'md', 'lg'] as $size)
+                                                @if($coffeeShop->hasActivated($orderProduct, $size))
+                                                    <option value="{{ $size }}">
+                                                        {{$coffeeShop->getSizeDisplayName($size)}}
+                                                        (£ {{$orderProduct->pivot->$size / 100}})
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    @else
+                                        <p class="info-price">
+                                            Price: £ {{$orderProduct->pivot->sm}}
+                                        </p>
+                                    @endif
+                                </span>
+                            </label>
+                        @endforeach
+                    @else
+                        <label class="row full-width" style="margin-top: 10px">
                             <span class="col-xs-12 col-sm-6">
                                 <select id="product-1" name="products[]" class="form-control">
                                     <option value=""></option>
@@ -81,8 +90,8 @@
                             <span class="col-xs-12 col-sm-6">
                                 <span></span>
                             </span>
-                        @endif
-                    </label>
+                        </label>
+                    @endif
                     <a href="#" class="row" id="add-product">Add a product</a>
                 </div>
 
@@ -92,7 +101,7 @@
                 </p>
 
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                <button type="submit" class="btn btn-success">Proceed to checkout</button>
+                <button type="submit" class="btn btn-success proceed-to-checkout">Proceed to checkout</button>
             </form>
         </div>
     </div>

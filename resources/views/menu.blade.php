@@ -24,7 +24,44 @@
                 <li><a href="{{ url('/about') }}">About</a></li>
                 @if (Auth::guest())
                     <li class="sign-up"><a href="{{ url('/auth/register') }}">Register</a></li>
-                    <li class="sign-in"><a href="{{ url('/auth/login') }}">Log In</a></li>
+                    <li class="sign-in dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">Log In</a>
+                        <div class="dropdown-menu" role="menu" style="padding: 15px">
+                            <form role="form" method="POST" action="{{ url('/auth/login') }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                <div class="form-group">
+                                    <label for="email">E-Mail Address</label>
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input id="password" type="password" class="form-control" name="password">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="remember"> Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+
+                                    <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+                                </div>
+                            </form>
+
+                            <hr>
+
+                            <b>Not registered with us?</b>
+                            <a href="{{ url('auth/register') }}" class="btn btn-primary" style="color: white">Register for free</a>
+                        </div>
+                    </li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
