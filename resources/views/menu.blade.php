@@ -15,7 +15,9 @@
 
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ route('home') }}">Dashboard</a></li>
+                @if(Auth::check())
+                    <li><a href="{{ route('home') }}">Dashboard</a></li>
+                @endif
                 @if( ! Auth::guest() && current_user()->role === 'admin')
                     <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
                 @elseif( ! Auth::guest() && ! current_user()->hasValidCoffeeShop())

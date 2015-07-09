@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <h1 class="text-center">Welcome to Koolbeans!</h1>
 
-            <p class="text-center">30 Seconds to register to start finding great coffee, from great coffee shops.
+            <p class="text-center" style="font-size: 17px;">30 Seconds to register to start finding great coffee, from great coffee shops.
             </p>
 
             @if (count($errors) > 0)

@@ -74,14 +74,14 @@
                     <h2 class="text-center">Are you a coffee shop?</h2>
                     <h4 class="text-center">People are changing the way they buy, so join them...</h4>
                 </div>
-                <p class="col-xs-12 col-sm-6 col-md-6 col-lg-offset-3 col-lg-3">
+                <p class="col-xs-12 col-sm-6 col-md-6 col-lg-offset-3 col-lg-3" style="font-size: 17px;">
                     KoolBeans puts your Coffee Shop online 24 hours a day, 7 days a week.
                     By listing your business with KoolBeans,
                     you’re gaining access to millions of UK coffee drinkers
                     who browse and purchase online everyday of the week.
                 </p>
 
-                <p class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                <p class="col-xs-12 col-sm-6 col-md-6 col-lg-3" style="font-size: 17px;">
                     We’ll get you listed in no time with our easy to use system – we’ll upload your menu,
                     handle your online orders and even sort out the payment,
                     so all you need to do is to serve the coffee.

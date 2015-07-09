@@ -536,4 +536,27 @@ class CoffeeShop extends Model
 
         return implode(", ", $formatted);
     }
+
+    /**
+     * @return array
+     */
+    public function getSpecs()
+    {
+        return [
+            'techy',
+            'student',
+            'quiet',
+            'relaxed',
+            'urban',
+            'alternative',
+            'artisan',
+            'food_available',
+            'free_wifi',
+            'payable_wifi',
+            'charging_ports',
+            'dogs_welcome',
+            'in_and_out_seating',
+            'inside_seating',
+        ];
+    }
 }
