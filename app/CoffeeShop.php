@@ -65,6 +65,11 @@ class CoffeeShop extends Model
     ];
 
     /**
+     * @var double
+     */
+    private $distance;
+
+    /**
      * @var array
      */
     protected $attributes = [
@@ -567,5 +572,21 @@ class CoffeeShop extends Model
         }
 
         return array_merge($attributes, $ammenties);
+    }
+
+    /**
+     * @return float
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param float $distance
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
     }
 }

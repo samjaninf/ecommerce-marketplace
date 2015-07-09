@@ -32,13 +32,13 @@
                 <div class="search-results row">
                     @foreach($shops as $coffeeShop)
                         <div class="col-sm-6">
-                            <div class="featured-coffee-shop" style="background-image: url({{$coffeeShop->mainImage() }})">
-                                <div class="info small-featured text-center">
+                            <div class="featured-coffee-shop" style="height: 450px; background-image: url({{$coffeeShop->mainImage() }})">
+                                <div class="info small-featured text-center" style="height: 45%">
                                     <h5 class="text-center">
                                         {{ $coffeeShop->name }}
                                     </h5>
                                     <p>
-                                        <i>{{ $coffeeShop->location }}</i>
+                                        <i>{{ $coffeeShop->location }} ({{ number_format($coffeeShop->getDistance(), 2) }} miles)</i>
                                     </p>
                                     @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
                                     <div class="review hidden-sm hidden-xs">

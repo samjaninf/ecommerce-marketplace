@@ -84,18 +84,29 @@ class WelcomeController extends Controller
         $subQuery = trim(mb_substr($query, $pos));
         $places   = app('places')->nearby($subQuery . ', United Kingdom');
         $city     = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
-        $query    = '%' . str_replace(' ', '%', $query) . '%';
+        $query = '%' . str_replace(' ', '%', $query) . '%';
 
         $orderByRaw = 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
                       abs($city['geometry']['location']['lng']) . ') asc';
 
         $filters = \Input::get('f', []);
 
-        $shops = CoffeeShop::where(function (Builder $q) use ($query) {
-            $q->where('location', 'like', $query)->orWhere('county', 'like', $query)->orWhere('postal_code', 'like', $query);
+        $shops = CoffeeShop::where(function (Builder $q) use ($query, $city) {
+            $q->where('location', 'like', $query)
+              ->orWhere('county', 'like', $query)
+              ->orWhere('postal_code', 'like', $query);
+
+            foreach ($city['address_components'] as $c) {
+                $q->orWhere('location', 'like', $c['long_name'])
+                  ->orWhere('county', 'like', $c['long_name'])
+                  ->orWhere('postal_code', 'like', $c['long_name']);
+                $q->orWhere('location', 'like', $c['short_name'])
+                  ->orWhere('county', 'like', $c['short_name'])
+                  ->orWhere('postal_code', 'like', $c['short_name']);
+            }
         })->where(function (Builder $query) use ($filters) {
             foreach ($filters as $filter => $_) {
-                if(in_array($filter, CoffeeShop::getSpecs())) {
+                if (in_array($filter, CoffeeShop::getSpecs())) {
                     $query->where('spec_' . $filter, '=', true);
                 }
             }
@@ -103,7 +114,33 @@ class WelcomeController extends Controller
 
         $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
 
-        return view('search.results', compact('shops', 'position'))->with('query', $baseQuery)->with('filters', array_keys($filters));
+        foreach ($shops as $shop) {
+            $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude, $city['geometry']['location']['lat'],
+                $city['geometry']['location']['lng']));
+        }
+
+        return view('search.results', compact('shops', 'position'))
+            ->with('query', $baseQuery)
+            ->with('filters', array_keys($filters));
+    }
+
+    /**
+     * @param $lat
+     * @param $lng
+     * @param $lat2
+     * @param $lng2
+     *
+     * @return float
+     */
+    private function calculDistance($lat, $lng, $lat2, $lng2)
+    {
+        $theta = $lng - $lng2;
+        $dist  =
+            sin(deg2rad($lat)) * sin(deg2rad($lat2)) + cos(deg2rad($lat)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist  = acos($dist);
+        $dist  = rad2deg($dist);
+
+        return $dist * 60 * 1.1515;
     }
 
     /**
