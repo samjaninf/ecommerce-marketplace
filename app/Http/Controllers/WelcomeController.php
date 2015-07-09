@@ -92,7 +92,7 @@ class WelcomeController extends Controller
         $filters = \Input::get('f', []);
 
         $shops = CoffeeShop::where(function (Builder $q) use ($query) {
-            $q->where('location', 'like', $query)->orWhere('county', 'like', $query);
+            $q->where('location', 'like', $query)->orWhere('county', 'like', $query)->orWhere('postal_code', 'like', $query);
         })->where(function (Builder $query) use ($filters) {
             foreach ($filters as $filter => $_) {
                 if(in_array($filter, CoffeeShop::getSpecs())) {
