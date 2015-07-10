@@ -320,8 +320,7 @@ class OrdersController extends Controller
         $order->paid = true;
         $order->save();
 
-        $chargedMessage = 'You have been correctly charged for your order. Here is your receipt.';
-        $successMessage = 'Your order has been added to your tip!';
+        $successMessage = 'Your coffee has been ordered!';
         $warningMessage = $successMessage;
 
         \Mail::send('emails.order_completed',
@@ -370,7 +369,7 @@ class OrdersController extends Controller
         }
 
         return redirect(route('order.success', ['order' => $order]))
-            ->with('messages', ['success' => ( isset( $charged ) ) ? $chargedMessage : $warningMessage])
+            ->with('messages', ['success' => $warningMessage])
             ->with('newauth', $previous ? 'no' : 'yes');
     }
 
