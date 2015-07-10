@@ -136,20 +136,6 @@
                     </div>
                 </div>
 
-                <div class="form-group @if($errors->any()) {{$errors->has('spec_independent') ? 'has-error' : 'has-success'}} @endif">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <div class="checkbox">
-                            <label for="spec-independent">
-                                <input type="checkbox"
-                                       id="spec-independent"
-                                       name="spec_independent"
-                                       @if(old('spec_independent', $coffeeShop->spec_independent)) checked @endif>
-                                Independent
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
                 @foreach($coffeeShop->getSpecs() as $spec)
                     <div class="form-group @if($errors->any()) {{$errors->has('spec_'. $spec) ? 'has-error' : 'has-success'}} @endif">
                         <div class="col-sm-offset-3 col-sm-9">
@@ -159,7 +145,7 @@
                                            id="spec-{{ str_replace('_', '-', $spec) }}"
                                            name="spec_{{ $spec }}"
                                            @if(old('spec_' . $spec, $coffeeShop->{'spec_' . $spec})) checked @endif>
-                                    Charging ports
+                                    {{ ucwords(str_replace('_', ' ', $spec)) }}
                                 </label>
                             </div>
                         </div>
