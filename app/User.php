@@ -44,6 +44,7 @@ use Laravel\Cashier\Contracts\Billable as BillableContract;
  * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereTrialEndsAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereSubscriptionEndsAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Koolbeans\User whereRole($value)
+ * @mixin \Illuminate\Database\Query\Builder
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, BillableContract
 {

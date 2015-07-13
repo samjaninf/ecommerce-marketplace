@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('product-types', 'ProductTypesController', ['only' => 'store']);
 
         Route::get('export', ['as' => 'admin.export', 'uses' => 'AdminController@export']);
+        Route::get('users', ['as' => 'admin.users', 'uses' => 'AdminController@users']);
     });
 });
 Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);

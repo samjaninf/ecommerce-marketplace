@@ -1,6 +1,7 @@
 <?php namespace Koolbeans\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\Order;
@@ -39,13 +40,37 @@ class AdminController extends Controller
     }
 
     /**
+     * @return \Illuminate\View\View|\Response
+     */
+    public function users()
+    {
+
+        $sql = User::select(\DB::raw('name, points, email, sum(ifnull(price,0)) as agr'))
+                   ->leftJoin('orders', function (JoinClause $join) {
+                       $join->on('orders.user_id', '=', 'users.id')->on('orders.paid', '=', \DB::raw(true));
+                   })
+                   ->groupBy('users.id')
+                   ->orderBy('agr', 'desc');
+
+        $sql2 = \DB::select(<<<SQL
+select name, points, email, sum(ifnull(price,0)) as agr from `users`
+left join orders on orders.user_id = users.id and orders.paid = true
+group by users.id
+order by agr desc
+SQL
+        );
+
+        return view('admin.users', ['users' => $sql->paginate()]);
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return array|\Illuminate\View\View|\Response
      */
     public function export(Request $request)
     {
-        if (($type = $request->input('type', null)) !== null) {
+        if (( $type = $request->input('type', null) ) !== null) {
             if ($type == 'customer') {
                 $users = User::whereRole('customer')->get();
 
@@ -55,13 +80,13 @@ class AdminController extends Controller
                 }
             } else {
                 $users = User::has('coffee_shop')->with('coffee_shop')->get();
-                $csv = ['Name;Coffee Shop;Location;Email;Phone'];
+                $csv   = ['Name;Coffee Shop;Location;Email;Phone'];
                 foreach ($users as $user) {
-                    $c = $user->coffee_shop;
+                    $c     = $user->coffee_shop;
                     $csv[] = "$user->name;$c->name;$c->location;$user->email;$c->phone_number";
                 }
             }
-    
+
             \File::put($path = storage_path("app/export_$type.csv"), implode("\r\n", $csv));
 
             return response()->download($path);

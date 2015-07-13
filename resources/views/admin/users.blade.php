@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('page-title')
-    Admin dashboard
+    Users
 @endsection
 
 @section('content')
@@ -26,9 +26,27 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <a href="?type=customer" class="btn btn-primary">Export customers</a>
-                <a href="?type=shops" class="btn btn-primary">Export coffee shops</a>
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Points</th>
+                        <th>Total spent</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->points }}</td>
+                            <td>£{{ number_format($user->agr, 2) }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-@stop
+@endsection

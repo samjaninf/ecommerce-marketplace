@@ -69,7 +69,14 @@ textarea {
   }
 
   #page-actions {
-    float: right;
+    &.admin {
+      display: block;
+      margin-top: 20px;
+    }
+
+    &:not(.admin) {
+      float: right;
+    }
 
     @media (max-width: @screen-xs-max) {
       & {

@@ -15,13 +15,14 @@
                             Show details
                         </a>
                     </span>
-                    <span id="page-actions">
+                    <span id="page-actions" class="admin">
                         <a href="{{ route('admin.home') }}" class="btn btn-primary">Dashboard</a>
                         <a href="{{ route('admin.products.index') }}" class="btn btn-primary">Product management</a>
                         <a href="{{ route('admin.coffee-shop.index') }}" class="btn btn-primary">Coffee Shops</a>
                         <a href="{{ route('admin.sales') }}" class="btn btn-primary">Sales</a>
                         <a href="{{ route('admin.reporting') }}" class="btn btn-primary">Reporting</a>
                         <a href="{{ route('admin.export') }}" class="btn btn-primary">Export</a>
+                        <a href="{{ route('admin.users') }}" class="btn btn-primary">Customers</a>
                         <a href="{{ route('admin.post.index') }}" class="btn btn-primary">All posts</a>
                     </span>
                 </h1>
