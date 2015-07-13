@@ -35,7 +35,9 @@
                     @forelse($shops as $coffeeShop)
                         <div class="col-sm-6">
                             <div class="featured-coffee-shop"
-                                 style="height: 450px; background-image: url({{$coffeeShop->mainImage() }})">
+                                 style="height: 450px; background-image: url({{$coffeeShop->mainImage() }})"
+                                 data-latitude="{{ $coffeeShop->latitude }}"
+                                 data-longitude="{{ $coffeeShop->longitude }}">
                                 <div class="info small-featured text-center" style="height: 45%">
                                     <h5 class="text-center">
                                         {{ $coffeeShop->name }}

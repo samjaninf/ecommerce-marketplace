@@ -22,12 +22,23 @@ initializeMaps = (container) ->
     anchorPoint: new google.maps.Point 0, -29
   koolbeans.infoWindow = new google.maps.InfoWindow
 
+  cs = document.querySelectorAll 'div[data-latitude]'
+  for cof in cs
+    addMarker cof.dataset.latitude, cof.dataset.longitude
+
   if container.dataset.position?
     position = container.dataset.position.split ','
     location = new google.maps.LatLng position[0], position[1]
     centerMapOnLocation location
   else if navigator.geolocation
     useGeoLocation koolbeans.map
+
+addMarker = (lat, lng) ->
+  new google.maps.Marker
+    map: koolbeans.map
+    position: new google.maps.LatLng lat, lng
+
+  koolbeans.marker.setVisible(false)
 
 useGeoLocation = () ->
   navigator.geolocation.getCurrentPosition (position) ->
