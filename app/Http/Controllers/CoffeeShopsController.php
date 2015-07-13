@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
+use Koolbeans\CoffeeShop;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
@@ -69,7 +70,7 @@ class CoffeeShopsController extends Controller
         });
 
         return redirect(route('home'))->with('messages',
-            ['success' => 'Your request has been sent trough! We shall contact you back very soon, stay close!']);
+            ['success' => 'Thank you for registering with us! We shall contact you back very soon, stay close!']);
     }
 
     /**
@@ -152,6 +153,18 @@ class CoffeeShopsController extends Controller
     public function toggleSpec($coffeeShopId, $spec)
     {
         $coffeeShop                    = $this->coffeeShop->find($coffeeShopId);
+        $specs = CoffeeShop::getSpecs();
+        $count = 0;
+        foreach ($specs as $hasSpec) {
+            if ($coffeeShop->{'spec_' . $hasSpec}) {
+                $count += 1;
+            }
+
+            if ($count == 5 && !$coffeeShop->{'spec_' . $spec}) {
+                return redirect()->back()->with('messages', ['warning' => 'You can only have 5 attributes activated.']);
+            }
+        }
+
         $coffeeShop->{'spec_' . $spec} = ! $coffeeShop->{'spec_' . $spec};
         $coffeeShop->save();
 

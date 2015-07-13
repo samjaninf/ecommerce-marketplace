@@ -136,22 +136,6 @@
                     </div>
                 </div>
 
-                @foreach($coffeeShop->getSpecs() as $spec)
-                    <div class="form-group @if($errors->any()) {{$errors->has('spec_'. $spec) ? 'has-error' : 'has-success'}} @endif">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <div class="checkbox">
-                                <label for="spec-{{ str_replace('_', '-', $spec) }}">
-                                    <input type="checkbox"
-                                           id="spec-{{ str_replace('_', '-', $spec) }}"
-                                           name="spec_{{ $spec }}"
-                                           @if(old('spec_' . $spec, $coffeeShop->{'spec_' . $spec})) checked @endif>
-                                    {{ ucwords(str_replace('_', ' ', $spec)) }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
                 <div class="form-group @if($errors->has('g-recaptcha-response')) has-errors @endif">
                     <label for="recaptcha" class="col-sm-3 control-label">Robot verification:</label>
 

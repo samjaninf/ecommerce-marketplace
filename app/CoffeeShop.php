@@ -55,20 +55,6 @@ class CoffeeShop extends Model
         'postal_code',
         'place_id',
         'county',
-        'spec_techy',
-        'spec_student',
-        'spec_quiet',
-        'spec_relaxed',
-        'spec_urban',
-        'spec_alternative',
-        'spec_artisan',
-        'spec_food_available',
-        'spec_free_wifi',
-        'spec_payable_wifi',
-        'spec_charging_ports',
-        'spec_dogs_welcome',
-        'spec_in_and_out_seating',
-        'spec_inside_seating',
     ];
 
     /**
