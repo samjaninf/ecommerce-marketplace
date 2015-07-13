@@ -1,9 +1,11 @@
 <?php namespace Koolbeans\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\Order;
 use Koolbeans\Repositories\CoffeeShopRepository;
+use Koolbeans\User;
 
 class AdminController extends Controller
 {
@@ -34,6 +36,38 @@ class AdminController extends Controller
                              ->orderBy('id', 'desc')
                              ->get(),
         ]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array|\Illuminate\View\View|\Response
+     */
+    public function export(Request $request)
+    {
+        if (($type = $request->input('type', null)) !== null) {
+            if ($type == 'customer') {
+                $users = User::whereRole('customer')->get();
+
+                $csv = ['Name;Email'];
+                foreach ($users as $user) {
+                    $csv[] = "$user->name;$user->email";
+                }
+            } else {
+                $users = User::has('coffee_shop')->with('coffee_shop')->get();
+                $csv = ['Name;Coffee Shop;Location;Email;Phone'];
+                foreach ($users as $user) {
+                    $c = $user->coffee_shop;
+                    $csv[] = "$user->name;$c->name;$c->location;$user->email;$c->phone_number";
+                }
+            }
+
+            \File::put($path = storage_path("app/export_$type.csv"), implode("\r\n", $csv));
+
+            return response()->download($path);
+        }
+
+        return view('admin.export');
     }
 
     /**

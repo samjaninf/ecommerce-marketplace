@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('products/{products}/{force?}',
             ['as' => 'admin.products.destroy', 'uses' => 'ProductsController@destroy']);
         Route::resource('product-types', 'ProductTypesController', ['only' => 'store']);
+
+        Route::get('export', ['as' => 'admin.export', 'uses' => 'AdminController@export']);
     });
 });
 Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
