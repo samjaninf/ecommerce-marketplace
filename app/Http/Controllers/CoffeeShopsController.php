@@ -99,6 +99,10 @@ class CoffeeShopsController extends Controller
 
         $coffeeShop->addReview($review, $rating);
 
+        $u = current_user();
+        $u->points += 5;
+        $u->save();
+
         return redirect()->back()->with('special-message', ['success' => "Your review has been delivered!"]);
     }
 

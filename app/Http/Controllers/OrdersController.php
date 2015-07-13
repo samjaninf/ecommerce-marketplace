@@ -32,7 +32,7 @@ class OrdersController extends Controller
     {
         $this->coffeeShopRepository = $coffeeShopRepository;
 
-        $this->middleware('open', ['only' => ['store', 'create']]);
+        $this->middleware('open', ['only' => ['store']]);
     }
 
     /**
@@ -319,6 +319,9 @@ class OrdersController extends Controller
 
         $order->paid = true;
         $order->save();
+
+        $user->points += 5;
+        $user->save();
 
         $successMessage = 'Your coffee has been ordered!';
         $warningMessage = $successMessage;

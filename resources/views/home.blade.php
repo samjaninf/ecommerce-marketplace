@@ -35,6 +35,11 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="dashboard">
                     <div class="row">
+                        <div class="col-xs-12">
+                            <h2>You currently have {{ current_user()->points }} KB Points</h2>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-8">
                             <h3>Your recent orders</h3>
 

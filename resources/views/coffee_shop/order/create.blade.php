@@ -24,11 +24,16 @@
                            placeholder="12:34"
                            class="form-control"
                            value="{{old('time', $order->time->format('H:i'))}}">
+
+                    <p>
+                        {!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
+                    </p>
                 </div>
 
                 <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
-                    <h5>Products:</h5>
-                    <a href="#" onclick="showMenuDescription(this)">View menu description</a>
+                    <h5>
+                        Products: <a href="#" onclick="showMenuDescription(this)">View menu description</a>
+                    </h5>
 
                     <div class="well well-sm hide" id="menu-description">
                         <dl>
