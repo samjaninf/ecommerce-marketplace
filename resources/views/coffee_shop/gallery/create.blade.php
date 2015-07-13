@@ -15,17 +15,46 @@
               method="post"
               enctype="multipart/form-data">
             <div class="form-group @if($errors->any()) {{$errors->has('image') ? 'has-error' : 'has-success'}} @endif">
-                <input type="submit" class="col-sm-2 btn btn-success btn-xs" value="Upload">
-                <label for="image" class="col-sm-1">Image:</label>
-
                 <input id="image"
                        name="image"
                        type="file"
-                       placeholder="Image..."
-                       class="col-sm-6">
+                       placeholder="Image...">
+                <p>Please upload large images (at least 980px wide) to ensure that they will display properly.</p>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success btn-lg" value="Upload now" style="width: 50%">
+            </div>
+            <div class="form-group">
+                <p>
+                    This is what your image looks like.
+                </p>
+                <img id="uploadPreview" style="width: 100%; height: 400px" src="">
+            </div>
+            <div class="form-group">
+                <img id="uploadSmallPreview" style="width: 30%; height: 200px;" src="">
+                <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="">
             </div>
 
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
         </form>
     </div>
 @endsection
+
+@section('scripts')
+    <script>
+        (function () {
+            var image    = document.getElementById("image");
+
+            image.onchange = function () {
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function (oFREvent) {
+                    document.getElementById("uploadPreview").src      = oFREvent.target.result;
+                    document.getElementById("uploadSmallPreview").src = oFREvent.target.result;
+                    document.getElementById("uploadSmallPreview2").src = oFREvent.target.result;
+                };
+            }
+        })();
+    </script>
+@stop
