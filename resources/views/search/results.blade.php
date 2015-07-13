@@ -18,7 +18,9 @@
             @endforeach
 
             <div class="pull-right container">
-                {!! $shops->render() !!}
+                @if($shops !== [])
+                    {!! $shops->render() !!}
+                @endif
             </div>
 
         </div>
@@ -30,15 +32,18 @@
                 </div>
 
                 <div class="search-results row">
-                    @foreach($shops as $coffeeShop)
+                    @forelse($shops as $coffeeShop)
                         <div class="col-sm-6">
-                            <div class="featured-coffee-shop" style="height: 450px; background-image: url({{$coffeeShop->mainImage() }})">
+                            <div class="featured-coffee-shop"
+                                 style="height: 450px; background-image: url({{$coffeeShop->mainImage() }})">
                                 <div class="info small-featured text-center" style="height: 45%">
                                     <h5 class="text-center">
                                         {{ $coffeeShop->name }}
                                     </h5>
+
                                     <p>
-                                        <i>{{ $coffeeShop->location }} ({{ number_format($coffeeShop->getDistance(), 2) }} miles)</i>
+                                        <i>{{ $coffeeShop->location }}
+                                            ({{ number_format($coffeeShop->getDistance(), 2) }} miles)</i>
                                     </p>
                                     @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
                                     <div class="review hidden-sm hidden-xs">
@@ -53,12 +58,18 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="col-sm-6">
+                            No result found!
+                        </div>
+                    @endforelse
                 </div>
 
-                <div class="pull-right">
-                    {!! $shops->render() !!}
-                </div>
+                @if($shops !== [])
+                    <div class="pull-right">
+                        {!! $shops->render() !!}
+                    </div>
+                @endif
             </div>
 
             <div class="col-sm-6 maps-container"></div>

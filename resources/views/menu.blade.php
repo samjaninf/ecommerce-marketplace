@@ -14,6 +14,17 @@
         </div>
 
         <div class="collapse navbar-collapse" id="main-menu">
+            @if(strpos(Route::getCurrentRoute()->getAction()['controller'], 'WelcomeController@index') === false)
+            <form class="form-inline" action="{{route('search')}}" method="post">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <input type="text" name="query" class="form-control" placeholder="Search...">
+                    <input type="submit" class="form-control">
+                </li>
+            </ul>
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+            </form>
+            @endif
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
                     <li><a href="{{ route('home') }}">Dashboard</a></li>

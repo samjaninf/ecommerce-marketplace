@@ -1,7 +1,8 @@
 <h6>Showing coffee shops near{{ empty($query) ? 'by' : '' }}...</h6>
 <h2>{{ $query }}</h2>
 
-<form class="form-inline">
+<form class="form-inline" method="post">
+    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
     <div class="form-group">
         <label class="sr-only" for="search">Search</label>
         <input type="text"

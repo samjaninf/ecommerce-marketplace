@@ -76,47 +76,61 @@ class WelcomeController extends Controller
             $query = $this->request->get('query');
         }
         $baseQuery = $query;
+        $filters = \Input::get('f', []);
 
         $pos = mb_strpos($query, ',');
         $pos = $pos == false ? mb_strpos($query, ' ') : $pos;
         $pos = $pos == false ? 0 : ( $pos + 1 );
 
         $subQuery = trim(mb_substr($query, $pos));
-        $places   = app('places')->nearby($subQuery . ', United Kingdom');
-        $city     = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
         $query = '%' . str_replace(' ', '%', $query) . '%';
-
-        $orderByRaw = 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
-                      abs($city['geometry']['location']['lng']) . ') asc';
-
-        $filters = \Input::get('f', []);
-
-        $shops = CoffeeShop::where(function (Builder $q) use ($query, $city) {
-            $q->where('location', 'like', $query)
-              ->orWhere('county', 'like', $query)
-              ->orWhere('postal_code', 'like', $query);
-
-            foreach ($city['address_components'] as $c) {
-                $q->orWhere('location', 'like', $c['long_name'])
-                  ->orWhere('county', 'like', $c['long_name'])
-                  ->orWhere('postal_code', 'like', $c['long_name']);
-                $q->orWhere('location', 'like', $c['short_name'])
-                  ->orWhere('county', 'like', $c['short_name'])
-                  ->orWhere('postal_code', 'like', $c['short_name']);
-            }
-        })->where(function (Builder $query) use ($filters) {
-            foreach ($filters as $filter => $_) {
-                if (in_array($filter, CoffeeShop::getSpecs())) {
-                    $query->where('spec_' . $filter, '=', true);
+        $places   = app('places')->nearby($subQuery . ', United Kingdom');
+        if ($places['status'] === 'ZERO_RESULTS') {
+            $places = app('places')->nearby($subQuery);
+            if ($places['status'] === 'ZERO_RESULTS') {
+                $tmp = CoffeeShop::where('location', 'like', $query)->first();
+                if (!$tmp) {
+                    $shops = [];
+                    $position = null;
                 }
             }
-        })->orderByRaw($orderByRaw)->paginate(8);
+        }
 
-        $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
+        if (!isset($shops)) {
+            $city = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
 
-        foreach ($shops as $shop) {
-            $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude, $city['geometry']['location']['lat'],
-                $city['geometry']['location']['lng']));
+            $orderByRaw =
+                'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
+                abs($city['geometry']['location']['lng']) . ') asc';
+
+
+            $shops = CoffeeShop::where(function (Builder $q) use ($query, $city) {
+                $q->where('location', 'like', $query)
+                  ->orWhere('county', 'like', $query)
+                  ->orWhere('postal_code', 'like', $query);
+
+                foreach ($city['address_components'] as $c) {
+                    $q->orWhere('location', 'like', $c['long_name'])
+                      ->orWhere('county', 'like', $c['long_name'])
+                      ->orWhere('postal_code', 'like', $c['long_name']);
+                    $q->orWhere('location', 'like', $c['short_name'])
+                      ->orWhere('county', 'like', $c['short_name'])
+                      ->orWhere('postal_code', 'like', $c['short_name']);
+                }
+            })->where(function (Builder $query) use ($filters) {
+                foreach ($filters as $filter => $_) {
+                    if (in_array($filter, CoffeeShop::getSpecs())) {
+                        $query->where('spec_' . $filter, '=', true);
+                    }
+                }
+            })->orderByRaw($orderByRaw)->paginate(8);
+
+            $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
+
+            foreach ($shops as $shop) {
+                $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude,
+                    $city['geometry']['location']['lat'], $city['geometry']['location']['lng']));
+            }
         }
 
         return view('search.results', compact('shops', 'position'))
