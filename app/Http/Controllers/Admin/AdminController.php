@@ -24,6 +24,19 @@ class AdminController extends Controller
     }
 
     /**
+     * @return \Illuminate\View\View|\Response
+     */
+    public function lastSales()
+    {
+        return view('admin.sales', [
+            'orders' => Order::where('created_at', '>', Carbon::now()->subMonth(2))
+                             ->wherePaid(true)
+                             ->orderBy('id', 'desc')
+                             ->get(),
+        ]);
+    }
+
+    /**
      * @param null $from
      *
      * @return \Illuminate\View\View|\Response

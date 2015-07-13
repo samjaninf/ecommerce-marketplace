@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
+        Route::get('last-sales', ['as' => 'admin.sales', 'uses' => 'AdminController@lastSales']);
         Route::get('reporting/{from?}', ['as' => 'admin.reporting', 'uses' => 'AdminController@reporting']);
         Route::resource('post', 'PostsController');
 

@@ -11,9 +11,12 @@
                 <h1>
                     @yield('page-title')
                     <span id="page-actions">
-                        <a href="{{ route('admin.products.index') }}" class="btn btn-primary">All products</a>
+                        <a href="{{ route('admin.home') }}" class="btn btn-primary">Dashboard</a>
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-primary">Product management</a>
+                        <a href="{{ route('admin.coffee-shop.index') }}" class="btn btn-primary">Coffee Shops</a>
+                        <a href="{{ route('admin.sales') }}" class="btn btn-primary">Sales</a>
+                        <a href="{{ route('admin.reporting') }}" class="btn btn-primary">Reporting</a>
                         <a href="{{ route('admin.post.index') }}" class="btn btn-primary">All posts</a>
-                        <a href="{{ route('admin.post.index') }}" class="btn btn-default">Go back</a>
                     </span>
                 </h1>
             </div>

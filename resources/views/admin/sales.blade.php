@@ -1,8 +1,8 @@
 @extends('app')
 
 @section('page-title')
-    Add a post
-@endsection
+    Recent sales
+@stop
 
 @section('content')
     <div class="container">
@@ -21,15 +21,26 @@
                 </h1>
             </div>
         </div>
-        <form action="{{ route('admin.post.store') }}" class="form-horizontal" method="post">
-            @include('admin.posts._form')
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div class="form-group">
-                <div class="col-sm-10">
-                    <input type="submit" class="btn btn-success" value="Add a post">
-                </div>
+        <div class="row">
+            <div class="col-xs-12">
+                @if($orders)
+                    <ul class="list-group">
+                        @foreach($orders as $order)
+                            <li class="list-group-item">
+                                <span class="info-price-dashboard">
+                                    £ {{$order->price / 100.}}
+                                </span> in {{$order->coffee_shop->name}}, {{$order->coffee_shop->location}}
+                                <span class="pull-right">
+                                    {{$order->created_at->format('Y-m-d H:i')}}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="alert alert-danger">No sales made in the last 48 hours</p>
+                @endif
             </div>
-        </form>
+        </div>
     </div>
-@endsection
+@stop

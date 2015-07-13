@@ -16,7 +16,8 @@
                         </span>
                     @endif
                     <span>
-                        <a href="{{ route('admin.coffee-shop.index') }}">List shops</a>
+                        <a href="{{ route('admin.home') }}" class="btn btn-primary">Dashboard</a>
+                        <a href="{{ route('admin.coffee-shop.index') }}" class="btn btn-primary">List shops</a>
                     </span>
                     <span id="page-actions">
                         @if($coffeeShop->status === 'requested')
