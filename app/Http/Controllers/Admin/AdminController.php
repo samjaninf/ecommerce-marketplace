@@ -61,7 +61,7 @@ class AdminController extends Controller
                     $csv[] = "$user->name;$c->name;$c->location;$user->email;$c->phone_number";
                 }
             }
-
+    
             \File::put($path = storage_path("app/export_$type.csv"), implode("\r\n", $csv));
 
             return response()->download($path);

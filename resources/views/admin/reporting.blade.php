@@ -16,6 +16,7 @@
                         <a href="{{ route('admin.coffee-shop.index') }}" class="btn btn-primary">Coffee Shops</a>
                         <a href="{{ route('admin.sales') }}" class="btn btn-primary">Sales</a>
                         <a href="{{ route('admin.reporting') }}" class="btn btn-primary">Reporting</a>
+                        <a href="{{ route('admin.export') }}" class="btn btn-primary">Export</a>
                         <a href="{{ route('admin.post.index') }}" class="btn btn-primary">All posts</a>
                     </span>
                 </h1>
