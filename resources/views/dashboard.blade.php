@@ -12,6 +12,11 @@
                 @include('dashboard._menu')
             </div>
             <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4><a href="/app.apk?r={{ time() }}">Download the application</a></h4>
+                    </div>
+                </div>
                 @if($coffeeShop->views > 10)
                     <div class="row">
                         <div class="col-xs-12">
