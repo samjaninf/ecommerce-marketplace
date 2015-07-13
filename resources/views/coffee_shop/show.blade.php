@@ -159,7 +159,10 @@
                                         </a>
                                     @endif
                                 @endforeach
-                                <p class="well" style="margin-top: 10px;">Hint: Click on the icon to (de)activate them.</p>
+                                <p class="well" style="margin-top: 10px;">
+                                    Hint: Click on the icon to (de)activate them. <br>
+                                    You can only select 5 attributes at most.
+                                </p>
                             @else
                                 @foreach($coffeeShop->getSpecs() as $spec)
                                     @if($coffeeShop->{'spec_' . $spec})
