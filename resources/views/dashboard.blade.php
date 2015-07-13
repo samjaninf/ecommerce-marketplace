@@ -53,8 +53,9 @@
                                     <td>
                                         {{ $order->status }}
                                         <a href="{{ route('next-order-status', [ $order ]) }}"
-                                           class="btn btn-success btn-xs pull-right">Set
-                                            as {{ $order->getNextStatus() }}</a>
+                                           class="btn btn-success btn-xs pull-right">
+                                            Set as {{ $order->getNextStatus() }}
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

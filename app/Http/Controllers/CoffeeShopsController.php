@@ -45,7 +45,7 @@ class CoffeeShopsController extends Controller
     {
         if (\Auth::guest()) {
             $user = User::create([
-                'name'     => $request->input('name'),
+                'name'     => $request->input('username'),
                 'email'    => $request->input('email'),
                 'password' => bcrypt($request->input('password')),
             ]);
@@ -60,7 +60,7 @@ class CoffeeShopsController extends Controller
             $user = current_user();
         }
 
-        $shop = $this->coffeeShop->newInstance($request->except(['name', 'email', 'password']));
+        $shop = $this->coffeeShop->newInstance($request->except(['username', 'email', 'password']));
         $shop->user()->associate($user);
         $shop->status = 'accepted';
         $shop->save();
@@ -152,15 +152,15 @@ class CoffeeShopsController extends Controller
      */
     public function toggleSpec($coffeeShopId, $spec)
     {
-        $coffeeShop                    = $this->coffeeShop->find($coffeeShopId);
-        $specs = CoffeeShop::getSpecs();
-        $count = 0;
+        $coffeeShop = $this->coffeeShop->find($coffeeShopId);
+        $specs      = CoffeeShop::getSpecs();
+        $count      = 0;
         foreach ($specs as $hasSpec) {
             if ($coffeeShop->{'spec_' . $hasSpec}) {
                 $count += 1;
             }
 
-            if ($count == 5 && !$coffeeShop->{'spec_' . $spec}) {
+            if ($count == 5 && ! $coffeeShop->{'spec_' . $spec}) {
                 return redirect()->back()->with('messages', ['warning' => 'You can only have 5 attributes activated.']);
             }
         }
@@ -231,5 +231,26 @@ class CoffeeShopsController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @return \Illuminate\View\View|\Response
+     */
+    public function showCurrentOrders()
+    {
+        $user   = current_user();
+        $images = $user->coffee_shop->gallery()->orderBy('position')->limit(3)->get();
+
+        return view('coffee_shop.current_orders', [
+
+            'coffeeShop' => $user->coffee_shop,
+            'images'     => $images,
+            'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+            'orders'     => $user->coffee_shop->orders()
+                                              ->where('paid', true)
+                                              ->where('status', '!=', 'collected')
+                                              ->orderBy('id', 'desc')
+                                              ->get(),
+        ]);
     }
 }

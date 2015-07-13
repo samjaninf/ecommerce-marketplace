@@ -24,6 +24,21 @@
         <div class="col-lg-8">
             @include('shared/_form_errors')
             <form class="form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
+                @if(Auth::guest())
+                    <div class="form-group @if($errors->any()) {{$errors->has('username') ? 'has-error' : 'has-success'}} @endif">
+                        <label for="username" class="col-sm-3 control-label">Your name:</label>
+
+                        <div class="col-sm-9">
+                            <input id="username"
+                                   name="username"
+                                   type="text"
+                                   placeholder="John Smith"
+                                   class="form-control"
+                                   value="{{old('name')}}">
+                        </div>
+                    </div>
+                @endif
+
                 <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
                     <label for="name" class="col-sm-3 control-label">Name:</label>
 

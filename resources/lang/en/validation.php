@@ -86,8 +86,23 @@ return [
     */
 
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'g-recaptcha-response' => [
+            'required' => 'Please complete the robot verification.',
+        ],
+
+        'latitude' => [
+            'required' => 'Please complete the address field using the autocompletion.',
+            'numeric' => 'Please complete the address field using the autocompletion.',
+        ],
+
+        'longitude' => [
+            'required' => 'Please complete the address field using the autocompletion.',
+            'numeric' => 'Please complete the address field using the autocompletion.',
+        ],
+
+        'place_id' => [
+            'required' => 'Please complete the address field using the autocompletion.',
+            'numeric' => 'Please complete the address field using the autocompletion.',
         ],
     ],
     /*

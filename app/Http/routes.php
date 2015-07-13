@@ -68,6 +68,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('offers', 'OffersController');
         Route::get('offers/{offer}/toggleActivation',
             ['as' => 'offers.toggle-activation', 'uses' => 'OffersController@toggleActivation']);
+
+
+        Route::get('current-orders', ['as' => 'current-orders', 'uses' => 'CoffeeShopsController@showCurrentOrders']);
     });
 
     Route::post('coffee-shop/{coffee_shop}/review',
