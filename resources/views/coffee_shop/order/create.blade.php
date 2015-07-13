@@ -5,7 +5,8 @@
 @stop
 
 @section('content')
-<div class="container" id="order">
+    <img src="{{$coffeeShop->mainImage()}}" alt="{{ $coffeeShop->name }}" style="width: 100%; height: 400px">
+    <div class="container" id="order">
     <div class="row">
         <div class="col-xs-12">
             <h1>
