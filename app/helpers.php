@@ -17,6 +17,7 @@ if ( ! function_exists('current_user')) {
  */
 function display_offer($offerId)
 {
+    /** @var \Koolbeans\Offer $offer */
     $offer      = \Koolbeans\Offer::find($offerId);
     $coffeeShop = $offer->coffee_shop;
 
@@ -27,8 +28,7 @@ function display_offer($offerId)
                 $offers .= ', ';
             }
 
-            $offers .= 'Free ' . $coffeeShop->getNameFor($detail->product) . ' (for buying a ' .
-                       $coffeeShop->getNameFor($offer->product) . ')';
+            $offers .= 'Free ' . $coffeeShop->getNameFor($detail->product);
         } elseif ($detail->type === 'flat') {
             foreach (['xs', 'sm', 'md', 'lg'] as $size) {
                 if ($detail->{'amount_' . $size} == 0) {
@@ -40,8 +40,7 @@ function display_offer($offerId)
                 }
 
                 $offers .= '£ ' . number_format($detail->{'amount_' . $size} / 100., 2) . ' off a ' .
-                           $coffeeShop->getNameFor($detail->product) . ' (for buying a ' .
-                           $coffeeShop->getNameFor($offer->product) . ')';
+                           $coffeeShop->getNameFor($detail->product);
             }
         } else {
             foreach (['xs', 'sm', 'md', 'lg'] as $size) {
@@ -54,11 +53,16 @@ function display_offer($offerId)
                 }
 
                 $offers .= $detail->{'amount_' . $size} . '% off a ' .
-                           $coffeeShop->getNameFor($detail->product) . ' (for buying a ' .
-                           $coffeeShop->getNameFor($offer->product) . ')';
+                           $coffeeShop->getNameFor($detail->product);
             }
         }
     }
 
-    return $offers . '.';
+    if ($offer->product->id !== $offer->productOnDeal()->id) {
+        $offers .= ' (for buying a ' . $coffeeShop->getNameFor($offer->product) . ').';
+    } else {
+        $offers .= '.';
+    }
+
+    return $offers;
 }
