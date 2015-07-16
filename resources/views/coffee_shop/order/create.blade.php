@@ -108,10 +108,12 @@
                     <a href="#" class="row" id="add-product">Add a product</a>
                 </div>
 
+                @if(Session::has('offer-used'))
                 <p class="offers alert alert-info">
-                    Current offer applying:<br>
-                    {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
+                    Chosen offer:<br>
+                    {{ display_offer(Session::get('offer-used')) }}
                 </p>
+                @endif
 
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                 <button type="submit" class="btn btn-success proceed-to-checkout">Proceed to checkout</button>
