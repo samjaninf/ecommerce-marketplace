@@ -62,7 +62,7 @@ class Offer extends Model
             $amount = $detail->amount_lg;
         }
 
-        if ($this->type == 'flat') {
+        if ($detail->type == 'flat') {
             return number_format($amount / 100, 2) . ' £';
         }
 

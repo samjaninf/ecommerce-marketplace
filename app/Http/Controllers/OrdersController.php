@@ -84,7 +84,7 @@ class OrdersController extends Controller
         $coffeeShop = $offer->coffee_shop;
 
         return redirect(route('coffee-shop.order.create',
-            ['coffee_shop' => $coffeeShop, 'drink' => $offer->product->id]));
+            ['coffee_shop' => $coffeeShop, 'id[]' => $offer->product->id]));
     }
 
     /**
