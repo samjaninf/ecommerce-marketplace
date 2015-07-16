@@ -108,7 +108,7 @@
                     <a href="#" class="row" id="add-product">Add a product</a>
                 </div>
 
-                <p class="offers">
+                <p class="offers alert alert-info">
                     Current offer applying:<br>
                     {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
                 </p>
