@@ -55,6 +55,8 @@ class CoffeeShop extends Model
         'postal_code',
         'place_id',
         'county',
+        'status',
+        'featured',
     ];
 
     /**

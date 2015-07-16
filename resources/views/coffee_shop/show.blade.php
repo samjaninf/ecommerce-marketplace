@@ -28,6 +28,7 @@
                             </span>
                         </h3>
                     </div>
+                    @if(!Auth::user()->owns($coffeeShop))
                     <div class="col-md-3 col-xs-12 col-sm-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading ">Order your coffee</div>
@@ -63,6 +64,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
 
