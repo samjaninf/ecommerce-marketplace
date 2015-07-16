@@ -40,7 +40,7 @@ function display_offer($offerId)
                 }
 
                 $offers .= '£ ' . number_format($detail->{'amount_' . $size} / 100., 2) . ' off a ' .
-                           $coffeeShop->getNameFor($detail->product);
+                           $coffeeShop->getSizeDisplayName($size) . ' ' . $coffeeShop->getNameFor($detail->product);
             }
         } else {
             foreach (['xs', 'sm', 'md', 'lg'] as $size) {
@@ -52,7 +52,7 @@ function display_offer($offerId)
                     $offers .= ', ';
                 }
 
-                $offers .= $detail->{'amount_' . $size} . '% off a ' .
+                $offers .= $detail->{'amount_' . $size} . '% off a ' . $coffeeShop->getSizeDisplayName($size) . ' ' .
                            $coffeeShop->getNameFor($detail->product);
             }
         }
