@@ -239,7 +239,6 @@ createLink = (input, cls, data, cb) ->
   link.parentNode.classList.remove 'has-error'
 
 if document.getElementById('creating-offers')?
-  console.log document.getElementById('creating-offers')
   productNb = 1
 
   addOrderDetail = (e) ->
@@ -387,15 +386,23 @@ if document.getElementById('creating-offers')?
     inputContainer = document.createElement 'div'
     inputContainer.classList.add 'col-sm-10'
     inputContainer.classList.add 'col-md-6'
+    inputContainer.classList.add 'input-group'
+
+    span = document.createElement 'span'
+    value = document.querySelector("input[name='type[#{nbProd}]']:checked").value
+    span.classList.add 'input-group-addon'
+    span.innerHTML = if value == 'flat' then '£' else '%'
 
     input = document.createElement 'input'
     input.id = label.for
     input.name = "size-#{size}[#{nbProd}]"
     input.type = 'number'
     input.step = '0.01'
+    input.min = '0'
     input.placeholder = '10'
     input.classList.add 'form-control'
 
+    inputContainer.appendChild span
     inputContainer.appendChild input
     div.appendChild label
     div.appendChild inputContainer

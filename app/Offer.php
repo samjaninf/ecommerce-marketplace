@@ -63,10 +63,10 @@ class Offer extends Model
         }
 
         if ($detail->type == 'flat') {
-            return number_format($amount / 100, 2) . ' £';
+            return '£ ' . number_format($amount / 100, 2) . ' off';
         }
 
-        return $amount . '%';
+        return $amount . '% off';
     }
 
     /**
@@ -75,6 +75,7 @@ class Offer extends Model
     public function productOnDeal()
     {
         $detail = $this->details()->first();
+
         return $detail->product ? $detail->product : $this->product;
     }
 

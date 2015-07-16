@@ -105,10 +105,10 @@ class OffersController extends Controller
         }
 
         if ( ! $isPercent) {
-            return round(( (float) $amounts[ $i ] ) * 100);
+            return abs(round(( (float) $amounts[ $i ] ) * 100));
         }
 
-        return round($amounts[ $i ]);
+        return abs(round($amounts[ $i ]));
     }
 
     /**
