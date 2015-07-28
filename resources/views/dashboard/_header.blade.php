@@ -28,11 +28,11 @@
                 <a href="{{ route('coffee-shop.gallery.index', ['coffee_shop' => $coffeeShop]) }}"
                    style="margin-left: 20px">
                     Add more images<span class="hidden-sm"> / Reorganize</span>
+                </a> (The first image will be used as your profile image)<br>
+                <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}"
+                   style="margin-left: 20px">
+                    Access your menu</span>
                 </a>
-                    <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}"
-                       style="margin-left: 20px">
-                        Access your menu</span>
-                    </a>
             </div>
         </div>
     </div>

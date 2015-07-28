@@ -176,12 +176,6 @@ createInput = (link, e, type, cb) ->
   input.dataset.target = link.dataset.target
   input.value = link.textContent.trim()
   input.classList.add 'form-control'
-  input.onkeydown = (e) ->
-    this.blur() if e.keyCode == 13
-
-  input.onblur = (e) ->
-    cb this, e
-
   if type == 'number'
     input.step = '0.01'
     input.min = '0.01'
@@ -189,6 +183,12 @@ createInput = (link, e, type, cb) ->
 
   link.parentNode.replaceChild input, link
   input.focus()
+
+  input.onkeydown = (e) ->
+    this.blur() if e.keyCode == 13
+
+  input.onblur = (e) ->
+    cb this, e
 
 renameProduct = (input, e) ->
   e.preventDefault()
