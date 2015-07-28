@@ -22,12 +22,15 @@
         <div class="row">
             <div class="col-xs-12">
                 <ul class="list-unstyled gallery">
-                    @forelse($gallery as $image)
+                    @forelse($gallery as $i => $image)
                         <li>
                             <img src="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}" alt="{{$image->image}}">
+
                             <div class="pull-right">
-                                <a href="{{ route('coffee-shop.gallery.up', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
-                                   class="btn btn-success"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                                @if($i != 0)
+                                    <a href="{{ route('coffee-shop.gallery.up', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
+                                       class="btn btn-success"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                                @endif
 
                                 <form method="post"
                                       action="{{route('coffee-shop.gallery.destroy', ['coffee_shop' => $coffeeShop, 'gallery' => $image])}}">
@@ -38,8 +41,10 @@
                                     </button>
                                 </form>
 
-                                <a href="{{ route('coffee-shop.gallery.down', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
-                                   class="btn btn-success"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                                @if($i != $gallery->count() - 1)
+                                    <a href="{{ route('coffee-shop.gallery.down', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
+                                       class="btn btn-success"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                                @endif
                             </div>
                         </li>
                     @empty

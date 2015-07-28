@@ -72,10 +72,12 @@ class GalleryImagesController extends Controller
                 'position' => $last === null ? 1 : ( $last->position + 1 ),
             ]);
 
-            return redirect(route('coffee-shop.gallery.index', ['coffeeShop' => $coffeeShop]));
+            return redirect(route('coffee-shop.gallery.index', ['coffeeShop' => $coffeeShop]))->with('messages',
+                ['success' => 'Your image has been uploaded!']);
         }
 
-        return redirect(route('coffee-shop.gallery.create', ['coffeeShop' => $coffeeShop]));
+        return redirect(route('coffee-shop.gallery.create', ['coffeeShop' => $coffeeShop]))->with('messages',
+            ['danger' => 'Your image is not valid.']);
     }
 
     /**

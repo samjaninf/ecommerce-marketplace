@@ -29,10 +29,17 @@
                     This is what your image looks like.
                 </p>
                 <img id="uploadPreview" style="width: 100%; height: 400px" src="/img/awaiting-image.png">
+                <span class="text-center">Main image on your profile page</span>
             </div>
             <div class="form-group">
-                <img id="uploadSmallPreview" style="width: 30%; height: 200px;" src="/img/awaiting-image.png">
-                <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="/img/awaiting-image.png">
+                <div>
+                    <img id="uploadSmallPreview" style="width: 30%; height: 200px;" src="/img/awaiting-image.png">
+                    <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="/img/awaiting-image.png">
+                </div>
+                <div>
+                    <span class="text-center" style="width: 30%">Small image, used in search results</span>
+                    <span class="text-center" style="width: 50%">Normal sized image, used in some cards</span>
+                </div>
             </div>
 
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">

@@ -11,7 +11,7 @@
             <div class="col-sm-3">
                 @include('dashboard._menu')
             </div>
-            <div class="col-xs-12">
+            <div class="col-sm-9">
                 <h2>Current orders</h2>
                 <table class="table table-hover">
                     <thead>
