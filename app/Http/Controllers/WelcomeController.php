@@ -134,9 +134,8 @@ class WelcomeController extends Controller
                 }
             })->orderByRaw($orderByRaw)->paginate(8);
 
-            $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
-
             if ($places['status'] !== 'ZERO_RESULTS') {
+                $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
                 foreach ($shops as $shop) {
                     $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude,
                         $city['geometry']['location']['lat'], $city['geometry']['location']['lng']));
