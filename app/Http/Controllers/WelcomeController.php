@@ -109,7 +109,7 @@ class WelcomeController extends Controller
                     abs($city['geometry']['location']['lng']) . ') asc';
             } else {
                 $city       = ['address_components' => []];
-                $orderByRaw = '';
+                $orderByRaw = 'name';
             }
 
             $shops = CoffeeShop::where(function (Builder $q) use ($query, $city) {
