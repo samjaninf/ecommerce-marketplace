@@ -101,11 +101,16 @@ class WelcomeController extends Controller
         }
 
         if ( ! isset( $shops )) {
-            $city = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
+            if ($places['status'] !== 'ZERO_RESULTS') {
+                $city = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
 
-            $orderByRaw =
-                'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
-                abs($city['geometry']['location']['lng']) . ') asc';
+                $orderByRaw =
+                    'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
+                    abs($city['geometry']['location']['lng']) . ') asc';
+            } else {
+                $city       = ['address_components' => []];
+                $orderByRaw = '';
+            }
 
             $shops = CoffeeShop::where(function (Builder $q) use ($query, $city) {
                 $q->where('location', 'like', $query)
@@ -131,9 +136,11 @@ class WelcomeController extends Controller
 
             $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
 
-            foreach ($shops as $shop) {
-                $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude,
-                    $city['geometry']['location']['lat'], $city['geometry']['location']['lng']));
+            if ($places['status'] !== 'ZERO_RESULTS') {
+                foreach ($shops as $shop) {
+                    $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude,
+                        $city['geometry']['location']['lat'], $city['geometry']['location']['lng']));
+                }
             }
         }
 
