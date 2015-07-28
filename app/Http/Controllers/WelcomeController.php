@@ -76,36 +76,36 @@ class WelcomeController extends Controller
             $query = $this->request->get('query');
         }
         $baseQuery = $query;
-        $filters = \Input::get('f', []);
+        $filters   = \Input::get('f', []);
 
         $pos = mb_strpos($query, ',');
         $pos = $pos == false ? mb_strpos($query, ' ') : $pos;
         $pos = $pos == false ? 0 : ( $pos + 1 );
 
         $subQuery = trim(mb_substr($query, $pos));
-        $query = '%' . str_replace(' ', '%', $query) . '%';
+        $query    = '%' . str_replace(' ', '%', $query) . '%';
         $places   = app('places')->nearby($subQuery . ', United Kingdom');
         if ($places['status'] === 'ZERO_RESULTS') {
             $places = app('places')->nearby($subQuery);
             if ($places['status'] === 'ZERO_RESULTS') {
                 $tmp = CoffeeShop::where('location', 'like', $query)->first();
-                if (!$tmp) {
-                    $shops = [];
+                if ( ! $tmp) {
+                    $shops    = [];
                     $position = null;
                 }
             }
         }
 
-        if (!isset($shops)) {
+        if ( ! isset( $shops )) {
             $city = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
 
             $orderByRaw =
                 'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
                 abs($city['geometry']['location']['lng']) . ') asc';
 
-
             $shops = CoffeeShop::where(function (Builder $q) use ($query, $city) {
                 $q->where('location', 'like', $query)
+                  ->orWhere('name', 'like', $query)
                   ->orWhere('county', 'like', $query)
                   ->orWhere('postal_code', 'like', $query);
 
