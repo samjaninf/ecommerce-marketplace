@@ -140,6 +140,8 @@ class WelcomeController extends Controller
                     $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude,
                         $city['geometry']['location']['lat'], $city['geometry']['location']['lng']));
                 }
+            } else {
+                $position = '';
             }
         }
 
