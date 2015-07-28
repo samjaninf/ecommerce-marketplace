@@ -37,8 +37,8 @@
                     <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="/img/awaiting-image.png">
                 </div>
                 <div>
-                    <span class="text-center" style="width: 30%">Small image, used in search results</span>
-                    <span class="text-center" style="width: 50%">Normal sized image, used in some cards</span>
+                    <span class="text-center" style="display: inline-block; width: 30%">Small image, used in search results</span>
+                    <span class="text-center" style="display: inline-block; width: 50%">Normal sized image, used in some cards</span>
                 </div>
             </div>
 
