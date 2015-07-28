@@ -88,7 +88,11 @@ class WelcomeController extends Controller
         if ($places['status'] === 'ZERO_RESULTS') {
             $places = app('places')->nearby($subQuery);
             if ($places['status'] === 'ZERO_RESULTS') {
-                $tmp = CoffeeShop::where('location', 'like', $query)->first();
+                $tmp = CoffeeShop::where('location', 'like', $query)
+                                 ->orWhere('name', 'like', $query)
+                                 ->orWhere('county', 'like', $query)
+                                 ->orWhere('postal_code', 'like', $query)
+                                 ->first();
                 if ( ! $tmp) {
                     $shops    = [];
                     $position = null;
