@@ -28,11 +28,11 @@
                 <p>
                     This is what your image looks like.
                 </p>
-                <img id="uploadPreview" style="width: 100%; height: 400px" src="">
+                <img id="uploadPreview" style="width: 100%; height: 400px" src="/img/awaiting-image.png">
             </div>
             <div class="form-group">
-                <img id="uploadSmallPreview" style="width: 30%; height: 200px;" src="">
-                <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="">
+                <img id="uploadSmallPreview" style="width: 30%; height: 200px;" src="/img/awaiting-image.png">
+                <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="/img/awaiting-image.png">
             </div>
 
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">

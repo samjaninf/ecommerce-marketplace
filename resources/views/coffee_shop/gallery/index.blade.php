@@ -11,6 +11,14 @@
                 @include('dashboard._title')
             </div>
         </div>
+        @if($gallery->count() > 0)
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}"
+                   class="btn btn-success">Now add your menu</a>
+            </div>
+        </div>
+        @endif
         <div class="row">
             <div class="col-xs-12">
                 <ul class="list-unstyled gallery">
