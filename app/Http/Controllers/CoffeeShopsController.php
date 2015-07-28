@@ -51,11 +51,6 @@ class CoffeeShopsController extends Controller
             ]);
 
             \Auth::login($user);
-
-            \Mail::send('emails.registration', ['user' => current_user()], function (Message $m) use ($request) {
-                $m->to($request->input('email'), $request->input('name'))
-                  ->subject('Thank you for registering to Koolbeans!');
-            });
         } else {
             $user = current_user();
         }
@@ -246,7 +241,6 @@ class CoffeeShopsController extends Controller
         $images = $user->coffee_shop->gallery()->orderBy('position')->limit(3)->get();
 
         return view('coffee_shop.current_orders', [
-
             'coffeeShop' => $user->coffee_shop,
             'images'     => $images,
             'firstImage' => $images->isEmpty() ? null : $images[0]->image,
