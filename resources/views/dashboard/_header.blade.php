@@ -6,7 +6,7 @@
                  class="main-gallery-image">
         @endif
     </div>
-    <div class="col-sm-9 col-xs-12 full-height">
+    <div class="col-sm-9 col-xs-12">
         <div class="row">
             <div class="col-xs-12 full-height">
                 @include('dashboard._title')
@@ -18,21 +18,23 @@
                     @if($i === 0)
                         <img src="{{$coffeeShop->getUploadUrl() . '/' . $image->image}}"
                              alt="Main image"
-                             class="secondary-gallery-image hide visible-xs-inline">
+                             class="secondary-gallery-image hide visible-xs-inline pull-left">
                     @else
                         <img src="{{$coffeeShop->getUploadUrl() . '/' . $image->image}}"
                              alt="Secondary image"
-                             class="secondary-gallery-image hidden-xs">
+                             class="secondary-gallery-image hidden-xs pull-left">
                     @endif
                 @endforeach
-                <a href="{{ route('coffee-shop.gallery.index', ['coffee_shop' => $coffeeShop]) }}"
-                   style="margin-left: 20px">
-                    Add more images<span class="hidden-sm"> / Reorganize</span>
-                </a> (The first image will be used as your profile image)<br>
-                <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}"
-                   style="margin-left: 20px">
-                    Access your menu</span>
-                </a>
+                <div class="clearfix"></div>
+                <div class="pull-left">
+                    <a href="{{ route('coffee-shop.gallery.index', ['coffee_shop' => $coffeeShop]) }}">
+                        Add more images<span class="hidden-sm"> / Reorganize</span>
+                    </a>( The first image will be used as your profile image )<br>
+                    <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}">
+                        Access your menu
+                    </a>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
