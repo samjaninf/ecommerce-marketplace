@@ -19,12 +19,12 @@
                                 Instructions
                             </div>
                             <div class="panel-body">
-                                Each product can be activated by clicking on the "On/Off" button.<br>
-                                You have to set up a price for each of the product's sizes you want activated.<br>
-                                You are not required to activate all the sizes, but you must enter a price above 0 for each one
-                                activated, otherwise they wont show up in your menu.<br>
-                                You can change the price by clicking on it and press "Enter", "Tab" or just click
-                                out the field to save it.
+                                Each product can be activated by clicking on the "On/Off" button. <br>
+                                Click the currency symbol (‘£’) next to each size you have
+                                turned on and enter a price for this item. <br>
+                                You are not required to activate all the sizes,
+                                but you must enter a price above £0.00 for each one activated,
+                                otherwise they will not show up in your menu.
                             </div>
                         </div>
                     </div>
