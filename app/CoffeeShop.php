@@ -490,6 +490,8 @@ class CoffeeShop extends Model
 
     /**
      * @param array $days
+     *
+     * @return string
      */
     private function formatDays(array $days)
     {
@@ -528,7 +530,11 @@ class CoffeeShop extends Model
                     $keep = null;
                 }
             } elseif ($active) {
-                $keep = $day;
+                if ($day === 'Sun') {
+                    $formatted[] = 'Sun';
+                } else {
+                    $keep = $day;
+                }
             }
 
             $previous = $day;
