@@ -8,8 +8,11 @@
     <div id="coffee-shop-presentation">
         <div class="container-fluid" id="show-coffee-shop">
             <div class="row">
-                <div class="col-xs-12" id="coffee-shop-image" style="background-image: url({{$coffeeShop->mainImage()}})">
-                </div>
+                {{--<div class="col-xs-12" id="coffee-shop-image" style="background-image: url({{$coffeeShop->mainImage()}})">--}}
+                {{--</div>--}}
+                <img class="col-xs-12" id="coffee-shop-image"
+                     src="/uploads/500fbe0a8348e91f731a914bb45cab4efce2c68d/2015_08_03_125107.png"
+                     style="padding: 0">
             </div>
         </div>
 
@@ -68,13 +71,11 @@
                 </div>
             </div>
 
-            <div class="container" id="coffee-shop-description">
+            <div class="container @if(Auth::check() && Auth::user()->owns($coffeeShop))cshop-owner @endif"
+                 id="coffee-shop-description">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-9" style="z-index: 50">
                         <div class="row">
-                            <div class="hide visible-xs-block col-xs-12 above-best-review-xs">
-                                Images
-                            </div>
                             <div class="col-sm-6 col-xs-12">
                                 <div class="review-container">
                                     <div class="review">

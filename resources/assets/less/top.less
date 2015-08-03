@@ -255,15 +255,16 @@
 }
 
 #show-coffee-shop {
-  background-color: #000000;
   padding: 0;
 
   & > .row {
-    margin: 0;
+    margin: auto;
+    max-width: 1200px;
+    background-color: black;
   }
 
   #coffee-shop-image {
-    height: 600px;
+    min-height: 600px;
     opacity: .5;
   }
 }
@@ -274,11 +275,12 @@
   margin-top: -200px;
 
   @media (max-width: @screen-xs-max) {
-    margin-top: -570px;
+    margin-top: -620px;
   }
 
   @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
     margin-top: -330px;
+    height: 330px;
   }
 
   @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
@@ -324,7 +326,12 @@
   }
 
   .panel {
-    margin-top: 20px;
+
+    @media (max-width: @screen-xs-max) {
+      margin-top: 20px;
+    }
+
+
     border-radius: 0;
 
     .panel-heading {
