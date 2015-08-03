@@ -67,6 +67,7 @@
                         <div class="col-sm-4 col-sm-offset-3">
                             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                             <input type="submit" class="btn btn-primary" value="Change opening times">
+                            <a href="{{ URL::previous() }}" class="btn btn-default">Discard and Go Back</a>
                         </div>
                     </div>
                 </form>

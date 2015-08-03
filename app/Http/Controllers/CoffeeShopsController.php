@@ -229,7 +229,7 @@ class CoffeeShopsController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect(route('coffee-shop.show', ['coffee-shop' => $coffeeShop->id]));
     }
 
     /**
