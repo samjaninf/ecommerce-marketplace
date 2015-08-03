@@ -144,25 +144,25 @@
 
                         <div class="col-sm-6 specs">
                             @if(! Auth::guest() && current_user()->owns($coffeeShop))
-                                <h4>Active:</h4>
+                                <h4 class="spec-actives">Active:</h4>
                                 @foreach($coffeeShop->getSpecs() as $spec)
                                     @if($coffeeShop->{'spec_' . $spec})
-                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}">
+                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}" class="toggle-spec">
                                             <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{ $spec }}"/>
                                         </a>
                                     @endif
                                 @endforeach
 
-                                <h4>Inactive:</h4>
+                                <h4 class="spec-inactives">Inactive:</h4>
                                 @foreach($coffeeShop->getSpecs() as $spec)
                                     @if(!$coffeeShop->{'spec_' . $spec})
-                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}">
+                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}" class="toggle-spec">
                                             <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{ $spec }}"/>
                                         </a>
                                     @endif
                                 @endforeach
                                 <p class="well" style="margin-top: 10px;">
-                                    Hint: Click on the icon to (de)activate them. <br>
+                                    Hint: Click on the icons to (de)activate them. <br>
                                     You can only select 5 attributes at most.
                                 </p>
                             @else

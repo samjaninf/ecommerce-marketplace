@@ -154,18 +154,30 @@ class CoffeeShopsController extends Controller
         $coffeeShop = $this->coffeeShop->find($coffeeShopId);
         $specs      = CoffeeShop::getSpecs();
         $count      = 0;
-        foreach ($specs as $hasSpec) {
-            if ($coffeeShop->{'spec_' . $hasSpec}) {
-                $count += 1;
-            }
+        if (!$coffeeShop->{'spec_' . $spec}) {
+            foreach ($specs as $hasSpec) {
+                if ($coffeeShop->{'spec_' . $hasSpec}) {
+                    $count += 1;
+                }
 
-            if ($count == 5 && ! $coffeeShop->{'spec_' . $spec}) {
-                return redirect()->back()->with('messages', ['warning' => 'You can only have 5 attributes activated.']);
+                if ($count == 5) {
+                    if (\Request::ajax()) {
+                        return response('', 403);
+                    }
+
+                    return redirect()
+                        ->back()
+                        ->with('messages', ['warning' => 'You can only have 5 attributes activated.']);
+                }
             }
         }
 
         $coffeeShop->{'spec_' . $spec} = ! $coffeeShop->{'spec_' . $spec};
         $coffeeShop->save();
+
+        if (\Request::ajax()) {
+            return response('');
+        }
 
         return redirect()->back();
     }

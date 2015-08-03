@@ -238,6 +238,28 @@ createLink = (input, cls, data, cb) ->
   input.parentNode.replaceChild link, input
   link.parentNode.classList.remove 'has-error'
 
+inAjax = false;
+$('.toggle-spec').on 'click', ->
+  return false if inAjax
+  inAjax = true
+  $that = $(this)
+  $.ajax
+    url: $that.attr('href')
+    success: ->
+      $h4 = $that.prevAll('h4')
+      if $h4.hasClass('spec-inactives')
+        $container = $that.prevAll('.spec-inactives')
+      else
+        $container = $that.nextAll 'p'
+
+      $that.detach()
+      $container.before($that)
+    complete: ->
+      inAjax = false
+
+  return false
+
+
 if document.getElementById('creating-offers')?
   productNb = 1
 
