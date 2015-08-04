@@ -14,6 +14,7 @@
                            placeholder="Enter your location to find a shop..."
                            class="form-control input-lg"
                            value="{{old('query')}}">
+                    <input type="hidden" name="location" id="my-current-location">
 
                     <input class="btn btn-primary btn-lg" type="submit" value="Search">
                 </div>

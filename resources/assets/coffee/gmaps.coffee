@@ -1,4 +1,8 @@
 initialize = ->
+  navigator.geolocation.getCurrentPosition( (a) =>
+    document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
+  )
+
   containers = document.querySelectorAll '#maps-container,.maps-container'
   locationField = document.getElementById 'field-maps-location'
 

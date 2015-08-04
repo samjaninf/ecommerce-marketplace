@@ -5,7 +5,6 @@
 @stop
 
 @section('content')
-    <img src="{{$coffeeShop->mainImage()}}" alt="{{ $coffeeShop->name }}" style="width: 100%; height: 400px">
     <div class="container" id="order">
     <div class="row">
         <div class="col-xs-12">
@@ -33,14 +32,14 @@
                 </div>
 
                 <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
-                    <h5>
+                    <h5 @if($coffeeShop->products()->wherePivot('description', '!=', '')->whereNotNull('description')->count() == 0) class="hide" @endif>
                         Products: <a href="#" onclick="showMenuDescription(this)">View menu description</a>
                     </h5>
 
                     <div class="well well-sm hide" id="menu-description">
                         <dl>
                             @foreach($coffeeShop->products as $product)
-                                @if($coffeeShop->hasActivated($product))
+                                @if($coffeeShop->hasActivated($product) && !empty($product->pivot->description))
                                     <dt>{{ $coffeeShop->getNameFor($product) }}</dt>
                                     <dd>{{ $coffeeShop->getDisplayDescriptionFor($product) }}</dd><br>
                                 @endif
@@ -65,15 +64,16 @@
                                 <span class="col-xs-12 col-sm-5">
                                     @if($orderProduct->type == 'drink')
                                         <span class="sizes">
-                                            @foreach(['xs', 'sm', 'md', 'lg'] as $size)
-                                                @if($coffeeShop->hasActivated($orderProduct, $size))
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="productSizes[{{$i}}]" value="{{$size}}">
-                                                        {{$coffeeShop->getSizeDisplayName($size)}}
-                                                        (£ {{$orderProduct->pivot->$size / 100}})
-                                                    </label>
-                                                @endif
-                                            @endforeach
+                                            <select class="form-control" name="productSizes[{{ $i }}]">
+                                                @foreach(['xs', 'sm', 'md', 'lg'] as $size)
+                                                    @if($coffeeShop->hasActivated($orderProduct, $size))
+                                                        <option value="{{ $size }}">
+                                                            {{$coffeeShop->getSizeDisplayName($size)}}
+                                                            (£ {{$orderProduct->pivot->$size / 100}})
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </span>
                                     @else
                                         <p class="info-price">
@@ -118,6 +118,7 @@
 
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                 <button type="submit" class="btn btn-success proceed-to-checkout">Proceed to checkout</button>
+                <a href="{{ route('coffee-shop.show', [ $coffeeShop->id ]) }}" class="btn btn-default proceed-to-checkout">Go back</a>
             </form>
         </div>
     </div>

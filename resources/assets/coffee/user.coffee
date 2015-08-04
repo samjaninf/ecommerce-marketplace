@@ -39,3 +39,16 @@ document.getElementById('show-more-reviews')?.onclick = (e) ->
     review.classList.remove 'hide' if review.classList.contains('hide') and review.nodeName == 'DIV'
 
   koolbeans.cancelEvent e
+
+document.getElementById('search-form')?.onsubmit = (e) ->
+  that = @
+  filters = document.getElementsByClassName('search-filter')
+  if filters?
+    [].forEach.call filters, (item) ->
+      if (item.checked)
+        input = document.createElement 'input'
+        input.type = 'hidden'
+        input.name = item.name
+        input.value = item.value
+
+        that.appendChild input

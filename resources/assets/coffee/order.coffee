@@ -33,24 +33,23 @@ if document.getElementById('order')
     container = document.createElement 'span'
     container.classList.add 'sizes'
 
+    select = document.createElement 'select'
+    select.name = sel.name.replace 's[', 'Sizes['
+    select.classList.add 'form-control'
+    container.appendChild select
+
     product = findProduct opt
 
     for size in ['xs', 'sm', 'md', 'lg']
       if product.pivot[size + '_activated'] == 1 and product.pivot[size] != 0
-        label = document.createElement 'label'
-        label.classList.add 'radio-inline'
-
-        input = document.createElement 'input'
-        input.type = 'radio'
-        input.name = sel.name.replace 's[', 'Sizes['
+        input = document.createElement 'option'
         input.value = size
 
         text = document.createTextNode coffeeShop['display_' + size] + ' (£ ' + (product.pivot[size] / 100) + ')'
 
-        label.appendChild input
-        label.appendChild text
+        input.appendChild text
 
-        container.appendChild(label)
+        select.appendChild(input)
 
     sel.parentNode.nextElementSibling.appendChild container
 

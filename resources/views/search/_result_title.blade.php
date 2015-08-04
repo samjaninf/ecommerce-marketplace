@@ -1,17 +1,11 @@
 <h6>Showing coffee shops near{{ empty($query) ? 'by' : '' }}...</h6>
 <h2>{{ $query }}</h2>
 
-<form class="form-inline" method="post">
-    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-    <div class="form-group">
-        <label class="sr-only" for="search">Search</label>
-        <input type="text"
-               class="form-control"
-               id="Search"
-               placeholder="Enter a new location"
-               name="query">
-    </div>
+@if ($shops->total() > 0)
+<b>Showing {{ $shops->firstItem() }} - {{ $shops->lastItem() }} of {{ $shops->total() }} shops</b>
+@endif
 
+<div class="form-inline">
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Filter... <span class="caret"></span>
@@ -21,7 +15,7 @@
                 <div class="col-xs-12 col-sm-6">
                     <b>Attributes</b><br>
                     @foreach(\Koolbeans\CoffeeShop::getSpecs('attributes') as $spec)
-                        <div class="checkbox">
+                        <div class="checkbox search-filter-cb">
                             <label>
                                 <input name="f[{{$spec}}]"
                                        type="checkbox"
@@ -47,6 +41,4 @@
             </div>
         </div>
     </div>
-
-    <button type="submit" class="btn btn-default btn-primary">Search</button>
-</form>
+</div>

@@ -35,15 +35,15 @@
                     @forelse($shops as $coffeeShop)
                         <div class="col-sm-6">
                             <div class="featured-coffee-shop"
-                                 style="height: 450px; background-image: url({{$coffeeShop->mainImage() }})"
+                                 style="height: 300px; background-image: url({{$coffeeShop->mainImage() }})"
                                  data-latitude="{{ $coffeeShop->latitude }}"
                                  data-longitude="{{ $coffeeShop->longitude }}">
-                                <div class="info small-featured text-center" style="height: 45%">
-                                    <h5 class="text-center">
+                                <div class="info small-featured" style="height: 45%">
+                                    <h4 class="text-left">
                                         {{ $coffeeShop->name }}
-                                    </h5>
+                                    </h4>
 
-                                    <p>
+                                    <p style="text-align: left">
                                         <i>{{ $coffeeShop->location }}
                                             ({{ number_format($coffeeShop->getDistance(), 2) }} miles)</i>
                                     </p>
@@ -51,7 +51,7 @@
                                     <div class="review hidden-sm hidden-xs">
                                         {{ $coffeeShop->getBestReview() ? $coffeeShop->getBestReview()->pivot->review : null}}
                                     </div>
-                                    <div class="actions">
+                                    <div class="actions text-center">
                                         <a href="{{ route('coffee-shop.order.create', ['coffeeShop' => $coffeeShop]) }}"
                                            class="btn btn-success">Order <span class="hidden-xs"> a Coffee </span></a>
                                         <a href="{{ route('coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}"
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             No result found!
                         </div>
                     @endforelse
@@ -74,12 +74,7 @@
                 @endif
             </div>
 
-            <div class="col-sm-6 maps-container no-marker" @if($lat !== false) data-position="{{ $position }}" @endif></div>
+            <div class="col-sm-6 maps-container no-marker" @if(!\Request::has('location')) data-position="{{ $position }}" @endif></div>
         </div>
     </div>
-@endsection
-
-@section('vendor_scripts')
-    <script type="text/javascript" src="//www.google.com/recaptcha/api.js"></script>
-    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 @endsection

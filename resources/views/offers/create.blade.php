@@ -13,6 +13,30 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
+                <div class="alert alert-info">
+                    <h4>Examples:</h4>
+                    <p>
+                        <b>Product:</b> Americano<br>
+                        <b>Until:</b> {{ \Carbon\Carbon::now()->addWeek()->endOfWeek()->format('d-m-Y') }}<br>
+                        <b>Reduced product:</b> Brownie<br>
+                        <b>FIXED AMOUNT:</b> £0.50<br>
+
+                        <i>When a user buys an americano, they have a reduction of 50p on the brownie.</i>
+                    </p>
+
+                    <p>
+                        <b>Product:</b> Latte<br>
+                        <b>Until:</b> {{ \Carbon\Carbon::now()->addWeek()->endOfWeek()->format('d-m-Y') }}<br>
+                        <b>Reduced product:</b> /<br>
+                        <b>PERCENTAGE:</b> 20%<br>
+
+                        <i>When a user buys a latte, it is reduced by 20%.</i>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 <form action="{{ route('offers.store') }}" method="post" class="form-horizontal">
                     <div class="form-group @if($errors->any()) {{$errors->has('product') ? 'has-error' : 'has-success'}} @endif">
                         <label for="product" class="col-sm-2 control-label">Product:</label>
@@ -23,6 +47,11 @@
                                     <option value="{{ $product->id }}">{{ $coffeeShop->getNameFor($product) }}</option>
                                 @endforeach
                             </select>
+
+                            <p class="help-block">
+                                When a customer add this product to their order,
+                                the offer will activate (if they chose it).
+                            </p>
                         </div>
                     </div>
 
@@ -35,6 +64,10 @@
                                    placeholder="{{ \Carbon\Carbon::now()->format('d/m/Y') }}"
                                    class="form-control"
                                    value="{{old('finish_at')}}">
+
+                            <p class="help-block">
+                                The offer will become unavailable after this date.
+                            </p>
                         </div>
                     </div>
 
@@ -43,7 +76,7 @@
 
                         <div class="form-group @if($errors->any()) {{$errors->has('referenced_product') ? 'has-error' : 'has-success'}} @endif">
                             <label for="referenced_product-0" class="col-sm-2 control-label">
-                                Referenced product (opt):
+                                Reduced product (opt):
                             </label>
 
                             <div class="col-sm-10 col-md-6">
@@ -55,7 +88,9 @@
                                         <option value="{{ $product->id }}">{{ $coffeeShop->getNameFor($product) }}</option>
                                     @endforeach
                                 </select>
-                                <p class="help-block">If you do not set a referenced product here, the base product will be reduced.</p>
+                                <p class="help-block">
+                                    If you leave this field empty, the offer will apply on the product above.
+                                </p>
                             </div>
                         </div>
 
@@ -63,20 +98,20 @@
                             <div class="radio col-sm-10 col-md-6 col-sm-offset-2 col-md-offset-2">
                                 <label>
                                     <input type="radio" name="type[0]" value="free" checked>
-                                    The referenced product will be free.
+                                    FREE: The reduced product will be free.
                                 </label>
                             </div>
                             <div class="radio col-sm-10 col-md-6 col-sm-offset-2 col-md-offset-2">
                                 <label>
                                     <input type="radio" name="type[0]" value="flat">
-                                    The referenced product will be reduced by a fixed amount.
+                                    FIXED AMOUNT: The product will be reduced by a fixed amount.
                                     You can specify the amount below, for each size (if it is a drink).
                                 </label>
                             </div>
                             <div class="radio col-sm-10 col-md-6 col-sm-offset-2 col-md-offset-2">
                                 <label>
                                     <input type="radio" name="type[0]" value="percent">
-                                    The referenced product will be reduced by a percentage.
+                                    PERCENTAGE: The product will be reduced by a percentage.
                                     You can specify the amount below, for each size (if it is a drink).
                                 </label>
                             </div>

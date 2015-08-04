@@ -192,5 +192,4 @@
 
 @section('vendor_scripts')
     <script type="text/javascript" src="//www.google.com/recaptcha/api.js"></script>
-    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 @endsection
