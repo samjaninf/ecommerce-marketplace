@@ -22,6 +22,7 @@
                     <input id="time"
                            name="time"
                            type="time"
+                           step="60"
                            placeholder="12:34"
                            class="form-control"
                            value="{{old('time', $order->time->format('H:i'))}}">

@@ -3,6 +3,7 @@
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\UploadFileRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GalleryImagesController extends Controller
 {
@@ -92,7 +93,7 @@ class GalleryImagesController extends Controller
         $image      = $coffeeShop->gallery()->find($imageId);
 
         if ($image->position !== 1) {
-            $image->position--;
+            $image->position = 1;
             $prev = $coffeeShop->gallery()->wherePosition($image->position)->first();
             $prev->position++;
             $prev->save();
@@ -110,6 +111,7 @@ class GalleryImagesController extends Controller
      */
     public function moveDown($coffeeShopId, $imageId)
     {
+        throw new NotFoundHttpException();
         $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
         $image      = $coffeeShop->gallery()->find($imageId);
         $last       = $coffeeShop->gallery()->orderBy('position', 'desc')->first();

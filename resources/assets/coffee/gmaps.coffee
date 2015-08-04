@@ -30,6 +30,7 @@ initializeMaps = (container) ->
     position = container.dataset.position.split ','
     location = new google.maps.LatLng position[0], position[1]
     centerMapOnLocation location
+    koolbeans.marker.setMap(null) if container.classList.contains 'no-marker'
   else if navigator.geolocation
     useGeoLocation koolbeans.map
 

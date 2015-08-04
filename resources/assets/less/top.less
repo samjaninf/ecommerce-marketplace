@@ -266,6 +266,11 @@
   #coffee-shop-image {
     min-height: 600px;
     opacity: .5;
+
+    @media (max-width: @screen-xs-max) {
+      min-height: 400px;
+      height: 400px;
+    }
   }
 }
 
@@ -275,7 +280,7 @@
   margin-top: -200px;
 
   @media (max-width: @screen-xs-max) {
-    margin-top: -620px;
+    margin-top: -420px;
   }
 
   @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
@@ -326,11 +331,9 @@
   }
 
   .panel {
-
     @media (max-width: @screen-xs-max) {
-      margin-top: 20px;
+      margin-top: 40px;
     }
-
 
     border-radius: 0;
 

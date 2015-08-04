@@ -78,6 +78,8 @@ class WelcomeController extends Controller
         $baseQuery = $query;
         $filters   = \Input::get('f', []);
 
+        $lat = $lng = false;
+
         $pos = mb_strpos($query, ',');
         $pos = $pos == false ? mb_strpos($query, ' ') : $pos;
         $pos = $pos == false ? 0 : ( $pos + 1 );
@@ -104,9 +106,12 @@ class WelcomeController extends Controller
             if ($places['status'] !== 'ZERO_RESULTS') {
                 $city = app('places')->getPlace($places['predictions'][0]['place_id'])['result'];
 
+                $lat = $city['geometry']['location']['lat'];
+                $lng = $city['geometry']['location']['lng'];
+
                 $orderByRaw =
-                    'abs(abs(latitude) - ' . abs($city['geometry']['location']['lat']) . ') + abs(abs(longitude) - ' .
-                    abs($city['geometry']['location']['lng']) . ') asc';
+                    'abs(abs(latitude) - ' . abs($lat) . ') + abs(abs(longitude) - ' .
+                    abs($lng) . ') asc';
             } else {
                 $city       = ['address_components' => []];
                 $orderByRaw = 'name';
@@ -135,17 +140,16 @@ class WelcomeController extends Controller
             })->orderByRaw($orderByRaw)->paginate(8);
 
             if ($places['status'] !== 'ZERO_RESULTS') {
-                $position = $city['geometry']['location']['lat'] . ',' . $city['geometry']['location']['lng'];
+                $position = $lat . ',' . $lng;
                 foreach ($shops as $shop) {
-                    $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude,
-                        $city['geometry']['location']['lat'], $city['geometry']['location']['lng']));
+                    $shop->setDistance($this->calculDistance($shop->latitude, $shop->longitude, $lat, $lng));
                 }
             } else {
                 $position = '';
             }
         }
 
-        return view('search.results', compact('shops', 'position'))
+        return view('search.results', compact('shops', 'position', 'lat', 'lng'))
             ->with('query', $baseQuery)
             ->with('filters', array_keys($filters));
     }

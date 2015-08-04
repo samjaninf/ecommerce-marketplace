@@ -74,7 +74,7 @@
                 @endif
             </div>
 
-            <div class="col-sm-6 maps-container"></div>
+            <div class="col-sm-6 maps-container no-marker" @if($lat !== false) data-position="{{ $position }}" @endif></div>
         </div>
     </div>
 @endsection

@@ -25,34 +25,28 @@
                     @forelse($gallery as $i => $image)
                         <li>
                             <img src="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}" alt="{{$image->image}}">
-
-                            <div class="pull-right">
-                                @if($i != 0)
-                                    <a href="{{ route('coffee-shop.gallery.up', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
-                                       class="btn btn-success"><i class="glyphicon glyphicon-arrow-up"></i></a>
-                                @endif
-
+                        </li>
+                        <li>
+                            @if($i != 0)
                                 <form method="post"
                                       action="{{route('coffee-shop.gallery.destroy', ['coffee_shop' => $coffeeShop, 'gallery' => $image])}}">
+                                    <a href="{{ route('coffee-shop.gallery.up', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
+                                       class="btn btn-success">Set as primary</a>
                                     <input type="hidden" name="_method" value="delete">
                                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                                     <button type="submit" class="btn btn-danger">
-                                        <i class="glyphicon glyphicon-remove"></i>
+                                        Delete
                                     </button>
                                 </form>
-
-                                @if($i != $gallery->count() - 1)
-                                    <a href="{{ route('coffee-shop.gallery.down', ['coffee_shop' => $coffeeShop, 'gallery' => $image]) }}"
-                                       class="btn btn-success"><i class="glyphicon glyphicon-arrow-down"></i></a>
-                                @endif
-                            </div>
+                            @endif
                         </li>
+                        <hr>
                     @empty
                         <li>
                             <p class="alert alert-warning">No image has been added yet.</p>
                         </li>
                     @endforelse
-                    <li class="text-center" style="width: 80%;">
+                    <li class="text-center">
                         <a href="{{ route('coffee-shop.gallery.create', ['coffee_shop' => $coffeeShop]) }}"
                            class="btn btn-primary">
                             Add image

@@ -18,11 +18,13 @@
                 <input id="image"
                        name="image"
                        type="file"
-                       placeholder="Image...">
+                       placeholder="Image..."
+                       style="display: none">
+                <button class="btn btn-primary" style="width: 50%" id="choose-image">Choose image</button>
                 <p>Please upload large images (at least 980px wide) to ensure that they will display properly.</p>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-success btn-lg" value="Upload now" style="width: 50%">
+                <input type="submit" class="btn btn-success btn-lg disabled" value="Upload" style="width: 50%">
             </div>
             <div class="form-group">
                 <p>
@@ -33,8 +35,8 @@
             </div>
             <div class="form-group">
                 <div>
-                    <img id="uploadSmallPreview" style="width: 30%; height: 200px;" src="/img/awaiting-image.png">
-                    <img id="uploadSmallPreview2" style="width: 50%; height: 200px;" src="/img/awaiting-image.png">
+                    <img id="uploadSmallPreview" style="width: 30%; height: 250px;" src="/img/awaiting-image.png">
+                    <img id="uploadSmallPreview2" style="width: 50%; height: 250px;" src="/img/awaiting-image.png">
                 </div>
                 <div>
                     <span class="text-center" style="display: inline-block; width: 30%">Small image, used in search results</span>
@@ -52,12 +54,19 @@
         (function () {
             var image    = document.getElementById("image");
 
+            $('#choose-image').on('click', function () {
+                $(image).click();
+                return false;
+            });
+
             image.onchange = function () {
                 var oFReader = new FileReader();
                 oFReader.readAsDataURL(image.files[0]);
+                $('input[type=submit]').removeClass('disabled');
 
                 oFReader.onload = function (oFREvent) {
                     document.getElementById("uploadPreview").src      = oFREvent.target.result;
+                    document.getElementById("uploadPreview").style.height = "auto";
                     document.getElementById("uploadSmallPreview").src = oFREvent.target.result;
                     document.getElementById("uploadSmallPreview2").src = oFREvent.target.result;
                 };
