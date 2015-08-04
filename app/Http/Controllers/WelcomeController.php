@@ -144,7 +144,7 @@ class WelcomeController extends Controller
                             $query->where('spec_' . $filter, '=', true);
                         }
                     }
-                })->orderByRaw($orderByRaw)->paginate(5);
+                })->orderByRaw($orderByRaw)->paginate(6);
             } else {
                 $shops = CoffeeShop::where(function (Builder $query) use ($filters) {
                     foreach ($filters as $filter => $_) {
@@ -152,7 +152,7 @@ class WelcomeController extends Controller
                             $query->where('spec_' . $filter, '=', true);
                         }
                     }
-                })->orderByRaw($orderByRaw)->paginate(5);
+                })->orderByRaw($orderByRaw)->paginate(6);
             }
 
             if ($lat !== false) {
