@@ -11,7 +11,7 @@
                 {{--<div class="col-xs-12" id="coffee-shop-image" style="background-image: url({{$coffeeShop->mainImage()}})">--}}
                 {{--</div>--}}
                 <img class="col-xs-12" id="coffee-shop-image"
-                     src="/uploads/500fbe0a8348e91f731a914bb45cab4efce2c68d/2015_08_03_125107.png"
+                     src="{{ $coffeeShop->mainImage() }}"
                      style="padding: 0">
             </div>
         </div>
