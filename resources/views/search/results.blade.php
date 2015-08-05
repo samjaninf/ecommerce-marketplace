@@ -11,7 +11,7 @@
                 @include('search._result_title')
             </div>
 
-            <div class="maps-container" data-position="{{$position}}" style="max-height: 400px"></div>
+            <div class="maps-container hidden-xs" data-position="{{$position}}" style="max-height: 400px"></div>
 
             @foreach($shops as $shop)
                 @include('coffee_shop._small', ['showXs' => true, 'size' => 'col-sm-6', 'coffeeShop' => $shop])
