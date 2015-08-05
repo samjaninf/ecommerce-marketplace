@@ -42,6 +42,10 @@
         @endif
     </ul>
 
+    <div class="text-center" id="terms-and-conditions">
+        <a href="{{ url('/terms') }}">Terms and conditions</a> | <a href="{{ url('/terms-of-use') }}">Terms and conditions</a>
+    </div>
+
     <div class="social">
         <a href="#"><i class="fa fa-facebook circle"></i></a>
         <a href="#"><i class="fa fa-instagram circle"></i></a>
