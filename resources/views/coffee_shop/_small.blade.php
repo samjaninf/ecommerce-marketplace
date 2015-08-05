@@ -1,4 +1,4 @@
-<div class="col-sm-4 @if( ! $showXs) hidden-xs @endif">
+<div class="{{ $size or 'col-sm-4' }} @if( ! $showXs) hidden-xs @endif">
     @if($coffeeShop !== null)
         <div class="featured-coffee-shop" style="background-image: url({{$coffeeShop->mainImage() }})">
             <div class="info small-featured text-center">

@@ -6,15 +6,15 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="visible-xs-block row">
+        <div class="visible-xs-block visible-sm-block row">
             <div class="search-results-title">
                 @include('search._result_title')
             </div>
 
-            <div class="maps-container" data-position="{{$position}}"></div>
+            <div class="maps-container" data-position="{{$position}}" style="max-height: 400px"></div>
 
             @foreach($shops as $shop)
-                @include('coffee_shop._small', ['showXs' => true, 'coffeeShop' => $shop])
+                @include('coffee_shop._small', ['showXs' => true, 'size' => 'col-sm-6', 'coffeeShop' => $shop])
             @endforeach
 
             <div class="pull-right container">
@@ -25,20 +25,20 @@
 
         </div>
 
-        <div class="hidden-xs row">
-            <div class="col-sm-6" style="padding: 0">
+        <div class="hidden-xs hidden-sm row">
+            <div class="col-md-6" style="padding: 0">
                 <div class="search-results-title">
                     @include('search._result_title')
                 </div>
 
                 <div class="search-results row">
                     @forelse($shops as $coffeeShop)
-                        <div class="col-sm-6">
+                        <div class="col-md-12 col-lg-6">
                             <div class="featured-coffee-shop"
                                  style="height: 300px; background-image: url({{$coffeeShop->mainImage() }})"
                                  data-latitude="{{ $coffeeShop->latitude }}"
                                  data-longitude="{{ $coffeeShop->longitude }}">
-                                <div class="info small-featured" style="height: 45%">
+                                <div class="info small-featured" style="height: 55%">
                                     <h4 class="text-left">
                                         {{ $coffeeShop->name }}
                                     </h4>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             No result found!
                         </div>
                     @endforelse
@@ -74,7 +74,7 @@
                 @endif
             </div>
 
-            <div class="col-sm-6 maps-container no-marker" @if(!\Request::has('location')) data-position="{{ $position }}" @endif></div>
+            <div class="col-md-6 maps-container no-marker" @if(!\Request::has('location')) data-position="{{ $position }}" @endif></div>
         </div>
     </div>
 @endsection

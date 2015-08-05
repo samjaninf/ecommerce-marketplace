@@ -74,13 +74,12 @@ class WelcomeController extends Controller
     {
         if ($this->request->method() === 'POST') {
             $query = $this->request->get('query');
-        } else {
-            throw new NotFoundHttpException;
         }
+        $location = $this->request->get('location');
         $baseQuery = $query;
         $lat       = $lng = false;
         if (empty( $query ) && $this->request->has('location')) {
-            list( $lat, $lng ) = explode(',', $this->request->get('location'));
+            list( $lat, $lng ) = explode(',', $location);
         }
         $filters = \Input::get('f', []);
 
@@ -164,6 +163,11 @@ class WelcomeController extends Controller
                 $position = '';
             }
         }
+
+        $shops = $shops->appends([
+            'location' => $location,
+            'query' => $query,
+        ]);
 
         return view('search.results', compact('shops', 'position', 'lat', 'lng'))
             ->with('query', $baseQuery)

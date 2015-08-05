@@ -63,7 +63,7 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
         }
 
         $attributes['featured'] = false;
-        $attributes['status'] = 'accepted';
+        $attributes['status'] = 'published';
 
         return $this->model->newInstance($attributes, $exists);
     }
