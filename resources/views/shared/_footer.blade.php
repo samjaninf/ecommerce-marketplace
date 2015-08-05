@@ -43,7 +43,7 @@
     </ul>
 
     <div class="text-center" id="terms-and-conditions">
-        <a href="{{ url('/terms') }}">Terms and conditions</a> | <a href="{{ url('/terms-of-use') }}">Terms and conditions</a>
+        <a href="{{ url('/terms') }}">Terms and Conditions</a> | <a href="{{ url('/terms-of-use') }}">Terms of Use</a>
     </div>
 
     <div class="social">
