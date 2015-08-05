@@ -274,6 +274,8 @@
                                 <div class="col-xs-12">
                                     @if($coffeeShop->reviews->count() > 3)
                                         <a href="#" id="show-more-reviews" class="hidden-xs">Show more...</a>
+                                    @elseif($coffeeShop->reviews->count() == 0)
+                                        Awaiting Reviews
                                     @endif
                                 </div>
                             </div>
