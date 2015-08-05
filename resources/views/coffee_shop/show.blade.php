@@ -208,7 +208,7 @@
                                     </p>
                                 @endif
 
-                                @if(! Auth::guest() && current_user()->canReview($coffeeShop))
+                                @if(! Auth::guest())
                                     @if ( ! $coffeeShop->reviews()->where('user_id', '=', current_user()->id)->count())
                                         <a href="#" id="add-review">
                                             Add your review

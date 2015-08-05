@@ -2,7 +2,7 @@
     @if($coffeeShop !== null)
         <div class="featured-coffee-shop" style="background-image: url({{$coffeeShop->mainImage() }})">
             <div class="info text-center">
-                <h5 class="text-center">
+                <h5 class="text-center" style="padding-top: 20px">
                     {{ $coffeeShop->name }}
                 </h5>
                 <p>

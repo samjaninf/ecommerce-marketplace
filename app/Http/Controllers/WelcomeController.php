@@ -353,6 +353,22 @@ class WelcomeController extends Controller
     }
 
     /**
+     * @return \Illuminate\View\View
+     */
+    public function terms()
+    {
+        return view('terms');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function termsOfUse()
+    {
+        return view('terms_use');
+    }
+
+    /**
      * @param $token
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response

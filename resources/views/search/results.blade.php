@@ -38,7 +38,7 @@
                                  style="height: 300px; background-image: url({{$coffeeShop->mainImage() }})"
                                  data-latitude="{{ $coffeeShop->latitude }}"
                                  data-longitude="{{ $coffeeShop->longitude }}">
-                                <div class="info small-featured" style="height: 55%">
+                                <div class="info small-featured" style="height: 55%; padding-left: 20px">
                                     <h4 class="text-left">
                                         {{ $coffeeShop->name }}
                                     </h4>
@@ -51,7 +51,7 @@
                                     <div class="review hidden-sm hidden-xs">
                                         {{ $coffeeShop->getBestReview() ? $coffeeShop->getBestReview()->pivot->review : null}}
                                     </div>
-                                    <div class="actions text-center">
+                                    <div class="actions text-center" style="margin-left: -20px">
                                         <a href="{{ route('coffee-shop.order.create', ['coffeeShop' => $coffeeShop]) }}"
                                            class="btn btn-success">Order <span class="hidden-xs"> a Coffee </span></a>
                                         <a href="{{ route('coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}"

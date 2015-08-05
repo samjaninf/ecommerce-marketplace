@@ -85,13 +85,6 @@ class CoffeeShopsController extends Controller
 
         $coffeeShop = $this->coffeeShop->find($id);
 
-        if ( ! current_user()->canReview($coffeeShop)) {
-            return redirect()
-                ->back()
-                ->with('messages',
-                    ['warning' => "You cannot review this coffee shop because you haven't made any order there."]);
-        }
-
         $coffeeShop->addReview($review, $rating);
 
         $u = current_user();
