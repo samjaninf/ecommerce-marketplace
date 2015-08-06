@@ -60,7 +60,6 @@ class CreateXeroBillsCommand extends Command
 
             if ($amount > 0) {
                 $invoices[] = $this->createInvoice($coffeeShop, $amount * .8 / 100);
-                $invoices[] = $this->createInvoice($coffeeShop, -4);
             }
         }
 
