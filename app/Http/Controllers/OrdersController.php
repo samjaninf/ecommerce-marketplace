@@ -156,6 +156,7 @@ class OrdersController extends Controller
         $order                 = new Order;
         $order->user_id        = current_user()->id;
         $order->coffee_shop_id = $coffeeShopId;
+        $order->make_on_arriving = $request->has('make_on_arriving');
 
         $order->pickup_time = $request->input('time');
 
@@ -216,6 +217,10 @@ class OrdersController extends Controller
     {
         $user  = current_user();
         $order = Order::find($orderId);
+
+        if ($order->paid) {
+            return redirect(route('order.success', ['order' => $order]));
+        }
 
         $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
 
@@ -352,6 +357,11 @@ class OrdersController extends Controller
                             'orderId' => $order->id,
                         ],
                     ],
+                    'ios' => [
+                        'payload' => $payload = [
+                            'orderId' => $order->id,
+                        ],
+                    ]
                 ],
             ]);
             $ionic        = new Client([

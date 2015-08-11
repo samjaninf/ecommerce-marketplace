@@ -16,13 +16,16 @@
         <div class="collapse navbar-collapse" id="main-menu">
             @if(strpos(Route::getCurrentRoute()->getAction()['controller'], 'WelcomeController@index') === false)
             <form class="form-inline" action="{{ route('search') }}" method="post" id="search-form">
-            <ul class="nav navbar-nav navbar-left">
-                <li>
-                    <input type="text" name="query" class="form-control" placeholder="Search...">
-                    <input type="hidden" name="location" id="my-current-location">
-                    <input type="submit" class="form-control" value="Search">
-                </li>
-            </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <input type="text" name="query" class="form-control" placeholder="Search...">
+                        <input type="hidden" name="location" id="my-current-location">
+                        <input type="submit" class="form-control" value="Search">
+                        @if(str_contains(URL::previous(), '/search'))
+                            <a href="{{ URL::previous() }}" class="btn btn-primary" style="display: inline; color: white">Go back</a>
+                        @endif
+                    </li>
+                </ul>
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
             </form>
             @endif

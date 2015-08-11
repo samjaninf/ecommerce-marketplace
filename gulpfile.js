@@ -17,9 +17,11 @@ elixir(function (mix) {
     mix.less('app.less')
         .coffee()
         .imagemin()
-        .scripts(['bootstrap-switch.js'], 'public/js/vendor.js')
+        .scripts(['bootstrap-switch.js', 'datetimepicker.js'], 'public/js/vendor.js')
+        .styles(['datetimepicker.css'], 'public/css/vendor.css')
         .version([
             'css/app.css',
+            'css/vendor.css',
             'js/app.js',
             'js/vendor.js'
         ]);

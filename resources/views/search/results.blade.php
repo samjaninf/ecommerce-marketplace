@@ -14,7 +14,7 @@
             <div class="maps-container hidden-xs" data-position="{{$position}}" style="max-height: 400px"></div>
 
             @foreach($shops as $shop)
-                @include('coffee_shop._small', ['showXs' => true, 'size' => 'col-sm-6', 'coffeeShop' => $shop])
+                @include('coffee_shop._small', ['showXs' => true, 'size' => 'col-sm-6 col-xs-6 col-very-xs-12', 'coffeeShop' => $shop])
             @endforeach
 
             <div class="pull-right container">

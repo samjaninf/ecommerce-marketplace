@@ -22,6 +22,8 @@ class Koolbeans
 
   initTooltips: ->
     $('[data-toggle="tooltip"]').tooltip()
+    console.log 'yo'
+    $("#dtBox").DateTimePicker()
 
   fadeOutMessages: ->
     jQuery('#messages-top')?.delay(8000).fadeOut()

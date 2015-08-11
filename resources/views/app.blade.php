@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('page-title', 'Welcome') - Koolbeans</title>
 
+    <link href="{{ elixir('css/vendor.css') }}" rel="stylesheet">
     <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
@@ -20,6 +21,7 @@
     <![endif]-->
 </head>
 <body>
+<div id="dtBox"></div>
 <header id="top-container" @if(app('request')->is('/')) style="height: 787px"@endif>
     @include('menu')
     @yield('splash')

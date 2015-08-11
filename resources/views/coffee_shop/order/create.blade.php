@@ -17,18 +17,25 @@
         <div class="col-xs-12">
             <form action="{{ route('coffee-shop.order.store', ['coffeeShop' => $coffeeShop]) }}" method="post">
                 <div class="form-group @if($errors->any()) {{$errors->has('time') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="time">Pickup time:</label>
                     <input id="time"
                            name="time"
-                           type="time"
-                           step="60"
                            placeholder="12:34"
                            class="form-control"
-                           value="{{old('time', $order->time->format('H:i'))}}">
+                           value="{{old('time', $order->time->format('H:i'))}}"
+                           type="text"
+                           data-field="time"
+                           readonly
+                           style="cursor:pointer;">
 
                     <p>
                         {!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
                     </p>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="make_on_arriving"> Make when I arrive
+                    </label>
                 </div>
 
                 <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
@@ -106,19 +113,19 @@
                             </span>
                         </label>
                     @endif
-                    <a href="#" class="row" id="add-product">Add a product</a>
+                    <a href="#" class="row" id="add-product">Add Product</a>
                 </div>
 
                 @if(Session::has('offer-used'))
                 <p class="offers alert alert-info">
-                    Chosen offer:<br>
+                    Chosen Offer:<br>
                     {{ display_offer(Session::get('offer-used')) }}
                 </p>
                 @endif
 
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                <button type="submit" class="btn btn-success proceed-to-checkout">Proceed to checkout</button>
-                <a href="{{ route('coffee-shop.show', [ $coffeeShop->id ]) }}" class="btn btn-default proceed-to-checkout">Go back</a>
+                <button type="submit" class="btn btn-success proceed-to-checkout">Place Order</button>
+                <a href="{{ route('coffee-shop.show', [ $coffeeShop->id ]) }}" class="btn btn-default proceed-to-checkout">Go Back</a>
             </form>
         </div>
     </div>

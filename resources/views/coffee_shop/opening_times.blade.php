@@ -41,11 +41,13 @@
                             <div class='col-sm-4'>
                                 <div class='form-group'>
                                     <label for="start_time_{{$day}}">
-                                        <input type="time"
-                                               step="60"
-                                               id="start_time_{{$day}}"
+                                        <input id="start_time_{{$day}}"
                                                class="form-control"
                                                name="start_time_{{$day}}"
+                                               type="text"
+                                               data-field="time"
+                                               readonly
+                                               style="cursor:pointer;"
                                                value="{{ $coffeeShop->getStartingHour($day) }}">
                                     </label>
                                 </div>
@@ -53,11 +55,13 @@
                             <div class='col-sm-4'>
                                 <div class='form-group'>
                                     <label for="end_time_{{$day}}">
-                                        <input type="time"
-                                               step="60"
-                                               id="end_time_{{$day}}"
+                                        <input id="end_time_{{$day}}"
                                                class="form-control"
                                                name="stop_time_{{$day}}"
+                                               type="text"
+                                               data-field="time"
+                                               readonly
+                                               style="cursor:pointer;"
                                                value="{{ $coffeeShop->getStoppingHour($day) }}">
                                     </label>
                                 </div>

@@ -55,6 +55,8 @@
                                         <span class="glyphicon glyphicon-time"></span>
                                         <input class="panel-input"
                                                name="time"
+                                               type="time"
+                                               step="60"
                                                placeholder="{{\Carbon\Carbon::now()->format('H:i')}}">
                                     </label>
 

@@ -1,11 +1,11 @@
-<h6>Showing coffee shops near{{ empty($query) ? 'by' : '' }}...</h6>
-<h2>{{ $query }}</h2>
-
-@if ($shops->total() > 0)
-<b>Showing {{ $shops->firstItem() }} - {{ $shops->lastItem() }} of {{ $shops->total() }} shops</b>
-@endif
-
-<div class="form-inline">
+<div class="pull-left">
+    <h6 style="margin:0;">Showing coffee shops near{{ empty($query) ? 'by' : '' }}...</h6>
+    <h2>{{ $query }}</h2>
+    @if ($shops->total() > 0)
+        <b>Showing {{ $shops->firstItem() }} - {{ $shops->lastItem() }} of {{ $shops->total() }} shops</b>
+    @endif
+</div>
+<div class="form-inline pull-right">
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Filter... <span class="caret"></span>
@@ -42,3 +42,4 @@
         </div>
     </div>
 </div>
+<div class="clearfix"></div>

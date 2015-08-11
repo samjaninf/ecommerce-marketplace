@@ -130,6 +130,11 @@
       width: 50%;
       opacity: .9;
 
+      @media (max-width: @screen-xs-max) {
+        margin: 20px auto auto;
+        width: 80%;
+      }
+
       .form-group {
         width: 100%;
         margin: auto;
@@ -150,7 +155,10 @@
             width: 80%;
 
             @media (max-width: @screen-xs-max) {
-              width: 60%;
+              width: 100%;
+              display: block;
+              border-radius: 0;
+              font-size: 11pt;
             }
           }
 
@@ -160,7 +168,9 @@
             width: 20%;
 
             @media (max-width: @screen-xs-max) {
-              width: 40%
+              width: 100%;
+              display: block;
+              border-radius: 0;
             }
           }
         }

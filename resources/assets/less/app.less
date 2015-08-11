@@ -603,3 +603,19 @@ hr {
 .search-filter-cb {
   margin: 3px 0 !important;
 }
+
+.col-very-xs-12 {
+  @media (max-width: 400px) {
+    width: 100%;
+  }
+
+  @media (min-width: 401px) and (max-width: @screen-xs-max) {
+    .featured-coffee-shop {
+      height: 200px;
+
+      .info {
+        height: 80%;
+      }
+    }
+  }
+}
