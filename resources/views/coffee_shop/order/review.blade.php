@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('page-title')
-    Checkout
+    Summary
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
                     <thead>
                     <tr>
                         <th>Your order</th>
-                        <th>Total: £ {{$order->price / 100.}}</th>
+                        <th>Total: £ {{number_format($order->price / 100., 2)}}</th>
                     </tr>
                     </thead>
                     @foreach($order->order_lines as $line)
@@ -32,8 +32,10 @@
                 </table>
 
                 <p class="offers">
+                    @if(Session::has('offer-used'))
                     Current offer applying:<br>
-                    {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
+                    {{ display_offer(Session::get('offer-used', $coffeeShop)) }}
+                    @endif
                 </p>
 
                 @if($order->price < 1500 && current_user()->transactions()->orderBy('id', 'desc')->first() !== null && current_user()->transactions()->orderBy('id', 'desc')->first()->charged == true)
@@ -113,7 +115,7 @@
                           id="existingCardForm"
                           action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                        <button class="btn btn-primary" type="submit">Submit Payment</button>
+                        <button class="btn btn-success" type="submit">Submit Payment</button>
                         <a href="#" class="btn btn-default" id="changeCard">Change card</a>
                     </form>
             </div>

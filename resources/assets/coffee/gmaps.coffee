@@ -20,8 +20,10 @@ initializeMaps = (container) ->
       stylers: [visibility: "off"]
     ]
 
+  draggable = container.classList.contains('draggable-marker')
   koolbeans.map = new google.maps.Map container, options
   koolbeans.marker = new google.maps.Marker
+    draggable: draggable
     map: koolbeans.map
     anchorPoint: new google.maps.Point 0, -29
   koolbeans.infoWindow = new google.maps.InfoWindow
@@ -113,3 +115,7 @@ changeFormFields = (place) ->
   document.getElementById('place-id-field').setAttribute 'value', place.place_id
 
 google.maps.event.addDomListener window, 'load', initialize if google?
+
+google.maps.event.addListener koolbeans.marker, 'dragend', ->
+  document.getElementById("latitude-field").value = this.getPosition().lat();
+  document.getElementById("longitude-field").value = this.getPosition().lng();

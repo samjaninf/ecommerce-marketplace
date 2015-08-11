@@ -184,7 +184,8 @@
         </div>
 
         <div class="col-lg-4">
-            <div id="maps-container" @if(isset($position)) data-position="{{$position}}" @endif></div>
+            <div id="maps-container" class="draggable-marker" @if(isset($position)) data-position="{{$position}}" @endif></div>
+            <p class="help-block">You can drag the pin to be more accurate.</p>
         </div>
     </div>
 </div>

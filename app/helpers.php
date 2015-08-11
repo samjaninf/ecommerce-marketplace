@@ -15,11 +15,15 @@ if ( ! function_exists('current_user')) {
  *
  * @return string
  */
-function display_offer($offerId)
+function display_offer($offerId, $currentCoffeeShop = null)
 {
     /** @var \Koolbeans\Offer $offer */
     $offer      = \Koolbeans\Offer::find($offerId);
     $coffeeShop = $offer->coffee_shop;
+
+    if ($currentCoffeeShop != null && $coffeeShop->id != $currentCoffeeShop->id) {
+        return ;
+    }
 
     $offers = "";
     foreach ($offer->details as $detail) {

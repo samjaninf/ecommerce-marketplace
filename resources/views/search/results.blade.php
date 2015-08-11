@@ -11,17 +11,19 @@
                 @include('search._result_title')
             </div>
 
-            <div class="maps-container hidden-xs" data-position="{{$position}}" style="max-height: 400px"></div>
+            <div class="maps-container hidden-xs hidden-sm" data-position="{{$position}}" style="max-height: 400px"></div>
 
             @foreach($shops as $shop)
                 @include('coffee_shop._small', ['showXs' => true, 'size' => 'col-sm-6 col-xs-6 col-very-xs-12', 'coffeeShop' => $shop])
             @endforeach
 
-            <div class="pull-right container">
-                @if($shops !== [])
-                    {!! $shops->render() !!}
-                @endif
-            </div>
+           <div class="col-xs-12">
+               <div class="pull-right">
+                   @if($shops !== [])
+                       {!! $shops->render() !!}
+                   @endif
+               </div>
+           </div>
 
         </div>
 
@@ -68,8 +70,10 @@
                 </div>
 
                 @if($shops !== [])
-                    <div class="pull-right">
-                        {!! $shops->render() !!}
+                    <div class="col-xs-12">
+                        <div class="pull-right">
+                            {!! $shops->render() !!}
+                        </div>
                     </div>
                 @endif
             </div>

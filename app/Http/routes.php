@@ -71,10 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('offers/{offer}/toggleActivation',
             ['as' => 'offers.toggle-activation', 'uses' => 'OffersController@toggleActivation']);
 
-
         Route::get('current-orders', ['as' => 'current-orders', 'uses' => 'CoffeeShopsController@showCurrentOrders']);
     });
 
+    Route::get('/orders/{id}/tweet', ['as' => 'order.tweet', 'uses' => 'OrdersController@tweet']);
     Route::post('coffee-shop/{coffee_shop}/review',
         ['as' => 'coffee-shop.review', 'uses' => 'CoffeeShopsController@storeReview']);
     Route::resource('coffee-shop.order', 'OrdersController');

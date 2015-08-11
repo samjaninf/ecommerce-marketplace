@@ -45,7 +45,25 @@
                 </p>
 
                 <h4>Pickup time: {{$order->pickup_time}}</h4>
+
+                <p>Tweet about this order and you will get 5 KB points! How cool is that?</p>
+                <a href="https://twitter.com/share" data-size="large" class="twitter-share-button" data-count="none" data-url="https://koolbeans.co.uk/" data-text="Just ordered a coffee from {{ $order->coffee_shop->name }} using @KoolBeansUK!">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
             </div>
         </div>
     </div>
+@stop
+
+@section('scripts')
+    <script>
+        (function () {
+            function handleTweetEvent(event){
+                if (event) {
+                    $.ajax('{{ route('order.tweet', $order->id) }}');
+                    $('.twitter-share-button').hide();
+                }
+            }
+            twttr.events.bind('tweet', handleTweetEvent);
+        })()
+    </script>
 @stop

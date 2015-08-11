@@ -191,8 +191,10 @@ class OrdersController extends Controller
 
         if (\Session::has('offer-used')) {
             $offer           = Offer::find(\Session::get('offer-used'));
-            $order->offer_id = $offer->id;
-            $this->applyOfferOnOrder($offer, $lines);
+            if ($order->coffee_shop_id == $coffeeShop->id) {
+                $order->offer_id = $offer->id;
+                $this->applyOfferOnOrder($offer, $lines);
+            }
         }
 
         $order->save();
@@ -468,6 +470,25 @@ class OrdersController extends Controller
                 }
             }
         }
+    }
+
+    /**
+     * @param $orderId
+     *
+     * @return string
+     */
+    public function tweet($orderId)
+    {
+        $order = Order::find($orderId);
+        if ($order->user_id != \Auth::user()->id) {
+            return '';
+        }
+
+        $user = \Auth::user();
+        $user->points += 5;
+        $user->save();
+
+        return 'success';
     }
 
 }
