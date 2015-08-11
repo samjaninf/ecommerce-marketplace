@@ -18,7 +18,7 @@
         </div>
 
         <div class="collapse navbar-collapse" id="main-menu">
-            @if(strpos(Route::getCurrentRoute()->getAction()['controller'], 'WelcomeController@index') === false)
+            @if(Route::getCurrentRoute() && Route::getCurrentRoute()->getAction() && strpos(Route::getCurrentRoute()->getAction()['controller'], 'WelcomeController@index') === false)
             <form class="form-inline" action="{{ route('search') }}" method="post" id="search-form">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
