@@ -9,7 +9,11 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="/img/shared/logo.png" alt="Koolbeans">
+                @if(app('request')->is('/'))
+                    <img src="/img/shared/logo-white.png" alt="Koolbeans">
+                @else
+                    <img src="/img/shared/logo.png" alt="Koolbeans">
+                @endif
             </a>
         </div>
 
