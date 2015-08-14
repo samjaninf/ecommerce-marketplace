@@ -166,7 +166,7 @@ class OrdersController extends Controller
             $product = $coffeeShop->products()->find($productId);
 
             $lines[]                 = $currentLine = new OrderLine;
-            $currentLine->product_id = $productId;
+            $currentLine->product()->associate($product);
             $currentLine->size       = null;
 
             if ( ! $product) {
@@ -189,11 +189,23 @@ class OrdersController extends Controller
             }
         }
 
-        if (\Session::has('offer-used')) {
-            $offer           = Offer::find(\Session::get('offer-used'));
-            if ($order->coffee_shop_id == $coffeeShop->id) {
-                $order->offer_id = $offer->id;
-                $this->applyOfferOnOrder($offer, $lines);
+        if ($coffeeShop->offer_activated) {
+            $now = Carbon::now();
+            $offPeak = $now->between(new Carbon(Carbon::now()->setTime(9, 45)), new Carbon(Carbon::now()->setTime(11, 45)));
+            if ($coffeeShop->offer_times == 'off-peak' && $offPeak && $now->day != Carbon::SATURDAY && $now->day != Carbon::SUNDAY ||
+                $coffeeShop->offer_times == 'off-peak-weekends' && $offPeak ||
+                $coffeeShop->offer_times == 'all') {
+                $tmp = new CollectionBase($lines);
+                $count = $tmp->count();
+                if ($coffeeShop->offer_drink_only) {
+                    $tmp = $tmp->filter(function ($row) {
+                        return $row->product->type == 'drink';
+                    });
+                }
+                $reduced = $tmp->take(floor($count / 2));
+                foreach ($reduced as $line) {
+                    $line->price = ceil($line->price / 2);
+                }
             }
         }
 

@@ -51,9 +51,9 @@ class WelcomeController extends Controller
             }
         }
 
-        $offers = Offer::whereActivated(true)->get();
+        $offers = CoffeeShop::whereOfferActivated(true)->get();
         while ($offers->count() < 4) {
-            $offers->add(new Offer);
+            $offers->add(new CoffeeShop());
         }
 
         $posts = Post::orderBy('created_at', 'desc')->limit(2)->get();

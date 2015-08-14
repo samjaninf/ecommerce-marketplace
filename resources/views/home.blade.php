@@ -69,20 +69,13 @@
                                                 Total: <span class="pull-right">£ {{ number_format($order->price / 100., 2) }}</span>
                                             </div>
                                             <div class="panel-footer">
-                                                <a href="#" class="btn btn-primary">Re-Order</a>
-                                                <a href="#" class="btn btn-warning">Leave Review</a>
+                                                <a href="{{ route('coffee-shop.show', $order->coffee_shop->id) }}"
+                                                   class="btn btn-warning">Leave Review</a>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-xs-12 col-md-4">
-                            <h3>Your offers</h3>
-
-                            @foreach(current_user()->offers->unique()->take(4) as $i => $offer)
-                                @include('offers._short', ['bgNum' => $i % 4 + 1])
-                            @endforeach
                         </div>
                     </div>
 

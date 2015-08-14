@@ -183,11 +183,11 @@
                             <h4>Current deals</h4>
 
                             <div class="row">
-                                @foreach($coffeeShop->offers as $i => $offer)
+                                @if($coffeeShop->offer_activated)
                                     <div class="col-xs-12 col-sm-6">
-                                        @include('offers._short', ['bgNum' => ($i % 4) + 1])
+                                        @include('offers._short', ['offer' => $coffeeShop, 'bgNum' => rand(1,4)])
                                     </div>
-                                @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>

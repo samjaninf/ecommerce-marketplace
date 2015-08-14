@@ -256,4 +256,22 @@ class CoffeeShopsController extends Controller
                                               ->get(),
         ]);
     }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $coffeeShopId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function offerUpdate(Request $request, $coffeeShopId)
+    {
+        $coffeeShop = $this->coffeeShop->find($coffeeShopId);
+        if (($coffeeShop->offer_activated = $request->has('offer_activated')) == true) {
+            $coffeeShop->offer_drink_only = $request->input('offer_drink_only') == 'drinks_only';
+            $coffeeShop->offer_times = $request->input('offer_times');
+            $coffeeShop->save();
+        }
+
+        return redirect()->back();
+    }
 }

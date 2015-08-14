@@ -116,6 +116,7 @@ changeFormFields = (place) ->
 
 google.maps.event.addDomListener window, 'load', initialize if google?
 
-google.maps.event.addListener koolbeans.marker, 'dragend', ->
-  document.getElementById("latitude-field").value = this.getPosition().lat();
-  document.getElementById("longitude-field").value = this.getPosition().lng();
+if koolbeans.marker?
+  google.maps.event.addListener koolbeans.marker, 'dragend', ->
+    document.getElementById("latitude-field").value = this.getPosition().lat();
+    document.getElementById("longitude-field").value = this.getPosition().lng();

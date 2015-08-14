@@ -1,65 +1,44 @@
-<table class="table">
-    <thead>
-    <tr>
-        <th>Product</th>
-        <th>Linked products</th>
-        <th>Offer type</th>
-        <th>Reductions</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($offers as $offer)
-        <tr>
-            <td>{{ $coffeeShop->getNameFor($offer->product) }}</td>
-            <td>
-                @foreach($offer->details as $detail)
-                    {{ $coffeeShop->getNameFor($detail->product) }}<br>
-                @endforeach
-            </td>
-            <td>
-                @foreach($offer->details as $detail)
-                    {{ $detail->getTypeDisplay() }}<br>
-                @endforeach
-            </td>
-            <td>
-                @foreach($offer->details as $detail)
-                    @if ($detail->type == 'free')
-                        100%<br>
-                    @else
-                        @if($detail->amount_xs) {{ $coffeeShop->getSizeDisplayName('xs') }}
-                        : {{ $detail->amount('xs') }} @endif
-                        @if($detail->amount_sm) {{ $coffeeShop->getSizeDisplayName('sm') }}
-                        : {{ $detail->amount('sm') }} @endif
-                        @if($detail->amount_md) {{ $coffeeShop->getSizeDisplayName('md') }}
-                        : {{ $detail->amount('md') }} @endif
-                        @if($detail->amount_lg) {{ $coffeeShop->getSizeDisplayName('lg') }}
-                        : {{ $detail->amount('lg') }} @endif
-                    @endif
-                    <br>
-                @endforeach
-            </td>
-            <td>
-                @if($offer->activated)
-                    <a href="{{ route('offers.toggle-activation', ['offer' => $offer]) }}"
-                       class="btn btn-warning btn-xs">Deactivate</a>
-                @else
-                    <a href="{{ route('offers.toggle-activation', ['offer' => $offer]) }}"
-                       class="btn btn-success btn-xs">Activate</a>
-                @endif
-                <a href="{{ route('offers.destroy', ['offer' => $offer]) }}"
-                   class="btn btn-danger btn-xs"
-                   data-confirm="Are you sure you want to delete this offer?"
-                   data-method="delete">Delete</a>
-            </td>
-        </tr>
-    @endforeach
-    <tr>
-        <td class="success" colspan="5">
-            <a href="{{ route('offers.create') }}">
-                Add an offer
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<form action="{{ route('coffee-shop.offer-update', $coffeeShop->id) }}" method="post">
+    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+    <div class="row">
+        <div class="col-xs-12 col-sm-1">
+            <label for="offer_activated" style="margin-top: 40px">
+                <input id="offer_activated"
+                       name="offer_activated"
+                       class="activates "
+                       type="checkbox"
+                       value="on"
+                       @if($coffeeShop->offer_activated) checked @endif>
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+            <h2>Activate Offers for Your Shop</h2>
+            <hr>
+
+            <h3>'Buy 1 Get 1 Half Price</h3>
+            <div class="form-group">
+                <label for="offer_drink_only">
+                    Choose what items this offer applies to
+                </label>
+                <select class="form-control" name="offer_drink_only" id="offer_drink_only">
+                    <option value="drinks_only">Offer applies to drinks only</option>
+                    <option value="drinks_food">Offer applies to drinks and food</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="offer_times">
+                    Choose what times of the day the offer operates
+                </label>
+                <select class="form-control" name="offer_times" id="offer_times">
+                    <option value="off-peak">Off-Peak times, excluded weekends (recommended)</option>
+                    <option value="off-peak-weekends">Off-Peak times, including weekends</option>
+                    <option value="all">All day, including weekends</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-2">
+            <button type="submit" class="btn btn-primary form-control" style="margin-top: 30px">Save</button>
+        </div>
+    </div>
+</form>

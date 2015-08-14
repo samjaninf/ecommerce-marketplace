@@ -58,6 +58,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('coffee-shop/{coffee_shop}/products/{product}/reprice/{size}',
             ['as' => 'coffee-shop.products.reprice', 'uses' => 'MenuController@reprice']);
 
+        Route::post('coffee-shop/{coffee_shop}/offer-update',
+            ['as' => 'coffee-shop.offer-update', 'uses' => 'CoffeeShopsController@offerUpdate']);
+
         Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
         Route::get('publish-my-shop', ['as' => 'publish-my-shop', 'uses' => 'CoffeeShopsController@publish']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
