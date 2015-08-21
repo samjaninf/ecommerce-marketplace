@@ -167,6 +167,7 @@
   font-size: @font-size-large;
   line-height: @line-height-computed;
   height: @navbar-height;
+  max-width:75%;
 
   &:hover,
   &:focus {
@@ -175,6 +176,7 @@
 
   > img {
     display: block;
+    max-width:100%;
   }
 
   @media (min-width: @grid-float-breakpoint) {
@@ -244,9 +246,9 @@
     .open .dropdown-menu {
       position: static;
       float: none;
-      width: auto;
+      width: 95%;
       margin-top: 0;
-      background-color: transparent;
+      background-color: #F3F3F3;
       border: 0;
       box-shadow: none;
       > li > a,

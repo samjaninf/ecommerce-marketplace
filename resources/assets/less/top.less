@@ -187,12 +187,7 @@
     color: white;
     text-align: center;
   }
-  @media (max-width: @screen-xs-max) {
-  padding:15px;
-    form {
-    width:100%;
-    }
-  }
+
   form {
     margin: 50px auto auto;
     width: 50%;
@@ -231,6 +226,20 @@
           }
         }
       }
+    }
+    @media (max-width: @screen-xs-max) {
+      padding:15px;
+      width:100% !important;
+      .form-group {
+        .input-group {
+          input {
+            float:left; 
+            clear:left; 
+            width:100%;
+          }
+        }
+      }
+
     }
   }
 }
