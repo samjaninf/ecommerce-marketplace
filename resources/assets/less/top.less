@@ -186,7 +186,9 @@
     color: white;
     text-align: center;
   }
-
+  @media (max-width: @screen-xs-max) {
+   padding:15px;
+  }
   form {
     margin: 50px auto auto;
     width: 50%;
@@ -226,9 +228,10 @@
         }
       }
     }
+
+
     @media (max-width: @screen-xs-max) {
-      padding:15px;
-      width:100% !important;
+      width:100%;
       .form-group {
         .input-group {
           .btn {
