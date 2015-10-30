@@ -8,21 +8,19 @@
         </h3>
 
         <p class="feature-contents">
-            Use the search bar with KoolBeans to show you local coffee shops you can order drinks with. List them
-            by reviews, distance or even the roastery.
+            Use the search bar to find and order from independent and small chain coffee shops. Refine your search  and KoolBeans will show coffee shops that are perfect for you.
         </p>
     </div>
     <div class="col-xs-12 col-sm-3 feature">
-        <div class="feature-icon">
-            <span class="glyphicon glyphicon-time"></span>
+        <div class="feature-icon alt">
+            <span class="fa fa-coffee"></span>
         </div>
         <h3 class="feature-title">
-            Shortcut your ordering time
+            Order
         </h3>
 
         <p class="feature-contents">
-            From the first time you use KoolBeans, you can save your favourite coffee shops and even your favourite
-            coffee combo.
+            Click & Collect your order with KoolBeans and lifehack your time . Order and pay securely online for your drinks and food then collect at your chosen time.
         </p>
     </div>
     <div class="clearfix visible-xs-block"></div>
@@ -31,7 +29,7 @@
             <span class="glyphicon glyphicon-comment"></span>
         </div>
         <h3 class="feature-title">
-            Trusted Reviews
+            Review
         </h3>
 
         <p class="feature-contents">
@@ -40,16 +38,15 @@
         </p>
     </div>
     <div class="col-xs-12 col-sm-3 feature">
-        <div class="feature-icon">
-            <i class="fa fa-coffee"></i>
+        <div class="feature-icon alt">
+            <i class="fa fa-share-alt"></i>
         </div>
         <h3 class="feature-title">
-            Less queuing
+            Share
         </h3>
 
         <p class="feature-contents">
-            When you order with KoolBeans you can go straight to the collection point at your chosen time and
-            collect your freshly made coffee from there. No need to queue up.
+            KoolBeans is about supporting and building trust in independent and small chain coffee shops. Share your experiences, earn points and recommend your favourites to grow the KoolBeans community.
         </p>
     </div>
 </div>

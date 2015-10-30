@@ -28,7 +28,7 @@
         </div>
 
         <div class="hidden-xs hidden-sm row">
-            <div class="col-md-6" style="padding: 0">
+            <div class="col-md-7" style="padding: 0">
                 <div class="search-results-title">
                     @include('search._result_title')
                 </div>
@@ -78,7 +78,7 @@
                 @endif
             </div>
 
-            <div class="col-md-6 maps-container no-marker" @if(!\Request::has('location')) data-position="{{ $position }}" @endif></div>
+            <div class="col-md-5 maps-container no-marker" @if(!\Request::has('location')) data-position="{{ $position }}" @endif></div>
         </div>
     </div>
 @endsection

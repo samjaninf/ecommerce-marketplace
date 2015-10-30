@@ -1,16 +1,29 @@
 .search-results-title {
-  padding: 3em;
-  background-color: #ebebe7;
+  padding: 1em;
+  background-color: #f7f7f7;
+  border-right:1px solid #ebebeb; 
+  border-bottom:1px solid #ebebeb;
+
+
 
   h6 {
-    font-size: 18pt;
-    color: #bbbcba;
+    font-size: 16pt;
+    color:#333333;
+    @media(max-width: @screen-xs-max){
+    font-size: 13pt;
+    }
   }
 
   h2 {
     font-size: 35.69pt;
     color: #484f51;
   }
+  @media(max-width: @screen-xs-max){
+    .form-inline,
+    .btn-group,
+    .dropdown-toggle {width:100%;}
+    .dropdown-toggle {top:15px; margin-bottom:15px;}
+  }           
 }
 
 .search-results {

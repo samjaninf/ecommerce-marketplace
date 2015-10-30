@@ -1,8 +1,6 @@
 <div class="pull-left">
-    <h6 style="margin:0;">Showing coffee shops near{{ empty($query) ? 'by' : '' }}...</h6>
-    <h2>{{ $query }}</h2>
     @if ($shops->total() > 0)
-        <b>Showing {{ $shops->firstItem() }} - {{ $shops->lastItem() }} of {{ $shops->total() }} shops</b>
+       <h6> Showing {{ $shops->firstItem() }} - {{ $shops->lastItem() }} of {{ $shops->total() }} shops near{{ empty($query) ? 'by' : ' '.$query }}</h6> 
     @endif
 </div>
 <div class="form-inline pull-right">

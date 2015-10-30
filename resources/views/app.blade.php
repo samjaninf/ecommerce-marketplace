@@ -22,7 +22,7 @@
 </head>
 <body>
 <div id="dtBox"></div>
-<header id="top-container" @if(app('request')->is('/')) style="height: 787px"@endif>
+<header id="top-container" @if(app('request')->is('/')) style="height: 550px"@endif>
     @include('menu')
     @yield('splash')
 </header>

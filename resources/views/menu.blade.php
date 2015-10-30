@@ -9,11 +9,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                @if(app('request')->is('/'))
                     <img src="/img/shared/logo-white.png" alt="Koolbeans">
-                @else
-                    <img src="/img/shared/logo.png" alt="Koolbeans">
-                @endif
             </a>
         </div>
 
@@ -42,7 +38,7 @@
                 @elseif( ! Auth::guest() && ! current_user()->hasValidCoffeeShop())
                     <li><a href="{{ route('coffee-shop.apply') }}">List Your Shop</a></li>
                 @endif
-                <li><a href="{{ url('/about') }}">About</a></li>
+                <li><a href="{{ url('/about') }}">How it works</a></li>
                 @if (Auth::guest())
                     <li class="sign-up"><a href="{{ url('/auth/register') }}">Register</a></li>
                     <li class="sign-in dropdown">

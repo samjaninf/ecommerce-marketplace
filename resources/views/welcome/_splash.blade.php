@@ -1,6 +1,7 @@
 <div id="splash">
     <div id="splash-contents" class="container-fluid">
         <h1>Order great coffee,<br>from great coffee shops</h1>
+        <h4>Order coffee & food from the best independent and small chain coffee shops</h4>
 
         <form class="form-inline" action="{{route('search')}}" method="post">
             <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">

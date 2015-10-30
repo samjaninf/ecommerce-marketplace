@@ -1,5 +1,5 @@
 <div class="row">
-    <h2 class="col-xs-12 text-center dark">Our Coffee Shops</h2>
+    <h2 class="col-xs-12 text-center dark">The best coffee shops near you</h2>
 </div>
 
 <div class="row">
