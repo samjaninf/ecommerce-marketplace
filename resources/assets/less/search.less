@@ -18,10 +18,14 @@
     font-size: 35.69pt;
     color: #484f51;
   }
+  @media(max-width: @screen-lg-min){
+    .dropdown-menu { left:auto; right: 0;}
+  }
   @media(max-width: @screen-xs-max){
     .form-inline,
     .btn-group,
     .dropdown-toggle {width:100%;}
+    .dropdown-menu {width:100%; min-width:100% !important; left:auto; right: 0;}
     .dropdown-toggle {top:15px; margin-bottom:15px;}
   }           
 }

@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 hidden-xs">
+                            <div class="col-sm-6 ">
                                 <div>
                                     @if(! Auth::guest() && current_user()->owns($coffeeShop))
                                         <a href="{{ route('coffee-shop.opening-times') }}">Change opening times</a>
@@ -166,7 +166,7 @@
                                 @endforeach
                                 <p class="well" style="margin-top: 10px;">
                                     Hint: Click on the icons to (de)activate them. <br>
-                                    You can only select 5 attributes at most.
+                                    You can only select 5 styles at most.
                                 </p>
                             @else
                                 @foreach($coffeeShop->getSpecs() as $spec)

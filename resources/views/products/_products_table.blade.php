@@ -31,11 +31,7 @@
                         {{ $coffeeShop->getNameFor($product) }}
                     </a>
                     (Default: {{ $product->name }})<br>
-                    Description: <a href="#"
-                                    class="change-description"
-                                    data-target="{{ route('coffee-shop.products.change-description', ['coffeeShop' => $coffeeShop, 'product' => $product]) }}">
-                        {{ $coffeeShop->getDescriptionFor($product) }}
-                    </a>
+                  
                 </span>
             </td>
             @foreach($sizes as $size)
@@ -59,6 +55,17 @@
                     </span>
                 </td>
             @endforeach
+        </tr>
+        <tr>
+           <td colspan="5" style="border-top:0px">
+                <span>
+                    Description: <a href="#"
+                                    class="change-description"
+                                    data-target="{{ route('coffee-shop.products.change-description', ['coffeeShop' => $coffeeShop, 'product' => $product]) }}">
+                        {{ $coffeeShop->getDescriptionFor($product) }}
+                    </a>
+                </span>
+            </td>
         </tr>
     @endforeach
     <tr>

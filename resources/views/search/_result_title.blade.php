@@ -11,7 +11,7 @@
         <div class="dropdown-menu" style="padding: 15px; margin-top: 0; min-width: 400px">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                    <b>Attributes</b><br>
+                    <b>Styles</b><br>
                     @foreach(\Koolbeans\CoffeeShop::getSpecs('attributes') as $spec)
                         <div class="checkbox search-filter-cb">
                             <label>

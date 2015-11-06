@@ -92,13 +92,15 @@
       width: 100%;
       bottom: 0;
       height: 50%;
-
+      @media (max-width: @screen-sm-max) {
+        padding:10px;
+      }
       h4 {
         margin-top: 0;
       }
 
       @media (min-width: @screen-md-min) {
-        padding: 10px 0 20px;
+        padding: 10px 10px 20px;
       }
     }
 
@@ -127,16 +129,22 @@
   }
 
   #deals {
+    background: #595b5f;
+    /*
     background: linear-gradient(
             rgba(0, 0, 0, 0.45),
             rgba(0, 0, 0, 0.45)
     ),
     url(/img/welcome/deals-welcome.png);
     background-size: cover;
+    */
   }
 
   #news {
+    background: #595b5f;
+    /*
     background-image: url(/img/welcome/news-welcome.png);
+    */
   }
 }
 

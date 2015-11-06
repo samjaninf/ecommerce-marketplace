@@ -40,12 +40,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-8">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             <h3>Your recent orders</h3>
 
                             <div class="row">
                                 @foreach($orders as $order)
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 ">
                                         <div class="panel panel-primary">
                                             <div class="panel-heading">
                                                 <span class="glyphicon glyphicon-time"></span>
@@ -85,7 +85,7 @@
 
                             <div class="row">
                                 @foreach(current_user()->coffee_shops->unique()->take(6) as $coffeeShop)
-                                    <div class="col-xs-6 col-sm-4">
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
                                         <div class="featured-coffee-shop" style="background-image: url({{$coffeeShop->mainImage() }})">
                                             <div class="info small-featured">
                                                 <h5>

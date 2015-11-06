@@ -3,7 +3,7 @@
         @if($offer->exists)
             <a href="{{ route('coffee-shop.show', $offer->id) }}">
                 <h4>{{ $offer->name }}</h4>
-                <b>Second Half Priced!</b><br>
+                <b>Buy 1 get 1 half price!</b><br>
                 @if($offer->offer_drink_only)
                     <i>On Drinks Only</i>
                 @endif

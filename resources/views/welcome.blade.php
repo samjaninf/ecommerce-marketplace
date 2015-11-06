@@ -30,7 +30,7 @@
                 <div class="col-xs-12 col-sm-6" id="deals">
                     <div class="row">
                         <div class="col-xs-12 text-center">
-                            <h2>Our offers</h2>
+                            <h2>Today’s offers</h2>
                         </div>
                     </div>
 

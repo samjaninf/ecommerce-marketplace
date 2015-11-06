@@ -30,12 +30,11 @@
             </form>
             @endif
             <ul class="nav navbar-nav navbar-right">
-                @if(Auth::check())
+                @if(Auth::check() )
                     <li><a href="{{ route('home') }}">Dashboard</a></li>
-                @endif
-                @if( ! Auth::guest() && current_user()->role === 'admin')
+                @elseif(Auth::check() && current_user()->role === 'admin')
                     <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
-                @elseif( ! Auth::guest() && ! current_user()->hasValidCoffeeShop())
+                @else
                     <li><a href="{{ route('coffee-shop.apply') }}">List Your Shop</a></li>
                 @endif
                 <li><a href="{{ url('/about') }}">How it works</a></li>

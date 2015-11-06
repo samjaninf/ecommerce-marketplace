@@ -26,7 +26,7 @@
             <form class="form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
                 @if(Auth::guest())
                     <div class="form-group @if($errors->any()) {{$errors->has('username') ? 'has-error' : 'has-success'}} @endif">
-                        <label for="username" class="col-sm-3 control-label">Your name:</label>
+                        <label for="username" class="col-sm-3 control-label"><span class="col-accent">1.</span> Your name:</label>
 
                         <div class="col-sm-9">
                             <input id="username"
@@ -40,7 +40,7 @@
                 @endif
 
                 <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="name" class="col-sm-3 control-label">Name:</label>
+                    <label for="name" class="col-sm-3 control-label"><span class="col-accent">2.</span> Coffee shop name:</label>
 
                     <div class="col-sm-9">
                         <input id="name"
@@ -54,7 +54,7 @@
 
                 @if(Auth::guest())
                     <div class="form-group @if($errors->any()) {{$errors->has('email') ? 'has-error' : 'has-success'}} @endif">
-                        <label for="email" class="col-sm-3 control-label">E-Mail Address</label>
+                        <label for="email" class="col-sm-3 control-label"><span class="col-accent">3.</span> E-Mail Address</label>
 
                         <div class="col-sm-9">
                             <input type="email"
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password_confirmation" class="col-sm-3 control-label">Confirm Password</label>
+                        <label for="password_confirmation" class="col-sm-3 control-label"><span class="col-accent">4.</span> Confirm Password</label>
 
                         <div class="col-sm-9">
                             <input type="password"
@@ -88,7 +88,7 @@
                 @endif
 
                 <div class="form-group @if($errors->any()) {{$errors->has('location') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="field-maps-location" class="col-sm-3 control-label">Address:</label>
+                    <label for="field-maps-location" class="col-sm-3 control-label"><span class="col-accent">5.</span> Address:</label>
 
                     <div class="col-sm-9">
                         <input id="field-maps-location"
@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="form-group @if($errors->any()) {{$errors->has('postal_code') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="postal_code" class="col-sm-3 control-label">Postal code:</label>
+                    <label for="postal_code" class="col-sm-3 control-label"><span class="col-accent">6.</span> Postal code:</label>
 
                     <div class="col-sm-9">
                         <input id="postal_code"
@@ -115,7 +115,7 @@
 
                 .
                 <div class="form-group @if($errors->any()) {{$errors->has('county') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="county" class="col-sm-3 control-label">County:</label>
+                    <label for="county" class="col-sm-3 control-label"><span class="col-accent">7.</span> County:</label>
 
                     <div class="col-sm-9 col-md-6">
                         <input id="county"
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="form-group @if($errors->any()) {{$errors->has('phone_number') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="phone_number" class="col-sm-3 control-label">Phone number:</label>
+                    <label for="phone_number" class="col-sm-3 control-label"><span class="col-accent">8.</span> Phone number:</label>
 
                     <div class="col-sm-9 col-md-6">
                         <input id="phone_number"
@@ -141,7 +141,7 @@
                 </div>
 
                 <div class="form-group @if($errors->any()) {{$errors->has('comment') ? 'has-error' : 'has-success'}} @endif">
-                    <label for="comment" class="col-sm-3 control-label">Comment:</label>
+                    <label for="comment" class="col-sm-3 control-label"><span class="col-accent">9.</span> Comment:</label>
 
                     <div class="col-sm-9">
                         <textarea id="comment"
@@ -193,4 +193,7 @@
 
 @section('vendor_scripts')
     <script type="text/javascript" src="//www.google.com/recaptcha/api.js"></script>
+    <script>
+      $('#content').css('background','#ebebeb')
+    </script> 
 @endsection
