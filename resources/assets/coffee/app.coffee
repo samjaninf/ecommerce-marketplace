@@ -22,7 +22,6 @@ class Koolbeans
 
   initTooltips: ->
     $('[data-toggle="tooltip"]').tooltip()
-    console.log 'yo'
     $("#dtBox").DateTimePicker()
 
   fadeOutMessages: ->
@@ -33,5 +32,5 @@ window.koolbeans = new Koolbeans()
 filters = document.querySelectorAll('.search-filter')
 for filter in filters
   filter.onclick = (e) ->
-    e.stopPropagation()
-    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add 'open'
+    this.parentNode.parentNode.classList.add 'open'
+    console.log "test"

@@ -34,8 +34,13 @@
                                        @if(in_array($spec, $filters)) checked @endif> {{ ucwords(str_replace('_', ' ', $spec)) }}
                             </label>
                         </div><br class="hidden-xs">
-                    @endforeach
+                    @endforeach   
+
                 </div>
+                <form id="search_update" method="post" action="{{ route('search') }}">
+                        <input type="submit" value="Search"> 
+                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                    </form>
             </div>
         </div>
     </div>
