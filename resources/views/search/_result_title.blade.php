@@ -37,12 +37,13 @@
                     @endforeach   
 
                 </div>
-                <form id="search_update" method="post" action="{{ route('search') }}">
-                        <input type="submit" value="Search"> 
-                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                    </form>
+
             </div>
         </div>
+               <form id="search_update" method="post" action="{{ route('search') }}">
+                        <input type="submit" value="Filter Results"> 
+                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                    </form>
     </div>
 </div>
 <div class="clearfix"></div>
