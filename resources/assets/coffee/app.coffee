@@ -32,5 +32,6 @@ window.koolbeans = new Koolbeans()
 filters = document.querySelectorAll('.search-filter')
 for filter in filters
   filter.onclick = (e) ->
+    e.stopPropagation()
     this.parentNode.parentNode.classList.add 'open'
     console.log "test"
