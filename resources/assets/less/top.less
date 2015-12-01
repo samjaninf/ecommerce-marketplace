@@ -395,14 +395,17 @@
 }
 
 #order-top {
+  position:relative;
   background:#000;
-    .container {padding-bottom:0px !important;}
-    h1.shop_name {font-size:45px; color:#fff; text-align:center; border-bottom:0px;}
+  .order-top-overlay {background:rgba(69,60,68,0.75); position:absolute; left:0px; top:0px; right:0px; bottom:0px; z-index:2;}
+    .container {padding-bottom:0px !important; z-index:3; position:relative;}
+    h1.shop_name {font-size:45px; color:#fff; text-align:center; border-bottom:0px; margin-top:70px;}
     h3 {font-size:18px; color:#fff; text-align:center;}
     .ratings {margin:0 auto; display:block; text-align:center;}
     .rating-no {color:#fff;}
     .rating-yes {color:#ffe994;}
     .order_header {
+      margin-top:70px;
       background:#00aed7;
       padding:20px;    
       h2 {color:#fff;font-size:20px; text-align:center; margin:0px;}

@@ -5,7 +5,9 @@
 @stop
 
 @section('content')
-<div  id="order-top" style="background-image: url('{{ $coffeeShop->mainImage() }}')">
+<div id="order-top" style="background-image: url('{{ $coffeeShop->mainImage() }}')">
+    <div class="order-top-overlay">
+    </div>
     <div class="container">
         <div class="row">
             <h1 class="shop_name"> {{$coffeeShop->name}}
