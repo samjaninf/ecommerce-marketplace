@@ -54,10 +54,8 @@
                                         {{ $coffeeShop->getBestReview() ? $coffeeShop->getBestReview()->pivot->review : null}}
                                     </div>
                                     <div class="actions text-center" style="margin-left: -20px">
-                                        <a href="{{ route('coffee-shop.order.create', ['coffeeShop' => $coffeeShop]) }}"
-                                           class="btn btn-success">Order <span class="hidden-xs"> a Coffee </span></a>
                                         <a href="{{ route('coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}"
-                                           class="btn btn-primary">View <span class="hidden-xs">Profile</span></a>
+                                           class="btn btn-primary">Order <span class="hidden-xs">a Coffee</span></a>
                                     </div>
                                 </div>
                             </div>

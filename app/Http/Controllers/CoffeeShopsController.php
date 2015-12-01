@@ -1,13 +1,22 @@
 <?php namespace Koolbeans\Http\Controllers;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Koolbeans\CoffeeShop;
+use Koolbeans\Offer;
+use Koolbeans\Order;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as CollectionBase;
+use Koolbeans\OrderLine;
+use Koolbeans\Product;
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\User;
+
+
 
 class CoffeeShopsController extends Controller
 {
@@ -101,20 +110,47 @@ class CoffeeShopsController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $coffeeShop = $this->coffeeShop->find($id);
+      $coffeeShop = $this->coffeeShop->find($id);
+        $bestReview = $coffeeShop->getBestReview();
+        $order = new Order;
+        $id    = $request->get('id');
 
-        if (null == $request->cookie('seen-' . $coffeeShop->id)) {
-            $coffeeShop->views += 1;
-            $coffeeShop->save();
+        $orderProduct = new Collection;
+        if ($id) {
+            if ( ! is_array($id)) {
+                $id = new CollectionBase($id);
+            }
+
+            foreach ($id as $i) {
+                $item = $coffeeShop->products()->find($i);
+                if ($item) {
+                    $orderProduct->add($item);
+                }
+            }
         }
 
-        $coffeeShop->save();
-        $bestReview = $coffeeShop->getBestReview();
+        if (( $time = $request->get('time') )) {
+            $order->time = new Carbon($time . ':00');
+        } else {
+            $order->time = Carbon::now()->addHour(1);
+        }
 
-        $response = new \Illuminate\Http\Response(view('coffee_shop.show', compact('coffeeShop', 'bestReview')));
-        $response->withCookie(cookie()->forever('seen-' . $coffeeShop->id, 'yes'));
+        $products = $coffeeShop->products()->orderBy('type', 'desc')->get();
 
-        return $response;
+        $fp = new Collection();
+        foreach ($products as $product) {
+            if ($coffeeShop->hasActivated($product)) {
+                $fp->add($product);
+            }
+        }
+
+        return view('coffee_shop.show', [
+            'coffeeShop'    => $coffeeShop,
+            'bestReview'    =>  $bestReview,
+            'order'         => $order,
+            'orderProducts' => $orderProduct,
+            'products'      => $fp,
+        ]);
     }
 
     /**

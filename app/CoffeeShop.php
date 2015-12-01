@@ -424,7 +424,7 @@ class CoffeeShop extends Model
                 }
             }
 
-            return implode("\n", array_map(function ($time) {
+            return implode(", ", array_map(function ($time) {
                 $days = $this->formatDays($time['days']);
 
                 return $days . " " . $time['start']->format("H:i") . "-" . $time['end']->format("H:i");

@@ -5,14 +5,27 @@
 @stop
 
 @section('content')
+<div id="order-top" style="background-image: url('{{ $coffeeShop->mainImage() }}')">
+    <div class="order-top-overlay">
+    </div>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                <h1>@yield('page-title')</h1>
+            <h1 class="shop_name"> {{$coffeeShop->name}}
+            <h3> <span class="glyphicon glyphicon-map-marker"> </span> {{$coffeeShop->location}} </h3>
+            <span class="ratings">
+                @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
+            </span>
+
+            <div class="order_header col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3">
+                <h2>Order Summary</h2>
             </div>
         </div>
+    </div>
+</div>
+<div id="order">
+    <div class="container">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3" id="order-inner">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -121,6 +134,7 @@
             </div>
         </div>
     </div>
+</div>
 @stop
 
 @section('vendor_scripts')

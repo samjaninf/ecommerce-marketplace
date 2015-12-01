@@ -1,85 +1,33 @@
 @extends('app')
 
 @section('page-title')
-    {{$coffeeShop->name}}
-@endsection
+    Place an order for {{$coffeeShop->name}}
+@stop
 
 @section('content')
-    <div id="coffee-shop-presentation">
-        <div class="container-fluid" id="show-coffee-shop">
-            <div class="row">
-                {{--<div class="col-xs-12" id="coffee-shop-image" style="background-image: url({{$coffeeShop->mainImage()}})">--}}
-                {{--</div>--}}
-                <img class="col-xs-12" id="coffee-shop-image"
-                     src="{{ $coffeeShop->mainImage() }}"
-                     style="padding: 0">
+<div id="order-top" style="background-image: url('{{ $coffeeShop->mainImage() }}')">
+    <div class="order-top-overlay">
+    </div>
+    <div class="container"> 
+        <div class="row">
+            <h1 class="shop_name"> {{$coffeeShop->name}}
+            <h3> <span class="glyphicon glyphicon-map-marker"> </span> {{$coffeeShop->location}} </h3>
+            <span class="ratings">
+                @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
+            </span>
+
+            <div class="order_header col-xs-12 col-sm-6  col-sm-offset-6 col-md-offset-6 col-lg-offset-6">
+                <h2>Place Your Order</h2>
             </div>
         </div>
-
-        <div id="best-review-and-features-available">
-            <div class="container" id="coffee-shop-info">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-9" id="coffee-shop-presentation-title">
-                        <h1>@yield('page-title')</h1>
-                        <h3>
-                            <span class="glyphicon glyphicon-map-marker"></span>
-                            {{$coffeeShop->location}}
-                            <br class="hidden-lg">
-                            <br class="hidden-lg">
-                            <span class="ratings">
-                                @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
-                            </span>
-                        </h3>
-                    </div>
-                    @if(Auth::guest() || !Auth::user()->owns($coffeeShop))
-                    <div class="col-md-3 col-xs-12 col-sm-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading ">Order your coffee</div>
-                            <div class="panel-body">
-                                <form action="{{ route('coffee-shop.order.create', ['coffee_shop' => $coffeeShop]) }}">
-                                    <label>
-                                        <i class="fa fa-coffee"></i>
-                                        <select name="id[]" class="panel-input">
-                                            <option value="">Select your item</option>
-                                            @foreach($coffeeShop->products as $product)
-                                                @if($coffeeShop->hasActivated($product))
-                                                    <option value="{{$product->id}}">{{$coffeeShop->getNameFor($product)}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </label>
-
-                                    <a href="#" class="btn btn-default" id="add-another-item">Add another item</a>
-
-                                    <label>
-                                        <span class="glyphicon glyphicon-time"></span>
-                                        <input class="panel-input"
-                                               name="time"
-                                               type="time"
-                                               step="60"
-                                               placeholder="{{\Carbon\Carbon::now()->format('H:i')}}">
-                                    </label>
-
-                                    <input type="submit" class="btn btn-success" value="Place order">
-                                </form>
-                            </div>
-                            <div class="panel-footer">
-                                <a href="{{ route('coffee-shop.order.create', ['coffee_shop' => $coffeeShop]) }}"
-                                   class="btn btn-default view-full-menu">View full menu</a>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-
-            <div class="container @if(Auth::check() && Auth::user()->owns($coffeeShop))cshop-owner @endif"
-                 id="coffee-shop-description">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-9" style="z-index: 50">
-                        <div class="row">
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="review-container">
+    </div>
+</div>
+<div id="order">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                  <div class="row">
+                        <div class="review-container">
                                     <div class="review">
                                         @if($bestReview !== null)
                                             {{$bestReview->pivot->review === '' ? 'No comment' : $bestReview->pivot->review}}
@@ -88,47 +36,6 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 ">
-                                <div>
-                                    @if(! Auth::guest() && current_user()->owns($coffeeShop))
-                                        <a href="{{ route('coffee-shop.opening-times') }}">Change opening times</a>
-                                    @endif
-                                    <p>
-                                        {!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container" id="coffee-shop-about">
-            @if(! Auth::guest() && (current_user()->owns($coffeeShop) || current_user()->role === 'admin'))
-                <div class="row">
-                    <div class="col-xs-12">
-                        @if(current_user()->role === 'admin')
-                            <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}" class="btn btn-primary">
-                                Review performances
-                            </a>
-                        @else
-                            <a href="{{ route('my-shop') }}" class="btn btn-primary">
-                                Manage your shop
-                            </a>
-                            @if($coffeeShop->status === 'accepted')
-                                <a href="{{ route('publish-my-shop') }}" class="btn btn-success">
-                                    Publish your shop
-                                </a>
-                            @endif
-                        @endif
-                    </div>
-                </div>
-            @endif
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-9">
-                    <div class="row">
                         <div class="col-sm-6">
                             <h4>About the shop</h4>
 
@@ -177,6 +84,160 @@
                             @endif
                         </div>
                     </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 " id="order-inner">
+                <form action="{{ route('coffee-shop.order.store', ['coffeeShop' => $coffeeShop]) }}" method="post">
+
+                    <div class="form-group @if($errors->any()) {{$errors->has('time') ? 'has-error' : 'has-success'}} @endif">
+                        <div class="order_left">
+                            <span class="number"> 1.</span> 
+                        </div>
+                        <div class="order_right">
+                            <p class="section-header">Set a collection time or tick to ‘make on arrival’ if you’re not sure when you will arrive: </p>
+                            <input id="time"
+                                   name="time"
+                                   placeholder="12:34"
+                                   class="form-control"
+                                   value="{{old('time', $order->time->format('H:i'))}}"
+                                   type="text"
+                                   data-field="time"
+                                   readonly
+                                   style="cursor:pointer;">
+
+                            <p class="opening">
+                              <span class="alt-txt">Opening Times: </span>{!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
+                            </p>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"  name="make_on_arriving"> Make when I arrive
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
+                        <div class="order_left">
+                             <span class="number"> 2.</span> 
+                        </div>
+                        <div class="order_right">
+                            <p class="section-header"> Select your drinks orders below: </p>
+                            <h5 @if($coffeeShop->products()->wherePivot('description', '!=', '')->whereNotNull('description')->count() == 0) class="hide" @endif>
+                                Products: 
+                            </h5>
+
+                            <div class="well well-sm hide" id="menu-description">
+                                <dl>
+                                    @foreach($coffeeShop->products as $product)
+                                        @if($coffeeShop->hasActivated($product) && !empty($product->pivot->description))
+                                            <dt>{{ $coffeeShop->getNameFor($product) }}</dt>
+                                            <dd>{{ $coffeeShop->getDisplayDescriptionFor($product) }}</dd><br>
+                                        @endif
+                                    @endforeach
+                                </dl>
+                            </div>
+                            @if(!$orderProducts->isEmpty())
+                                @foreach($orderProducts as $i => $orderProduct)
+                                    <label class="row full-width" style="margin-top: 10px">
+                                        <span class="col-xs-12 col-sm-6">
+                                            <select id="product-{{ $i }}" name="products[{{$i}}]" class="form-control choose-product-select">
+                                                @foreach($products as $product)
+                                                    @if($coffeeShop->hasActivated($product))
+                                                        <option @if($orderProduct->id == $product->id) selected @endif
+                                                        value="{{ $product->id }}" data-type="{{ $product->type }}">
+                                                            {{ $coffeeShop->getNameFor($product) }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </span>
+                                        <span class="col-xs-12 col-sm-5">
+                                            @if($orderProduct->type == 'drink')
+                                                <span class="sizes">
+                                                    <select class="form-control" name="productSizes[{{ $i }}]">
+                                                        @foreach(['xs', 'sm', 'md', 'lg'] as $size)
+                                                            @if($coffeeShop->hasActivated($orderProduct, $size))
+                                                                <option value="{{ $size }}">
+                                                                    {{$coffeeShop->getSizeDisplayName($size)}}
+                                                                    (£ {{$orderProduct->pivot->$size / 100}})
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </span>
+                                            @else
+                                                <p class="info-price">
+                                                    Price: £ {{$orderProduct->pivot->sm}}
+                                                </p>
+                                            @endif
+                                        </span>
+                                        <span class="col-xs-12 col-sm-1">
+                                            <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-{{$i}}">×</a>
+                                        </span>
+                                    </label>
+                                @endforeach
+                            @else
+                                <label class="row full-width" style="margin-top: 10px">
+                                    <span class="col-xs-12 col-sm-6">
+                                        <select id="product-0" name="products[0]" class="form-control choose-product-select">
+                                            <option value=""></option>
+                                            @foreach($products as $product)
+                                                <option value="{{ $product->id }}" data-type="{{ $product->type }}">
+                                                    {{ $coffeeShop->getNameFor($product) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </span>
+                                    <span class="col-xs-12 col-sm-5">
+                                        <span></span>
+                                    </span>
+                                    <span class="col-xs-12 col-sm-1">
+                                        <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-0">×</a>
+                                    </span>
+                                </label>
+                            @endif
+                            <a href="#" class="row" id="add-product">Add Product</a>
+                        </div>
+                    </div>
+
+                    @if(Session::has('offer-used'))
+                    <p class="offers alert alert-info">
+                        Chosen Offer:<br>
+                        {{ display_offer(Session::get('offer-used')) }}
+                    </p>
+                    @endif
+
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                 
+                    <div class="col-xs-12 col-sm-12 btn-panel ">
+                        <button type="submit" class="btn btn-success proceed-to-checkout col-xs-12">Place Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+     <div class="container" id="coffee-shop-about">
+            @if(! Auth::guest() && (current_user()->owns($coffeeShop) || current_user()->role === 'admin'))
+                <div class="row">
+                    <div class="col-xs-12">
+                        @if(current_user()->role === 'admin')
+                            <a href="{{ route('admin.coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}" class="btn btn-primary">
+                                Review performances
+                            </a>
+                        @else
+                            <a href="{{ route('my-shop') }}" class="btn btn-primary">
+                                Manage your shop
+                            </a>
+                            @if($coffeeShop->status === 'accepted')
+                                <a href="{{ route('publish-my-shop') }}" class="btn btn-success">
+                                    Publish your shop
+                                </a>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+            @endif
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                  
                     <hr>
                     <div class="row">
                         <div class="col-xs-12" id="show-coffee-shop-offers">
@@ -286,25 +347,16 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
 @stop
 
-@section('scripts')
-    <script>
-        (function ($) {
-            $('a#add-another-item').click(function () {
-                var contents =
-                    '<label><i class="fa fa-coffee"></i><select name="id[]" class="panel-input"><option value="">Select your item</option>' +
-                        @foreach($coffeeShop->products as $product)
-                            @if($coffeeShop->hasActivated($product))
-                                '<option value="{{$product->id}}">{{$coffeeShop->getNameFor($product)}}</option>' +
-                            @endif
-                        @endforeach
-                    '</select></i></label>';
+<script type="text/javascript">
+    var products = {!! json_encode($products) !!};
+    var coffeeShop = {!! $coffeeShop->toJson() !!};
 
-                $(contents).insertBefore(this);
-                return false;
-            })
-        })(jQuery);
-    </script>
-@stop
+    function showMenuDescription(el) {
+        event.preventDefault();
+        document.getElementById('menu-description').classList.remove('hide');
+        el.parentNode.removeChild(el)
+    }
+</script>
