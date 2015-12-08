@@ -66,7 +66,7 @@ class CoffeeShopsController extends Controller
 
         $shop = $this->coffeeShop->newInstance($request->except(['username', 'email', 'password']));
         $shop->user()->associate($user);
-        $shop->status = 'published';
+        $shop->status = 'requested';
         $shop->save();
 
         \Mail::send('emails.coffeeshop_registration', ['user' => current_user()], function (Message $m) use ($user) {
