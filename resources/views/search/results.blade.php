@@ -62,7 +62,25 @@
                         </div>
                     @empty
                         <div class="col-md-12">
-                            No result found!
+                            <h2>No results found, do you know a good coffee shop?</h2>
+                            <div class="col-xs-12">
+                                <form action="" method="post" enctype="text/plain">
+                                    <div class="form-group">
+                                        <label for="shopName">Coffee Shop:</label>
+                                        <input type="text" class="form-control" id="shopName" placeholder="Shop Name...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="location">Location:</label>
+                                        <input type="text" class="form-control" id="location" placeholder="Location...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="about">Why are you recommending this shop?</label>
+                                        <textarea style="min-height: 100px;" class="form-control" name="about" id="about"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
                         </div>
                     @endforelse
                 </div>
