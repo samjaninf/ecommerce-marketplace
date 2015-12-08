@@ -44,6 +44,7 @@ class ApplicationCoffeeShopRequest extends Request
             'longitude'            => 'required|numeric',
             'place_id'             => 'required|google_place_id',
             'g-recaptcha-response' => 'required|google_recaptcha',
+            'terms'                => 'required',
         ];
 
         if (\Auth::guest()) {

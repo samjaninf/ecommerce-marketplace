@@ -5,12 +5,13 @@
 @endsection
 
 @section('content')
-<div class="container main-content-padded">
-    <div class="row">
+<div class="container-fluid">
+  <div class="row" id="apply-title">
+    <div class="container">
+      <div class="row">
         <div class="col-xs-12">
             <h2 class="text-center">
-                KoolBeans puts your Coffee Shop online<br>
-                24 hours a day, 7 days a week
+              Join the KoolBeans network of independent & small chain coffee shops. 
             </h2>
 
             <h3 class="text-center" style="font-weight: 100">
@@ -19,7 +20,40 @@
                 the week.
             </h3>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+<div class="container-fluid" id="apply-whatwedo">
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6" style="font-size: 17px;">
+          <h2 class="text-center">What We Do</h2>
+          <ul>
+              <li>Your Coffee Shop is online 24/7 and easily viewable to millions of UK coffee drinkers </li>
+              <li>Customers can browse and purchase from your store online  - we notify you of orders that are made </li>
+              <li>We process all payments online saving you time and expense </li>
+              <li>We simplify your online business by seamlessly integrating it into  your normal day to day operating </li>
+              <li>We market your shop  over several social media platforms including facebook and twitter and make it easy for customers to find you on google </li>
+              <li>Your Coffee Shop is online 24/7 and easily viewable to millions of UK coffee drinkers </li>
+          </ul>
+        </div>
+
+        <div class="col-xs-12 col-sm-6" style="font-size: 17px;">
+          <h2 class="text-center">How It Works</h2>
+          <ul>
+              <li>Upload details and pictures of your coffee shop including your menu, allowing customers to familiarise themselves with your store</li>
+              <li>Begin receiving orders  - Notifications are sent through real time to your store via a downloadable ios /android app or by email  </li>
+              <li>Customers collect their order in store either on arrival or at their collection time</li>
+              <li>The full sales amount is paid to you every 14days less a small commission which includes transaction fees and costs. </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container main-content-padded">
     <div class="row" style="margin-top: 20px">
         <div class="col-lg-8">
             @include('shared/_form_errors')
@@ -148,6 +182,20 @@
                                   name="comment"
                                   placeholder="Do you have any questions for Koolbeans?"
                                   class="form-control">{{old('comment', $coffeeShop->comment)}}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group @if($errors->any()) {{$errors->has('terms') ? 'has-error' : 'has-success'}} @endif">
+                    <label for="terms" class="col-sm-3 control-label"><span class="col-accent">10.</span> T&C:</label>
+
+                    <div class="col-sm-9 col-md-6">
+                      <div class="checkbox">
+                        <label>
+                        <input id="terms"
+                               name="terms"
+                               type="checkbox"> Please tick the box to agree to our <a href="/coffee-shop-contract" target="_blank">Terms and Conditions</a>
+                        </label>
+                      </div>
                     </div>
                 </div>
 

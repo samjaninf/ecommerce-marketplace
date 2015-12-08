@@ -359,7 +359,10 @@ class WelcomeController extends Controller
     {
         return view('terms');
     }
-
+    public function coffeeShopContract() 
+    {
+      return view('coffee_contract');
+    }
     /**
      * @return \Illuminate\View\View
      */
