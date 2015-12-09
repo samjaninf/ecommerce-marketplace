@@ -90,33 +90,25 @@
 
                     <div class="form-group @if($errors->any()) {{$errors->has('time') ? 'has-error' : 'has-success'}} @endif">
                         <div class="order_left">
-                            <span class="number"> 1.</span> 
+                            <span class="number"> 1.</span>
                         </div>
                         <div class="order_right">
                             <p class="section-header">Set a collection time or tick to ‘make on arrival’ if you’re not sure when you will arrive: </p>
-                            <input id="time"
-                                   name="time"
-                                   placeholder="12:34"
-                                   class="form-control"
-                                   value="{{old('time', $order->time->format('H:i'))}}"
-                                   type="text"
-                                   data-field="time"
-                                   readonly
-                                   style="cursor:pointer;">
-
                             <p class="opening">
-                              <span class="alt-txt">Opening Times: </span>{!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
+                                <span class="alt-txt">Opening Times: </span>{!! nl2br(e($coffeeShop->showOpeningTimes())) !!}
                             </p>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"  name="make_on_arriving"> Make when I arrive
-                                </label>
-                            </div>
+
+                            <select id="time" name="time" class="form-control">
+                                @foreach ( $times as $string => $time )
+                                    <option value="{{ $time }}">{{ $string }}</option>
+                                @endforeach
+                                    <option value="00:00">Make when I arrive</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
                         <div class="order_left">
-                             <span class="number"> 2.</span> 
+                             <span class="number"> 2.</span>
                         </div>
                         <div class="order_right">
                             <p class="section-header"> Select your drinks orders below: </p>
@@ -194,7 +186,7 @@
                                     </span>
                                 </label>
                             @endif
-                            <a href="#" class="row" id="add-product">Add Product</a>
+                            <a href="#" class="row btn btn-primary" id="add-product">Add Drink</a>
                         </div>
                     </div>
 
@@ -208,7 +200,8 @@
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                  
                     <div class="col-xs-12 col-sm-12 btn-panel ">
-                        <button type="submit" class="btn btn-success proceed-to-checkout col-xs-12">Place Order</button>
+                        <a href="{{ route('coffee-shop.show', [ $coffeeShop->id ]) }}" class="btn btn-primary back-to-shop col-xs-4">Go Back</a>
+                        <button type="submit" class="btn btn-success proceed-to-checkout col-xs-7 col-xs-offset-1">Place Order & Pay</button>
                     </div>
                 </form>
             </div>

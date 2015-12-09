@@ -131,11 +131,27 @@ class OrdersController extends Controller
             }
         }
 
+        //times 10, 15, 20, 25, 30
+        $now = strtotime("-1 hour", strtotime($order->time));
+
+        $times = array("In ten minutes" => 10, 
+                       "In fifteen minutes" => 15, 
+                       "In twenty minutes" => 20, 
+                       "In twenty-five minutes" => 25, 
+                       "In thirty minutes" => 30);
+        $inTimes = array();
+        foreach ( $times as $string => $time ) {
+            $inTime = strtotime("+" . $time . " minutes", $now);
+            $inTime = date("H:i", $inTime);
+            $inTimes[$string] = $inTime;
+        }
+
         return view('coffee_shop.order.create', [
             'coffeeShop'    => $coffeeShop,
             'order'         => $order,
             'orderProducts' => $orderProduct,
             'products'      => $fp,
+            'times'         => $inTimes
         ]);
     }
 
