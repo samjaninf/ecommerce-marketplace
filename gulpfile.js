@@ -16,8 +16,8 @@ require('laravel-elixir-imagemin');
 elixir(function (mix) {
     mix.less('app.less')
         .coffee()
-        //.imagemin()
-        .scripts(['bootstrap-switch.js', 'datetimepicker.js', 'lightbox.js'], 'public/js/vendor.js')
+       // .imagemin()
+        .scripts(['bootstrap-switch.js', 'datetimepicker.js', 'lightbox.js', 'placeorder.js'], 'public/js/vendor.js')
         .styles(['datetimepicker.css', 'lightbox.css'], 'public/css/vendor.css')
         .version([
             'css/app.css',

@@ -73,12 +73,14 @@
                 <div class="col-xs-12">
                     <h2 class="text-center">Own or manage a coffee shop?</h2>
                     <h4 class="text-center">People are changing the way they buy. So join them...</h4>
-<p style="font-size: 17px;" class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-offset-3 col-lg-6 ">Joining the KoolBeans network of  independent and small chain coffee shops is the easiest way to put your business online. We’ll have you listed in no time.
+<p style="font-size: 17px;" class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-offset-3 col-lg-6 welcome-description">Joining the KoolBeans network of independent and small chain coffee shops is the easiest way to put your business online. We’ll have you listed in no time.
 </p>
                 </div>
 
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-6 text-right">
                     <a href="{{ route('coffee-shop.apply') }}" class="btn btn-primary">Sign up now</a><br/>
+                </div>
+                <div class="col-xs-6 text-left">
                     <a href="{{ url('/about') }}" class="btn btn-default">More info</a>
                 </div>
             </div>

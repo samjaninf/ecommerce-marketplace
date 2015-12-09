@@ -47,7 +47,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-5">
-                        <h3> KoolBeans is the simple way to <br/> get great coffee on the go. </h3>
+                        <h3> KoolBeans is the simple way to get great coffee on the go. </h3>
                         <p>Whether you are commuting to work, on your way to a lecture, sitting at your desk or in a town you don’t know, KoolBeans gives you an easy way to find, order and collect from the finest coffee shops on offer. The best news is, it’s free to use. <br/><br/> There are no extra fees or hidden charges for using KoolBeans so you can use it everyday to save you time and money.</p>
                     </div>
                 </div>

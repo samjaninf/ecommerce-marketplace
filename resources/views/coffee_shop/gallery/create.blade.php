@@ -34,13 +34,25 @@
                 <span class="text-center">Main image on your profile page</span>
             </div>
             <div class="form-group">
-                <div>
-                    <img id="uploadSmallPreview" style="width: 30%; height: 250px;" src="/img/awaiting-image.png">
-                    <img id="uploadSmallPreview2" style="width: 50%; height: 250px;" src="/img/awaiting-image.png">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-4" style="overflow: hidden; height: 250px;">
+                            <img id="uploadSmallPreview" style="width: 100%;" src="/img/awaiting-image.png">
+                        </div>
+                        <div class="col-xs-6" style="overflow: hidden; height: 250px;">
+                            <img id="uploadSmallPreview2" style="width: 100%;" src="/img/awaiting-image.png">
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <span class="text-center" style="display: inline-block; width: 30%">Small image, used in search results</span>
-                    <span class="text-center" style="display: inline-block; width: 50%">Normal sized image, used in some cards</span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <span class="text-center">Small image, used in search results</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="text-center">Normal sized image, used in some cards</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

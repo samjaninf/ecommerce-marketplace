@@ -14,7 +14,7 @@
               Join the KoolBeans network of independent & small chain coffee shops. 
             </h2>
 
-            <h3 class="text-center" style="font-weight: 100">
+            <h3 class="text-center">
                 by listing your business with KoolBeans,
                 you’re gaining access to millions of UK coffee drinkers who browse and purchase online everyday of
                 the week.

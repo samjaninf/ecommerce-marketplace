@@ -1,3 +1,7 @@
+
+
+<pre>
+                            {{ var_dump($orderProducts)}}</pre>
 @extends('app')
 
 @section('page-title')
@@ -102,8 +106,11 @@
                                 @foreach ( $times as $string => $time )
                                     <option value="{{ $time }}">{{ $string }}</option>
                                 @endforeach
-                                    <option value="00:00">Make when I arrive</option>
+                                    <option value="{{old('time', $order->time->format('H:i'))}}">Make when I arrive</option>
+                                    <option id="custom-time-value" value="custom">Custom time</option>
                             </select>
+                            <input class="form-control" type="text" id="custom-time" data-field="time" style="cursor:pointer; margin-top: 10px" value="{{old('time', $order->time->format('H:i'))}}  ">
+
                         </div>
                     </div>
                     <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">

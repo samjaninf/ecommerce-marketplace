@@ -52,6 +52,10 @@ textarea {
   #apply-title {
     background: #595b5f;
     color: #FFF;
+    h3 {
+      font-weight: 300;
+      font-style: italic;
+    }
   }
   #apply-whatwedo {
     background: #FFF;
@@ -250,7 +254,7 @@ textarea {
   }
 }
 #order-inner {
-  select {
+  select, input {
     background:#eeeeee;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     -moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -258,6 +262,9 @@ textarea {
     font-weight: 100;
     font-size: 18px;
     height: 50px;
+  }
+  #custom-time {
+    display: none;
   }
   #time {
     background: url(/img/time.png) no-repeat 2% #e9e9e9;
@@ -290,7 +297,9 @@ textarea {
   background-color: #00aed7;
   text-align: center;
   height: 400px;
-
+  width: 100%;
+  background-image: url(/img/welcome/splash.png);
+  background-size: cover;
   h1 {
     border: none;
     color: white;

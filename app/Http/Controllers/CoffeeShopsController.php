@@ -117,22 +117,22 @@ class CoffeeShopsController extends Controller
 
         $orderProduct = new Collection;
         if ($id) {
-            if ( ! is_array($id)) {
-                $id = new CollectionBase($id);
-            }
+            // if ( ! is_array($id)) {
+                //$id = new CollectionBase($id);
+            // }
 
             foreach ($id as $i) {
                 $item = $coffeeShop->products()->find($i);
-                if ($item) {
+              //  if ($item) {
                     $orderProduct->add($item);
-                }
+               // }
             }
         }
 
         if (( $time = $request->get('time') )) {
             $order->time = new Carbon($time . ':00');
         } else {
-            $order->time = Carbon::now()->addHour(1);
+            $order->time = Carbon::now();
         }
 
         $products = $coffeeShop->products()->orderBy('type', 'desc')->get();
@@ -145,7 +145,7 @@ class CoffeeShopsController extends Controller
         }
 
         //times 10, 15, 20, 25, 30
-        $now = strtotime("-1 hour", strtotime($order->time));
+        $now = strtotime($order->time);
 
         $times = array(
             "In five minutes" => 5,
