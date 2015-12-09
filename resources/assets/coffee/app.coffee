@@ -27,6 +27,13 @@ class Koolbeans
   fadeOutMessages: ->
     jQuery('#messages-top')?.delay(8000).fadeOut()
 
+  lightbox.option(
+    'resizeDuration': 500
+    'fitImagesInViewport': true
+    'wrapAround': true
+    'maxHeight': $(window).height() - 50
+  )
+
 window.koolbeans = new Koolbeans()
 
 filters = document.querySelectorAll('.search-filter')

@@ -168,6 +168,14 @@
                                 @endforeach
                             @else
                                 <label class="row full-width" style="margin-top: 10px">
+                                    <div style="padding-left:0px; font-weight:400">
+                                        <div class="col-xs-6">
+                                            Drink:
+                                        </div>
+                                        <div class="col-xs-6">
+                                            Size:
+                                        </div>
+                                    </div>
                                     <span class="col-xs-12 col-sm-6">
                                         <select id="product-0" name="products[0]" class="form-control choose-product-select">
                                             <option value=""></option>
@@ -253,6 +261,21 @@
                         </div>
                     </div>
                     <hr>
+                    <div class="row" id="coffee-shop-gallery" style="padding-bottom: 20px;">
+                        <div class="col-xs-12">
+                            <h4>Our latest images</h4>
+                        </div>
+                        @foreach ( $images as $image )                        
+                            <div class="col-xs-6 col-md-3">
+                                <div style="overflow:hidden;">
+                                    <a href="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}" data-lightbox="gallery">
+                                        <img width="100%" height="200px" src="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}">
+                                    </a>
+                                </div>
+                            
+                            </div>
+                        @endforeach
+                    </div>
                     <div class="row" id="reviews-for-coffeeshop">
                         <div class="col-xs-12">
                             <h4>

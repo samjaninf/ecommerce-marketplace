@@ -53,11 +53,11 @@
                             <h5 @if($coffeeShop->products()->wherePivot('description', '!=', '')->whereNotNull('description')->count() == 0) class="hide" @endif>
                                 Products: <a href="#" onclick="showMenuDescription(this)">View menu description</a>
                             </h5>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6">
+                            <div class="product_header row">
+                                <div class="col-xs-6">
                                     Drink:
                                 </div>
-                                <div class="col-xs-12 col-sm-6">
+                                <div class="col-xs-6">
                                     Size:
                                 </div>
                             </div>
