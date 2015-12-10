@@ -110,22 +110,22 @@ class CoffeeShopsController extends Controller
      */
     public function show(Request $request, $id)
     {
-      $coffeeShop = $this->coffeeShop->find($id);
+
+        $coffeeShop = $this->coffeeShop->find($id);
         $bestReview = $coffeeShop->getBestReview();
         $order = new Order;
-        $id    = $request->get('id');
 
         $orderProduct = new Collection;
         if ($id) {
-            // if ( ! is_array($id)) {
-                //$id = new CollectionBase($id);
-            // }
+            if ( ! is_array($id)) {
+                $id = new CollectionBase($id);
+            }
 
             foreach ($id as $i) {
                 $item = $coffeeShop->products()->find($i);
-              //  if ($item) {
+               if ($item) {
                     $orderProduct->add($item);
-               // }
+               }
             }
         }
 
@@ -148,12 +148,12 @@ class CoffeeShopsController extends Controller
         $now = strtotime($order->time);
 
         $times = array(
-            "In five minutes" => 5,
-            "In ten minutes" => 10, 
-            "In fifteen minutes" => 15, 
-            "In twenty minutes" => 20, 
-            "In twenty-five minutes" => 25, 
-            "In thirty minutes" => 30
+            "In 5 minutes"     => 5,
+            "In 10 minutes"    => 10, 
+            "In 15 minutes"    => 15, 
+            "In 20 minutes"    => 20, 
+            "In 25 minutes"    => 25, 
+            "In 30 minutes"    => 30
         );
         $inTimes = array();
         foreach ( $times as $string => $time ) {
@@ -172,7 +172,8 @@ class CoffeeShopsController extends Controller
             'orderProducts' => $orderProduct,
             'products'      => $fp,
             'images'       => $gallery,
-            'times'         => $inTimes
+            'times'         => $inTimes,
+            'test' => $orderProduct
         ]);
     }
 

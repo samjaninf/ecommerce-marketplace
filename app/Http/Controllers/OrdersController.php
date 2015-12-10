@@ -100,7 +100,6 @@ class OrdersController extends Controller
         $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
 
         $order = new Order;
-        $id    = $request->get('id');
 
         $orderProduct = new Collection;
         if ($id) {
@@ -135,12 +134,12 @@ class OrdersController extends Controller
         $now = strtotime("-1 hour", strtotime($order->time));
 
         $times = array(
-            "In five minutes"           => 5,
-            "In ten minutes"            => 10, 
-            "In fifteen minutes"        => 15, 
-            "In twenty minutes"         => 20, 
-            "In twenty-five minutes"    => 25, 
-            "In thirty minutes"         => 30
+            "In 5 minutes"     => 5,
+            "In 10 minutes"    => 10, 
+            "In 15 minutes"    => 15, 
+            "In 20 minutes"    => 20, 
+            "In 25 minutes"    => 25, 
+            "In 30 minutes"    => 30
         );
         $inTimes = array();
         foreach ( $times as $string => $time ) {
