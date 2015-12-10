@@ -26,111 +26,133 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3" id="order-inner">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Your order</th>
-                        <th>Total: £ {{number_format($order->price / 100., 2)}}</th>
-                    </tr>
-                    </thead>
-                    @foreach($order->order_lines as $line)
-                        <tr>
-                            <td>
+                    <?php $total = 0; ?>
+                    @foreach ( $order->order_lines as $line)
+                        <div class="row order-lines">
+                            <div class="col-xs-8">
                                 {{$line->product->type == 'drink' ? $coffeeShop->getSizeDisplayName($line->size) : ''}}
                                 {{$coffeeShop->getNameFor($line->product)}}
-                            </td>
-                            <td>£ {{$line->price / 100.}}</td>
-                        </tr>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <?php $total = $total + $line->price; ?>
+                                £{{$line->price /100 }}
+                            </div>
+                        </div>
                     @endforeach
-                </table>
+                    <div class="row order-total">
+                        <div class="col-xs-12 text-right">
+                            <p>Pickup time: {{ $order->pickup_time }}</p>
+                            <h3>Total: £{{ $total / 100 }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p class="offers">
+                            @if(Session::has('offer-used'))
+                            Current offer applying:<br>
+                            {{ display_offer(Session::get('offer-used', $coffeeShop)) }}
+                            @endif
+                        </p>
+                        @if($order->price < 1500 && current_user()->transactions()->orderBy('id', 'desc')->first() !== null && current_user()->transactions()->orderBy('id', 'desc')->first()->charged == true)
+                            <p>
+                                An authorization of £ 15 will be made to your bank.
+                                However, we will not charge you for that amount.
+                                You wont be charged until you spend more than £ 15 in total in our shops.
+                                In 6 days, you will automatically be charged for the amount accumulated over the week.
+                            </p>
+                        @endif
+                    </div>
+                    <div class="row">
 
-                <p class="offers">
-                    @if(Session::has('offer-used'))
-                    Current offer applying:<br>
-                    {{ display_offer(Session::get('offer-used', $coffeeShop)) }}
-                    @endif
-                </p>
+                        <div class="col-xs-12">
+                            <h3 class="text-center secure-payment"><img src="/img/lock.png" alt="secure"/>Please make your Secure Payment</h3>
+                        </div>
+                        <div class="col-xs-12 text-center secure-payment-text">
+                            <p>Pay online using our secure checkout - with no minimum spends and we'll even store your payment details securely to make your next transaction even easier.</p>
+                        </div>
+                        <div class="text-center col-xs-12" style="padding: 20px 0px;">
+                            <img src="/img/trustwave.png" alt="Trust Wave"/>
+                        </div>
 
-                @if($order->price < 1500 && current_user()->transactions()->orderBy('id', 'desc')->first() !== null && current_user()->transactions()->orderBy('id', 'desc')->first()->charged == true)
-                    <p>
-                        An authorization of £ 15 will be made to your bank.
-                        However, we will not charge you for that amount.
-                        You wont be charged until you spend more than £ 15 in total in our shops.
-                        In 6 days, you will automatically be charged for the amount accumulated over the week.
-                    </p>
-                @endif
-
-                <h4>Pickup time: {{$order->pickup_time}}</h4>
-                    <form accept-charset="UTF-8"
-                          action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}"
-                          class="require-validation @if(current_user()->hasStripeId()) hide @endif"
-                          data-cc-on-file="false"
-                          id="payment-form"
-                          method="post">
-                        <div class="form-row">
-                            <div class="col-xs-12 form-group required">
-                                <label class="control-label">Name on Card</label>
-                                <input class="form-control" size="4" type="text" title="Name">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-xs-12 form-group card required">
-                                <label class="control-label">Card Number</label>
-                                <input data-stripe="number"
-                                       placeholder="1234123412341234"
-                                       class="form-control card-number"
-                                       size="20"
-                                       type="text">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-xs-4 form-group cvc required">
-                                <label class="control-label">CVC</label>
-                                <input data-stripe="cvc"
-                                       class="form-control card-cvc"
-                                       placeholder="ex. 311"
-                                       size="4"
-                                       type="text">
-                            </div>
-                            <div class="col-xs-4 form-group expiration required">
-                                <label class="control-label">Expiration</label>
-                                <input class="form-control card-expiry-month"
-                                       data-stripe="exp-month"
-                                       placeholder="MM"
-                                       size="2"
-                                       type="text">
-                            </div>
-                            <div class="col-xs-4 form-group expiration required">
-                                <label class="control-label"> </label>
-                                <input class="form-control card-expiry-year"
-                                       data-stripe="exp-year"
-                                       placeholder="YYYY"
-                                       size="4"
-                                       type="text">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-3 form-group">
-                                <button class="form-control btn btn-primary submit-button" type="submit">Pay »</button>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-12 error form-group hide">
-                                <div class="alert-danger alert">
-                                    Please correct the errors and try again.
+                    </div>
+                    <div class="row">
+                        <form accept-charset="UTF-8"
+                              action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}"
+                              class="require-validation @if(current_user()->hasStripeId()) hide @endif"
+                              data-cc-on-file="false"
+                              id="payment-form"
+                              method="post">
+                            <div class="form-row">
+                                <div class="col-xs-12 form-group required">
+                                    
+                                    <input class="form-control" size="4" type="text" placeholder="Name On Card" title="Name">
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col-xs-12 form-group card required">
+                                    <input data-stripe="number"
+                                           placeholder="Card Number"
+                                           class="form-control card-number"
+                                           size="20"
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-xs-4 form-group expiration required">
+                                    <label class="control-label">Expiry Date:</label>
+                                    <input class="form-control card-expiry-month"
+                                           data-stripe="exp-month"
+                                           placeholder="Month"
+                                           size="2"
+                                           type="text">
+                                </div>
+                                <div class="col-xs-4 form-group expiration required">
+                                    <label class="control-label"> </label>
+                                    <input class="form-control card-expiry-year"
+                                           data-stripe="exp-year"
+                                           placeholder="Year"
+                                           size="4"
+                                           type="text">
+                                </div>
+                                <div class="col-xs-4 form-group cvc required">
+                                    <label class="control-label">CVC:</label>
+                                    <input data-stripe="cvc"
+                                           class="form-control card-cvc"
+                                           placeholder="ex. 311"
+                                           size="4"
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group payment-outer">
+                                    <div class="form-row">
+                                        <div class="col-md-12 form-group payment-inner">
+                                            <button class="form-control btn btn-success submit-button" type="submit">Make Payment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 error form-group hide">
+                                    <div class="alert-danger alert">
+                                        Please correct the errors and try again.
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <form method="post"
+                                    class="@if(!current_user()->hasStripeId()) hide @endif"
+                                    id="existingCardForm"
+                                    action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}">
+                                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                                <button class="btn btn-success col-xs-7" type="submit">Submit Payment</button>
+                                <a href="#" class="btn btn-default col-xs-4 col-xs-offset-1" id="changeCard">Change card</a>
+                            </form>
                         </div>
-                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                    </form>
-                    <form method="post"
-                          class="@if(!current_user()->hasStripeId()) hide @endif"
-                          id="existingCardForm"
-                          action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}">
-                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                        <button class="btn btn-success" type="submit">Submit Payment</button>
-                        <a href="#" class="btn btn-default" id="changeCard">Change card</a>
-                    </form>
+                    </div>
             </div>
         </div>
     </div>

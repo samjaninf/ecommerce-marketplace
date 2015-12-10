@@ -40,16 +40,6 @@ if document.getElementById('order')
 
     product = findProduct opt
 
-    for size in ['xs', 'sm', 'md', 'lg']
-      if product.pivot[size + '_activated'] == 1 and product.pivot[size] != 0
-        input = document.createElement 'option'
-        input.value = size
-
-        text = document.createTextNode coffeeShop['display_' + size] + ' (£ ' + (product.pivot[size] / 100) + ')'
-
-        input.appendChild text
-
-        select.appendChild(input)
 
     sel.parentNode.nextElementSibling.appendChild container
 

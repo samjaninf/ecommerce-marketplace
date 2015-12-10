@@ -255,7 +255,7 @@ textarea {
 }
 #order-inner {
   select, input {
-    background:#eeeeee;
+    background:#f8f8f8;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     -moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset;
     box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -284,6 +284,42 @@ textarea {
     position: relative;
     top: 5px;
   }
+  .order-total {
+    margin: 10px 17px; padding: 10px 0px;
+  }
+  .payment-outer {
+    margin: 0px;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    background: #3fd6a8;
+    position: relative;
+    top: 1px;
+    button {
+      background: #27ad84;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 20px;
+      height: 40px;
+    }
+  }
+  .secure-payment {
+    color: #585858;
+  }
+  .secure-payment-text {
+    padding: 0px 20px;
+    font-weight: 100; 
+  }
+  .secure-payment img {
+    position: relative;
+    top: -2px;
+    right: 2px;
+  }
+  .card-number {
+    background: #f8f8f8 no-repeat url(/img/cards.png) center right;
+  }
+  .card-cvc {
+    background: #f8f8f8 no-repeat url(/img/card.png) center right;
+  }
 }
 .info-price {
   margin-top: 8px;
@@ -292,7 +328,24 @@ textarea {
 .info-price-dashboard {
   color: #219161;
 }
-
+.order-lines {
+  margin: 10px 30px;
+  padding: 10px 0px;
+  font-weight: 100;
+  font-family: open sans;
+  font-size: 18px;
+  background-image: linear-gradient(to right, black 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 5px 1px;
+  background-repeat: repeat-x;
+  &:last-child {
+    background-image: linear-gradient(to right, black 100%, rgba(255,255,255,0) 0%);
+  }   
+  div {
+    padding: 0px;
+    margin: 0px;
+  }
+}
 #banner-home-user {
   background-color: #00aed7;
   text-align: center;

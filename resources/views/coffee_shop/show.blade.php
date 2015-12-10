@@ -1,7 +1,3 @@
-
-
-<pre>
-                            {{ var_dump($orderProducts)}}</pre>
 @extends('app')
 
 @section('page-title')
