@@ -1,5 +1,9 @@
 <?php namespace Koolbeans\Http\Controllers;
 
+
+use Koolbeans\Http\Requests;
+use Koolbeans\Http\Requests\UserRequest;
+
 class HomeController extends Controller
 {
 
@@ -10,6 +14,21 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        $drinks = [
+          'Latte',
+          'Cappucino',
+          'Espreso',
+          'Mocha',
+          'Ice Coffee',
+          'Frappucino',
+          'Americano',
+          'Macchiato',
+          'Flat White',
+          'Caramel Macchiato',
+          'Cafe Au Lait'
+        ];
+
         $user = current_user();
 
         $message = [];
@@ -57,7 +76,7 @@ RAW
             ->limit(4)
             ->get();
 
-        return view('home', compact('orders'))->with('messages', $message);
+        return view('home', compact('orders'))->with('messages', $message)->with('drinks', $drinks)->with('favourite', $user->favourite_products)->with('user', $user);
     }
 
     /**
@@ -85,5 +104,62 @@ SQL;
             'firstImage' => $images->isEmpty() ? null : $images[0]->image,
         ]);
     }
+
+    public function store(UserRequest $request) {
+        $user = current_user();
+
+        $drinks = [
+          'Latte',
+          'Cappucino',
+          'Espreso',
+          'Mocha',
+          'Ice Coffee',
+          'Frappucino',
+          'Americano',
+          'Macchiato',
+          'Flat White',
+          'Caramel Macchiato',
+          'Cafe Au Lait'
+        ];
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+
+        if($email) {
+          \DB::table('users')
+                      ->where('id', $user->id)
+                      ->update(['favourite_products' => $request->input('drink')]);
+        }
+        if($name) {
+          \DB::table('users')
+                      ->where('id', $user->id)
+                      ->update(['name' => $name]);
+        }
+
+        $favourite = \DB::table('users')
+                    ->where('id', $user->id)
+                    ->select('favourite_products')
+                    ->get();
+
+        if(isset($favourite)) {
+          $favourite = $favourite[0]->favourite_products;
+        } else {
+          $favourite = '1';
+        }
+
+        $user = current_user();
+
+        $orders = current_user()
+            ->orders()
+            ->with('order_lines.product')
+            ->with('coffee_shop')
+            ->wherePaid(true)
+            ->orderBy('created_at', 'desc')
+            ->limit(4)
+            ->get();
+
+        return view('home', compact('orders'))->with('drinks', $drinks)->with('favourite', $favourite)->with('name', $name)->with('email', $email);
+    }
+
 
 }

@@ -36,6 +36,8 @@ Route::resource('posts', 'PostsController');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::post('home', ['as' => 'home.store', 'uses' => 'HomeController@store']);
+
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
 
     Route::group(['middleware' => 'owner'], function () {

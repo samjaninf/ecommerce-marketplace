@@ -1,10 +1,19 @@
+
+<?php if ( isset($test) ) { ?>
+ <pre>
+    <?php var_dump($test); ?>
+</pre>
+<?php
+} ?>
+
+
 @extends('app')
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12" id="banner-home-user">
-                <h1>Welcome, {{ current_user()->name }}</h1>
+                <h1>Welcome, {{ $name or current_user()->name }}</h1>
             </div>
         </div>
     </div>
@@ -143,14 +152,35 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="details">
-                    <h3>Your details</h3>
+                    <form method="POST" action="{{ route('home.store') }}">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h4>Your Details</h4>
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="username" name="name" value="{{ $name or current_user()->name }}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" value="{{ $email or current_user()->email }}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="drink">Pick your favourite drink</label>
+                                    <select name="drink" class="form-control">
 
-                    <dl class="dl-horizontal">
-                        <dt>Name</dt>
-                        <dd>{{ current_user()->name }}</dd>
-                        <dt>Email</dt>
-                        <dd>{{ current_user()->email }}</dd>
-                    </dl>
+                                        @foreach ( $drinks as $drink )
+
+                                            <option @if ($favourite === $drink) selected @endif value="{{ $drink }}">{{ $drink }}</option>
+
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                                <button class="btn btn-primary" type="submit">Update your profile</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
