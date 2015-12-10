@@ -30,7 +30,7 @@
 
                     <div class="form-group @if($errors->any()) {{$errors->has('time') ? 'has-error' : 'has-success'}} @endif">
                         <div class="order_left">
-                            <span class="number"> 1.</span>
+                            <span class="number"> 1.</span>11111111
                         </div>
                         <div class="order_right">
                             <p class="opening">

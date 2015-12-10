@@ -25,7 +25,7 @@
 <div id="order">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3" id="order-inner">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3 order-page" id="order-inner">
                     <?php $total = 0; ?>
                     @foreach ( $order->order_lines as $line)
                         <div class="row order-lines">
