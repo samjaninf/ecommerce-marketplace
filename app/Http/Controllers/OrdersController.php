@@ -101,6 +101,8 @@ class OrdersController extends Controller
 
         $order = new Order;
 
+        $id = $coffeeShopId;
+
         $orderProduct = new Collection;
         if ($id) {
             if ( ! is_array($id)) {
