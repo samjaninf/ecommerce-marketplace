@@ -83,6 +83,8 @@ class WelcomeController extends Controller
         }
         $filters = \Input::get('f', []);
 
+        $test = $filters;
+
         if ($lat === false) {
             $pos = mb_strpos($query, ',');
             $pos = $pos == false ? mb_strpos($query, ' ') : $pos;
@@ -171,7 +173,8 @@ class WelcomeController extends Controller
 
         return view('search.results', compact('shops', 'position', 'lat', 'lng'))
             ->with('query', $baseQuery)
-            ->with('filters', array_keys($filters));
+            ->with('filters', array_keys($filters))
+            ->with('test', $baseQuery);
     }
 
     /**

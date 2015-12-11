@@ -1,6 +1,7 @@
 initialize = ->
   navigator.geolocation.getCurrentPosition( (a) =>
     document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
+    document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude
   )
 
   containers = document.querySelectorAll '#maps-container,.maps-container'
