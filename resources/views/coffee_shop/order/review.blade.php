@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-12 form-group payment-outer">
+                                <div class="col-xs-12 form-group payment-outer">
                                     <div class="form-row">
                                         <div class="col-md-12 form-group payment-inner">
                                             <button class="form-control btn btn-success submit-button" type="submit">Make Payment</button>

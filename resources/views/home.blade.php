@@ -1,12 +1,3 @@
-
-<?php if ( isset($test) ) { ?>
- <pre>
-    <?php var_dump($test); ?>
-</pre>
-<?php
-} ?>
-
-
 @extends('app')
 
 @section('content')
