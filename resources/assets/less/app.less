@@ -383,7 +383,7 @@ textarea {
   text-align: center;
   height: 400px;
   width: 100%;
-  background-image: url(/img/welcome/splash.png);
+  background-image: url(/img/welcome/splash.jpg);
   background-size: cover;
   h1 {
     border: none;
@@ -495,7 +495,7 @@ textarea {
 .review-container {
   padding-left: 40px;
   background: url(/img/shared/review-quote.png) no-repeat 0 7px;
-
+  margin-top: 30px;
   .review {
     font-style: italic;
     font-weight: normal;
@@ -561,13 +561,7 @@ hr {
 }
 
 #deals-and-news {
-  > div > div {
-    height: 480px;
-
-    @media (max-width: @screen-md-max) {
-      height: 680px;
-    }
-  }
+  background: #595b5f;
 }
 
 .specs {
@@ -748,6 +742,7 @@ hr {
   font-size: 14pt;
   white-space: normal;
   padding: 5px 20px;
+  margin: 0px;
   @media (max-width: @screen-xs-max) {
     width:100%;
     font-size:18px;

@@ -26,7 +26,7 @@
         </div>
 
         <div class="container-fluid" id="deals-and-news">
-            <div class="row">
+            <div class="row row-eq-height">
                 <div class="col-xs-12 col-sm-6" id="deals">
                     <div class="row">
                         <div class="col-xs-12 text-center">
