@@ -18,7 +18,7 @@
             <form class="form-inline" action="{{ route('search') }}" method="post" id="search-form">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <input type="text" name="query" class="form-control" placeholder="Search...">
+                        <input id="query" type="text" name="query" class="form-control" placeholder="Search...">
                         <input type="hidden" name="location" id="my-current-location">
                         <input type="submit" class="form-control" value="Search">
                         @if(str_contains(URL::previous(), '/search'))
