@@ -70,6 +70,7 @@
 
         <div class="container-fluid are-you-a-coffee-shop">
             <div class="row">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/UVapFxCTKUQ?autoplay=1&loop=1&autohide=1" frameborder="0" allowfullscreen></iframe>
                 <div class="col-xs-offset-3 col-xs-6 own-a-coffee text-center">
                     <h2 class="text-center">Own or manage a coffee shop?</h2>
                     <h3 class="text-center">People are changing the way they buy. So join them...</h3>
