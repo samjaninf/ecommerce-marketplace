@@ -4,7 +4,27 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12" id="banner-home-user">
-                <h1>Welcome, {{ $name or current_user()->name }}</h1>
+                <form class="form-inline" action="{{route('search')}}" method="post">
+                    <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">
+                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                        <label for="query" class="sr-only">Query:</label>
+
+                        <div class="input-group">
+                            <input id="query"
+                                   name="query"
+                                   type="text"
+                                   style="width: 450px;"
+                                   placeholder="Enter your location to find a shop..."
+                                   class="form-control input-lg"
+                                   value="{{old('query')}}">
+                            <input type="hidden" name="location" id="my-current-location">
+
+                            <input class="btn btn-primary btn-lg" type="submit" value="Search">
+                        </div>
+                    </div>
+                </form>
+                <h2>Welcome {{ $name or current_user()->name }}</h2>
+                <h4>What are you ordering today?</h4>
             </div>
         </div>
     </div>

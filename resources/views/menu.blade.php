@@ -31,7 +31,7 @@
             @endif
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check() )
-                    <li><a href="{{ route('home') }}">Dashboard</a></li>
+                    <li><a href="{{ route('home') }}">Profile</a></li>
                 @elseif(Auth::check() && current_user()->role === 'admin')
                     <li><a href="{{ route('admin.home') }}">Admin dashboard</a></li>
                 @else

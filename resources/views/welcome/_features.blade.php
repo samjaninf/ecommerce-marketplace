@@ -4,7 +4,7 @@
             <span class="glyphicon glyphicon-map-marker"></span>
         </div>
         <h3 class="feature-title">
-            Find local coffee shops accross the UK
+            Find
         </h3>
 
         <p class="feature-contents">

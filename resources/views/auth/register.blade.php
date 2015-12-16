@@ -6,12 +6,12 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2 register-title">
-                    <h1 class="text-center">Welcome to Koolbeans!</h1>
+                    <h1 class="text-center">Order a takeaway coffee</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2 register-form">
-                    <p class="text-center" style="font-size: 17px;">30 Seconds to register to start finding great coffee, from great coffee shops.
+                    <p class="text-center" style="font-size: 17px;">Create your KoolBeans account & order ahead from the best independent coffee shops
                     </p>
 
                     @if (count($errors) > 0)
@@ -64,7 +64,7 @@
 
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-success">
-                                            Join us
+                                            Grab a coffee now
                                         </button>
                                     </div>
 
