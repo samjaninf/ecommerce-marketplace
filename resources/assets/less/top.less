@@ -105,7 +105,23 @@
   left: 0;
   background-image: url(/img/welcome/koolbeans_head.jpg);
   background-size: cover;
+  overflow:hidden;
 
+  video { 
+    position:absolute; 
+    left:0px; top:-5%; right:0px;
+    width:100%;
+    z-index:4;
+    @media (max-width: @screen-md-max) {
+     width:105%; 
+    }
+    @media (max-width: @screen-sm-max) {
+     width:auto; 
+     bottom:0px;
+     height:105%;
+
+    }
+  }
   #splash-contents {
     z-index: 5;
     position: relative;
