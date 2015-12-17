@@ -75,36 +75,24 @@
                                 @foreach($orderProducts as $i => $orderProduct)
                                     <label class="row full-width" style="margin-top: 10px">
                                         <span class="col-xs-12 col-sm-6">
-                                            <select id="product-{{ $i }}" name="products[{{$i}}]" class="form-control choose-product-select">
+                                            <select id="product-drink-[0]" name="products[0]" class="form-control choose-product-select">
                                                 @foreach($products as $product)
                                                     @if($coffeeShop->hasActivated($product))
-                                                        <option @if($orderProduct->id == $product->id) selected @endif
-                                                        value="{{ $product->id }}" data-type="{{ $product->type }}">
-                                                            {{ $coffeeShop->getNameFor($product) }}
-                                                        </option>
+                                                        @if($product->type == 'drink')
+                                                            <option class="drink-option" value="{{ $product->id }}" data-type="{{ $product->type }} @if($orderProduct->id == $product->id) selected @endif">
+                                                                {{ $coffeeShop->getNameFor($product) }}
+                                                            </option>
+                                                        @else
+                                                            <option class="food-option" value="{{ $product->id }}" data-type="{{ $product->type }}">
+                                                                {{ $coffeeShop->getNameFor($product) }}
+                                                            </option>
+                                                        @endif
                                                     @endif
                                                 @endforeach
-                                            </select>
+                                            </select> 
                                         </span>
-                                        <span class="col-xs-12 col-sm-5">
-                                            @if($orderProduct->type == 'drink')
-                                                <span class="sizes">
-                                                    <select class="form-control" name="productSizes[{{ $i }}]">
-                                                        @foreach(['xs', 'sm', 'md', 'lg'] as $size)
-                                                            @if($coffeeShop->hasActivated($orderProduct, $size))
-                                                                <option value="{{ $size }}">
-                                                                    {{$coffeeShop->getSizeDisplayName($size)}}
-                                                                    (£ {{$orderProduct->pivot->$size / 100}})
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </span>
-                                            @else
-                                                <p class="info-price">
-                                                    Price: £ {{$orderProduct->pivot->sm}}
-                                                </p>
-                                            @endif
+                                        <span class="col-xs-12 col-sm-5 sizes-select">
+
                                         </span>
                                         <span class="col-xs-12 col-sm-1">
                                             <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-{{$i}}">×</a>

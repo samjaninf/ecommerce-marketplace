@@ -9,15 +9,13 @@
   <div class="row" id="apply-title">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
-            <h2 class="text-center">
-              Join the KoolBeans network of independent & small chain coffee shops. 
-            </h2>
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+            <h1 class="text-center signup-header">
+              People are changing the way<br> they buy. So join them... 
+            </h1>
 
             <h3 class="text-center">
-                by listing your business with KoolBeans,
-                you’re gaining access to millions of UK coffee drinkers who browse and purchase online everyday of
-                the week.
+                Joining the KoolBeans network of independent and small chain coffee shops is the easiest way to put your business online. We’ll have you listed in no time. 
             </h3>
         </div>
       </div>
@@ -31,22 +29,21 @@
         <div class="col-xs-12 col-sm-6" style="font-size: 17px;">
           <h2 class="text-center">What We Do</h2>
           <ul>
-              <li>Your Coffee Shop is online 24/7 and easily viewable to millions of UK coffee drinkers </li>
-              <li>Customers can browse and purchase from your store online  - we notify you of orders that are made </li>
-              <li>We process all payments online saving you time and expense </li>
-              <li>We simplify your online business by seamlessly integrating it into  your normal day to day operating </li>
-              <li>We market your shop  over several social media platforms including facebook and twitter and make it easy for customers to find you on google </li>
-              <li>Your Coffee Shop is online 24/7 and easily viewable to millions of UK coffee drinkers </li>
+              <li>Your Coffee Shop is online 24/7</li>
+              <li>Customers can browse and purchase from your store online</li>
+              <li>Payments all processed online</li>
+              <li>Integration into your normal service via our apps</li>
+              <li>We market your shop for you</li>
           </ul>
         </div>
 
         <div class="col-xs-12 col-sm-6" style="font-size: 17px;">
           <h2 class="text-center">How It Works</h2>
           <ul>
-              <li>Upload details and pictures of your coffee shop including your menu, allowing customers to familiarise themselves with your store</li>
-              <li>Begin receiving orders  - Notifications are sent through real time to your store via a downloadable ios /android app or by email  </li>
-              <li>Customers collect their order in store either on arrival or at their collection time</li>
-              <li>The full sales amount is paid to you every 14days less a small commission which includes transaction fees and costs. </li>
+              <li>Upload your Coffee Shop info and photos, including your menu</li>
+              <li>Begin receiving orders  - Notifications are sent through real time to your store via a downloadable ios /android app or by email</li>
+              <li>Customers collect their order in store</li>
+              <li>The full sales amount is paid to you every 14days less a small commission</li>
           </ul>
         </div>
       </div>
@@ -54,6 +51,11 @@
   </div>
 </div>
 <div class="container main-content-padded">
+    <div class="row" style="margin-top:20px">
+      <div class="col-xs-12">
+         <h4 class="text-center">View our <a href="/signup-faq">FAQ's</a></h4>
+      </div>
+    </div>
     <div class="row" style="margin-top: 20px">
         <div class="col-lg-8">
             @include('shared/_form_errors')

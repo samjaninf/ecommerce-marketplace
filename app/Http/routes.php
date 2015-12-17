@@ -26,6 +26,7 @@ Route::get('terms', 'WelcomeController@terms');
 Route::get('terms-of-use', 'WelcomeController@termsOfUse');
 route::get('coffee-shop-contract', 'WelcomeController@coffeeShopContract');
 Route::get('contact-us', 'WelcomeController@contactUs');
+Route::get('signup-faq', 'WelcomeController@signupfaq');
 Route::post('contact', 'WelcomeController@contact');
 Route::post('about', 'WelcomeController@updateAbout');
 

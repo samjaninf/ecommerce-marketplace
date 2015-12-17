@@ -11,6 +11,7 @@ use Koolbeans\Post;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Jenssegers\Agent\Agent;
 
 class WelcomeController extends Controller
 {
@@ -58,10 +59,13 @@ class WelcomeController extends Controller
 
         $posts = Post::orderBy('created_at', 'desc')->limit(2)->get();
 
+        $agent = new Agent();
+
         return view('welcome')
             ->with('featuredShops', $featured)
             ->with('posts', $posts)
-            ->with('offers', $offers->random(4));
+            ->with('offers', $offers->random(4))
+            ->with('agent', $agent);
     }
 
     /**
@@ -374,6 +378,13 @@ class WelcomeController extends Controller
         return view('terms_use');
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function signupfaq()
+    {
+      return view('faq');
+    }
     /**
      * @param $token
      *

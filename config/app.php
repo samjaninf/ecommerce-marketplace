@@ -131,6 +131,7 @@ return [
         'Barryvdh\Cors\CorsServiceProvider',
         'Laravel\Cashier\CashierServiceProvider',
         'Propaganistas\LaravelPhone\LaravelPhoneServiceProvider',
+        'Jenssegers\Agent\AgentServiceProvider',
 
         /*
          * Application Service Providers...
@@ -188,6 +189,7 @@ return [
         'URL'       => 'Illuminate\Support\Facades\URL',
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View'      => 'Illuminate\Support\Facades\View',
+        'Agent'     => 'Jenssegers\Agent\Facades\Agent',
     ],
 
 ];

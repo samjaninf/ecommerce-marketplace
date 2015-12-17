@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('page-title')
-    Order great coffee, from great coffee shops
+    Grab a coffee
 @endsection
 
 @section('splash')
