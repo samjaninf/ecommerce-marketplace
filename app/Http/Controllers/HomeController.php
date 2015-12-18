@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+ 
         $drinks = [
           'Latte',
           'Cappucino',
