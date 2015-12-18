@@ -131,7 +131,7 @@
                             </div>
                             @if(!$orderProducts->isEmpty())
                                 @foreach($orderProducts as $i => $orderProduct)
-                                    <label class="row full-width" style="margin-top: 10px">
+                                    <label class="row full-width" style="margin-top: 10px">z
                                         <span class="col-xs-12 col-sm-6">
                                             <select id="product-{{ $i }}" name="products[{{$i}}]" class="form-control choose-product-select">
                                                 @foreach($products as $product)

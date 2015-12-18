@@ -12,7 +12,7 @@
        class="list-group-item">Your Menu</a>
     <a href="{{ route('current-orders') }}" class="list-group-item">Current Orders</a>
     <a href="{{ route('reporting') }}" class="list-group-item">Reporting</a>
-    <a href="{{ route('order.history', ['coffee_shop' => current_user()->coffee_shop]) }}" class="list-group-item">
+    <a href="{{ route('order.index', ['coffee_shop' => current_user()->coffee_shop]) }}" class="list-group-item">
         Order History
     </a>
     <hr class="hidden-xs">

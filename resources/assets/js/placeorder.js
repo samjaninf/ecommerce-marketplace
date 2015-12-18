@@ -4,9 +4,8 @@
 
 	time.on('change', function() {
 		$this = $(this);
-		console.log($this.val());
-		console.log($this.html());
 		if ( $this.val() === 'custom' || $this.val() === customTime.val()) {
+			$('#custom-time-value').val(customTime.val().replace(/\s/g, ''));
 			customTime.show();
 		} else {
 			customTime.hide();
@@ -38,8 +37,7 @@
 	});
 
 	function priceToDecimal(price) {
-		price = price / 100;
-		return price;
+		return (price / 100).toFixed(2);
 	}
 
 	function getProductSizes(productName, that) {
@@ -47,54 +45,50 @@
 
 		window.products.forEach( function (product) {
 			if ( product.name == productName) {
+				if (product.type === 'drink') {
+					productSize = product.pivot;
+					sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
 
-				productSize = product.pivot;
-				sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
-
-				if (that) {
-					console.log(that.attr('name').replace(/\D/g, ''));
-					//myString = myString.replace(/\D/g,'');
-					option = '<select name="productSizes[' + that.attr('name').replace(/\D/g, '') + ']" class="choose-product-select count-size">';
-				} else {
-					option = '<select name="productSizes[0]" class="choose-product-select count-size">';
-				}
-
-
-				for ( var key in sizes) {
-					
-				if ( productSize[sizes[key]] == 1 ) {
-						if ( key == 'xs' ) {
-							price = 'X-small';
-						} else if ( key == 'sm' ) {
-							price = 'Small';
-						} else if ( key == 'md' ) {
-							price = 'Medium';
-						} else if ( key == 'lg' ) {
-							price = 'Large';
-						}
-
-						option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
+					if (that) {
+						console.log(that.attr('name').replace(/\D/g, ''));
+						//myString = myString.replace(/\D/g,'');
+						option = '<select name="productSizes[' + that.attr('name').replace(/\D/g, '') + ']" class="choose-product-select count-size">';
+					} else {
+						option = '<select name="productSizes[0]" class="choose-product-select count-size">';
 					}
-				}
+
+
+					for ( var key in sizes) {
+						
+					if ( productSize[sizes[key]] == 1 ) {
+							if ( key == 'xs' ) {
+								price = 'X-small';
+							} else if ( key == 'sm' ) {
+								price = 'Small';
+							} else if ( key == 'md' ) {
+								price = 'Medium';
+							} else if ( key == 'lg' ) {
+								price = 'Large';
+							}
+
+							option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
+						}
+					}
 				
-				option += '</select>';
-				if (that) {
-					that.parent().siblings('.sizes-select').html('');
-					that.parent().siblings('.sizes-select').append(option);
-					console.log(option);
+					option += '</select>';
+					if (that) {
+						that.parent().siblings('.sizes-select').html('');
+						that.parent().siblings('.sizes-select').append(option);
+						console.log(option);
+					} else {
+						$('.sizes-select').html('');
+						$('.sizes-select').append(option);
+					}
 				} else {
 					$('.sizes-select').html('');
-					$('.sizes-select').append(option);
+					console.log(product);
+					$('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
 				}
-				// sizes.forEach( function (size) {
-				// 	console.log(productSize[size]);
-				// });
-				// if ( size.xs_activated == 1) {
-				// 	//create option
-				// 	xs = '<option value="' + size.xs + ">X-Small @ " + priceToDecimal(size.xs) + "</option>";
-
-				// }
-
 			}
 		});
 	}
