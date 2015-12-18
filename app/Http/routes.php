@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('publish-my-shop', ['as' => 'publish-my-shop', 'uses' => 'CoffeeShopsController@publish']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
         Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
-
+ 
         Route::get('coffee-shop/opening-times',
             ['as' => 'coffee-shop.opening-times', 'uses' => 'CoffeeShopsController@openingTimes']);
         Route::post('coffee-shop/opening-times', ['uses' => 'CoffeeShopsController@updateOpeningTimes']);
