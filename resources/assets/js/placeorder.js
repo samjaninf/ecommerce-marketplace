@@ -36,24 +36,100 @@
 	jQuery('.dropdown-close').on('click', function() {
 		jQuery('.dropdown-toggle').hide();
 	});
-	function getProductSize(productName) {
+
+	function priceToDecimal(price) {
+		price = price / 100;
+		return price;
+	}
+
+	function getProductSizes(productName, that) {
+
 
 		window.products.forEach( function (product) {
 			if ( product.name == productName) {
-				console.log(product.pivot);
+
+				productSize = product.pivot;
+				sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
+
+				if (that) {
+					console.log(that.attr('name').replace(/\D/g, ''));
+					//myString = myString.replace(/\D/g,'');
+					option = '<select name="productSizes[' + that.attr('name').replace(/\D/g, '') + ']" class="choose-product-select count-size">';
+				} else {
+					option = '<select name="productSizes[0]" class="choose-product-select count-size">';
+				}
+
+
+				for ( var key in sizes) {
+					
+				if ( productSize[sizes[key]] == 1 ) {
+						if ( key == 'xs' ) {
+							price = 'X-small';
+						} else if ( key == 'sm' ) {
+							price = 'Small';
+						} else if ( key == 'md' ) {
+							price = 'Medium';
+						} else if ( key == 'lg' ) {
+							price = 'Large';
+						}
+
+						option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
+					}
+				}
+				
+				option += '</select>';
+				if (that) {
+					that.parent().siblings('.sizes-select').html('');
+					that.parent().siblings('.sizes-select').append(option);
+					console.log(option);
+				} else {
+					$('.sizes-select').html('');
+					$('.sizes-select').append(option);
+				}
+				// sizes.forEach( function (size) {
+				// 	console.log(productSize[size]);
+				// });
+				// if ( size.xs_activated == 1) {
+				// 	//create option
+				// 	xs = '<option value="' + size.xs + ">X-Small @ " + priceToDecimal(size.xs) + "</option>";
+
+				// }
+
 			}
 		});
-		console.log(window.products);
+	}
+
+	function getProductCount() {
+		return $('.count-product').length - 1;
 	}
 	$(document).ready(function() {
+		//get count and append attr
+		$('.choose-product-select').attr('name', 'products[' + getProductCount() + ']');
+
 		var current = $('.choose-product-select option:selected').text().replace(/\s/g, '');
-		getProductSize(current);
+		getProductSizes(current);
 	});
 
-	$('.choose-product-select').on('change', function() {
-		var current = $(this).find('option:selected').text().toLowerCase().replace(/\s/g, '');
-		console.log(current);
+	$(document).on('change', '.choose-product-select', function() {
+		var current = $(this).find('option:selected').text().replace(/\s/g, '');
+		getProductSizes(current, $(this));
 	});
 
+	var product;
+	$(document).on('click', '#add-product', function (e) {
+		e.preventDefault();
 
+		product = $('.products-copy').clone().removeClass('products-copy');
+		product.find('.count-product').attr('name', 'products[' + $('.count-product').length + ']');
+		var current = product.find('.count-product option:selected').text().replace(/\s/g, '');
+		var that = product.find('.choose-product-select');
+		getProductSizes(current, that);
+		product.insertAfter('.products-copy');
+	});
+
+	$(document).on('click', '.remove-product', function(e) {
+		e.preventDefault();
+
+		$(this).parent().parent().remove();
+	});
 })(jQuery);

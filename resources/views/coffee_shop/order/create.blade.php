@@ -73,9 +73,9 @@
                             </div>
                             @if(!$orderProducts->isEmpty())
                                 @foreach($orderProducts as $i => $orderProduct)
-                                    <label class="row full-width" style="margin-top: 10px">
+                                    <label class="row products-copy full-width" style="margin-top: 10px">
                                         <span class="col-xs-12 col-sm-6">
-                                            <select id="product-drink-[0]" name="products[0]" class="form-control choose-product-select">
+                                            <select id="product-drink-[0]" class="form-control count-product choose-product-select">
                                                 @foreach($products as $product)
                                                     @if($coffeeShop->hasActivated($product))
                                                         @if($product->type == 'drink')
