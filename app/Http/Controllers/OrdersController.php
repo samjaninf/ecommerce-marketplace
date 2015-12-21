@@ -33,12 +33,11 @@ class OrdersController extends Controller
         $this->coffeeShopRepository = $coffeeShopRepository;
 
         $this->middleware('open', ['only' => ['store']]);
-    } 
+    }
 
     /**
      * Display a listing of the resource.
      */
-
     public function index($coffeeShopId = null)
     {
         if (current_user()->role == 'admin') {

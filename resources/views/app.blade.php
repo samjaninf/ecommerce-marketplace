@@ -87,14 +87,19 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script>
-        var input = document.getElementById('query');
+        var headerQuery = document.getElementById('query');
+        var footerQuery = document.getElementById('footerquery');
+
         var options = {
             componentRestrictions: {country: 'uk'},
             options: {
                 types: ['(cities)']
             },
         };
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        new google.maps.places.Autocomplete(headerQuery, options);
+
+        new google.maps.places.Autocomplete(footerQuery, options);
     </script>
 <script src="{{ elixir('js/vendor.js') }}"></script>
 

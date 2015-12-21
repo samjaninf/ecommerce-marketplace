@@ -1,6 +1,7 @@
 (function($) {
 	var time = jQuery('#time');
 	var customTime = jQuery('#custom-time');
+	var product;
 
 	time.on('change', function() {
 		$this = $(this);
@@ -14,22 +15,8 @@
 	customTime.on('change', function() {
 		jQuery('#custom-time-value').val($(this).val());
 	});
-	// products.forEach(function (product) {
-	// 	console.log(product);
-
-
-	// 	// product.name
-
-	// 	// if product.pivot.xs_activated = 1
-	// 	// if product.pivot.sm_activated = 1
-	// 	// if product.pivot.md_activated = 1
-	// 	// if product.pvitor.lg_activated = 1
-
-	// });
-
 
 	jQuery('.filter-toggle').on('click', function() {
-		console.log('click');
 		jQuery('.dropdown-toggle').show();
 	});
 	jQuery('.dropdown-close').on('click', function() {
@@ -40,76 +27,75 @@
 		return (price / 100).toFixed(2);
 	}
 
-	function getProductSizes(productName, that) {
+	function createProductSizes(productName, that) {
+		if(window.products) {
+			window.products.forEach( function (product) {
+				//get the selected product name and create select option for sizes
+				if ( product.name == productName) {
+					//get create option for sizes for drinks NOT food
+					if (product.type === 'drink') {
+						productSize = product.pivot;
+						sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
 
+						if (that) {
+							option = '<select name="productSizes[' + that.attr('name').replace(/\D/g, '') + ']" class="choose-product-select count-size">';
+						} else {
+							option = '<select name="productSizes[0]" class="choose-product-select count-size">';
+						}
 
-		window.products.forEach( function (product) {
-			if ( product.name == productName) {
-				if (product.type === 'drink') {
-					productSize = product.pivot;
-					sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
+						//type
+						for ( var key in sizes) {
+							if ( productSize[sizes[key]] == 1 ) {
+								if ( key == 'xs' ) {
+									price = 'X-small';
+								} else if ( key == 'sm' ) {
+									price = 'Small';
+								} else if ( key == 'md' ) {
+									price = 'Medium';
+								} else if ( key == 'lg' ) {
+									price = 'Large';
+								}
 
-					if (that) {
-						console.log(that.attr('name').replace(/\D/g, ''));
-						//myString = myString.replace(/\D/g,'');
-						option = '<select name="productSizes[' + that.attr('name').replace(/\D/g, '') + ']" class="choose-product-select count-size">';
-					} else {
-						option = '<select name="productSizes[0]" class="choose-product-select count-size">';
-					}
-
-
-					for ( var key in sizes) {
-						
-					if ( productSize[sizes[key]] == 1 ) {
-							if ( key == 'xs' ) {
-								price = 'X-small';
-							} else if ( key == 'sm' ) {
-								price = 'Small';
-							} else if ( key == 'md' ) {
-								price = 'Medium';
-							} else if ( key == 'lg' ) {
-								price = 'Large';
+								option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
 							}
-
-							option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
+						}
+					
+						option += '</select>';
+						if (that) {
+							that.parent().siblings('.sizes-select').html('');
+							that.parent().siblings('.sizes-select').append(option);
+						} else {
+							$('.sizes-select').html('');
+							$('.sizes-select').append(option);
+						}
+						
+					} else {
+						if (that) {
+							//food only uses the "sm" value, no sizes
+							that.parent().siblings('.sizes-select').html('');
+							that.parent().siblings('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
+						} else {
+							$('.sizes-select').html('');
+							$('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
 						}
 					}
-				
-					option += '</select>';
-					if (that) {
-						that.parent().siblings('.sizes-select').html('');
-						that.parent().siblings('.sizes-select').append(option);
-						console.log(option);
-					} else {
-						$('.sizes-select').html('');
-						$('.sizes-select').append(option);
-					}
-				} else {
-					$('.sizes-select').html('');
-					console.log(product);
-					$('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
 				}
-			}
-		});
+			});
+		}
 	}
 
-	function getProductCount() {
-		return $('.count-product').length - 1;
-	}
 	$(document).ready(function() {
-		//get count and append attr
-		$('.choose-product-select').attr('name', 'products[' + getProductCount() + ']');
+		$('.choose-product-select').attr('name', 'products[0]');
 
 		var current = $('.choose-product-select option:selected').text().replace(/\s/g, '');
-		getProductSizes(current);
+		createProductSizes(current);
 	});
 
 	$(document).on('change', '.choose-product-select', function() {
 		var current = $(this).find('option:selected').text().replace(/\s/g, '');
-		getProductSizes(current, $(this));
+		createProductSizes(current, $(this));
 	});
 
-	var product;
 	$(document).on('click', '#add-product', function (e) {
 		e.preventDefault();
 
@@ -117,7 +103,7 @@
 		product.find('.count-product').attr('name', 'products[' + $('.count-product').length + ']');
 		var current = product.find('.count-product option:selected').text().replace(/\s/g, '');
 		var that = product.find('.choose-product-select');
-		getProductSizes(current, that);
+		createProductSizes(current, that);
 		product.insertAfter('.products-copy');
 	});
 

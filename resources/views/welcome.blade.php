@@ -72,9 +72,8 @@
             <div class="row">
                 <div class="col-xs-offset-3 col-xs-6 own-a-coffee text-center">
                     <h2 class="text-center">Own or manage a coffee shop?</h2>
-                    <h3 class="text-center">Learn More</h3>
                     <div>
-                        <a href="{{ route('coffee-shop.apply') }}" class="btn btn-primary" style="background: #FF9D3A; border: none">Sign up</a><br/>
+                        <a href="{{ route('coffee-shop.apply') }}" class="btn btn-primary" style="background: #FF9D3A; border: 0; font-size: 18px;">Learn More</a>
                     </div>
                 </div>
             </div>

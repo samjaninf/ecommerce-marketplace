@@ -65,7 +65,8 @@ class WelcomeController extends Controller
             ->with('featuredShops', $featured)
             ->with('posts', $posts)
             ->with('offers', $offers->random(4))
-            ->with('agent', $agent);
+            ->with('agent', $agent)
+            ->with('home', true);
     }
 
     /**
