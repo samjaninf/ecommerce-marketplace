@@ -89,7 +89,8 @@
     <script>
         var headerQuery = document.getElementById('query');
         var footerQuery = document.getElementById('footerquery');
-
+        var homeQuery = document.getElementById('homequery');
+        
         var options = {
             componentRestrictions: {country: 'uk'},
             options: {
@@ -98,7 +99,7 @@
         };
 
         new google.maps.places.Autocomplete(headerQuery, options);
-
+        new google.maps.places.Autocomplete(homeQuery, options);
         new google.maps.places.Autocomplete(footerQuery, options);
     </script>
 <script src="{{ elixir('js/vendor.js') }}"></script>

@@ -1,19 +1,19 @@
 @extends('app')
 
 @section('content')
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12" id="banner-home-user">
                 <form class="form-inline" action="{{route('search')}}" method="post">
-                    <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">
+                    <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif" style="width: 100%;">
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <label for="query" class="sr-only">Query:</label>
 
                         <div class="input-group">
-                            <input id="query"
+                            <input id="homequery"
                                    name="query"
                                    type="text"
-                                   style="width: 450px;"
                                    placeholder="Enter your location to find a shop..."
                                    class="form-control input-lg"
                                    value="{{old('query')}}">
@@ -118,10 +118,8 @@
                                                     <i>{{ $coffeeShop->location }}</i>
                                                 </p>
                                                 <div class="actions text-center">
-                                                    <a href="{{ route('coffee-shop.order.create', ['coffeeShop' => $coffeeShop]) }}"
-                                                       class="btn btn-success">Order <span class="hidden-xs"> a Coffee </span></a>
                                                     <a href="{{ route('coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}"
-                                                       class="btn btn-primary">View <span class="hidden-xs">Profile</span></a>
+                                                       class="btn btn-success">Order <span class="hidden-xs"> a Coffee </span></a>
                                                 </div>
                                             </div>
                                         </div>

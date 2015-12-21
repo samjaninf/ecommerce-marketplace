@@ -67,7 +67,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container-fluid are-you-a-coffee-shop">
             <div class="row">
                 <div class="col-xs-offset-3 col-xs-6 own-a-coffee text-center">

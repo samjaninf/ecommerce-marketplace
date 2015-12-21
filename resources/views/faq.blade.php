@@ -19,7 +19,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 faq" style="font-weight: bold;">
                 <h3>How does it work?</h3>
 
                 <p>Sign up – Enter your shop details – Menu, descriptions, photos, location and opening times and start receiving orders straight away.</p>
