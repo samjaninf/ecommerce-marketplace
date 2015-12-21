@@ -409,12 +409,12 @@ textarea {
   background-image: url(/img/welcome/splash.png);
   background-size: cover;
   padding-top: 150px;
-  @media (max-width: @screen-sm-max) {
+  @media (max-width: @screen-xs-max) {
     padding-top: 100px;
   }
   .banner-form {
     width: 80%;
-    @media (max-width: @screen-md-max) {
+    @media (max-width: @screen-sm-max) {
       width: 100%;
     }
   }
@@ -422,13 +422,14 @@ textarea {
     width: 50%;
     margin: auto;
     opacity: 0.9;
-    @media (max-width: @screen-sm-max) {
+    @media (max-width: @screen-xs-max) {
       width: 100%;
     }
     #homequery {
       width: 80%;
-      @media (max-width: @screen-sm-max) {
+      @media (max-width: @screen-xs-max) {
         width: 100%;
+        border-radius: 0px;
       }
     }
     .btn-primary {
@@ -437,6 +438,7 @@ textarea {
       @media (max-width: @screen-sm-max) {
         width: auto;
         border-radius: 0px;
+        width: 100%;
       }
     }
   }
