@@ -1,13 +1,13 @@
 <div class="container-fluid" id="footer">
     <h2>Find your coffee now...</h2>
 
-    <form class="form-inline" action="{{route('search')}}" method="post">
+    <form class="form-inline" action="{{route('search')}}" method="post" id="search-form">
         <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
             <label for="query" class="sr-only">Query:</label>
 
             <div class="input-group">
-                <input id="query"
+                <input id="footerquery"
                        name="query"
                        type="text"
                        placeholder="Enter your location to find a shop..."
@@ -19,7 +19,6 @@
         </div>
     </form>
 </div>
-
 <div id="bottom-footer" class="container-fluid">
     <img src="/img/shared/grey-logo.png" alt="Koolbeans">
     <ul class="my-nav">

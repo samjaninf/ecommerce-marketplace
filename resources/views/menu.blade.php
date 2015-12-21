@@ -1,6 +1,6 @@
 <nav class="navbar">
     <div class="container-fluid">
-        <div class="navbar-header">
+        <div class="navbar-header @if (isset($home)) home-bg-overlay @endif">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#main-menu">
                 <span class="sr-only">Toggle Navigation</span>
@@ -13,7 +13,7 @@
             </a>
         </div>
 
-        <div class="collapse navbar-collapse" id="main-menu">
+        <div class="collapse navbar-collapse @if (isset($home)) home-bg-overlay @endif" id="main-menu">
             @if(Route::getCurrentRoute() && Route::getCurrentRoute()->getAction() && strpos(Route::getCurrentRoute()->getAction()['controller'], 'WelcomeController@index') === false)
             <form class="form-inline" action="{{ route('search') }}" method="post" id="search-form">
                 <ul class="nav navbar-nav navbar-left">
