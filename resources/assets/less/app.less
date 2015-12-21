@@ -412,13 +412,19 @@ textarea {
   @media (max-width: @screen-sm-max) {
     padding-top: 100px;
   }
+  .banner-form {
+    width: 80%;
+    @media (max-width: @screen-md-max) {
+      width: 100%;
+    }
+  }
   form {
     width: 50%;
     margin: auto;
     @media (max-width: @screen-sm-max) {
       width: 100%;
     }
-    #query {
+    #homequery {
       width: 80%;
       @media (max-width: @screen-sm-max) {
         width: 100%;
@@ -426,6 +432,7 @@ textarea {
     }
     .btn-primary {
       width: 20%;
+      border-radius: 0px 6px 6px 0px;
       @media (max-width: @screen-sm-max) {
         width: auto;
         border-radius: 0px;

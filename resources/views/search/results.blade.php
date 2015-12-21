@@ -27,14 +27,16 @@
 
         </div>
 
+
         <div class="hidden-xs hidden-sm row">
             <div class="col-md-7" style="padding: 0">
                 <div class="search-results-title">
                     @include('search._result_title')
                 </div>
-
+                
                 <div class="search-results row">
                     @forelse($shops as $coffeeShop)
+
                         <div class="col-md-12 col-lg-6">
                             <div class="featured-coffee-shop"
                                  style="height: 300px; background-image: url({{$coffeeShop->mainImage() }})"
@@ -50,9 +52,7 @@
                                             ({{ number_format($coffeeShop->getDistance(), 2) }} miles)</i>
                                     </p>
                                     @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
-                                    <div class="review hidden-sm hidden-xs">
-                                        {{ $coffeeShop->getBestReview() ? $coffeeShop->getBestReview()->pivot->review : null}}
-                                    </div>
+
                                     <div class="actions text-center" style="margin-left: -20px">
                                         <a href="{{ route('coffee-shop.show', ['coffeeShop' => $coffeeShop]) }}"
                                            class="btn btn-primary">Order <span class="hidden-xs">a Coffee</span></a>

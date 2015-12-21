@@ -178,8 +178,7 @@ class WelcomeController extends Controller
 
         return view('search.results', compact('shops', 'position', 'lat', 'lng'))
             ->with('query', $baseQuery)
-            ->with('filters', array_keys($filters))
-            ->with('test', $baseQuery);
+            ->with('filters', array_keys($filters));
     }
 
     /**

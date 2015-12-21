@@ -10,7 +10,7 @@
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <label for="query" class="sr-only">Query:</label>
 
-                        <div class="input-group">
+                        <div class="input-group banner-form" style="margin: 0 auto;">
                             <input id="homequery"
                                    name="query"
                                    type="text"
