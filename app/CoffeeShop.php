@@ -141,14 +141,11 @@ class CoffeeShop extends Model
      */
     public function getRating()
     {
-        static $rating = -1;
 
-        if ($rating === -1) {
-            $rating = $this->getConnection()
-                           ->table($this->reviews()->getTable())
-                           ->where('coffee_shop_id', '=', $this->id)
-                           ->avg('rating');
-        }
+        $rating = $this->getConnection()
+                       ->table($this->reviews()->getTable())
+                       ->where('coffee_shop_id', '=', $this->id)
+                       ->avg('rating');
 
         return round($rating);
     }
