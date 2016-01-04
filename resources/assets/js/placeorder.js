@@ -32,9 +32,9 @@
 			console.log(productName);
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
-				if ( product.name == productName) {
+				if ( product.name == productName.replace(/\s/g, '')) {
 					console.log('name == product name');
-					//get create option for sizes for drinks NOT food
+					//get create option for sizes for d.replace(/\s/g, '')rinks NOT food
 					if (product.type === 'drink') {
 						productSize = product.pivot;
 						sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
