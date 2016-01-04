@@ -32,6 +32,7 @@
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
 				if ( product.name == productName) {
+					console.log('name == product name');
 					//get create option for sizes for drinks NOT food
 					if (product.type === 'drink') {
 						productSize = product.pivot;
@@ -45,8 +46,9 @@
 
 						//type
 						for ( var key in sizes) {
+							console.log(key);
+							console.log(productSize);
 							if ( productSize[sizes[key]] == 1 ) {
-								console.log(key);
 								if ( key == 'xs' ) {
 									price = 'X-small';
 								} else if ( key == 'sm' ) {
