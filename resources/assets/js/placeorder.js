@@ -29,6 +29,7 @@
 
 	function createProductSizes(productName, that) {
 		if(window.products) {
+			console.log(productName);
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
 				if ( product.name == productName) {
