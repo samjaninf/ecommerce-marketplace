@@ -46,6 +46,7 @@
 						//type
 						for ( var key in sizes) {
 							if ( productSize[sizes[key]] == 1 ) {
+								console.log(key);
 								if ( key == 'xs' ) {
 									price = 'X-small';
 								} else if ( key == 'sm' ) {
