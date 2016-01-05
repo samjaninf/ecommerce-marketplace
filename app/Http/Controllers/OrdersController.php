@@ -123,7 +123,7 @@ class OrdersController extends Controller
             $order->time = Carbon::now()->addHour(1);
         }
 
-        $products = $coffeeShop->products()->orderBy('type', 'desc')->get();
+        $products = $coffeeShop->products()->orderBy('type', 'ascr')->get();
 
         $fp = new Collection();
         foreach ($products as $product) {

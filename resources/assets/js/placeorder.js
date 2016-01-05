@@ -29,13 +29,13 @@
 
 	function createProductSizes(productName, that) {
 		if(window.products) {
-			console.log(productName);
+			
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
 				if ( product.name == productName.replace(/\s/g, '')) {
-					console.log('name == product name');
-					//get create option for sizes for d.replace(/\s/g, '')rinks NOT food
-					if (product.type === 'drink') {
+				
+					//get create option for sizes for d.replace(/\s/g, ''
+					if ( product.type === 'drink' ) {
 						productSize = product.pivot;
 						sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
 
@@ -47,8 +47,6 @@
 
 						//type
 						for ( var key in sizes) {
-							console.log(key);
-							console.log(productSize);
 							if ( productSize[sizes[key]] == 1 ) {
 								if ( key == 'xs' ) {
 									price = 'X-small';
@@ -63,7 +61,7 @@
 								option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
 							}
 						}
-					
+						
 						option += '</select>';
 						if (that) {
 							that.parent().siblings('.sizes-select').html('');
@@ -89,10 +87,50 @@
 	}
 
 	$(document).ready(function() {
+
+		Array.prototype.move = function (old_index, new_index) {
+		    if (new_index >= this.length) {
+		        var k = new_index - this.length;
+		        while ((k--) + 1) {
+		            this.push(undefined);
+		        }
+		    }
+		    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+		    return this; // for testing purposes
+		};
+
+		sorted = [];
+		sorting = [];
+
+		$('.choose-product-select option').each( function (i) {
+			sorting.push($(this));
+			sorted.push($(this).text().replace(/\s/g, '').toLowerCase());
+		});
+		sorted.sort();
+		
+		sorted.forEach(function (value, i) {
+			console.log(value);
+		});
+
+		// $('.choose-product-select option').each( function (i) {
+		// 	var cur = $(this).text().replace(/\s/g, '').toLowerCase();
+		// 	sorted.push(cur);
+
+
+
+		// 	sorted.slice(-1)[0] 
+
+		// 	sorted.indexOf
+		// });
+
+		console.log(sorted.sort());
 		$('.choose-product-select').attr('name', 'products[0]');
 
 		var current = $('.choose-product-select option:selected').text().replace(/\s/g, '');
 		createProductSizes(current);
+		if ( $('.remove-product').length == 1 ) {
+			$('.remove-product').hide();
+		}
 	});
 
 	$(document).on('change', '.choose-product-select', function() {
@@ -104,11 +142,14 @@
 		e.preventDefault();
 
 		product = $('.products-copy').clone().removeClass('products-copy');
+		product.find('.remove-product').show();
+		product.find('.remove-product').css('display', 'block');
 		product.find('.count-product').attr('name', 'products[' + $('.count-product').length + ']');
 		var current = product.find('.count-product option:selected').text().replace(/\s/g, '');
 		var that = product.find('.choose-product-select');
 		createProductSizes(current, that);
 		product.insertAfter('.products-copy');
+
 	});
 
 	$(document).on('click', '.remove-product', function(e) {

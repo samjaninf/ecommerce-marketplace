@@ -77,6 +77,7 @@
                                     <label class="row products-copy full-width" style="margin-top: 10px">
                                         <span class="col-xs-12 col-sm-6">
                                             <select id="product-drink-[0]" class="form-control count-product choose-product-select">
+                                            
                                                 @foreach($products as $product)
                                                     @if($coffeeShop->hasActivated($product))
                                                         @if($product->type == 'drink')

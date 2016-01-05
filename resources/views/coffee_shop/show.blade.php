@@ -25,66 +25,6 @@
 <div id="order">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                  <div class="row">
-                        <div class="review-container">
-                                    <div class="review">
-                                        @if($bestReview !== null)
-                                            {{$bestReview->pivot->review === '' ? 'No comment' : $bestReview->pivot->review}}
-                                        @else
-                                            No review has been written yet!
-                                        @endif
-                                    </div>
-                                </div>
-                        <div class="col-sm-6">
-                            <h4>About the shop</h4>
-
-                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
-                                <a href="#" id="edit-coffeeshop-about-helper">Change description</a>
-                                <p id="edit-coffeeshop-about"
-                                   data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
-                            @else
-                                <p>
-                                    @endif
-                                    {{ ! $coffeeShop->about ? 'No information.' : $coffeeShop->about }}
-                                </p>
-                        </div>
-
-                        <hr class="visible-xs-block">
-
-                        <div class="col-sm-6 specs">
-                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
-                                <h4 class="spec-actives">Active:</h4>
-                                @foreach($coffeeShop->getSpecs() as $spec)
-                                    @if($coffeeShop->{'spec_' . $spec})
-                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}" class="toggle-spec">
-                                            <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{ $spec }}"/>
-                                        </a>
-                                    @endif
-                                @endforeach
-
-                                <h4 class="spec-inactives">Inactive:</h4>
-                                @foreach($coffeeShop->getSpecs() as $spec)
-                                    @if(!$coffeeShop->{'spec_' . $spec})
-                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}" class="toggle-spec">
-                                            <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{ $spec }}"/>
-                                        </a>
-                                    @endif
-                                @endforeach
-                                <p class="well" style="margin-top: 10px;">
-                                    Hint: Click on the icons to (de)activate them. <br>
-                                    You can only select 5 styles at most.
-                                </p>
-                            @else
-                                @foreach($coffeeShop->getSpecs() as $spec)
-                                    @if($coffeeShop->{'spec_' . $spec})
-                                        <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{$spec}}"/>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-            </div>
             <div class="col-xs-12 col-sm-6 " id="order-inner">
                 <form action="{{ route('coffee-shop.order.store', ['coffeeShop' => $coffeeShop]) }}" method="post">
 
@@ -203,6 +143,66 @@
                         <button type="submit" class="btn btn-success proceed-to-checkout col-xs-7 col-xs-offset-1">Place Order & Pay</button>
                     </div>
                 </form>
+            </div>
+            <div class="col-xs-12 col-sm-6 hidden-md hide-xs">
+                  <div class="row">
+                        <div class="review-container">
+                                    <div class="review">
+                                        @if($bestReview !== null)
+                                            {{$bestReview->pivot->review === '' ? 'No comment' : $bestReview->pivot->review}}
+                                        @else
+                                            No review has been written yet!
+                                        @endif
+                                    </div>
+                                </div>
+                        <div class="col-sm-6">
+                            <h4>About the shop</h4>
+
+                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
+                                <a href="#" id="edit-coffeeshop-about-helper">Change description</a>
+                                <p id="edit-coffeeshop-about"
+                                   data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
+                            @else
+                                <p>
+                                    @endif
+                                    {{ ! $coffeeShop->about ? 'No information.' : $coffeeShop->about }}
+                                </p>
+                        </div>
+
+                        <hr class="visible-xs-block">
+
+                        <div class="col-sm-6 specs">
+                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
+                                <h4 class="spec-actives">Active:</h4>
+                                @foreach($coffeeShop->getSpecs() as $spec)
+                                    @if($coffeeShop->{'spec_' . $spec})
+                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}" class="toggle-spec">
+                                            <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{ $spec }}"/>
+                                        </a>
+                                    @endif
+                                @endforeach
+
+                                <h4 class="spec-inactives">Inactive:</h4>
+                                @foreach($coffeeShop->getSpecs() as $spec)
+                                    @if(!$coffeeShop->{'spec_' . $spec})
+                                        <a href="{{ route('coffee-shop.toggle-spec', ['coffee_shop' => $coffeeShop, 'spec' => $spec]) }}" class="toggle-spec">
+                                            <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{ $spec }}"/>
+                                        </a>
+                                    @endif
+                                @endforeach
+                                <p class="well" style="margin-top: 10px;">
+                                    Hint: Click on the icons to (de)activate them. <br>
+                                    You can only select 5 styles at most.
+                                </p>
+                            @else
+                                @foreach($coffeeShop->getSpecs() as $spec)
+                                    @if($coffeeShop->{'spec_' . $spec})
+                                        <img src="/img/coffee_shops/spec_{{$spec}}.png" alt="{{$spec}}"/>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

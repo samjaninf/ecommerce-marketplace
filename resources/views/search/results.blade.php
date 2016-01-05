@@ -41,15 +41,16 @@
                             <div class="featured-coffee-shop"
                                  style="height: 300px; background-image: url({{$coffeeShop->mainImage() }})"
                                  data-latitude="{{ $coffeeShop->latitude }}"
-                                 data-longitude="{{ $coffeeShop->longitude }}">
+                                 data-longitude="{{ $coffeeShop->longitude }}"
+                                 data-title="{{ $coffeeShop->name }}"
+                                 data-id="{{ $coffeeShop->id }}">
                                 <div class="info small-featured" style="height: 55%; padding-left: 20px">
                                     <h4 class="text-left">
                                         {{ $coffeeShop->name }}
                                     </h4>
 
                                     <p style="text-align: left">
-                                        <i>{{ $coffeeShop->location }}
-                                            ({{ number_format($coffeeShop->getDistance(), 2) }} miles)</i>
+                                        <i>{{ $coffeeShop->location }}</i>
                                     </p>
                                     @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
 
