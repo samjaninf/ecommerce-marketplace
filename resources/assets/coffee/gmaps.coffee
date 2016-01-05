@@ -3,14 +3,12 @@ initialize = ->
     document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
     document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude
   )
-
   containers = document.querySelectorAll '#maps-container,.maps-container'
   locationField = document.getElementById 'field-maps-location'
 
   for cont in containers
     initializeMaps cont
   initializeAutoComplete locationField, koolbeans.map if locationField?
-
 initializeMaps = (container) ->
   return if container.offsetParent == null
   options =
@@ -20,23 +18,22 @@ initializeMaps = (container) ->
       elementType: "labels"
       stylers: [visibility: "off"]
     ]
-
-  draggable = container.classList.contains('draggable-marker')
   koolbeans.map = new google.maps.Map container, options
-
   cs = document.querySelectorAll 'div[data-latitude]'
   for cof in cs
     addMarker cof.dataset.latitude, cof.dataset.longitude, cof.dataset.title, cof.dataset.id
-
   if container.dataset.position?
     position = container.dataset.position.split ','
     location = new google.maps.LatLng position[0], position[1]
-    centerMapOnLocation location
   else if navigator.geolocation
     useGeoLocation koolbeans.map
+  centerMapOnLocation location
 
+  singleMarker = new google.maps.Marker
+    map: koolbeans.map
+    position: location
 addMarker = (lat, lng, title, id) ->
-  console.log(lat, lng, title)
+  console.log ('hmmmmm')
   infoWindow = new google.maps.InfoWindow
     content: '<h3><a href="/coffee-shop/' + id + '">' + title + '</a></h3>'
   marker = new google.maps.Marker
@@ -69,7 +66,7 @@ placeChanged = (autoComplete) -> () ->
   return if !place.geometry
 
   centerMapOn place
-  openInfoWindow place
+  koolbeans.marker
   changeFormFields place
 
 hideMarkerAndWindow = () ->
@@ -81,13 +78,11 @@ centerMapOn = (place) ->
   else
     centerMapOnLocation place.geometry.location
 
-centerMapOnLocation = () ->
+centerMapOnLocation = (location) ->
   cs = document.querySelectorAll 'div[data-latitude]'
-  location = new google.maps.LatLng cs[0].dataset.latitude, cs[0].dataset.longitude
+  location = new google.maps.LatLng cs[0].dataset.latitude, cs[0].dataset.longitude if cs[0]
   koolbeans.map.setCenter location
   koolbeans.map.setZoom 17
-  moveMarkerTo location
-
 
 openInfoWindow = (place, marker) ->
   address = [

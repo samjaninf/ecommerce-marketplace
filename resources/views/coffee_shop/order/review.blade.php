@@ -26,6 +26,14 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3 order-page" id="order-inner">
+                    <div id="error-message" style="display: none">
+                        <div style="padding: 5px;">
+                            <div id="inner-message" class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                
+                            </div>
+                        </div>
+                    </div>
                     <?php $total = 0; ?>
                     @foreach ( $order->order_lines as $line)
                         <div class="row order-lines">
@@ -146,10 +154,11 @@
                             <form method="post"
                                     class="@if(!current_user()->hasStripeId()) hide @endif"
                                     id="existingCardForm"
-                                    action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}">
+                                    action="{{ route('coffee-shop.order.checkout', ['coffeeShop' => $coffeeShop, 'order' => $order]) }}"
+                                    >
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-                                <button class="btn btn-success col-xs-7" type="submit">Submit Payment</button>
-                                <a href="#" class="btn btn-default col-xs-4 col-xs-offset-1" id="changeCard">Change card</a>
+                                <button class="btn btn-success col-xs-7" style="margin: 10px;" type="submit">Submit Payment</button>
+                                <a href="#" class="btn btn-default col-xs-4 col-xs-offset-1" style="margin: 10px;" id="changeCard">Change card</a>
                             </form>
                         </div>
                     </div>
@@ -190,7 +199,9 @@
                 var $form = $('#payment-form');
 
                 if (response.error) {
-                    $form.find('.payment-errors').text(response.error.message);
+                    console.log('hmm');
+                    $('#error-message').find('#inner-message').text(response.error.message);
+                    $('#error-message').show();
                     $form.find('button').prop('disabled', false);
                 } else {
                     var token = response.id;

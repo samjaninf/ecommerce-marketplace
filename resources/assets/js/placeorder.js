@@ -57,8 +57,9 @@
 								} else if ( key == 'lg' ) {
 									price = 'Large';
 								}
-
-								option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
+								if (priceToDecimal(productSize[key]) > 0 ) {
+									option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
+								}
 							}
 						}
 						
@@ -75,7 +76,7 @@
 						if (that) {
 							//food only uses the "sm" value, no sizes
 							that.parent().siblings('.sizes-select').html('');
-							that.parent().siblings('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
+							that.parent().siblings('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
 						} else {
 							$('.sizes-select').html('');
 							$('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
@@ -88,42 +89,6 @@
 
 	$(document).ready(function() {
 
-		Array.prototype.move = function (old_index, new_index) {
-		    if (new_index >= this.length) {
-		        var k = new_index - this.length;
-		        while ((k--) + 1) {
-		            this.push(undefined);
-		        }
-		    }
-		    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
-		    return this; // for testing purposes
-		};
-
-		sorted = [];
-		sorting = [];
-
-		$('.choose-product-select option').each( function (i) {
-			sorting.push($(this));
-			sorted.push($(this).text().replace(/\s/g, '').toLowerCase());
-		});
-		sorted.sort();
-		
-		sorted.forEach(function (value, i) {
-			console.log(value);
-		});
-
-		// $('.choose-product-select option').each( function (i) {
-		// 	var cur = $(this).text().replace(/\s/g, '').toLowerCase();
-		// 	sorted.push(cur);
-
-
-
-		// 	sorted.slice(-1)[0] 
-
-		// 	sorted.indexOf
-		// });
-
-		console.log(sorted.sort());
 		$('.choose-product-select').attr('name', 'products[0]');
 
 		var current = $('.choose-product-select option:selected').text().replace(/\s/g, '');
@@ -131,6 +96,8 @@
 		if ( $('.remove-product').length == 1 ) {
 			$('.remove-product').hide();
 		}
+
+
 	});
 
 	$(document).on('change', '.choose-product-select', function() {
