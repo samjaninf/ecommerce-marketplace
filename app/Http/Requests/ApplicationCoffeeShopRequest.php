@@ -43,7 +43,7 @@ class ApplicationCoffeeShopRequest extends Request
             'latitude'             => 'required|numeric',
             'longitude'            => 'required|numeric',
             'place_id'             => 'required|google_place_id',
-            'g-recaptcha-response' => 'required|google_recaptcha',
+            // 'g-recaptcha-response' => 'required|google_recaptcha',
             'terms'                => 'required',
         ];
 
