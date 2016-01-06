@@ -58,9 +58,7 @@ initializeMaps = (container) ->
   cs = document.querySelectorAll 'div[data-latitude]'
 
   for cof in cs
-
-    addMarker cof.dataset.latitude, cof.dataset.longitude
-
+    addMarker cof.dataset.latitude, cof.dataset.longitude, cof.dataset.title, cof.dataset.id
 
   if container.dataset.position?
 
@@ -77,14 +75,25 @@ initializeMaps = (container) ->
     useGeoLocation koolbeans.map
 
 
-addMarker = (lat, lng) ->
+addMarker = (lat, lng, title) ->
 
-  new google.maps.Marker
+  infoWindow = new google.maps.InfoWindow
+
+    content: '<h3><a href="/coffee-shop/' + id + '">' + title + '</a></h3>'
+
+  marker = new google.maps.Marker
 
     map: koolbeans.map
 
     position: new google.maps.LatLng lat, lng
 
+    ttle: title
+
+  marker.addListener('click', (e) ->
+
+      infoWindow.open(koolbeans.map, marker)
+
+  )
 
   koolbeans.marker.setVisible(false)
 
