@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('users', ['as' => 'admin.users', 'uses' => 'AdminController@users']);
     });
 });
+    Route::get('order', ['as' => 'order.index', 'uses' => 'OrdersController@index']);
 Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
 Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
 
