@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
+use Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Collection as CollectionBase;
 use Koolbeans\Http\Requests;
@@ -42,20 +42,20 @@ class OrdersController extends Controller
     {
         if (current_user()->role == 'admin') {
             $orders = Order::all();
-        } elseif ($coffeeShopId === null) {
-            $orders = current_user()->orders;
-        } else {
-            $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
-            $orders     = $coffeeShop->orders;
-            $images     = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
-
-            return view('order.index', compact('orders', 'coffeeShop'))->with([
-                'images'     => $images,
-                'firstImage' => $images->isEmpty() ? null : $images[0]->image,
-            ]);
         }
 
-        return view('order.index', compact('orders'));
+        if ( Request::get('coffee_shop') >= 1 ) {
+            $coffeeShop = $this->coffeeShopRepository->find(Request::get('coffee_shop'));
+            if (empty($orders)) {
+                $orders = $coffeeShop->orders()->orderBy('created_at', 'desc')->get();
+            }
+            $images = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
+        }
+
+        return view('order.index', compact('orders', 'coffeeShop'))->with([
+            'images'     => $images,
+            'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+        ]);
     }
 
     /**
