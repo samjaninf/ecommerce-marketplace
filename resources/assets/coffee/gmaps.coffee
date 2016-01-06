@@ -4,7 +4,7 @@ initialize = ->
 
     document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
 
-    document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude
+    document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude if (a.coords.latitude !=  '')
 
   )
 
@@ -52,6 +52,15 @@ initializeMaps = (container) ->
 
     anchorPoint: new google.maps.Point 0, -29
 
+  infoWindow = new google.maps.InfoWindow
+
+    content: 'Me'
+    
+  koolbeans.marker.addListener('click', (e) ->
+
+      infoWindow.open(koolbeans.map, koolbeans.marker)
+
+  )
   koolbeans.infoWindow = new google.maps.InfoWindow
 
 
@@ -75,7 +84,7 @@ initializeMaps = (container) ->
     useGeoLocation koolbeans.map
 
 
-addMarker = (lat, lng, title) ->
+addMarker = (lat, lng, title, id) ->
 
   infoWindow = new google.maps.InfoWindow
 
