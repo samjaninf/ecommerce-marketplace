@@ -32,6 +32,8 @@
 			
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
+				console.log(product.name);
+				console.log(productName).replace(/\s/g, ''));
 				if ( product.name == productName.replace(/\s/g, '')) {
 				
 					//get create option for sizes for d.replace(/\s/g, ''
