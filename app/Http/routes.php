@@ -91,7 +91,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('order', ['as' => 'order.index', 'uses' => 'OrdersController@index']);
 
     Route::resource('products', 'ProductsController', ['only' => 'store']);
-    Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('home', ['as' => 'admin.home', 'uses' => 'AdminController@index']);
         Route::get('last-sales', ['as' => 'admin.sales', 'uses' => 'AdminController@lastSales']);
@@ -115,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('users', ['as' => 'admin.users', 'uses' => 'AdminController@users']);
     });
 });
+Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
 Route::resource('coffee-shop', 'CoffeeShopsController', ['only' => ['show', 'index']]);
 
 /**

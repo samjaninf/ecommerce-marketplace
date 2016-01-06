@@ -58,11 +58,10 @@ RAW
             }
 
             $message = $user->coffee_shop->status === 'requested' ? [
-                'info' => 'Your shop has not been accepted yet. ' .
-                          'In the meantime, you can still look at the shops close to you ' .
-                          'and look for your concurrence!',
+                'info' => 'Your coffee shop is not live yet on Koolbeans.' .
+                          'Please adjust your profile and Koolbeans will be in touch shortly!',
             ] : [
-                'alert' => 'Your shop has been denied. Please check the comment on <a href="' .
+                'alert' => 'Your coffee shop has been denied. Please check the comment on <a href="' .
                            route('coffee-shop.apply') . '">this page</a>, and feel free to apply again!',
             ];
         }
