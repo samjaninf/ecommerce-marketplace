@@ -151,11 +151,13 @@
                                                 </select>
                                             </label>
                                         </span>
-                                            <label>
-                                                <span class="col-xs-12 col-sm-5 sizes-select">
+                                        <span class="select">
+                                            <label class="col-xs-12 col-sm-5">
+                                                <span class="sizes-select">
 
                                                 </span>
                                             </label>
+                                        </span>
                                         <span class="col-xs-12 col-sm-1">
                                             <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-{{$i}}">×</a>
                                         </span>

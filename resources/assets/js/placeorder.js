@@ -32,10 +32,7 @@
 			
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
-				console.log(product.name);
-				console.log(productName.replace(/\s/g, ''));
-				if ( product.name == productName.replace(/\s/g, '')) {
-				
+				if ( product.name.replace(/\s/g, '') == productName) {
 					//get create option for sizes for d.replace(/\s/g, ''
 					if ( product.type === 'drink' ) {
 						productSize = product.pivot;
@@ -67,8 +64,8 @@
 						
 						option += '</select>';
 						if (that) {
-							that.parent().siblings('.sizes-select').html('');
-							that.parent().siblings('.sizes-select').append(option);
+							that.parent().parent().siblings('.select').find('.sizes-select').html('');
+							that.parent().parent().siblings('.select').find('.sizes-select').append(option);
 						} else {
 							$('.sizes-select').html('');
 							$('.sizes-select').append(option);
@@ -77,8 +74,8 @@
 					} else {
 						if (that) {
 							//food only uses the "sm" value, no sizes
-							that.parent().siblings('.sizes-select').html('');
-							that.parent().siblings('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
+							that.parent().parent().siblings('.sizes-select').html('');
+							that.parent().parent().siblings('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
 						} else {
 							$('.sizes-select').html('');
 							$('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
