@@ -131,31 +131,35 @@
                             </div>
                             @if(!$orderProducts->isEmpty())
                                 @foreach($orderProducts as $i => $orderProduct)
-                                   <label class="row products-copy full-width" style="margin-top: 10px">
+                                   <div class="row products-copy full-width" style="margin-top: 10px">
                                         <span class="col-xs-12 col-sm-6">
-                                            <select id="product-drink-[0]" class="form-control count-product choose-product-select">
-                                                @foreach($products as $product)
-                                                    @if($coffeeShop->hasActivated($product))
-                                                        @if($product->type == 'drink')
-                                                            <option class="drink-option" value="{{ $product->id }}" data-type="{{ $product->type }} @if($orderProduct->id == $product->id) selected @endif">
-                                                                {{ $coffeeShop->getNameFor($product) }}
-                                                            </option>
-                                                        @else
-                                                            <option class="food-option" value="{{ $product->id }}" data-type="{{ $product->type }}">
-                                                                {{ $coffeeShop->getNameFor($product) }}
-                                                            </option>
+                                            <label>
+                                                <select id="product-drink-[0]" class="form-control count-product choose-product-select">
+                                                    @foreach($products as $product)
+                                                        @if($coffeeShop->hasActivated($product))
+                                                            @if($product->type == 'drink')
+                                                                <option class="drink-option" value="{{ $product->id }}" data-type="{{ $product->type }} @if($orderProduct->id == $product->id) selected @endif">
+                                                                    {{ $coffeeShop->getNameFor($product) }}
+                                                                </option>
+                                                            @else
+                                                                <option class="food-option" value="{{ $product->id }}" data-type="{{ $product->type }}">
+                                                                    {{ $coffeeShop->getNameFor($product) }}
+                                                                </option>
+                                                            @endif
                                                         @endif
-                                                    @endif
-                                                @endforeach
-                                            </select> 
+                                                    @endforeach
+                                                </select>
+                                            </label>
                                         </span>
-                                        <span class="col-xs-12 col-sm-5 sizes-select">
+                                            <label>
+                                                <span class="col-xs-12 col-sm-5 sizes-select">
 
-                                        </span>
+                                                </span>
+                                            </label>
                                         <span class="col-xs-12 col-sm-1">
                                             <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-{{$i}}">×</a>
                                         </span>
-                                    </label>
+                                    </div>
                                 @endforeach
                             @else
                                 <label class="row full-width" style="margin-top: 10px">
