@@ -151,8 +151,8 @@
                                                 </select>
                                             </label>
                                         </span>
-                                        <span class="select">
-                                            <label class="col-xs-12 col-sm-5">
+                                        <span class="select col-xs-12 col-sm-5">
+                                            <label>
                                                 <span class="sizes-select">
 
                                                 </span>
