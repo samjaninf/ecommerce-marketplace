@@ -1,48 +1,33 @@
 initialize = ->
-
   navigator.geolocation.getCurrentPosition( (a) =>
-
     document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
-
-    document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude if (a.coords.latitude !=  '')
-
+    if document.getElementById 'filter-location' != undefined
+      document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude if (a.coords.latitude !=  '')
   )
 
-
   containers = document.querySelectorAll '#maps-container,.maps-container'
-
   locationField = document.getElementById 'field-maps-location'
 
-
   for cont in containers
-
     initializeMaps cont
-
   initializeAutoComplete locationField, koolbeans.map if locationField?
 
-
 initializeMaps = (container) ->
-
   return if container.offsetParent == null
-
   options =
-
     zoom: 15
-
     styles: [
-
       featureType: "poi"
-
       elementType: "labels"
-
       stylers: [visibility: "off"]
-
     ]
 
-
   draggable = container.classList.contains('draggable-marker')
+  koolbeans.service = new google.maps.DirectionsService
 
   koolbeans.map = new google.maps.Map container, options
+  koolbeans.display = new google.maps.DirectionsRenderer
+    map: koolbeans.map
 
   koolbeans.marker = new google.maps.Marker
 
@@ -52,9 +37,11 @@ initializeMaps = (container) ->
 
     anchorPoint: new google.maps.Point 0, -29
 
+    position: navigator.geolocation.getCurrentPosition
+
   infoWindow = new google.maps.InfoWindow
 
-    content: 'Me'
+    content: '<b>ME</b>'
     
   koolbeans.marker.addListener('click', (e) ->
 
@@ -72,7 +59,6 @@ initializeMaps = (container) ->
   if container.dataset.position?
 
     position = container.dataset.position.split ','
-
     location = new google.maps.LatLng position[0], position[1]
 
     centerMapOnLocation location
@@ -80,7 +66,6 @@ initializeMaps = (container) ->
     koolbeans.marker.setMap(null) if container.classList.contains 'no-marker'
 
   else if navigator.geolocation
-
     useGeoLocation koolbeans.map
 
 
@@ -96,12 +81,12 @@ addMarker = (lat, lng, title, id) ->
 
     position: new google.maps.LatLng lat, lng
 
-    ttle: title
+    title: title
 
   marker.addListener('click', (e) ->
-
       infoWindow.open(koolbeans.map, marker)
 
+      getDirectionsToMarker koolbeans.service, koolbeans.display, marker
   )
 
   koolbeans.marker.setVisible(false)
@@ -110,9 +95,11 @@ addMarker = (lat, lng, title, id) ->
 useGeoLocation = () ->
 
   navigator.geolocation.getCurrentPosition (position) ->
-
-    location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-
+    cs = document.querySelectorAll 'div[data-latitude]'
+    if cs[0] != undefined
+      location = new google.maps.LatLng(cs[0].dataset.latitude, cs[0].dataset.longitude)
+    else
+      location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
     centerMapOnLocation location
 
 
@@ -131,6 +118,8 @@ bindMapToAutoComplete = (autoComplete, map) ->
 
   google.maps.event.addListener autoComplete, 'place_changed', placeChanged(autoComplete)
 
+getDirectionsToMarker = (directionsService, directionsDisplay, marker) ->
+ console.log(marker);
 
 placeChanged = (autoComplete) -> () ->
 
@@ -196,10 +185,6 @@ openInfoWindow = (place, marker) ->
     (place.address_components[2] && place.address_components[2].short_name || '')
 
   ].join(' ')
-
-
-  console.log(place)
-
 
   koolbeans.infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
 
