@@ -17,6 +17,7 @@ use Laravel\Cashier\StripeGateway;
 use Session;
 use Stripe\Charge;
 use Stripe\Error\Card;
+use Jenssegers\Agent\Agent;
 
 class OrdersController extends Controller
 {
@@ -149,13 +150,16 @@ class OrdersController extends Controller
             $inTime = date("H:i", $inTime);
             $inTimes[$string] = $inTime;
         }
+        
+        $agent = new Agent();
 
         return view('coffee_shop.order.create', [
             'coffeeShop'    => $coffeeShop,
             'order'         => $order,
             'orderProducts' => $orderProduct,
             'products'      => $fp,
-            'times'         => $inTimes
+            'times'         => $inTimes,
+            'agent'         => $agent
         ]);
     }
 

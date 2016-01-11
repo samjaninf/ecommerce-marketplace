@@ -1,4 +1,4 @@
-<div class="offer bg-{{$bgNum}}">
+<div style="margin: 0 auto;" class="offer bg-{{$bgNum}}">
     <div class="border">
         @if($offer->exists)
             <a href="{{ route('coffee-shop.show', $offer->id) }}">

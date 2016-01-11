@@ -15,8 +15,7 @@ use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\ApplicationCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\User;
-
-
+use Jenssegers\Agent\Agent;
 
 class CoffeeShopsController extends Controller
 {
@@ -165,15 +164,18 @@ class CoffeeShopsController extends Controller
         //gallery
         $gallery = $coffeeShop->gallery()->orderBy('position', 'asc')->take(4)->get();
 
+        //detect device
+        $agent = new Agent();
+
         return view('coffee_shop.show', [
             'coffeeShop'    => $coffeeShop,
             'bestReview'    =>  $bestReview,
             'order'         => $order,
             'orderProducts' => $orderProduct,
             'products'      => $fp,
-            'images'       => $gallery,
+            'images'        => $gallery,
             'times'         => $inTimes,
-            'test' => $orderProduct
+            'agent'         => $agent
         ]);
     }
 

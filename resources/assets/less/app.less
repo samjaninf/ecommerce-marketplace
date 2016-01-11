@@ -49,6 +49,27 @@ textarea {
 }
 
 #content {
+  #coffee-shop-gallery {
+    padding-bottom: 20px;
+    img {
+      max-height: 200px;
+    }
+    @media(max-width: @screen-md-min) {
+      img {
+        max-height: 400px;
+      }
+    }
+    .image-1, .image-2, .image-3 {
+      @media(max-width: @screen-sm-min) {
+        display: none;
+      }
+    .image-2, .image-3 {
+      @media (max-width: @screen-sm-max) {
+        display: none;
+      }
+    }
+    }
+  }
   .signup-header {
     border: 0;
     font-size: 40px;
