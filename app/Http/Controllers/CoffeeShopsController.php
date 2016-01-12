@@ -168,7 +168,7 @@ class CoffeeShopsController extends Controller
         $orders = $coffeeShop->orders()->where('paid', true)->get();
         $review = false;
         foreach ($orders as $o) {
-            if ($o['user_id'] === $current_user->id) {
+            if ($o['user_id'] === current_user()->id) {
                 $review = true;
                 break;
             }
