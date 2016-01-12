@@ -102,6 +102,7 @@ class WelcomeController extends Controller
                 $places = app('places')->nearby($subQuery);
                 if ($places['status'] === 'ZERO_RESULTS') {
                     $tmp = CoffeeShop::where('location', 'like', $query)
+                                      ->where('status', '=', 'published')
                                      ->orWhere('name', 'like', $query)
                                      ->orWhere('county', 'like', $query)
                                      ->orWhere('postal_code', 'like', $query)
@@ -147,18 +148,18 @@ class WelcomeController extends Controller
                 })->where(function (Builder $query) use ($filters) {
                     foreach ($filters as $filter => $_) {
                         if (in_array($filter, CoffeeShop::getSpecs())) {
-                            $query->where('spec_' . $filter, '=', true);
+                            $query->where('spec_' . $filter, '=', true)->where('status', '=', 'published');
                         }
                     }
-                })->orderByRaw($orderByRaw)->paginate(6);
+                })->where('status', '=', 'published')->orderByRaw($orderByRaw)->paginate(6);
             } else {
                 $shops = CoffeeShop::where(function (Builder $query) use ($filters) {
                     foreach ($filters as $filter => $_) {
                         if (in_array($filter, CoffeeShop::getSpecs())) {
-                            $query->where('spec_' . $filter, '=', true);
+                            $query->where('spec_' . $filter, '=', true)->where('status', '=', 'published');
                         }
                     }
-                })->orderByRaw($orderByRaw)->paginate(6);
+                })->where('status', '=', 'published')->orderByRaw($orderByRaw)->paginate(6);
             }
 
             if ($lat !== false) {

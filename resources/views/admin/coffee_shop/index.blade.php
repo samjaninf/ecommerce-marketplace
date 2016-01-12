@@ -56,10 +56,16 @@
                                 @else
                                     <span class="btn btn-xs btn-default disabled">Not published yet</span>
                                 @endif
-                                <a href="{{ route('admin.coffee-shop.destroy', ['coffee_shop' => $shop]) }}"
-                                   class="btn btn-xs btn-danger"
-                                   data-confirm="Deleting a coffee shop is impossible: it is too dangerous. However, you can still disable it. Are you sure you want to do that?"
-                                   data-method="delete">Disable</a>
+                                @if ($shop->status != 'denied')
+                                    <a href="{{ route('admin.coffee-shop.destroy', ['coffee_shop' => $shop]) }}"
+                                       class="btn btn-xs btn-danger"
+                                       data-confirm="Deleting a coffee shop is impossible: it is too dangerous. However, you can still disable it. Are you sure you want to do that?"
+                                       data-method="delete">Disable</a>
+                                @else
+                                    <a href="{{ route('admin.coffee-shop.enable', ['coffee_shop' => $shop]) }}"
+                                        class="btn btn-xs btn-primary"
+                                        data-method="enable">Enable</a>
+                                @endif
                             </td>
                         </tr>
                     @empty

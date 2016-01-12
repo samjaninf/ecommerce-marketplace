@@ -139,4 +139,22 @@ class CoffeeShopsController extends Controller
         return redirect(route('admin.coffee-shop.index'))->with('messages',
             ['info' => "Coffee shop $coffeeShop->name updated!"]);
     }
+
+    public function destroy($id)
+    {
+        $coffeeShop = $this->coffeeShopRepository->find($id);
+        $coffeeShop->update(['status' => 'denied']);
+
+        $shops = $this->coffeeShopRepository->paginate(15);
+
+        return view('admin.coffee_shop.index')->with('shops', $shops);
+    }
+    public function enable($id)
+    {
+        $coffeeShop = $this->coffeeShopRepository->find($id);
+        $coffeeShop->update(['status' => 'published']);
+        
+        $shops = $this->coffeeShopRepository->paginate(15);
+        return view('admin.coffee_shop.index')->with('shops', $shops);
+    }
 }

@@ -111,6 +111,11 @@ class CoffeeShopsController extends Controller
     {
 
         $coffeeShop = $this->coffeeShop->find($id);
+
+        if ($coffeeShop->status === 'denied') {
+            exit;
+        }
+        
         $bestReview = $coffeeShop->getBestReview();
         $order = new Order;
 

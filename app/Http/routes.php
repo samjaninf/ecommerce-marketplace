@@ -102,7 +102,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['create', 'store']]);
         Route::get('coffee-shop/{coffee_shop}/{status}',
             ['as' => 'admin.coffee-shop.review', 'uses' => 'CoffeeShopsController@review']);
-
+        route::get('coffeeshop/{coffee_shop}/enable',
+            ['as' => 'admin.coffee-shop.enable', 'uses' => 'CoffeeShopsController@enable']);
         Route::get('products/{products}/enable',
             ['as' => 'admin.products.enable', 'uses' => 'ProductsController@enable']);
         Route::resource('products', 'ProductsController', ['except' => 'destroy']);

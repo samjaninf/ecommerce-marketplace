@@ -35,7 +35,7 @@ class EloquentCoffeeShopRepository implements CoffeeShopRepository
      */
     public function getFeatured()
     {
-        return $this->model->published()->whereFeatured(true)->orderByRaw('RAND()')->get();
+        return $this->model->published()->whereFeatured(true)->orWhere('status', '=', 'published')->orderByRaw('RAND()')->get();
     }
 
     /**
