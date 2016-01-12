@@ -22,6 +22,9 @@ initializeMaps = (container) ->
       stylers: [visibility: "off"]
     ]
 
+  cp = document.getElementById 'my-current-location'
+  pos = cp.value.split ','
+
   draggable = container.classList.contains('draggable-marker')
   koolbeans.service = new google.maps.DirectionsService
 
@@ -37,7 +40,7 @@ initializeMaps = (container) ->
 
     anchorPoint: new google.maps.Point 0, -29
 
-    position: navigator.geolocation.getCurrentPosition
+    position: google.maps.LatLng(pos[0], pos[1])
 
   infoWindow = new google.maps.InfoWindow
 
@@ -119,7 +122,26 @@ bindMapToAutoComplete = (autoComplete, map) ->
   google.maps.event.addListener autoComplete, 'place_changed', placeChanged(autoComplete)
 
 getDirectionsToMarker = (directionsService, directionsDisplay, marker) ->
- console.log(marker);
+  cp = document.getElementById 'my-current-location'
+  pos = cp.value.split ','
+  origin = new google.maps.LatLng(pos[0], pos[1])
+  destinationLat = marker
+    .getPosition()
+    .lat()
+  destinationLng = marker
+    .getPosition()
+    .lng()
+  destination = new google.maps.LatLng(destinationLat, destinationLng)
+  request =
+    origin: origin
+    destination: destination
+    travelMode: google.maps.TravelMode.DRIVING
+  directionsService.route request, getDirectionsToMarkerFunc = (response, status) ->
+    console.log(status);
+    if status != null
+      directionsDisplay.setDirections(response)
+    else
+      window.alert 'Directions failed because: ' + status
 
 placeChanged = (autoComplete) -> () ->
 
