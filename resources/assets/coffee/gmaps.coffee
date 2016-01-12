@@ -1,6 +1,9 @@
 initialize = ->
   navigator.geolocation.getCurrentPosition( (a) =>
     document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
+    koolbeans.mePos =
+      lat: a.coords.latitude
+      lng: a.coords.longitude
     if document.getElementById 'filter-location' != undefined
       document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude if (a.coords.latitude !=  '')
   )
@@ -24,7 +27,7 @@ initializeMaps = (container) ->
 
   cp = document.getElementById 'my-current-location'
   pos = cp.value.split ','
-
+  console.log(koolbeans.mePos);
   draggable = container.classList.contains('draggable-marker')
   koolbeans.service = new google.maps.DirectionsService
 
@@ -32,24 +35,22 @@ initializeMaps = (container) ->
   koolbeans.display = new google.maps.DirectionsRenderer
     map: koolbeans.map
 
-  koolbeans.marker = new google.maps.Marker
-
-    draggable: draggable
-
+  koolbeans.me = new google.maps.Marker
     map: koolbeans.map
-
-    anchorPoint: new google.maps.Point 0, -29
-
     position: google.maps.LatLng(pos[0], pos[1])
 
-  infoWindow = new google.maps.InfoWindow
+  koolbeans.marker = new google.maps.Marker
+    draggable: draggable
+    map: koolbeans.map
+    anchorPoint: new google.maps.Point 0, -29
 
-    content: '<b>ME</b>'
+  infoWindow = new google.maps.InfoWindow
+    content: '<b>Coffee</b>'
     
   koolbeans.marker.addListener('click', (e) ->
 
       infoWindow.open(koolbeans.map, koolbeans.marker)
-
+      getDirectionsToMarker koolbeans.service, koolbeans.display, koolbeans.marker
   )
   koolbeans.infoWindow = new google.maps.InfoWindow
 
@@ -59,16 +60,6 @@ initializeMaps = (container) ->
   for cof in cs
     addMarker cof.dataset.latitude, cof.dataset.longitude, cof.dataset.title, cof.dataset.id
 
-  if container.dataset.position?
-
-    position = container.dataset.position.split ','
-    location = new google.maps.LatLng position[0], position[1]
-
-    centerMapOnLocation location
-
-    koolbeans.marker.setMap(null) if container.classList.contains 'no-marker'
-
-  else if navigator.geolocation
     useGeoLocation koolbeans.map
 
 

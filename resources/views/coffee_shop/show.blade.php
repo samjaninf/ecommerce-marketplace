@@ -304,9 +304,11 @@
 
                                 @if(! Auth::guest())
                                     @if ( ! $coffeeShop->reviews()->where('user_id', '=', current_user()->id)->count())
-                                        <a href="#" id="add-review">
-                                            Add your review
-                                        </a>
+                                        @if ($can_review)
+                                            <a href="#" id="add-review">
+                                                Add your review
+                                            </a>
+                                        @endif
                                     @endif
                                 @endif
                             </h4>

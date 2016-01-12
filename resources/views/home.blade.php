@@ -185,6 +185,10 @@
 
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="twitter">Your twitter name</label>
+                                    <input type="text" class="form-control" id="twitter" name="twitter" value="{{ $twitter or current_user()->twitter }}"/>
+                                </div>
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                                 <button class="btn btn-primary" type="submit">Update your profile</button>
                             </div>

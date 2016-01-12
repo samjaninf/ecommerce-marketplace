@@ -165,7 +165,14 @@ class CoffeeShopsController extends Controller
             $inTime = date("H:i", $inTime);
             $inTimes[$string] = $inTime;
         }
-
+        $orders = $coffeeShop->orders()->where('paid', true)->get();
+        $review = false;
+        foreach ($orders as $o) {
+            if ($o['user_id'] === $current_user->id) {
+                $review = true;
+                break;
+            }
+        }
         //gallery
         $gallery = $coffeeShop->gallery()->orderBy('position', 'asc')->take(4)->get();
 
@@ -176,6 +183,7 @@ class CoffeeShopsController extends Controller
             'coffeeShop'    => $coffeeShop,
             'bestReview'    =>  $bestReview,
             'order'         => $order,
+            'can_review'        => $review,
             'orderProducts' => $orderProduct,
             'products'      => $fp,
             'images'        => $gallery,

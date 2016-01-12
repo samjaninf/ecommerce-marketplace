@@ -123,22 +123,30 @@ SQL;
 
         $name = $request->input('name');
         $email = $request->input('email');
+        $twitter = $request->input('twitter');
+        $fdrink = $request->input('drinl');
 
-        if($email) {
+        if($fdrink) {
           \DB::table('users')
                       ->where('id', $user->id)
-                      ->update(['favourite_products' => $request->input('drink')]);
+                      ->update(['favourite_products' => $fdrink]);
         }
         if($name) {
           \DB::table('users')
                       ->where('id', $user->id)
                       ->update(['name' => $name]);
         }
+        if($twitter) {
+          \DB::table('coffee_shops')
+                    ->where('id', $user->id)
+                    ->update(['twitter' => $twitter]);
+        }
 
         $favourite = \DB::table('users')
                     ->where('id', $user->id)
                     ->select('favourite_products')
                     ->get();
+
 
         if(isset($favourite)) {
           $favourite = $favourite[0]->favourite_products;
@@ -157,7 +165,7 @@ SQL;
             ->limit(4)
             ->get();
 
-        return view('home', compact('orders'))->with('drinks', $drinks)->with('favourite', $favourite)->with('name', $name)->with('email', $email);
+        return view('home', compact('orders'))->with('drinks', $drinks)->with('favourite', $favourite)->with('name', $name)->with('email', $email)->with('twitter', $twitter);
     }
 
 
