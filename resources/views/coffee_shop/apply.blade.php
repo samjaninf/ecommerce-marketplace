@@ -52,6 +52,13 @@
     </div>
   </div>
 </div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <img src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
+    </div>
+  </div>
+</div>
 <div class="container main-content-padded">
     <div class="row" style="margin-top:20px">
       <div class="col-md-12 col-lg-8">
