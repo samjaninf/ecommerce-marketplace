@@ -21,7 +21,7 @@ initializeMaps = (container) ->
       elementType: "labels"
       stylers: [visibility: "off"]
     ]
-
+ 
   draggable = container.classList.contains('draggable-marker')
 
   koolbeans.service = new google.maps.DirectionsService
