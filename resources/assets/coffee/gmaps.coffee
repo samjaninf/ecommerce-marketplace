@@ -1,9 +1,6 @@
 initialize = ->
   navigator.geolocation.getCurrentPosition( (a) =>
     document.getElementById('my-current-location').value = a.coords.latitude + ',' + a.coords.longitude
-    koolbeans.mePos =
-      lat: a.coords.latitude
-      lng: a.coords.longitude
     if document.getElementById 'filter-location' != undefined
       document.getElementById('filter-location').value = a.coords.latitude + ',' + a.coords.longitude if (a.coords.latitude !=  '')
   )
@@ -25,19 +22,14 @@ initializeMaps = (container) ->
       stylers: [visibility: "off"]
     ]
 
-  cp = document.getElementById 'my-current-location'
-  pos = cp.value.split ','
-  console.log(koolbeans.mePos);
   draggable = container.classList.contains('draggable-marker')
+
   koolbeans.service = new google.maps.DirectionsService
 
   koolbeans.map = new google.maps.Map container, options
+
   koolbeans.display = new google.maps.DirectionsRenderer
     map: koolbeans.map
-
-  koolbeans.me = new google.maps.Marker
-    map: koolbeans.map
-    position: google.maps.LatLng(pos[0], pos[1])
 
   koolbeans.marker = new google.maps.Marker
     draggable: draggable
@@ -46,21 +38,19 @@ initializeMaps = (container) ->
 
   infoWindow = new google.maps.InfoWindow
     content: '<b>Coffee</b>'
-    
-  koolbeans.marker.addListener('click', (e) ->
 
+  koolbeans.marker.addListener('click', (e) ->
       infoWindow.open(koolbeans.map, koolbeans.marker)
       getDirectionsToMarker koolbeans.service, koolbeans.display, koolbeans.marker
   )
   koolbeans.infoWindow = new google.maps.InfoWindow
 
-
   cs = document.querySelectorAll 'div[data-latitude]'
 
   for cof in cs
     addMarker cof.dataset.latitude, cof.dataset.longitude, cof.dataset.title, cof.dataset.id
-
-    useGeoLocation koolbeans.map
+    
+  useGeoLocation koolbeans.map
 
 
 addMarker = (lat, lng, title, id) ->
@@ -89,6 +79,7 @@ addMarker = (lat, lng, title, id) ->
 useGeoLocation = () ->
 
   navigator.geolocation.getCurrentPosition (position) ->
+    console.log('hmm');
     cs = document.querySelectorAll 'div[data-latitude]'
     if cs[0] != undefined
       location = new google.maps.LatLng(cs[0].dataset.latitude, cs[0].dataset.longitude)

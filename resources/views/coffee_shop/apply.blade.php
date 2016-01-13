@@ -7,8 +7,8 @@
 @section('content')
 <div class="container-fluid">
   <div class="row" id="apply-title">
-                    <div class="col-xs-12 list-your-shop-overlay">
-        </div>
+    <div class="col-xs-12 list-your-shop-overlay">
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-offset-2 col-sm-8">
