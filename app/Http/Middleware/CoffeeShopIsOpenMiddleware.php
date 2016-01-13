@@ -21,7 +21,11 @@ class CoffeeShopIsOpenMiddleware
         if ($request->has('pickup_time')) {
             $time = new Carbon($request->input('pickup_time') . ':00');
         } elseif ($request->has('time')) {
-            $time = new Carbon($request->input('time') . ':00');
+            if ($request->input('time') == 'onarrival') {
+                $time = Carbon::now();
+            } else {
+                $time = new Carbon($request->input('time') . ':00');
+            }
         } else {
             $time = Carbon::now();
         }

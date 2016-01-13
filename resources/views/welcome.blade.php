@@ -68,7 +68,10 @@
             </div>
         </div>
         <div class="container-fluid are-you-a-coffee-shop">
+
             <div class="row">
+                    <div class="col-xs-12 list-your-shop-overlay">
+    </div>
                 <div class="col-xs-offset-3 col-xs-6 own-a-coffee text-center">
                     <h2 class="text-center">Own or manage a coffee shop?</h2>
                     <div>

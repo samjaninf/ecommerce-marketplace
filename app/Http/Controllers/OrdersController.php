@@ -50,7 +50,9 @@ class OrdersController extends Controller
             if (empty($orders)) {
                 $orders = $coffeeShop->orders()->orderBy('created_at', 'desc')->get();
             }
+          
             $images = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
+
         }
 
         return view('order.index', compact('orders', 'coffeeShop'))->with([
@@ -117,11 +119,14 @@ class OrdersController extends Controller
                 }
             }
         }
-
-        if (( $time = $request->get('time') )) {
-            $order->time = new Carbon($time . ':00');
+        if ($request->get('time') == 'onarrival') {
+            $order->time = Carbon::now();
         } else {
-            $order->time = Carbon::now()->addHour(1);
+            if (( $time = $request->get('time') )) {
+                $order->time = new Carbon($time . ':00');
+            } else {
+                $order->time = Carbon::now()->addHour(1);
+            }
         }
 
         $products = $coffeeShop->products()->orderBy('type', 'ascr')->get();
@@ -171,18 +176,22 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, $coffeeShopId)
+    public function store($coffeeShopId, Request $request)
     {
         $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
-        $productIds = $request->input('products');
-        $sizes      = $request->input('productSizes');
+        $productIds = Request::input('products');
+        $sizes      = Request::input('productSizes');
 
         $order                 = new Order;
         $order->user_id        = current_user()->id;
         $order->coffee_shop_id = $coffeeShopId;
-        $order->make_on_arriving = $request->has('make_on_arriving');
-
-        $order->pickup_time = $request->input('time');
+        $time = Request::input('time');
+        if ($time == 'onarrival') {
+            $order->make_on_arriving = 1;
+            $order->pickup_time = 'Make On Arrival';
+        } else {
+            $order->pickup_time = Request::input('time');
+        }
 
         $lines   = [];
         foreach ($productIds as $i => $productId) {
@@ -251,7 +260,7 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function checkout(Request $request, $coffeeShopId, $orderId)
+    public function checkout( $coffeeShopId, $orderId)
     {
         $user  = current_user();
         $order = Order::find($orderId);
@@ -265,7 +274,7 @@ class OrdersController extends Controller
         if ( ! $user->hasStripeId()) {
             try {
                 $gateway  = new StripeGateway($user);
-                $customer = $gateway->createStripeCustomer($request->input('stripeToken'));
+                $customer = $gateway->createStripeCustomer(Request::input('stripeToken'));
             } catch (Card $e) {
                 return view('coffee_shop.order.review', [
                     'order'      => $order,
@@ -278,8 +287,8 @@ class OrdersController extends Controller
 
             $user->setStripeId($customer->id);
             $user->save();
-        } elseif ($request->has('stripeToken')) {
-            $user->updateCard($request->input('stripeToken'));
+        } elseif (Request::has('stripeToken')) {
+            $user->updateCard(Request::input('stripeToken'));
         }
 
         $previous = $user->transactions()->where('charged', '=', false)->sum('amount');
@@ -388,8 +397,7 @@ class OrdersController extends Controller
                     return $token->token;
                 })->all(),
                 'notification' => [
-                    'alert'   => 'You have a new order! Pickup time: ' .
-                                 (new Carbon($order->pickup_time))->format('H:i'),
+                    'alert'   => 'You have a new order! Pickup time: ',
                     'android' => [
                         'payload' => $payload = [
                             'orderId' => $order->id,

@@ -58,6 +58,12 @@ class GalleryImagesController extends Controller
     {
         $coffeeShop = $this->coffeeShopRepository->find($id);
 
+        $images = $coffeeShop->gallery()->get();
+
+        if(count($images) >= 4) {
+            exit;
+        }
+
         $file = $request->file('image');
         if ($file->isValid()) {
             $destinationPath = $coffeeShop->getUploadPath();

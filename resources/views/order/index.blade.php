@@ -5,9 +5,10 @@
 @stop
 
 @section('content')
+    {{ current_user()->isOwner() }}
     <div class="{{ current_user()->isOwner() ? 'container-fluid' : 'container main-content-padded' }}">
-        @if(current_user()->isOwner())
-            @include('dashboard._header')
+        @if(current_user()->isOwner() )
+          
         @else
             <div class="row">
                 <div class="col-xs-12">

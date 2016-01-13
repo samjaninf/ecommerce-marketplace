@@ -100,6 +100,7 @@ class EloquentProductRepository implements ProductRepository
 
         $product->name = $input->get('name');
         $product->type = $input->get('type');
+        $product->status = $input->get('status');
 
         $product->load('types');
 

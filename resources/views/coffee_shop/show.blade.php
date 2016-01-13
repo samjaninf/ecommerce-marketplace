@@ -104,7 +104,7 @@
                                 @foreach ( $times as $string => $time )
                                     <option value="{{ $time }}">{{ $string }}</option>
                                 @endforeach
-                                    <option value="{{old('time', $order->time->format('H:i'))}}">Make when I arrive</option>
+                                    <option value="onarrival">Make when I arrive</option>
                                     <option id="custom-time-value" value="custom">Custom time</option>
                             </select>
                             <input class="form-control" type="text" id="custom-time" data-field="time" style="cursor:pointer; margin-top: 10px" value="{{old('time', $order->time->format('H:i'))}}  ">
@@ -281,8 +281,8 @@
                         <div class="col-xs-12">
                             <h4>Our latest images</h4>
                         </div>
-                        @foreach ( $images as $c => $image)                           
-                            <div class="col-xs-12 col-sm-6 image-{{$c}}">
+                        @foreach ( $images as $c => $image)
+                            <div class="col-xs-12 col-sm-6 col-md-3 image-{{$c}}">
                                 <div style="overflow:hidden;">
                                     <a href="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}" data-lightbox="gallery">
                                         <img width="100%" src="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}">

@@ -44,11 +44,29 @@
                     {{ Session::has('offer-used') ? display_offer(Session::get('offer-used')) : "" }}
                 </p>
 
-                <h4>Pickup time: {{$order->pickup_time}}</h4>
+                @if ( $order->make_on_arriving == 1)
+                    <h4>Make On Arrival</h4>
+                @else
+                    <h4>Pickup time: {{$order->pickup_time}}</h4>
+                @endif
 
                 <p>Tweet about this order and you will get 5 KB points! How cool is that?</p>
                 <a href="https://twitter.com/share" data-size="large" class="twitter-share-button" data-count="none" data-url="https://koolbeans.co.uk/" data-text="Just ordered a coffee from {{ $order->coffee_shop->name }} using @KoolBeansUK!">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <script>       window.twttr = (function (d, s, id) {
+            var t, js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            return window.twttr || (t = {
+                _e: [],
+                ready: function (f) {
+                    t._e.push(f)
+                }
+            });
+        }(document, "script", "twitter-wjs"));
+                </script>
             </div>
         </div>
     </div>
@@ -56,14 +74,21 @@
 
 @section('scripts')
     <script>
-        (function () {
+            $('.twitter-share-button').hide();
+       
             function handleTweetEvent(event){
                 if (event) {
                     $.ajax('{{ route('order.tweet', $order->id) }}');
                     $('.twitter-share-button').hide();
                 }
             }
-            twttr.events.bind('tweet', handleTweetEvent);
-        })()
+            setTimeout(function () {
+                $('.twitter-share-button').show();
+                twttr.events.bind('click', function(e) {
+                    
+                    handleTweetEvent(e);
+                });
+            }, 1500);
+
     </script>
 @stop

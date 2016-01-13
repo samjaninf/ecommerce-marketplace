@@ -23,7 +23,7 @@
             <div class="col-xs-12">
                 <ul class="list-unstyled gallery">
                     @forelse($gallery as $i => $image)
-                        <li>
+                        <li class="cf-images">
                             <img src="{{$coffeeShop->getUploadUrl()}}/{{$image->image}}" alt="{{$image->image}}">
                         </li>
                         <li>
@@ -48,7 +48,7 @@
                     @endforelse
                     <li class="text-center">
                         <a href="{{ route('coffee-shop.gallery.create', ['coffee_shop' => $coffeeShop]) }}"
-                           class="btn btn-primary">
+                           class="btn btn-primary add-images">
                             Add image
                         </a>
                     </li>

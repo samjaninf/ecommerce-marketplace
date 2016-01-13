@@ -26,6 +26,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-sm-offset-2 col-md-offset-2 col-lg-offset-3 order-page" id="order-inner">
+
                     <div id="error-message" style="display: none">
                         <div style="padding: 5px;">
                             <div id="inner-message" class="alert alert-danger">
@@ -43,14 +44,23 @@
                             </div>
                             <div class="col-xs-4 text-right">
                                 <?php $total = $total + $line->price; ?>
-                                £{{$line->price /100 }}
+                                £{{ number_format((float)$line->price / 100, 2, '.', '') }}
                             </div>
                         </div>
                     @endforeach
                     <div class="row order-total">
-                        <div class="col-xs-12 text-right">
-                            <p>Pickup time: {{ $order->pickup_time }}</p>
-                            <h3>Total: £{{ $total / 100 }}</h3>
+                        <div class="col-xs-4">
+                            <a class="btn btn-primary" href="{{ URL::previous() }}">
+                                Amend <span class="hidden-xs">Order</span>
+                            </a>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            @if ($order->make_on_arriving != 0)
+                                <p>Make On Arrival</p>
+                            @else 
+                                <p>Pickup time: {{ $order->pickup_time }}</p>
+                            @endif
+                            <h3>Total: £{{ number_format((float)$total / 100, 2, '.', '') }}</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -158,7 +168,7 @@
                                     >
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                                 <button class="btn btn-success col-xs-7" style="margin: 10px;" type="submit">Submit Payment</button>
-                                <a href="#" class="btn btn-default col-xs-4 col-xs-offset-1" style="margin: 10px;" id="changeCard">Change card</a>
+                                <a href="#" class="btn btn-default col-xs-4 col-xs-offset-1" style="margin: 10px;" id="changeCard">Change <span class="hidden-xs">card</span></a>
                             </form>
                         </div>
                     </div>

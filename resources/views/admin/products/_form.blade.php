@@ -55,5 +55,5 @@
         <button id="add-type-trigger" class="btn btn-default" style="margin-top: -1px">Add</button>
     </div>
 </div>
-
+<input type="hidden" name="status" id="status" value="accepted">
 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">

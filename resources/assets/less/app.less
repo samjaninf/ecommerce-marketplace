@@ -49,25 +49,35 @@ textarea {
 }
 
 #content {
+  .list-your-shop-overlay {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: rgba(0,0,0,0.5);
+  }
   #coffee-shop-gallery {
     padding-bottom: 20px;
     img {
       max-height: 200px;
+      display:block;
     }
     @media(max-width: @screen-md-min) {
       img {
         max-height: 400px;
       }
     }
-    .image-1, .image-2, .image-3 {
-      @media(max-width: @screen-sm-min) {
+    image-1, .image-2, .image-3 {
+      @media (min-width: @screen-xs-min) {
         display: none;
       }
     .image-2, .image-3 {
-      @media (max-width: @screen-sm-max) {
+      @media (min-width: @screen-xs-max) and (max-width: @screen-md-min) {
         display: none;
       }
     }
+
     }
   }
   .signup-header {
@@ -110,14 +120,6 @@ textarea {
     color: #FFF;
     padding: 35px 0px;
     position: relative;
-    .list-your-shop-overlay {
-      position: absolute;
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      background: rgba(0,0,0,0.5);
-    }
     h3 {
       font-weight: 300;
       font-style: italic;
@@ -330,6 +332,7 @@ textarea {
 }
 
 #order-inner {
+
   select, input {
     background:#f8f8f8;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -436,7 +439,7 @@ textarea {
   }
   .banner-form {
     width: 80%;
-    @media (max-width: @screen-sm-max) {
+    @media (min-width: @screen-lg-min) {
       width: 100%;
     }
   }
@@ -449,7 +452,7 @@ textarea {
     }
     #homequery {
       width: 80%;
-      @media (max-width: @screen-xs-max) {
+      @media (max-width: @screen-lg-min){
         width: 100%;
         border-radius: 0px;
       }

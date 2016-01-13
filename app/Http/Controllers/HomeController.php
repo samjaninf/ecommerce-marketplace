@@ -30,7 +30,19 @@ class HomeController extends Controller
         ];
 
         $user = current_user();
-
+        $id         = $user->id;
+        $sql        = <<<SQL
+SELECT DATE_FORMAT(orders.created_at, '%M %Y') as actual_date, SUM(price) as price
+FROM coffee_shops
+JOIN orders
+  ON orders.coffee_shop_id = coffee_shops.id
+WHERE coffee_shops.user_id = $id
+AND paid = true
+GROUP BY actual_date
+ORDER BY actual_date DESC
+LIMIT 1
+SQL;
+        $sales  = \DB::connection()->select($sql);
         $message = [];
         if ($user->isOwner()) {
             if ($user->hasValidCoffeeShop()) {
@@ -40,6 +52,7 @@ class HomeController extends Controller
                     'coffeeShop' => $user->coffee_shop,
                     'images'     => $images,
                     'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+                    'sales'      => $sales,
                     'orders'     => $user->coffee_shop->orders()
                                                       ->where('paid', true)
                                                       ->where('status', '!=', 'collected')
@@ -75,7 +88,7 @@ RAW
             ->limit(4)
             ->get();
 
-        return view('home', compact('orders'))->with('messages', $message)->with('drinks', $drinks)->with('favourite', $user->favourite_products)->with('user', $user);
+        return view('home', compact('orders'))->with('sales', $reporting)->with('messages', $message)->with('drinks', $drinks)->with('favourite', $user->favourite_products)->with('user', $user);
     }
 
     /**
