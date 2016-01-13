@@ -271,6 +271,7 @@ class OrdersController extends Controller
 
         $coffeeShop = $this->coffeeShopRepository->find($coffeeShopId);
 
+
         if ( ! $user->hasStripeId()) {
             try {
                 $gateway  = new StripeGateway($user);
@@ -293,6 +294,13 @@ class OrdersController extends Controller
 
         $previous = $user->transactions()->where('charged', '=', false)->sum('amount');
         $amount   = $order->price;
+
+        \Mail::send('emails.order_received',
+            ['coffeeShop' => $coffeeShop, 'user' => current_user(), 'order' => $order],
+            function (Message $m) use ($coffeeShop) {
+                $m->to($coffeeShop->user->email, $coffeeShop->user->name)
+                    ->subject('You have received an order!');
+            });
 
         if ($amount + $previous > 1500) {
             try {
@@ -383,6 +391,7 @@ class OrdersController extends Controller
             function (Message $m) use ($user) {
                 $m->to($user->email, $user->name)->subject('Your order has been sent!');
             });
+
 
         $tokens = $user->mobile_tokens;
         if ($tokens->isEmpty()) {

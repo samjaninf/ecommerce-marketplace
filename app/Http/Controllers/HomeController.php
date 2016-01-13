@@ -88,7 +88,7 @@ RAW
             ->limit(4)
             ->get();
 
-        return view('home', compact('orders'))->with('sales', $reporting)->with('messages', $message)->with('drinks', $drinks)->with('favourite', $user->favourite_products)->with('user', $user);
+        return view('home', compact('orders'))->with('sales', $sales)->with('messages', $message)->with('drinks', $drinks)->with('favourite', $user->favourite_products)->with('user', $user);
     }
 
     /**

@@ -40,7 +40,7 @@
 	                            <td class="mcnImageContent" style="padding-right: 0px; padding-left: 0px; padding-top: 0; padding-bottom: 0; text-align:center;" valign="top">
 	                                
 	                                    
-	                                        <img alt="" src="https://gallery.mailchimp.com/0703726b93d229eadd93c6ffc/images/51a7ca98-4678-4f62-bf26-a8e24d0078dc.jpg" style="max-width:940px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage" align="middle" width="600">
+	                                        <img alt="" src="https://gallery.mailchimp.com/0703726b93d229eadd93c6ffc/images/2ec5f930-4d03-4c9a-b15d-130528b51015.png" style="max-width:940px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage" align="middle" width="600">
 	                                    
 	                                
 	                            </td>
@@ -49,7 +49,7 @@
 	                </td>
 	            </tr>
 	    </tbody>
-	</table><table class="mcnBoxedTextBlock" border="0" cellpadding="0" cellspacing="0" style="width: 600px; margin: 0 auto;">
+	</table><table class="mcnBoxedTextBlock" style="min-width:100%;" border="0" cellpadding="0" cellspacing="0" width="100%">
 	    <!--[if gte mso 9]>
 		<table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
 		<![endif]-->
@@ -68,12 +68,27 @@
 	                            <table class="mcnTextContentContainer" style="min-width: 100% ! important;background-color: #2480A5;" border="0" cellpadding="18" cellspacing="0" width="100%">
 	                                <tbody><tr>
 	                                    <td style="color: #F2F2F2;font-family: Helvetica;font-size: 14px;font-weight: bold;text-align: left;" class="mcnTextContent" valign="top">
-	                                        <span style="font-size:15px"><span style="font-family:trebuchet ms,lucida grande,lucida sans unicode,lucida sans,tahoma,sans-serif">Hey {{ $user->name }}<br>
-	<br>
-	Thanks for registering with KoolBeans. Order ahead from our registered coffee shops across the UK.<br>
-	<br>
-	<a href="http://koolbeans.co.uk/" target="_blank" title="KoolBeans.co.uk">Click here to grab a coffee</a><br>
-	<br>
-	from the<br>
-	KoolBeans team
+	                                        <span style="font-size:15px"><span style="font-family:trebuchet ms,lucida grande,lucida sans unicode,lucida sans,tahoma,sans-serif">
+												{{ $coffeeShop->name }} You have received an order<br>
+												<br>order id: {{ $order->id }}
+												<br>Pickup Time: {{ $order->pickup_time }}
+												<br>{{ $user->name }}<br>
+												Order Details:
+												<table>
+												@foreach($order->order_lines as $line)
+													<tr>
+														<td>
+															{{$line->product->type == 'drink' ? $coffeeShop->getSizeDisplayName($line->size) : ''}}
+															{{$coffeeShop->getNameFor($line->product)}}
+														</td>
+														<td>£{{ number_format($line->price / 100, 2, '.', ',') }}</td>
+													</tr>
+												@endforeach
+												</table>
+												<br>Price: {{ number_format($order->price / 100, 2, '.', ',') }}<br><br>
+
+												<a href="http://koolbeans.co.uk/" target="_blank" title="KoolBeans.co.uk">Log in to view the order</a><br>
+												<br>
+												from the<br>
+												KoolBeans team
 @stop

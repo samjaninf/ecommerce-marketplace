@@ -40,7 +40,7 @@
 	                            <td class="mcnImageContent" style="padding-right: 0px; padding-left: 0px; padding-top: 0; padding-bottom: 0; text-align:center;" valign="top">
 	                                
 	                                    
-	                                        <img alt="" src="https://gallery.mailchimp.com/0703726b93d229eadd93c6ffc/images/51a7ca98-4678-4f62-bf26-a8e24d0078dc.jpg" style="max-width:940px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage" align="middle" width="600">
+	                                        <img alt="" src="https://gallery.mailchimp.com/0703726b93d229eadd93c6ffc/images/0cb286aa-94f5-406d-965c-9b9893053616.png" style="max-width:940px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage" align="middle" width="600">
 	                                    
 	                                
 	                            </td>
@@ -49,7 +49,7 @@
 	                </td>
 	            </tr>
 	    </tbody>
-	</table><table class="mcnBoxedTextBlock" border="0" cellpadding="0" cellspacing="0" style="width: 600px; margin: 0 auto;">
+	</table><table class="mcnBoxedTextBlock" style="min-width:100%;" border="0" cellpadding="0" cellspacing="0" width="100%">
 	    <!--[if gte mso 9]>
 		<table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
 		<![endif]-->
@@ -68,12 +68,14 @@
 	                            <table class="mcnTextContentContainer" style="min-width: 100% ! important;background-color: #2480A5;" border="0" cellpadding="18" cellspacing="0" width="100%">
 	                                <tbody><tr>
 	                                    <td style="color: #F2F2F2;font-family: Helvetica;font-size: 14px;font-weight: bold;text-align: left;" class="mcnTextContent" valign="top">
-	                                        <span style="font-size:15px"><span style="font-family:trebuchet ms,lucida grande,lucida sans unicode,lucida sans,tahoma,sans-serif">Hey {{ $user->name }}<br>
+	                                        <span style="font-size:15px"><span style="font-family:trebuchet ms,lucida grande,lucida sans unicode,lucida sans,tahoma,sans-serif">
+	Dear {{ $user->name }},
+	<br><br>
+	We regret to inform you that your coffee shop registration hasn't been approved at this time.<br>
 	<br>
-	Thanks for registering with KoolBeans. Order ahead from our registered coffee shops across the UK.<br>
-	<br>
-	<a href="http://koolbeans.co.uk/" target="_blank" title="KoolBeans.co.uk">Click here to grab a coffee</a><br>
-	<br>
+	This could happen for a number of reasons. Please check the criteria within our <a href="http://koolbeans.co.uk/coffee-shop-contract" target="_blank" title="Coffee Shop Contract">Coffee Shop Contract</a><br>
+	<br> 
+	If you would like to speak to us about this decision, please contact us by sending an email to <a href="mailto:support@koolbeans.co.uk" target="_blank" title="support@koolbeans.co.uk">support@koolbeans.co.uk</a><br><br>
 	from the<br>
 	KoolBeans team
 @stop

@@ -166,32 +166,39 @@
                                     </div>
                                 @endforeach
                             @else
-                                <label class="row full-width" style="margin-top: 10px">
-                                    <div style="padding-left:0px; font-weight:400">
-                                        <div class="col-xs-6">
-                                            Drink:
-                                        </div>
-                                        <div class="col-xs-6">
-                                            Size:
-                                        </div>
+
+                                   <div class="row products-copy full-width" style="margin-top: 10px">
+                                        <span class="col-xs-12 col-sm-6">
+                                            <label style="width: 100%;">
+                                                <select id="product-drink-[0]" class="form-control count-product choose-product-select">
+                                                    @foreach($products as $i => $product)
+                                                        @if($coffeeShop->hasActivated($product))
+                                                            @if($product->type == 'drink')
+                                                                <option class="drink-option" value="{{ $product->id }}" data-type="{{ $product->type }} @if($i == 0) selected @endif">
+                                                                    {{ $coffeeShop->getNameFor($product) }}
+                                                                </option>
+                                                            @else
+                                                                <option class="food-option" value="{{ $product->id }}" data-type="{{ $product->type }}">
+                                                                    {{ $coffeeShop->getNameFor($product) }}
+                                                                </option>
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </label>
+                                        </span>
+                                        <span class="select col-xs-12 col-sm-5">
+                                            <label style="width: 100%;">
+                                                <span class="sizes-select">
+
+                                                </span>
+                                            </label>
+                                        </span>
+                                        <span class="col-xs-12 col-sm-1">
+                                            <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-0">×</a>
+                                        </span>
                                     </div>
-                                    <span class="col-xs-12 col-sm-6">
-                                        <select id="product-0" name="products[0]" class="form-control choose-product-select">
-                                            <option value=""></option>
-                                            @foreach($products as $product)
-                                                <option value="{{ $product->id }}" data-type="{{ $product->type }}">
-                                                    {{ $coffeeShop->getNameFor($product) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </span>
-                                    <span class="col-xs-12 col-sm-5">
-                                        <span></span>
-                                    </span>
-                                    <span class="col-xs-12 col-sm-1">
-                                        <a href="#" class="btn btn-danger remove-product form-control" id="remove-product-0">×</a>
-                                    </span>
-                                </label>
+
                             @endif
                             <a href="#" class="row btn btn-primary" id="add-product">Add Drink</a>
                         </div>

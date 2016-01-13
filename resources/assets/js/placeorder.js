@@ -31,6 +31,7 @@
 		if(window.products) {
 			
 			window.products.forEach( function (product) {
+				console.log(productName);
 				//get the selected product name and create select option for sizes
 				if ( product.name.replace(/\s/g, '') == productName) {
 					//get create option for sizes for d.replace(/\s/g, ''
@@ -42,6 +43,7 @@
 							option = '<select name="productSizes[' + that.attr('name').replace(/\D/g, '') + ']" class="choose-product-select count-size">';
 						} else {
 							option = '<select name="productSizes[0]" class="choose-product-select count-size">';
+
 						}
 
 						//type

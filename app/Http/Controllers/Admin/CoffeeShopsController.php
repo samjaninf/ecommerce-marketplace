@@ -53,6 +53,12 @@ class CoffeeShopsController extends Controller
             });
         }
 
+        if ($status === 'declined') {
+            \Mail::send('emails.coffeeshop_declined', ['user' => $coffeeShop->user], function (Message $m) use ($coffeeShop) {
+                $m->to($coffeeShop->user->email, $coffeeShop->name)
+                  ->subject('Your shop has been declined!');
+            });
+        }
         if ($status === 'requested') {
             return redirect()
                 ->back()
