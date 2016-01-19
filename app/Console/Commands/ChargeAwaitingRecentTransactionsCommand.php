@@ -51,10 +51,11 @@ class ChargeAwaitingRecentTransactionsCommand extends Command
             $user             = null;
             $saved            = null;
             foreach ($transactions as $transaction) {
-                echo $transaction->id . PHP_EOL;
-                if ($userId != -1 && $userId !== $transaction->user_id) {
-                    $charge = Charge::retrieve($stripe_charge_id);
-                    $charge->capture(['amount' => $amount]);
+     
+                    echo $transaction->stripe_charge_id;
+                    $charge1 = Charge::retrieve($transaction->stripe_charge_id);
+
+                    echo $charge1->capture();
 
                     $saved->charged = true;
                     $saved->save();
@@ -71,8 +72,7 @@ class ChargeAwaitingRecentTransactionsCommand extends Command
                     ], function (Message $m) use ($user) {
                         $m->to($user->email, $user->name)->subject('You have been charged.');
                     });
-                }
-
+                
                 if ($transaction->stripe_charge_id) {
                     $currentDate = Carbon::now();
                     if ($currentDate->diffInDays($transaction->created_at) < 6) {
@@ -115,8 +115,9 @@ class ChargeAwaitingRecentTransactionsCommand extends Command
 
             return 0;
         } catch (\Exception $e) {
+            echo $e;
             \Mail::send('emails.FAILURE', [], function (Message $m) {
-                $m->to('contact@thomasruiz.eu');
+                $m->to('gouldmatt99@hotmail.com');
             });
         }
     }

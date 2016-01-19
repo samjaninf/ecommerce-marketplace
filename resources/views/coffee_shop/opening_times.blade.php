@@ -7,7 +7,7 @@
                 <h1>
                     Set your opening times
                     <span id="page-actions">
-                        <a href="{{ route('my-shop') }}" class="btn btn-primary">Your shop</a>
+                        <a href="{{ route('my.profile') }}" class="btn btn-primary">Your Profile</a>
                     </span>
                 </h1>
             </div>

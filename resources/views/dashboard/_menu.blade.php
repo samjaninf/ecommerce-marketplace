@@ -12,6 +12,11 @@
        class="list-group-item">Your Menu</a>
     <a href="{{ route('current-orders') }}" class="list-group-item">Current Orders</a>
     <a href="{{ route('reporting') }}" class="list-group-item">Reporting</a>
+    @if (current_user()->coffee_Shop)
+        <a href="{{ route('my.profile') }}" class="list-group-item">
+            Your Profile
+        </a>
+    @Endif
     <a href="{{ route('order.index', ['coffee_shop' => current_user()->coffee_shop]) }}" class="list-group-item">
         Order History
     </a>

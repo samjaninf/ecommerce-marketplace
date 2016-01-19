@@ -166,7 +166,7 @@ class CoffeeShopsController extends Controller
             $inTimes[$string] = $inTime;
         }
         $review = false;
-        if (empty(current_user()->id)) {
+        if (!empty(current_user()->id)) {
             $orders = $coffeeShop->orders()->where('paid', true)->get();
             foreach ($orders as $o) {
                     if ($o['user_id'] === current_user()->id) {

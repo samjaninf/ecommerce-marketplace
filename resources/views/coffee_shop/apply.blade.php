@@ -48,8 +48,8 @@
               <li>The full sales amount is paid to you every 14days less a small commission</li>
           </ul>
         </div>
-        <div class="col-xs-12">
-          <img style="width: 100%; padding: 10px 0px" src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
+        <div class="col-xs-12 text-center">
+          <img style="width: 100%; padding: 10px 0px; max-width: 800px;" src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
         </div>
       </div>
     </div>

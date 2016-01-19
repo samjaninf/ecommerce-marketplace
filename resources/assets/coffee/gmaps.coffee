@@ -21,87 +21,76 @@ initializeMaps = (container) ->
       elementType: "labels"
       stylers: [visibility: "off"]
     ]
- 
   draggable = container.classList.contains('draggable-marker')
-
   koolbeans.service = new google.maps.DirectionsService
-
   koolbeans.map = new google.maps.Map container, options
-
   koolbeans.display = new google.maps.DirectionsRenderer
     map: koolbeans.map
 
-  koolbeans.marker = new google.maps.Marker
-    draggable: draggable
-    map: koolbeans.map
-    anchorPoint: new google.maps.Point 0, -29
-
-  infoWindow = new google.maps.InfoWindow
-    content: '<b>Coffee</b>'
-
-  koolbeans.marker.addListener('click', (e) ->
-      infoWindow.open(koolbeans.map, koolbeans.marker)
-      getDirectionsToMarker koolbeans.service, koolbeans.display, koolbeans.marker
-  )
-  koolbeans.infoWindow = new google.maps.InfoWindow
-
   cs = document.querySelectorAll 'div[data-latitude]'
-
-  for cof in cs
-    addMarker cof.dataset.latitude, cof.dataset.longitude, cof.dataset.title, cof.dataset.id
-    
+  if cs.length > 0
+    console.log('yup');
+    for cof in cs
+      addMarker cof.dataset.latitude, cof.dataset.longitude, cof.dataset.title, cof.dataset.id
+  else
+    koolbeans.marker = new google.maps.Marker
+      draggable: draggable
+      map: koolbeans.map
+      anchorPoint: new google.maps.Point 0, -29
+    koolbeans.infoWindow = new google.maps.InfoWindow
   useGeoLocation koolbeans.map
 
-
 addMarker = (lat, lng, title, id) ->
-
   infoWindow = new google.maps.InfoWindow
-
     content: '<h3><a href="/coffee-shop/' + id + '">' + title + '</a></h3>'
 
   marker = new google.maps.Marker
-
     map: koolbeans.map
-
     position: new google.maps.LatLng lat, lng
-
     title: title
 
   marker.addListener('click', (e) ->
       infoWindow.open(koolbeans.map, marker)
-
       getDirectionsToMarker koolbeans.service, koolbeans.display, marker
   )
 
-  koolbeans.marker.setVisible(false)
+geoSuccess = (position) ->
+  console.log(position);
+  cs = document.querySelectorAll 'div[data-latitude]'
+  if cs[0] != undefined
+    location = new google.maps.LatLng(cs[0].dataset.latitude, cs[0].dataset.longitude)
+  else
+    location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+  centerMapOnLocation location
 
+geoError = (error) ->
+  console.log(error);
 
 useGeoLocation = () ->
-
-  navigator.geolocation.getCurrentPosition (position) ->
-    console.log('hmm');
-    cs = document.querySelectorAll 'div[data-latitude]'
-    if cs[0] != undefined
-      location = new google.maps.LatLng(cs[0].dataset.latitude, cs[0].dataset.longitude)
-    else
-      location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+  cs = document.querySelectorAll 'div[data-latitude]'
+  cs_single = document.querySelector 'div[data-position]'
+  if cs[0] != undefined
+    location = new google.maps.LatLng(cs[0].dataset.latitude, cs[0].dataset.longitude)
     centerMapOnLocation location
+  else if cs_single != null && cs_single != undefined
+    pos = cs_single.dataset.position.split ','
+    location = new google.maps.LatLng(pos[0], pos[1])
+    centerMapOnLocation location
+  else
+    timeout =
+      timeout: 5000
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, timeout)
 
 
 initializeAutoComplete = (locationField, map) ->
-
   autoComplete = new google.maps.places.Autocomplete locationField, { types: ['address'] }
-
-
   bindMapToAutoComplete autoComplete, map if map?
 
 
 bindMapToAutoComplete = (autoComplete, map) ->
-
   autoComplete.bindTo 'bounds', map
-
-
   google.maps.event.addListener autoComplete, 'place_changed', placeChanged(autoComplete)
+
 
 getDirectionsToMarker = (directionsService, directionsDisplay, marker) ->
   cp = document.getElementById 'my-current-location'
@@ -126,101 +115,58 @@ getDirectionsToMarker = (directionsService, directionsDisplay, marker) ->
       window.alert 'Directions failed because: ' + status
 
 placeChanged = (autoComplete) -> () ->
-
   hideMarkerAndWindow()
-
-
   place = autoComplete.getPlace()
-
   return if !place.geometry
-
-
   centerMapOn place
-
   openInfoWindow place, koolbeans.marker
-
   changeFormFields place
 
 
 hideMarkerAndWindow = () ->
-
   koolbeans.infoWindow.close();
-
   koolbeans.marker.setVisible(false);
 
 
 centerMapOn = (place) ->
-
   if place.geometry.viewport
-
     koolbeans.map.fitBounds place.geometry.viewport
-
     moveMarkerTo place.geometry.location
-
   else
-
     centerMapOnLocation place.geometry.location
 
-
 centerMapOnLocation = (location) ->
-
   koolbeans.map.setCenter location
-
   koolbeans.map.setZoom 17
-
   moveMarkerTo location
 
-
 moveMarkerTo = (position) ->
-
   koolbeans.marker.setPosition position
-
   koolbeans.marker.setVisible true
 
 
 openInfoWindow = (place, marker) ->
-
   address = [
-
     (place.address_components[0] && place.address_components[0].short_name || ''),
-
     (place.address_components[1] && place.address_components[1].short_name || ''),
-
     (place.address_components[2] && place.address_components[2].short_name || '')
-
   ].join(' ')
-
   koolbeans.infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-
   koolbeans.infoWindow.open(koolbeans.map, marker);
 
 
 changeFormFields = (place) ->
-
   for component in place.address_components
-
     if component.types.indexOf("administrative_area_level_2") != -1 or component.types.indexOf("administrative_area_level_1") != -1
-
       document.getElementById('county').setAttribute 'value', component.long_name
-
     if component.types.indexOf('postal_code') != -1
-
       document.getElementById('postal_code').setAttribute 'value', component.short_name
-
   document.getElementById('latitude-field').setAttribute 'value', place.geometry.location.lat()
-
   document.getElementById('longitude-field').setAttribute 'value', place.geometry.location.lng()
-
   document.getElementById('place-id-field').setAttribute 'value', place.place_id
 
-
 google.maps.event.addDomListener window, 'load', initialize if google?
-
-
 if koolbeans.marker?
-
   google.maps.event.addListener koolbeans.marker, 'dragend', ->
-
     document.getElementById("latitude-field").value = this.getPosition().lat();
-
     document.getElementById("longitude-field").value = this.getPosition().lng();

@@ -40,6 +40,46 @@ class WelcomeController extends Controller
      */
     public function index(CoffeeShopRepository $coffeeShops)
     {
+
+        if (isset($_GET['code'])) {
+          $code = $_GET['code'];
+
+          $token_request_body = array(
+            'grant_type' => 'authorization_code',
+            'client_id' => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L',
+            'code' => $code,
+            'client_secret' => 'sk_test_fNCMV9dZEwNvPs3wf2OBBohK'
+          );
+
+          $req = curl_init('https://connect.stripe.com/oauth/token');
+          curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($req, CURLOPT_POST, true );
+          curl_setopt($req, CURLOPT_POSTFIELDS, http_build_query($token_request_body));
+
+          // TODO: Additional error handling
+          $respCode = curl_getinfo($req, CURLINFO_HTTP_CODE);
+          $resp = json_decode(curl_exec($req), true);
+          curl_close($req);
+
+
+          $coffeeShop = CoffeeShop::where('user_id', current_user()->id)
+                                  ->update(['stripe_user_id' => $resp['stripe_user_id'], 
+                                            'stripe_access_token' => $resp['access_token'],
+                                            'stripe_scope' => $resp['scope'],
+                                            'stripe_refresh_token' => $resp['refresh_token'],
+                                            'stripe_livemode' => $resp['livemode'],
+                                            'stripe_publishable_key' => $resp['stripe_publishable_key']
+                                  ]);
+          $response = $resp;
+
+
+        } else if (isset($_GET['error'])) { // Error
+          $response = $_GET['error_description'];
+        } else {
+          $response = '';
+        }
+
+
         $featured    = array_fill(0, 7, null);
         $coffeeShops = $coffeeShops->getFeatured();
         foreach ($coffeeShops as $i => $coffeeShop) {
@@ -66,7 +106,8 @@ class WelcomeController extends Controller
             ->with('posts', $posts)
             ->with('offers', $offers->random(4))
             ->with('agent', $agent)
-            ->with('home', true);
+            ->with('home', true)
+            ->with('response', $response);
     }
 
     /**

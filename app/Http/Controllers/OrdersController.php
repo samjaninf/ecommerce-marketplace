@@ -292,19 +292,26 @@ class OrdersController extends Controller
             $user->updateCard(Request::input('stripeToken'));
         }
 
-        $previous = $user->transactions()->where('charged', '=', false)->sum('amount');
+        $previous = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->sum('amount');
         $amount   = $order->price;
 
         \Mail::send('emails.order_received',
             ['coffeeShop' => $coffeeShop, 'user' => current_user(), 'order' => $order],
             function (Message $m) use ($coffeeShop) {
-                $m->to($coffeeShop->user->email, $coffeeShop->user->name)
+                $m->to('matt@saowapan.com', $coffeeShop->user->name)
                     ->subject('You have received an order!');
             });
 
         if ($amount + $previous > 1500) {
             try {
-                if ( ! $user->charge($amount + $previous, ['currency' => 'gbp'])) {
+                if ( ! $user->charge($amount, array(
+                    'currency'         => 'gbp',
+                    'customer' => $user->stripe_id,
+                    'application_fee'  => number_format(($amount / 100) / 0.09, 0, '.', ''),
+                    'destination'      => $coffeeShop->stripe_user_id
+                ),
+                array('stripe_account'   => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L')
+            )) {
                     return view('coffee_shop.order.review', [
                         'order'      => $order,
                         'coffeeShop' => $coffeeShop,
@@ -323,8 +330,8 @@ class OrdersController extends Controller
                 ]);
             }
 
-            $user->transactions()->create(['amount' => $amount, 'charged' => true]);
-            $transactions = $user->transactions()->where('charged', '=', false)->get();
+            $user->transactions()->create(['amount' => $amount, 'charged' => true, 'coffee_shop_id' => $coffeeShopId]);
+            $transactions = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->get();
 
             $refund = 0;
             foreach ($transactions as $t) {
@@ -347,11 +354,19 @@ class OrdersController extends Controller
                 'refund'  => $refund / 100.,
                 'initial' => '15.00',
             ], function (Message $m) use ($user) {
-                $m->to($user->email, $user->name)->subject('You have been charged.');
+                $m->to('matt@saowapan.com', $user->name)->subject('You have been charged.');
             });
         } else {
             try {
-                if ( ! $previous && ! $charge = $user->charge(1500, ['currency' => 'gbp', 'capture' => false])) {
+                if ( ! $previous && ! $charge = $user->charge($amount, array(
+                    'currency'          => 'gbp',
+                    'capture'           => false,
+                    'customer'          => $user->stripe_id,
+                    'application_fee'   => number_format(($amount / 100) / 0.09, 0, '.', ''),
+                    'destination'       => $coffeeShop->stripe_user_id
+                ),
+                array('stripe_account'   => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L')
+            )) {
                     return view('coffee_shop.order.review', [
                         'order'      => $order,
                         'coffeeShop' => $coffeeShop,
@@ -374,6 +389,7 @@ class OrdersController extends Controller
                 'amount'           => $amount,
                 'charged'          => false,
                 'stripe_charge_id' => ( isset( $charge ) ? $charge['id'] : null ),
+                'coffee_shop_id'   => $coffeeShopId
             ]);
         }
 
@@ -389,7 +405,7 @@ class OrdersController extends Controller
         \Mail::send('emails.order_completed',
             ['user' => current_user(), 'order' => $order, 'coffeeShop' => $coffeeShop],
             function (Message $m) use ($user) {
-                $m->to($user->email, $user->name)->subject('Your order has been sent!');
+                $m->to('matt@saowapan.com', $user->name)->subject('Your order has been sent!');
             });
 
 
@@ -397,7 +413,7 @@ class OrdersController extends Controller
         if ($tokens->isEmpty()) {
             \Mail::send('emails.no_active_token_found', ['user' => $coffeeShop->user],
                 function (Message $m) use ($coffeeShop) {
-                    $m->to($coffeeShop->user->email, $coffeeShop->user->name)
+                    $m->to('matt@saowapan.com', $coffeeShop->user->name)
                       ->subject('Make sure to install the application');
                 });
         } else {

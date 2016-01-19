@@ -17,70 +17,84 @@
                         <h4><a class="btn btn-primary android" href="/app.apk?r={{ time() }}">Download the android application</a></h4>
                     </div>
                 </div>
-                @if($coffeeShop->views > 10)
+                @if ( $coffeeShop->views > 10)    
                     <div class="row">
                         <div class="col-xs-12">
                             <h4>You had {{ $coffeeShop->views }} visitors in total!</h4>
                         </div>
                         <div class="col-xs-12">
                             <h4>Your total sales for {{ $sales[0]->actual_date }} is £{{ number_format($sales [0]->price /100, 2, '.', ',') }}</h4>
+                        </div>
+                    </div>
+                @else
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2>Thanks for joining KoolBeans!</h2>
+                        </div>
                     </div>
                 @endif
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h2>Current orders</h2>
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Order #</th>
-                                <th>Order</th>
-                                <th>Name</th>
-                                <th>Collection time</th>
-                                <th>Order status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($orders as $order)
+                @if ($coffeeShop->stripe_user_id)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2>Current orders</h2>
+                            <table class="table table-hover">
+                                <thead>
                                 <tr>
-                                    <td>{{$order->id}}</td>
-                                    <td>
-                                        @foreach($order->order_lines as $line)
-                                            @if($line->product->type == 'drink')
-                                                {{ $coffeeShop->getSizeDisplayName($line->size) }}
-                                            @endif
-                                            {{ $coffeeShop->getNameFor($line->product) }}<br>
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        {{ $order->user->name }}
-                                    </td>
-                                    <td>
-                                        {{ $order->pickup_time }}
-                                    </td>
-                                    <td>
-                                        {{ $order->status }}
-                                        <a href="{{ route('next-order-status', [ $order ]) }}"
-                                           class="btn btn-success btn-xs pull-right">
-                                            Set as {{ $order->getNextStatus() }}
-                                        </a>
-                                    </td>
+                                    <th>Order #</th>
+                                    <th>Order</th>
+                                    <th>Name</th>
+                                    <th>Collection time</th>
+                                    <th>Order status</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>{{$order->id}}</td>
+                                        <td>
+                                            @foreach($order->order_lines as $line)
+                                                @if($line->product->type == 'drink')
+                                                    {{ $coffeeShop->getSizeDisplayName($line->size) }}
+                                                @endif
+                                                {{ $coffeeShop->getNameFor($line->product) }}<br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $order->user->name }}
+                                        </td>
+                                        <td>
+                                            {{ $order->pickup_time }}
+                                        </td>
+                                        <td>
+                                            {{ $order->status }}
+                                            <a href="{{ route('next-order-status', [ $order ]) }}"
+                                               class="btn btn-success btn-xs pull-right">
+                                                Set as {{ $order->getNextStatus() }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12">
+                            <h2>Most bought products</h2>
+                            <ul class="list-group">
+                                @foreach($mostBought as $product)
+                                    <li class="list-group-item">
+                                        {{$coffeeShop->getNameFor($coffeeShop->findProduct($product->product_id))}}:
+                                        {{$product->aggregate}} times
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
+                @else
                     <div class="col-xs-12">
-                        <h2>Most bought products</h2>
-                        <ul class="list-group">
-                            @foreach($mostBought as $product)
-                                <li class="list-group-item">
-                                    {{$coffeeShop->getNameFor($coffeeShop->findProduct($product->product_id))}}:
-                                    {{$product->aggregate}} times
-                                </li>
-                            @endforeach
-                        </ul>
+                        <h3 class="bg-danger text-warning" style="padding: 15px; font-size: 20px;">Hi {{ current_user()->name }}, Stripe has not been connected yet! Customers will be unable to purchase coffee online!</h3>
+                        <h6><a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L&scope=read_write">connect to stripe</a></h6>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>

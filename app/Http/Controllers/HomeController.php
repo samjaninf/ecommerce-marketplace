@@ -3,6 +3,7 @@
 
 use Koolbeans\Http\Requests;
 use Koolbeans\Http\Requests\UserRequest;
+use Koolbeans\Http\Requests\CoffeeShopUpdateRequest;
 
 class HomeController extends Controller
 {
@@ -71,10 +72,10 @@ RAW
             }
 
             $message = $user->coffee_shop->status === 'requested' ? [
-                'info' => 'Your coffee shop is not live yet on Koolbeans.' .
-                          'Please adjust your profile and Koolbeans will be in touch shortly!',
+                'info' => 'Your coffee shop is not live yet on Koolbeans. ' .
+                          'While you wait for us, you can adjust your profile below!',
             ] : [
-                'alert' => 'Your coffee shop has been denied. Please check the comment on <a href="' .
+                'alert' => 'Hi, sorry your coffee shop has been denied. Please check the comment on <a href="' .
                            route('coffee-shop.apply') . '">this page</a>, and feel free to apply again!',
             ];
         }
@@ -181,5 +182,45 @@ SQL;
         return view('home', compact('orders'))->with('drinks', $drinks)->with('favourite', $favourite)->with('name', $name)->with('email', $email)->with('twitter', $twitter);
     }
 
+    public function profile()
+    {
+      $user = current_user();
+      $coffee_shop = $user->coffee_shop;
 
+      $images     = $coffee_shop->gallery()->orderBy('position')->limit(3)->get();
+      return view('profile', [
+          'images'      => $images,
+          'firstImage'  => $images->isEmpty() ? null : $images[0]->image,
+          'coffeeShop'  => $coffee_shop
+        ]);
+    }
+
+    public function profileupdate(CoffeeShopUpdateRequest $request) {
+      $user = current_user();
+
+      $coffee_shop = $user->coffee_shop;
+
+      if ($request->input('name') != $coffee_shop->name) {
+        $coffee_shop->name = $request->input('name');
+      }
+
+      $coffee_shop->location = $request->input('location');
+      $coffee_shop->postal_code = $request->input('postal_code');
+      $coffee_shop->county = $request->input('county');
+      $coffee_shop->phone_number = $request->input('phone_number');
+      $coffee_shop->latitude = $request->input('latitude');
+      $coffee_shop->longitude = $request->input('longitude');
+      $coffee_shop->place_id = $request->input('place_id');
+      $coffee_shop->about = $request->input('about');
+      
+      $coffee_shop->save();
+
+      $images = $coffee_shop->gallery()->orderBy('position')->limit(3)->get();
+
+      return redirect()->back()->with( [
+          'coffeeShop' => $coffee_shop,
+          'images'     => $images,
+          'firstImage' => $images->isEmpty() ? null : $images[0]->image,
+        ]);
+    }
 }

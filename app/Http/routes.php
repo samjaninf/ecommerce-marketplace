@@ -42,6 +42,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
 
     Route::group(['middleware' => 'owner'], function () {
+        Route::resource('my.profile', 'HomeController', ['only' => ['profile', 'profileupdate']]);
+            Route::get('my-profile', 
+                ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
+            Route::post('my-profile', 
+                ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);
         Route::get('reporting', ['as' => 'reporting', 'uses' => 'HomeController@reporting']);
         Route::get('order/{order}/nextStatus', ['as' => 'next-order-status', 'uses' => 'OrdersController@nextStatus']);
         Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
@@ -65,11 +70,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('coffee-shop/{coffee_shop}/offer-update',
             ['as' => 'coffee-shop.offer-update', 'uses' => 'CoffeeShopsController@offerUpdate']);
 
+
+
         Route::get('my-shop', ['as' => 'my-shop', 'uses' => 'HomeController@index']);
         Route::get('publish-my-shop', ['as' => 'publish-my-shop', 'uses' => 'CoffeeShopsController@publish']);
         Route::resource('coffee-shop', 'CoffeeShopsController', ['except' => ['show', 'index']]);
         
         Route::get('coffee-shop/{coffee_shop}/order', ['as' => 'order.history', 'uses' => 'OrdersController@index']);
+
         Route::get('coffee-shop/opening-times',
             ['as' => 'coffee-shop.opening-times', 'uses' => 'CoffeeShopsController@openingTimes']);
         Route::post('coffee-shop/opening-times', ['uses' => 'CoffeeShopsController@updateOpeningTimes']);
