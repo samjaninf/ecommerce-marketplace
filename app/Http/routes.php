@@ -36,7 +36,7 @@ Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'Coff
 Route::resource('posts', 'PostsController');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('my.profile', 'HomeController', ['only' => ['profile', 'profileupdate']]);
+  
         Route::get('my-profile', 
             ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
         Route::post('my-profile',  
