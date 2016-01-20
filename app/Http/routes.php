@@ -33,13 +33,12 @@ Route::post('about', 'WelcomeController@updateAbout');
 Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
 Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 
+Route::group(['middleware' => 'auth'], function () {
 Route::resource('posts', 'PostsController');
         Route::get('my-profile', 
             ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
         Route::post('my-profile',  
-            ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);
-Route::group(['middleware' => 'auth'], function () {
-  
+            ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);  
 
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::post('home', ['as' => 'home.store', 'uses' => 'HomeController@store']);
