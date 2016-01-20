@@ -36,15 +36,15 @@ Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'Coff
 Route::resource('posts', 'PostsController');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('my.profile', 'HomeController', ['only' => ['profile', 'profileupdate']]);
+        Route::get('my-profile', 
+            ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
+        Route::post('my-profile',  
+            ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::post('home', ['as' => 'home.store', 'uses' => 'HomeController@store']);
 
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
-        Route::resource('my.profile', 'HomeController', ['only' => ['profile', 'profileupdate']]);
-            Route::get('my-profile', 
-                ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
-            Route::post('my-profile',  
-                ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);
     Route::group(['middleware' => 'owner'], function () {
 
         Route::get('reporting', ['as' => 'reporting', 'uses' => 'HomeController@reporting']);
