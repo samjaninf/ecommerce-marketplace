@@ -208,7 +208,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h2 class="text-center">Adjust your profile!</h2>
-                            <form class="form-horizontal" action="" method="post">
+                            <form class="form-horizontal" action="/my-profile" method="post">
                                 <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
                                     <label for="name" class="col-sm-2">Coffee shop name:</label>
 
