@@ -12,13 +12,6 @@
 @section('content')
     <div id="welcome">
         <div class="container-fluid" id="features">
-            @if (isset ($response))
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h4>{{ $response }}</h4>
-                    </div>
-                </div>
-            @endif
             @include('welcome._features')
         </div>
 

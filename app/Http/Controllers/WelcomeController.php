@@ -68,13 +68,13 @@ class WelcomeController extends Controller
                                             'stripe_livemode' => $resp['livemode'],
                                             'stripe_publishable_key' => $resp['stripe_publishable_key']
                                   ]);
-          $response = $_GET['code'];
+          $response = 'You have successfully connected with Stripe!';
 
 
         } else if (isset($_GET['error'])) { // Error
-          $response = $_GET['error_description'];
+          $response = 'Sorry, you\'ve not been able to connect with stripe!' . $_GET['error_description'];
         } else {
-          $response = '';
+          $response = 'You\'ve not been able to connect with stripe, please contact us!';
         }
 
 

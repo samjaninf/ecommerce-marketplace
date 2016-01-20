@@ -10,7 +10,9 @@
     <div id="splash-contents" class="container-fluid">
         <h1>Grab a coffee</h1>
         <h4>Order ahead from the best independent coffee shops</h4>
-
+          @if (isset ($response))
+            <h4>{{ $response }}</h4>
+          @endif
         <form class="form-inline" action="{{route('search')}}" method="post">
             <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
