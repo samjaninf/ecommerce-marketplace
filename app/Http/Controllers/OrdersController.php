@@ -302,25 +302,15 @@ class OrdersController extends Controller
                     ->subject('You have received an order!');
             });
 
-        if ($amount + $previous > 1500) {
-            try {
-                if ( ! $user->charge($amount, array(
-                    'currency'         => 'gbp',
-                    'customer' => $user->stripe_id,
-                    'application_fee'  => number_format(($amount / 100) / 0.09, 0, '.', ''),
-                    'destination'      => $coffeeShop->stripe_user_id
-                ),
-                array('stripe_account'   => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L')
+        try {
+            if ( ! $user->charge($amount, array(
+                'currency'         => 'gbp',
+                'customer' => $user->stripe_id,
+                'application_fee'  => number_format($amount * 0.09, 0, '.', ''),
+                'destination'      => $coffeeShop->stripe_user_id
+            ),
+            array('stripe_account'   => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L')
             )) {
-                    return view('coffee_shop.order.review', [
-                        'order'      => $order,
-                        'coffeeShop' => $coffeeShop,
-                    ])->with('messages', [
-                        'danger' => 'There was a problem during the authorization. ' .
-                                    'It should not happen unless you cannot afford your order. Please try again.',
-                    ]);
-                }
-            } catch (Card $e) {
                 return view('coffee_shop.order.review', [
                     'order'      => $order,
                     'coffeeShop' => $coffeeShop,
@@ -329,69 +319,42 @@ class OrdersController extends Controller
                                 'It should not happen unless you cannot afford your order. Please try again.',
                 ]);
             }
-
-            $user->transactions()->create(['amount' => $amount, 'charged' => true, 'coffee_shop_id' => $coffeeShopId]);
-            $transactions = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->get();
-
-            $refund = 0;
-            foreach ($transactions as $t) {
-                $stripe_charge_id = $t->stripe_charge_id;
-                if ($stripe_charge_id) {
-                    $charge = Charge::retrieve($stripe_charge_id);
-                    $charge->refunds->create();
-                }
-
-                $t->charged = true;
-                $t->save();
-                $refund += $t->amount;
-            }
-
-            $charged = true;
-
-            \Mail::send('emails.payment_charged', [
-                'user'    => current_user(),
-                'amount'  => $amount / 100.,
-                'refund'  => $refund / 100.,
-                'initial' => '15.00',
-            ], function (Message $m) use ($user) {
-                $m->to('matt@saowapan.com', $user->name)->subject('You have been charged.');
-            });
-        } else {
-            try {
-                if ( ! $previous && ! $charge = $user->charge($amount, array(
-                    'currency'          => 'gbp',
-                    'capture'           => false,
-                    'customer'          => $user->stripe_id,
-                    'application_fee'   => number_format(($amount / 100) / 0.09, 0, '.', ''),
-                    'destination'       => $coffeeShop->stripe_user_id
-                ),
-                array('stripe_account'   => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L')
-            )) {
-                    return view('coffee_shop.order.review', [
-                        'order'      => $order,
-                        'coffeeShop' => $coffeeShop,
-                    ])->with('messages', [
-                        'danger' => 'There was a problem during the authorization. ' .
-                                    'It should not happen unless you cannot afford your order. Please try again.',
-                    ]);
-                }
-            } catch (Card $e) {
-                return view('coffee_shop.order.review', [
-                    'order'      => $order,
-                    'coffeeShop' => $coffeeShop,
-                ])->with('messages', [
-                    'danger' => 'There was a problem during the authorization. ' .
-                                'It should not happen unless you cannot afford your order. Please try again.',
-                ]);
-            }
-
-            $user->transactions()->create([
-                'amount'           => $amount,
-                'charged'          => false,
-                'stripe_charge_id' => ( isset( $charge ) ? $charge['id'] : null ),
-                'coffee_shop_id'   => $coffeeShopId
+        } catch (Card $e) {
+            return view('coffee_shop.order.review', [
+                'order'      => $order,
+                'coffeeShop' => $coffeeShop,
+            ])->with('messages', [
+                'danger' => 'There was a problem during the authorization. ' .
+                            'It should not happen unless you cannot afford your order. Please try again.',
             ]);
         }
+
+        $user->transactions()->create(['amount' => $amount, 'charged' => true, 'coffee_shop_id' => $coffeeShopId]);
+        $transactions = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->get();
+
+        $refund = 0;
+        foreach ($transactions as $t) {
+            $stripe_charge_id = $t->stripe_charge_id;
+            if ($stripe_charge_id) {
+                $charge = Charge::retrieve($stripe_charge_id);
+                $charge->refunds->create();
+            }
+
+            $t->charged = true;
+            $t->save();
+            $refund += $t->amount;
+        }
+
+        $charged = true;
+
+        \Mail::send('emails.payment_charged', [
+            'user'    => current_user(),
+            'amount'  => $amount / 100.,
+            'refund'  => $refund / 100.,
+            'initial' => '15.00',
+        ], function (Message $m) use ($user) {
+            $m->to('matt@saowapan.com', $user->name)->subject('You have been charged.');
+        });
 
         $order->paid = true;
         $order->save();

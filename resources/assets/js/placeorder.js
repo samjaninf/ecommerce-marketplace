@@ -31,7 +31,6 @@
 		if(window.products) {
 			
 			window.products.forEach( function (product) {
-				console.log(productName);
 				//get the selected product name and create select option for sizes
 				if ( product.name.replace(/\s/g, '') == productName) {
 					//get create option for sizes for d.replace(/\s/g, ''
@@ -74,13 +73,16 @@
 						}
 						
 					} else {
+						console.log('mm');
 						if (that) {
+							console.log('n');
 							//food only uses the "sm" value, no sizes
-							that.parent().parent().siblings('.sizes-select').html('');
-							that.parent().parent().siblings('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
-						} else {
 							$('.sizes-select').html('');
-							$('.sizes-select').append('£' + priceToDecimal(product.pivot.sm));
+							$('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
+						} else {
+							console.log('y');
+							$('.sizes-select').html('');
+							$('.sizes-select').append('£');
 						}
 					}
 				}

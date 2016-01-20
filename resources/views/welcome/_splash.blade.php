@@ -9,7 +9,7 @@
     @endif
     <div id="splash-contents" class="container-fluid">
         <h1>Grab a coffee</h1>
-        <h4>Order ahead from the best independent and small chain coffee shops</h4>
+        <h4>Order ahead from the best independent coffee shops</h4>
 
         <form class="form-inline" action="{{route('search')}}" method="post">
             <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">
