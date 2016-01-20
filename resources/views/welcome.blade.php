@@ -1,3 +1,7 @@
+<pre>
+    {{ var_dump ($response) }}
+</pre>
+
 @extends('app')
 
 @section('page-title')

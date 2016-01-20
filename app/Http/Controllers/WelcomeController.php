@@ -107,7 +107,7 @@ class WelcomeController extends Controller
             ->with('offers', $offers->random(4))
             ->with('agent', $agent)
             ->with('home', true)
-            ->with('response', $response);
+            ->with('response', current_user());
     }
 
     /**
