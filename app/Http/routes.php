@@ -40,13 +40,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('home', ['as' => 'home.store', 'uses' => 'HomeController@store']);
 
     Route::get('apply-offer/{offer}', ['as' => 'apply-offer', 'uses' => 'OrdersController@applyOffer']);
-
-    Route::group(['middleware' => 'owner'], function () {
         Route::resource('my.profile', 'HomeController', ['only' => ['profile', 'profileupdate']]);
             Route::get('my-profile', 
                 ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
             Route::post('my-profile',  
                 ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);
+    Route::group(['middleware' => 'owner'], function () {
+
         Route::get('reporting', ['as' => 'reporting', 'uses' => 'HomeController@reporting']);
         Route::get('order/{order}/nextStatus', ['as' => 'next-order-status', 'uses' => 'OrdersController@nextStatus']);
         Route::get('coffee-shop/{coffee_shop}/gallery/{gallery}/up',
