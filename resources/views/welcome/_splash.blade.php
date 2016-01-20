@@ -10,7 +10,7 @@
     <div id="splash-contents" class="container-fluid text-center">
         <h1>Grab a coffee</h1>
         <h4>Order ahead from the best independent coffee shops</h4>
-          @if (isset ($response))
+          @if (isset ($response) && $response != '')
             <div class="alert alert-success" style="display: inline-block; padding-top: 5px;"><h3>{{ $response }}</h3></div>
           @endif
         <form class="form-inline" action="{{route('search')}}" method="post">
