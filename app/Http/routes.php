@@ -34,13 +34,13 @@ Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeS
 Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
 
 Route::resource('posts', 'PostsController');
-
-Route::group(['middleware' => 'auth'], function () {
-  
         Route::get('my-profile', 
             ['as' => 'my.profile', 'uses' => 'HomeController@profile']);
         Route::post('my-profile',  
             ['as' => 'my.profile.update', 'uses' => 'HomeController@profileupdate']);
+Route::group(['middleware' => 'auth'], function () {
+  
+
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::post('home', ['as' => 'home.store', 'uses' => 'HomeController@store']);
 
