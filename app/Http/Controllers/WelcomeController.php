@@ -40,7 +40,6 @@ class WelcomeController extends Controller
      */
     public function index(CoffeeShopRepository $coffeeShops)
     {
-
         if (isset($_GET['code'])) {
           $code = $_GET['code'];
 
@@ -69,7 +68,7 @@ class WelcomeController extends Controller
                                             'stripe_livemode' => $resp['livemode'],
                                             'stripe_publishable_key' => $resp['stripe_publishable_key']
                                   ]);
-          $response = $resp;
+          $response = $_GET['code'];
 
 
         } else if (isset($_GET['error'])) { // Error
