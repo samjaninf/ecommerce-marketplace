@@ -40,7 +40,7 @@ class WelcomeController extends Controller
      */
     public function index(CoffeeShopRepository $coffeeShops)
     {
-$user = '';
+$user = current_user();
         if (isset($_GET['code'])) {
           $code = $_GET['code'];
 
