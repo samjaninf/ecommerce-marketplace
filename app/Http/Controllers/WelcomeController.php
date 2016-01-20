@@ -62,7 +62,7 @@ class WelcomeController extends Controller
           curl_close($req);
 
 
-          $coffeeShop = CoffeeShop::where('user_id', current_user()->id)
+          $coffeeShop = CoffeeShop::where('user_id', 39)
                                   ->update(['stripe_user_id' => $resp['stripe_user_id'], 
                                             'stripe_access_token' => $resp['access_token'],
                                             'stripe_scope' => $resp['scope'],
