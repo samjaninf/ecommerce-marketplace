@@ -1,5 +1,7 @@
 <pre>
-    {{ var_dump ($response) }}
+    @if (isset($response))
+        {{ var_dump ($response) }}
+    @endif
 </pre>
 
 @extends('app')

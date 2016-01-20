@@ -40,7 +40,7 @@ class WelcomeController extends Controller
      */
     public function index(CoffeeShopRepository $coffeeShops)
     {
-
+$user = '';
         if (isset($_GET['code'])) {
           $code = $_GET['code'];
 
@@ -61,15 +61,15 @@ class WelcomeController extends Controller
           $resp = json_decode(curl_exec($req), true);
           curl_close($req);
 
-
-          $coffeeShop = CoffeeShop::where('user_id', current_user()->id)
-                                  ->update(['stripe_user_id' => $resp['stripe_user_id'], 
-                                            'stripe_access_token' => $resp['access_token'],
-                                            'stripe_scope' => $resp['scope'],
-                                            'stripe_refresh_token' => $resp['refresh_token'],
-                                            'stripe_livemode' => $resp['livemode'],
-                                            'stripe_publishable_key' => $resp['stripe_publishable_key']
-                                  ]);
+          $user = current_user();
+          // $coffeeShop = CoffeeShop::where('user_id', current_user()->id)
+          //                         ->update(['stripe_user_id' => $resp['stripe_user_id'], 
+          //                                   'stripe_access_token' => $resp['access_token'],
+          //                                   'stripe_scope' => $resp['scope'],
+          //                                   'stripe_refresh_token' => $resp['refresh_token'],
+          //                                   'stripe_livemode' => $resp['livemode'],
+          //                                   'stripe_publishable_key' => $resp['stripe_publishable_key']
+          //                         ]);
           $response = $resp;
 
 
@@ -107,7 +107,7 @@ class WelcomeController extends Controller
             ->with('offers', $offers->random(4))
             ->with('agent', $agent)
             ->with('home', true)
-            ->with('response', current_user());
+            ->with('response', $user);
     }
 
     /**
