@@ -11,7 +11,7 @@
         <h1>Grab a coffee</h1>
         <h4>Order ahead from the best independent coffee shops</h4>
           @if (isset ($response))
-            <h4>{{ $response }}</h4>
+            <div class="alert alert-success"><h3>{{ $response }}</h3></div>
           @endif
         <form class="form-inline" action="{{route('search')}}" method="post">
             <div class="form-group @if($errors->any()) {{$errors->has('query') ? 'has-error' : 'has-success'}} @endif">

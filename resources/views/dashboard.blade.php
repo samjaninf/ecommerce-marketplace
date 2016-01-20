@@ -91,8 +91,7 @@
                     </div>
                 @else
                     <div class="col-xs-12">
-                        <h3 class="bg-danger text-warning" style="padding: 15px; font-size: 20px;">Hi {{ current_user()->name }}, Stripe has not been connected yet! Customers will be unable to purchase coffee online!</h3>
-                        <h6><a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L&scope=read_write">connect to stripe</a></h6>
+                        <h2 class="bg-danger text-warning" style="padding: 15px; font-size: 20px;">Hi {{ current_user()->name }}, <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L&scope=read_write">Connect to stripe</a>. You will unable to process online orders without Stripe!</h2>
                     </div>
                 @endif
             </div>
