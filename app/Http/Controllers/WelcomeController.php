@@ -73,8 +73,6 @@ class WelcomeController extends Controller
 
         } else if (isset($_GET['error'])) { // Error
           $response = 'Sorry, you\'ve not been able to connect with stripe!' . $_GET['error_description'];
-        } else {
-          $response = 'You\'ve not been able to connect with stripe, please contact us!';
         }
 
 
