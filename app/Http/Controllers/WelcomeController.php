@@ -40,7 +40,7 @@ class WelcomeController extends Controller
      */
     public function index(CoffeeShopRepository $coffeeShops)
     {
-$user = current_user();
+
         if (isset($_GET['code'])) {
           $code = $_GET['code'];
 
@@ -61,15 +61,14 @@ $user = current_user();
           $resp = json_decode(curl_exec($req), true);
           curl_close($req);
 
-          $user = current_user();
-          // $coffeeShop = CoffeeShop::where('user_id', current_user()->id)
-          //                         ->update(['stripe_user_id' => $resp['stripe_user_id'], 
-          //                                   'stripe_access_token' => $resp['access_token'],
-          //                                   'stripe_scope' => $resp['scope'],
-          //                                   'stripe_refresh_token' => $resp['refresh_token'],
-          //                                   'stripe_livemode' => $resp['livemode'],
-          //                                   'stripe_publishable_key' => $resp['stripe_publishable_key']
-          //                         ]);
+          $coffeeShop = CoffeeShop::where('user_id', current_user()->id)
+                                  ->update(['stripe_user_id' => $resp['stripe_user_id'], 
+                                            'stripe_access_token' => $resp['access_token'],
+                                            'stripe_scope' => $resp['scope'],
+                                            'stripe_refresh_token' => $resp['refresh_token'],
+                                            'stripe_livemode' => $resp['livemode'],
+                                            'stripe_publishable_key' => $resp['stripe_publishable_key']
+                                  ]);
           $response = $resp;
 
 
@@ -106,8 +105,7 @@ $user = current_user();
             ->with('posts', $posts)
             ->with('offers', $offers->random(4))
             ->with('agent', $agent)
-            ->with('home', true)
-            ->with('response', $user);
+            ->with('home', true);
     }
 
     /**

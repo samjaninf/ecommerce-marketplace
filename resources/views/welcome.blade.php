@@ -1,9 +1,3 @@
-<pre>
-    @if (isset($response))
-        {{ var_dump ($response) }}
-    @endif
-</pre>
-
 @extends('app')
 
 @section('page-title')
