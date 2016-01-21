@@ -24,30 +24,34 @@
     </div>
   </div>
 </div>
+<div class="container-fluid" id="coffee-shop-benefits">
+    <div class="row row-eq-height text-center">
+        <div class="col-xs-12 col-sm-3">
+            <img src="/img/increase customers.png"/>
+            <h4>Your Shop Online</h4>
+            <p>Create your online coffee shop to match your business. Customise your page with photos, descriptions and menu</p>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <img src="/img/Increase sales.png"/>
+            <h4>New Customers</h4>
+            <p>Allow new customers to find and learn more about you</p>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <img src="/img/Customer icon 2.png"/>
+            <h4>No Hardware</h4>
+            <p>Set up and start receiving orders with just a smartphone, tablet or PC</p>
+        </div>
+        <div class="col-xs-12 col-sm-3 ">
+            <img src="/img/mobile review.png"/>
+            <h4>Supporting Independent</h4>
+            <p>Independents do it better and we support that wholeheartedly. We are exclusive to independents and local chains</p>
+        </div>
+    </div>
+</div>
 <div class="container-fluid" id="apply-whatwedo">
   <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12 col-sm-6" style="font-size: 17px;">
-          <h2 class="text-center">What We Do</h2>
-          <ul>
-              <li>Your Coffee Shop is online 24/7</li>
-              <li>Customers can browse and purchase from your store online</li>
-              <li>Payments all processed online</li>
-              <li>Integration into your normal service via our apps</li>
-              <li>We market your shop for you</li>
-          </ul>
-        </div>
-
-        <div class="col-xs-12 col-sm-6" style="font-size: 17px;">
-          <h2 class="text-center">How It Works</h2>
-          <ul>
-              <li>Upload your Coffee Shop info and photos, including your menu</li>
-              <li>Begin receiving orders  - Notifications are sent through real time to your store via a downloadable ios /android app or by email</li>
-              <li>Customers collect their order in store</li>
-              <li>The full sales amount is paid to you every 14days less a small commission</li>
-          </ul>
-        </div>
         <div class="col-xs-12 text-center">
           <img style="width: 100%; padding: 10px 0px; max-width: 800px;" src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
         </div>

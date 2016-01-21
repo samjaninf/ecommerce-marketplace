@@ -9,7 +9,7 @@
                     <i>{{ $coffeeShop->location }}</i>
                 </p>
                 @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
-                <div class="review hidden-sm hidden-xs">
+                <div class="review hidden-md hidden-sm hidden-xs">
                     {{ $coffeeShop->getBestReview() ? $coffeeShop->getBestReview()->pivot->review : null}}
                 </div>
                 <div class="actions">

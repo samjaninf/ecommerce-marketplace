@@ -70,13 +70,37 @@
         <div class="container-fluid are-you-a-coffee-shop">
 
             <div class="row">
-                    <div class="col-xs-12 list-your-shop-overlay">
-    </div>
+                <div class="col-xs-12 list-your-shop-overlay">
+                </div>
                 <div class="col-xs-offset-3 col-xs-6 own-a-coffee text-center">
                     <h2 class="text-center">Own or manage a coffee shop?</h2>
                     <div>
                         <a href="{{ route('coffee-shop.apply') }}" class="btn btn-primary" style="background: #FF9D3A; border: 0; font-size: 18px;">Learn More</a>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid benefits-of-joining">
+            <div class="row row-eq-height text-center">
+                <div class="col-xs-12 col-sm-3">
+                    <img src="/img/shop icon.png"/>
+                    <h4>Your Shop Online</h4>
+                    <p>Create your online coffee shop to match your business. Customise your page with photos, descriptions and menu</p>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <img src="/img/Customer icon.png"/>
+                    <h4>New Customers</h4>
+                    <p>Allow new customers to find and learn more about you</p>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <img src="/img/Order received icon.png"/>
+                    <h4>No Hardware</h4>
+                    <p>Set up and start receiving orders with just a smartphone, tablet or PC</p>
+                </div>
+                <div class="col-xs-12 col-sm-3 ">
+                    <img src="/img/Heart.png"/>
+                    <h4>Supporting Independent</h4>
+                    <p>Independents do it better and we support that wholeheartedly. We are exclusive to independents and local chains</p>
                 </div>
             </div>
         </div>
