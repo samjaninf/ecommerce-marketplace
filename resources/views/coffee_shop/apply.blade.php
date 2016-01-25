@@ -13,12 +13,8 @@
       <div class="row">
         <div class="col-xs-12 col-sm-offset-2 col-sm-8">
             <h1 class="text-center signup-header">
-              People are changing the way<br> they buy. So join them... 
+              Join KoolBeans & allow customers to discover your coffee shop & order ahead
             </h1>
-
-            <h3 class="text-center">
-                Joining the KoolBeans network of independent and small chain coffee shops is the easiest way to put your business online. We’ll have you listed in no time. 
-            </h3>
         </div>
       </div>
     </div>
@@ -28,23 +24,23 @@
     <div class="row row-eq-height text-center">
         <div class="col-xs-12 col-sm-3">
             <img src="/img/increase customers.png"/>
-            <h4>Your Shop Online</h4>
-            <p>Create your online coffee shop to match your business. Customise your page with photos, descriptions and menu</p>
+            <h4>More customers</h4>
+            <p>Ordering ahead allows you to serve more customers as orders and payments are taken in advance.</p>
         </div>
         <div class="col-xs-12 col-sm-3">
             <img src="/img/Increase sales.png"/>
-            <h4>New Customers</h4>
-            <p>Allow new customers to find and learn more about you</p>
+            <h4>Higher average speeds</h4>
+            <p>Online purchases have a higher average speed as customers take more time browsing your shop.</p>
         </div>
         <div class="col-xs-12 col-sm-3">
             <img src="/img/Customer icon 2.png"/>
-            <h4>No Hardware</h4>
-            <p>Set up and start receiving orders with just a smartphone, tablet or PC</p>
+            <h4>Customer satisfaction</h4>
+            <p>80% of coffee consumers would prefer to order ahead than lose out because of a large queue.</p>
         </div>
         <div class="col-xs-12 col-sm-3 ">
             <img src="/img/mobile review.png"/>
-            <h4>Supporting Independent</h4>
-            <p>Independents do it better and we support that wholeheartedly. We are exclusive to independents and local chains</p>
+            <h4>Trusted reviews</h4>
+            <p>Our service only allows reviews from customers who have actually bought from you.</p>
         </div>
     </div>
 </div>
@@ -54,6 +50,7 @@
       <div class="row">
         <div class="col-xs-12 text-center">
           <img style="width: 100%; padding: 10px 0px; max-width: 800px;" src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
+          <h1 style="border-bottom: 0px;">Full sales amount less fees paid directly to your account</h1>
         </div>
       </div>
     </div>
