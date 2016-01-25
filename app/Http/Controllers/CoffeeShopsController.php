@@ -65,7 +65,7 @@ class CoffeeShopsController extends Controller
 
         $shop = $this->coffeeShop->newInstance($request->except(['username', 'email', 'password']));
         $shop->user()->associate($user);
-        $shop->status = 'requested';
+        $shop->status = 'accepted';
         $shop->save();
 
         \Mail::send('emails.coffeeshop_registration', ['user' => current_user()], function (Message $m) use ($user) {
@@ -259,6 +259,9 @@ class CoffeeShopsController extends Controller
     {
         $coffeeShop = current_user()->coffee_shop;
         if ($coffeeShop->status != 'accepted') {
+            return redirect()->back();
+        }
+        if (!$coffeeShop->stripe_user_id) {
             return redirect()->back();
         }
 

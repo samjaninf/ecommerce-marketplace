@@ -29,8 +29,6 @@
                 <div class="col-xs-12 col-lg-6">
                     <h1 class="text-center">Update your profile!</h1>
 
-                    <h2><a target="_blank" href="{{ route('coffee-shop.opening-times') }}">Change your opening times</a></h2>
-
                     <form class="form-horizontal" action="{{ route('my.profile.update') }}" method="post">
 
                         <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">

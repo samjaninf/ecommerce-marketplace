@@ -33,7 +33,18 @@
                         </div>
                     </div>
                 @endif
+
                 @if ($coffeeShop->stripe_user_id)
+                    @if ($coffeeShop->status != 'published')
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>If you have finished your profile you can now publish your shop!</h3>
+                            </div>
+                            <div class="col-xs-12">
+                                <a href="{{ route('publish-my-shop') }}" class="btn btn-success">Publish your shop</a>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-xs-12">
                             <h2>Current orders</h2>
@@ -91,8 +102,11 @@
                     </div>
                 @else
                     <div class="col-xs-12">
-                        <h2 class="bg-danger text-warning" style="padding: 15px; font-size: 20px;">Hi {{ current_user()->name }}, <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L&scope=read_write">Connect to stripe</a>. You will unable to process online orders without Stripe!</h2>
+                        <h2 class="bg-danger text-warning" style="padding: 15px; font-size: 20px;">Hi {{ current_user()->name }}, <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L&scope=read_write">Connect to stripe</a>. You will be unable to publish your shop until stripe has been connected!</h2>
                     </div>
+                    <div class="col-xs-12">
+                        <h4>You can also <a href="{{ route('coffee-shop.gallery.index', ['coffee_shop' => $coffeeShop]) }}">add images</a>, <a target="_blank" href="{{ route('coffee-shop.opening-times') }}">set your opening times</a>, <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}">choose your menu</a> and <a href="{{ route('coffee-shop.show', ['coffeeshop' => $coffeeShop]) }}">Review your shop</a></h4>
+                    </div>           {{ $coffeeShop->status }}
                 @endif
             </div>
         </div>

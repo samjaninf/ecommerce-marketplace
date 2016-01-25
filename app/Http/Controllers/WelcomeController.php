@@ -68,6 +68,7 @@ class WelcomeController extends Controller
                                             'stripe_livemode' => $resp['livemode'],
                                             'stripe_publishable_key' => $resp['stripe_publishable_key']
                                   ]);
+
           $response = 'You have successfully connected with Stripe!';
 
 

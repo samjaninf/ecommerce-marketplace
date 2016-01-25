@@ -61,7 +61,7 @@
       <div class="col-md-12 col-lg-8">
          <h4 class="text-center">View our <a href="/signup-faq">FAQ's</a></h4>
       </div>
-      <div class="col-xs-4 hidden-md">
+      <div class="col-xs-4 hidden-md hidden-sm hidden-xs">
         <h4 class="text-center">Drag pin to your location!</h4>
       </div>
     </div>
@@ -243,7 +243,7 @@
         </div>
 
         <div class="col-lg-4 col-xs-12">
-            <div class="hidden-lg visible-md text-center">
+            <div class="hidden-lg visible-md visible-sm visible-xs text-center">
               <h4>Drag pin to your location!</h4>
             </div>
             <div id="maps-container" class="draggable-marker" @if(isset($position)) data-position="{{$position}}" @endif></div>
