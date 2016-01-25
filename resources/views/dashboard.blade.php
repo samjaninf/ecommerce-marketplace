@@ -106,7 +106,7 @@
                     </div>
                     <div class="col-xs-12">
                         <h4>You can also <a href="{{ route('coffee-shop.gallery.index', ['coffee_shop' => $coffeeShop]) }}">add images</a>, <a target="_blank" href="{{ route('coffee-shop.opening-times') }}">set your opening times</a>, <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}">choose your menu</a> and <a href="{{ route('coffee-shop.show', ['coffeeshop' => $coffeeShop]) }}">Review your shop</a></h4>
-                    </div>           {{ $coffeeShop->status }}
+                    </div>
                 @endif
             </div>
         </div>
