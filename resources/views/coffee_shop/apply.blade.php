@@ -29,8 +29,8 @@
         </div>
         <div class="col-xs-12 col-sm-3">
             <img src="/img/Increase sales.png"/>
-            <h4>Higher average speeds</h4>
-            <p>Online purchases have a higher average speed as customers take more time browsing your shop.</p>
+            <h4>Higher average spends</h4>
+            <p>Online purchases have a higher average spend as customers take more time browsing your shop.</p>
         </div>
         <div class="col-xs-12 col-sm-3">
             <img src="/img/Customer icon 2.png"/>

@@ -14,8 +14,7 @@
         </a>
     @Endif
     <a class="list-group-item" target="_blank" href="{{ route('coffee-shop.opening-times') }}">Opening times</a>
-    <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}"
-       class="list-group-item">Your Menu</a>
+    <a href="{{ route('coffee-shop.products.index', ['coffee_shop' => current_user()->coffee_shop]) }}" class="list-group-item">Your Menu</a>
     <a href="{{ route('current-orders') }}" class="list-group-item">Current Orders</a>
     <a href="{{ route('reporting') }}" class="list-group-item">Reporting</a>
     <a href="{{ route('order.index', ['coffee_shop' => current_user()->coffee_shop]) }}" class="list-group-item">

@@ -20,7 +20,6 @@
 
         <div class="row">
             <div class="col-xs-12 faq" style="font-weight: bold;">
-
                 <h3>How does it work?</h3>
                 <p>Sign up – Enter your shop details – Menu, descriptions, photos, location and opening times and start receiving orders straight away.</p>
                 <p>Customers get to know your shop when searching for coffee in your area, see your details, your photos, look at your menu and check out reviews. They can then choose to order and pay online through KoolBeans or walk in store and buy from you directly.</p>
@@ -86,20 +85,19 @@
                 <p>All payments are paid directly to your Stripe account in 7days or less.</p>
 
                 <h3>There aren’t many coffee shops on the site from my area, should I still join?</h3>
-                <p>Please bear with us. We are a start-up and are working hard to grow our community. We would love you to become a founder coffee shop, which is why we are offering the first 6 months free.</p>
+                <p>Please bear with us. We are a start-up and are working hard to grow the independent community. Joining now will help us achieve this.</p>
 
                 <h3>I already have a website and a twitter account can KoolBeans be linked to these?</h3>
                 <p>That’s fantastic news and also a great help. Putting links on your website and social media accounts to your unique KoolBeans page will help you stand out better in searches and is a great way to increase revenue.</p>
 
                 <h3>Can I advertise KoolBeans in my shop or window?</h3>
                 <p>Yes absolutely! We will provide KoolBeans window stickers which you can place on your shop window/door. These will help KoolBeans users to recognise they have found the right shop. </p>
+                
                 <h3>What if I run out of stock?</h3>
                 <p>You can turn items off in the seller dashboard with one click if you are running low on stock and turn them back on again when they are back in stock. </p>
+                
                 <h3>We love you!!</h3>
                 <p>We love you too!</p>
-
-
-
             </div>
         </div>
     </div>

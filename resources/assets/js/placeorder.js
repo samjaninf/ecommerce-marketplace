@@ -29,7 +29,6 @@
 
 	function createProductSizes(productName, that) {
 		if(window.products) {
-			
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
 				if ( product.name.replace(/\s/g, '') == productName) {
@@ -49,13 +48,13 @@
 						for ( var key in sizes) {
 							if ( productSize[sizes[key]] == 1 ) {
 								if ( key == 'xs' ) {
-									price = 'X-small';
-								} else if ( key == 'sm' ) {
 									price = 'Small';
-								} else if ( key == 'md' ) {
+								} else if ( key == 'sm' ) {
 									price = 'Medium';
-								} else if ( key == 'lg' ) {
+								} else if ( key == 'md' ) {
 									price = 'Large';
+								} else if ( key == 'lg' ) {
+									price = 'x-Large';
 								}
 								if (priceToDecimal(productSize[key]) > 0 ) {
 									option += '<option value="' + key + '">' + price + ' @ £' + priceToDecimal(productSize[key]) + '</option>';
@@ -73,7 +72,6 @@
 						}
 						
 					} else {
-						console.log('mm');
 						if (that) {
 							console.log('n');
 							//food only uses the "sm" value, no sizes

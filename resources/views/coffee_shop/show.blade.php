@@ -117,7 +117,7 @@
                                  <span class="number"> 2.</span>
                             </div>
                             <div class="order_right">
-                                <p class="section-header"> Select your drinks orders below: </p>
+                                <p class="section-header"> Select your order below: </p>
                                 <h5 @if($coffeeShop->products()->wherePivot('description', '!=', '')->whereNotNull('description')->count() == 0) class="hide" @endif>
                                     Products: 
                                 </h5>
@@ -145,6 +145,7 @@
                                                                         {{ $coffeeShop->getNameFor($product) }}
                                                                     </option>
                                                                 @else
+                                                                    <option disabled>─────food─────</option>
                                                                     <option class="food-option" value="{{ $product->id }}" data-type="{{ $product->type }}">
                                                                         {{ $coffeeShop->getNameFor($product) }}
                                                                     </option>

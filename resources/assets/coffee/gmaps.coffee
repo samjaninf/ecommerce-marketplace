@@ -38,6 +38,10 @@ initializeMaps = (container) ->
       map: koolbeans.map
       anchorPoint: new google.maps.Point 0, -29
     koolbeans.infoWindow = new google.maps.InfoWindow
+    google.maps.event.addListener koolbeans.marker, 'dragend', changeMarkerLocation = (evt) ->
+      document.getElementById('latitude-field').setAttribute 'value', evt.latLng.lat()
+      document.getElementById('longitude-field').setAttribute 'value', evt.latLng.lng()
+      
   useGeoLocation koolbeans.map
 
 addMarker = (lat, lng, title, id) ->
@@ -88,6 +92,7 @@ initializeAutoComplete = (locationField, map) ->
 
 
 bindMapToAutoComplete = (autoComplete, map) ->
+  console.log('bind#');
   autoComplete.bindTo 'bounds', map
   google.maps.event.addListener autoComplete, 'place_changed', placeChanged(autoComplete)
 
@@ -115,6 +120,7 @@ getDirectionsToMarker = (directionsService, directionsDisplay, marker) ->
       window.alert 'Directions failed because: ' + status
 
 placeChanged = (autoComplete) -> () ->
+  console.log('change');
   hideMarkerAndWindow()
   place = autoComplete.getPlace()
   return if !place.geometry
@@ -156,6 +162,7 @@ openInfoWindow = (place, marker) ->
 
 
 changeFormFields = (place) ->
+  console.log('yuuuup');
   for component in place.address_components
     if component.types.indexOf("administrative_area_level_2") != -1 or component.types.indexOf("administrative_area_level_1") != -1
       document.getElementById('county').setAttribute 'value', component.long_name
