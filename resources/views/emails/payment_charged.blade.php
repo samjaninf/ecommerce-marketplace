@@ -49,7 +49,7 @@
                     </td>
                 </tr>
         </tbody>
-    </table><table class="mcnBoxedTextBlock" border="0" cellpadding="0" cellspacing="0" style="width: 600px; margin: 0 auto;">
+    </table><table class="mcnBoxedTextBlock" style="max-width: 600px; margin: 0 auto;" border="0" cellpadding="0" cellspacing="0" style="width: 600px; margin: 0 auto;">
         <!--[if gte mso 9]>
         <table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
         <![endif]-->

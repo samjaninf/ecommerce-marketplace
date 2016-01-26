@@ -145,7 +145,11 @@
                                                                         {{ $coffeeShop->getNameFor($product) }}
                                                                     </option>
                                                                 @else
-                                                                    <option disabled>─────food─────</option>
+                                                                    {!! $food = false; !!}
+                                                                    @if ($food == false)
+                                                                        {!! $food = true; !!}
+                                                                        <option disabled>─────food─────</option>
+                                                                    @endif
                                                                     <option class="food-option" value="{{ $product->id }}" data-type="{{ $product->type }}">
                                                                         {{ $coffeeShop->getNameFor($product) }}
                                                                     </option>

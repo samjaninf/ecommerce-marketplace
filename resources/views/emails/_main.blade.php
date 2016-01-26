@@ -513,7 +513,7 @@
             </td>
         </tr>
     </tbody>
-</table><table class="mcnImageCardBlock" border="0" cellpadding="0" cellspacing="0" width="100%">
+</table><table class="mcnImageCardBlock" style="max-width: 600px; margin: 0 auto;" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tbody class="mcnImageCardBlockOuter">
         <tr>
             <td class="mcnImageCardBlockInner" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px;" valign="top">

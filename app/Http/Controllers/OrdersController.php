@@ -298,10 +298,9 @@ class OrdersController extends Controller
         \Mail::send('emails.order_received',
             ['coffeeShop' => $coffeeShop, 'user' => current_user(), 'order' => $order],
             function (Message $m) use ($coffeeShop) {
-                $m->to('matt@saowapan.com', $coffeeShop->user->name)
+                $m->to($coffeeShop->user->email, $coffeeShop->user->name)
                     ->subject('You have received an order!');
             });
-
         try {
             if ( ! $user->charge($amount, array(
                 'currency'         => 'gbp',
@@ -353,7 +352,7 @@ class OrdersController extends Controller
             'refund'  => $refund / 100.,
             'initial' => '15.00',
         ], function (Message $m) use ($user) {
-            $m->to('matt@saowapan.com', $user->name)->subject('You have been charged.');
+            $m->to($user->email, $user->name)->subject('You have been charged.');
         });
 
         $order->paid = true;
@@ -368,7 +367,7 @@ class OrdersController extends Controller
         \Mail::send('emails.order_completed',
             ['user' => current_user(), 'order' => $order, 'coffeeShop' => $coffeeShop],
             function (Message $m) use ($user) {
-                $m->to('matt@saowapan.com', $user->name)->subject('Your order has been sent!');
+                $m->to($user->email, $user->name)->subject('Your order has been sent!');
             });
 
 
@@ -376,7 +375,7 @@ class OrdersController extends Controller
         if ($tokens->isEmpty()) {
             \Mail::send('emails.no_active_token_found', ['user' => $coffeeShop->user],
                 function (Message $m) use ($coffeeShop) {
-                    $m->to('matt@saowapan.com', $coffeeShop->user->name)
+                    $m->to($coffeeShop->user->email, $coffeeShop->user->name)
                       ->subject('Make sure to install the application');
                 });
         } else {
