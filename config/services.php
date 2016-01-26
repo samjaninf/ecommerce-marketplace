@@ -50,8 +50,8 @@ return [
         // 'rsa_public_key'      => '/etc/ssl/certs/koolbeans.cer',
     ],
     'ionic'    => [
-        'app_id'     => 'ee60e96a',
-        'app_secret' => '9b2ce71b9906a0165b782799ed1261efc4293c6cd895de7f',
+        'app_id'     => 'ef4727c0',
+        'app_secret' => 'f73be765e4d464e4aa8529739a7ffdf17d50bd28b54f6db7',
     ],
 
 ];
