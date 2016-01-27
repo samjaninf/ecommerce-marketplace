@@ -89,6 +89,9 @@ textarea {
   .signup-header {
     border: 0;
     font-size: 40px;
+    @media (max-width: @screen-md-min) {
+      font-size: 30px;
+    }
   }
   .register-title {
     padding: 0px;
@@ -897,17 +900,24 @@ hr {
 #coffee-shop-benefits {
   background: #2e2c2c;
   padding: 50px 30px;
+  padding-left: 10px;
   img {
     max-height: 130px;
   }
   h4 {
     color: white;
+    @media (max-width: @screen-md-min) {
+      font-size: 24px;
+    }
   }
   p {
     color: white;
     max-width: 300px;
     padding-bottom: 20px;
     margin: 0 auto;
+    @media (max-width: @screen-md-min) {
+      font-size: 18px;
+    }
   }
 }
 .dtpicker-buttonCont .dtpicker-button {

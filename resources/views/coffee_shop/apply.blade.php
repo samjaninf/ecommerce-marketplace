@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-offset-2 col-sm-8">
             <h1 class="text-center signup-header">
-              Join KoolBeans & allow customers to discover your coffee shop & order ahead
+              Join KoolBeans for free & allow customers to discover your coffee shop & order ahead
             </h1>
         </div>
       </div>
