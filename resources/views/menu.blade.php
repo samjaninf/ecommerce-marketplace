@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" @if (Route::current()->getName() != 'welcome') style="background: #fff;" @endif>
     <div class="container-fluid">
         <div class="navbar-header @if (isset($home)) home-bg-overlay @endif">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
