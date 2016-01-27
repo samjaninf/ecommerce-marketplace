@@ -66,9 +66,10 @@
       </div>
     </div>
     <div class="row" style="margin-top: 20px">
-        <div class="col-lg-8">
+        
             @include('shared/_form_errors')
             <form class="form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
+              <div class="col-lg-8">
                 @if(Auth::guest())
                     <div class="form-group @if($errors->any()) {{$errors->has('username') ? 'has-error' : 'has-success'}} @endif">
                         <label for="username" class="col-sm-3 control-label"><span class="col-accent">1.</span> Your name:</label>
@@ -234,12 +235,6 @@
                        id="place-id-field">
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
 
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" class="btn btn-primary" value="Register your coffee shop">
-                    </div>
-                </div>
-            </form>
         </div>
 
         <div class="col-lg-4 col-xs-12">
@@ -249,6 +244,14 @@
             <div id="maps-container" class="draggable-marker" @if(isset($position)) data-position="{{$position}}" @endif></div>
             <p class="help-block">You can drag the pin to be more accurate.</p>
         </div>
+          <div class="col-xs-12">
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input type="submit" class="btn btn-primary" value="Register your coffee shop">
+                </div>
+            </div>
+          </div>
+        </form>
     </div>
 </div>
 @endsection

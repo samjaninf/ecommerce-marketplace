@@ -31,10 +31,11 @@
 		if(window.products) {
 			window.products.forEach( function (product) {
 				//get the selected product name and create select option for sizes
-				if ( product.name.replace(/\s/g, '') == productName) {
+				//console.log(product.name.replace(/\s/g, ''));
+				if ( product.pivot.name.replace(/\s/g, '') == productName || product.name.replace(/\s/g, '') == productName) {
 					//get create option for sizes for d.replace(/\s/g, ''
 					if ( product.type === 'drink' ) {
-						productSize = product.pivot;
+						productSize = product.pivot;	
 						sizes = {'xs': 'xs_activated', 'sm': 'sm_activated', 'md': 'md_activated', 'lg': 'lg_activated'};
 
 						if (that) {
@@ -102,6 +103,7 @@
 	});
 
 	$(document).on('change', '.choose-product-select', function() {
+		console.log('hmm');
 		var current = $(this).find('option:selected').text().replace(/\s/g, '');
 		createProductSizes(current, $(this));
 	});

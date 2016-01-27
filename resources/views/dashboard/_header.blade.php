@@ -1,15 +1,6 @@
 <div class="row dashboard-header">
     @if($firstImage)
-    <div class="col-sm-3 hidden-xs full-height">
-        
-            <img src="{{$coffeeShop->getUploadUrl() . '/' . $firstImage}}"
-                 alt="Main image"
-                 class="main-gallery-image">
-        
-    </div>
-    @endif
-    @if($firstImage)
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-sm-12 col-xs-12">
     @else 
         <div class="col-xs-12">
     @endif 

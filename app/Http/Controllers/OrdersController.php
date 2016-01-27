@@ -134,6 +134,7 @@ class OrdersController extends Controller
         $fp = new Collection();
         foreach ($products as $product) {
             if ($coffeeShop->hasActivated($product)) {
+                array_push($product, $coffeeShop->getNameFor($product));
                 $fp->add($product);
             }
         }
