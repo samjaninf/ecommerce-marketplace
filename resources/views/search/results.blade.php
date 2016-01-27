@@ -28,7 +28,7 @@
         </div>
 
 
-        <div class="hidden-xs hidden-sm row">
+        <div class="hidden-xs hidden-sm row" style="padding: 15px 0px;">
             <div class="col-md-7" style="padding: 0">
                 <div class="search-results-title">
                     @include('search._result_title')
