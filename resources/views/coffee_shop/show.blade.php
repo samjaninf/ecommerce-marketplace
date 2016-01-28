@@ -16,7 +16,7 @@
                 @include('coffee_shop._rating', ['rating' => $coffeeShop->getRating()])
             </span>
 
-            <div class="order_header col-xs-12 col-sm-6  col-sm-offset-6 col-md-offset-6 col-lg-offset-6">
+            <div class="order_header col-sm-12 col-lg-6 col-lg-offset-6">
                 <h2>Place Your Order</h2>
             </div>
         </div>
@@ -25,8 +25,8 @@
 <div id="order">
     <div class="container">
         <div class="row">
-            @if (!$agent->isMobile())
-                <div class="col-xs-12 col-sm-6 hidden-xs">
+            @if (!$agent->isMobile() || !$agent->isTablet())
+                <div class="col-sm-12 col-lg-6 hidden-xs">
                       <div class="row">
                             <div class="review-container">
                                         <div class="review">
@@ -88,7 +88,7 @@
                 </div>
             @endif  
             @if ( $coffeeShop->stripe_user_id )
-                <div class="col-xs-12 col-sm-6 " id="order-inner">
+                <div class="col-sm-12 col-lg-6 " id="order-inner">
                     <form action="{{ route('coffee-shop.order.store', ['coffeeShop' => $coffeeShop]) }}" method="post">
 
                         <div class="form-group @if($errors->any()) {{$errors->has('time') ? 'has-error' : 'has-success'}} @endif">
@@ -226,7 +226,7 @@
                     </form>
                 </div>
             @else
-                <div class="col-xs-12 col-sm-6 " id="order-inner">
+                <div class="col-sm-12 col-lg-6 " id="order-inner">
                     <div class="form-group order-products @if($errors->any()) {{$errors->has('products') ? 'has-error' : 'has-success'}} @endif">
                         <div class="order_left">
                              <span class="number"> 1.</span>
@@ -269,23 +269,7 @@
                     </div>
                 </div>
             @endif
-            <div class="col-xs-12 col-sm-6 hidden-lg visible-md-block">
-                  <div class="row">
-                        <div class="col-sm-6">
-                            <h4 style="padding-top: 10px;">About the shop</h4>
 
-                            @if(! Auth::guest() && current_user()->owns($coffeeShop))
-                                <a href="#" id="edit-coffeeshop-about-helper">Change description</a>
-                                <p id="edit-coffeeshop-about"
-                                   data-target="{{ route('coffee-shop.update', ['coffeeShop' => $coffeeShop]) }}">
-                            @else
-                                <p>
-                                    @endif
-                                    {{ ! $coffeeShop->about ? 'No information.' : $coffeeShop->about }}
-                                </p>
-                        </div>
-                    </div>
-            </div>
         </div>
     </div>
      <div class="container" id="coffee-shop-about">

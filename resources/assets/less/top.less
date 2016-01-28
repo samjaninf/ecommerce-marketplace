@@ -54,7 +54,10 @@
       }
     }
     .navbar-collapse, .navbar-header {
-
+      form {
+        float: left;
+        margin: 5px 0px;
+      }
       ul.nav {
         margin: 9px 0;
 
@@ -206,8 +209,7 @@
             border-bottom-right-radius: 0;
             border-top-right-radius: 0;
             width: 80%;
-
-            @media (max-width: @screen-xs-max) {
+            @media (max-width: @screen-md-max) {
               width: 100%;
               display: block;
               border-radius: 0;
@@ -219,7 +221,9 @@
             border-bottom-left-radius: 0;
             border-top-left-radius: 0;
             width: 20%;
-
+            @media (max-width: @screen-md-max) {
+              font-size: 14px;
+            }
             @media (max-width: @screen-xs-max) {
               width: 100%;
               display: block;

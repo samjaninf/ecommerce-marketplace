@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div style="padding: 0px;" class="container-fluid">
   <div class="row" id="apply-title">
     <div class="col-xs-12 list-your-shop-overlay">
     </div>

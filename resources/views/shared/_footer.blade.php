@@ -20,7 +20,7 @@
     </form>
 </div>
 <div id="bottom-footer" class="container-fluid">
-    <img src="/img/shared/grey-logo.png" alt="Koolbeans">
+    <img src="/img/shared/grey-logo.png" style="max-width: 100%;" alt="Koolbeans">
     <ul class="my-nav">
         <li><a href="{{ route('home') }}">Home</a></li>
         @if( ! Auth::guest() && current_user()->role === 'admin')
