@@ -299,24 +299,26 @@ class WelcomeController extends Controller
     public function pushToken(Request $request)
     {
         $user = User::find($request->user_id);
+
         if ($request->has('unregister') && $request->unregister == true) {
             $requestTokens =
                 $request->has('_push.ios_tokens') ? $request->_push['ios_tokens'] : $request->_push['android_tokens'];
             $user->mobile_tokens()->whereIn('token', $requestTokens)->delete();
 
-            return;
+            return 'token unregistered';
         }
 
         if ($request->has('_push')) {
             $requestTokens =
                 $request->has('_push.ios_tokens') ? $request->_push['ios_tokens'] : $request->_push['android_tokens'];
-            foreach ($requestTokens as $requestToken) {
-                $user->mobile_tokens()->firstOrCreate(['token' => $requestToken]);
-            }
+
+                $user->mobile_tokens()->firstOrCreate(['token' => $requestTokens]);
+            return 'token saved';
         } else {
             $requestToken = $request->has('ios_token') ? $request->ios_token : $request->android_token;
             $token        = $user->mobile_tokens()->firstOrNew(['token' => $requestToken]);
             $token->delete();
+            return 'token deleted';
         }
     }
 
@@ -328,6 +330,7 @@ class WelcomeController extends Controller
     public function auth(Request $request)
     {
       if (\Auth::attempt($request->only(['email', 'password']))) {
+
         return current_user()->id;
       }
       return response('Bad credentials.', 403);

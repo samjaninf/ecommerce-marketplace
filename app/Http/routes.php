@@ -14,7 +14,7 @@
 Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
-Route::any('webhooks/push-token', 'WelcomeController@pushToken');
+Route::post('webhooks/push-token', 'WelcomeController@pushToken');
 Route::post('webhooks/auth', 'WelcomeController@auth');
 Route::post('webhooks/validate', 'WelcomeController@validateId');
 Route::get('webhooks/validate/{token}', 'WelcomeController@validateToken');
