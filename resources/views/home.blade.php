@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid">
+    <div style="padding: 0px;" class="container-fluid">
         <div class="row">
             <div class="col-xs-12" id="banner-home-user">
                 <form class="form-inline" action="{{route('search')}}" method="post">
