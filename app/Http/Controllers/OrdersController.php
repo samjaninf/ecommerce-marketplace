@@ -371,7 +371,7 @@ class OrdersController extends Controller
                 $m->to($user->email, $user->name)->subject('Your order has been sent!');
             });
 
-
+ 
         $tokens = $user->mobile_tokens;
         if ($tokens->isEmpty()) {
             \Mail::send('emails.no_active_token_found', ['user' => $coffeeShop->user],
