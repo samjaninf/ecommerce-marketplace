@@ -75,8 +75,7 @@ RAW
                 'info' => 'Your coffee shop is not live yet on Koolbeans. ' .
                           'While you wait for us, you can adjust your profile below!',
             ] : [
-                'alert' => 'Hi, sorry your coffee shop has been denied. Please check the comment on <a href="' .
-                           route('coffee-shop.apply') . '">this page</a>, and feel free to apply again!',
+
             ];
         }
 

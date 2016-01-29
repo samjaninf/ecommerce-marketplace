@@ -25,7 +25,7 @@
                 </form>
                 <h2>Welcome {{ $name or current_user()->name }}</h2>
                 @if (current_user()->coffee_shop != null)
-                    <h4>We're reviewing your shop at the minute, fill out some details below to help us!</h4>
+                    <h4>Sorry your account is not live!</h4>
                 @else
                     <h4>What are you ordering today?</h4>
                 @endif
@@ -207,112 +207,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12">
-                            <h2 class="text-center">Adjust your profile!</h2>
-                            <form class="form-horizontal" action="{{ route('my.profile.update') }}" method="post">
-                                <div class="form-group @if($errors->any()) {{$errors->has('name') ? 'has-error' : 'has-success'}} @endif">
-                                    <label for="name" class="col-sm-2">Coffee shop name:</label>
-
-                                    <div class="col-sm-9">
-                                        <input id="name"
-                                               name="name"
-                                               type="text"
-                                               placeholder="The name of your coffee shop..."
-                                               class="form-control"
-                                               value="{{old('name', current_user()->coffee_shop->name)}}">
-                                    </div>
-                                </div>
-                               <div class="form-group @if($errors->any()) {{$errors->has('location') ? 'has-error' : 'has-success'}} @endif">
-                                    <label for="field-maps-location" class="col-sm-2">Address:</label>
-
-                                    <div class="col-sm-9">
-                                        <input id="field-maps-location"
-                                               name="location"
-                                               type="text"
-                                               placeholder="The address of your coffee shop..."
-                                               class="form-control"
-                                               value="{{old('location', current_user()->coffee_shop->location)}}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group @if($errors->any()) {{$errors->has('postal_code') ? 'has-error' : 'has-success'}} @endif">
-                                    <label for="postal_code" class="col-sm-2">Postal code:</label>
-
-                                    <div class="col-sm-9">
-                                        <input id="postal_code"
-                                               name="postal_code"
-                                               type="text"
-                                               placeholder="Postal code..."
-                                               class="form-control"
-                                               value="{{old('postal_code', current_user()->coffee_shop->postal_code)}}">
-                                    </div>
-                                </div>
-
-                                
-                                <div class="form-group @if($errors->any()) {{$errors->has('county') ? 'has-error' : 'has-success'}} @endif">
-                                    <label for="county" class="col-sm-2">County:</label>
-
-                                    <div class="col-sm-9">
-                                        <input id="county"
-                                               name="county"
-                                               type="text"
-                                               placeholder="County..."
-                                               class="form-control"
-                                               value="{{old('county', current_user()->coffee_shop->county)}}">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 col-xs-12">
-                                    <div class="text-center">
-                                      <h4>Not the correct location? Drag the pin to your coffee shop.</h4>
-                                    </div>
-                                    <div id="maps-container" class="draggable-marker" data-position="{{ current_user()->coffee_shop->latitude }}, {{ current_user()->coffee_shop->longitude }}"></div>
-                                    <p class="help-block">You can drag the pin to be more accurate.</p>
-                                </div>
-
-                                <div class="form-group @if($errors->any()) {{$errors->has('phone_number') ? 'has-error' : 'has-success'}} @endif">
-                                    <label for="phone_number" class="col-sm-2">Phone number:</label>
-
-                                    <div class="col-sm-9">
-                                        <input id="phone_number"
-                                               name="phone_number"
-                                               type="text"
-                                               placeholder="Phone number..."
-                                               class="form-control"
-                                               value="{{old('phone_number', current_user()->coffee_shop->phone_number)}}">
-                                    </div>
-                                </div>
-                                <div class="form-group @if($errors->any()) {{$errors->has('about') ? 'has-error' : 'has-success'}} @endif">
-                                    <label for="about" class="col-sm-2">Tell customers about your coffee shop: </label>
-
-                                    <div class="col-sm-9">
-                                        <textarea id="about"
-                                               rows="5"
-                                               name="about"
-                                               placeholder=""
-                                               class="form-control">{{old('about', current_user()->coffee_shop->about)}}</textarea>
-                                    </div>
-                                </div>
-
-                                <input type="hidden"
-                                       name="latitude"
-                                       value="{{old('latitude', current_user()->coffee_shop->latitude)}}"
-                                       id="latitude-field">
-                                <input type="hidden"
-                                       name="longitude"
-                                       value="{{old('longitude', current_user()->coffee_shop->longitude)}}"
-                                       id="longitude-field">
-                                <input type="hidden"
-                                       name="place_id"
-                                       value="{{old('place_id', current_user()->coffee_shop->place_id)}}"
-                                       id="place-id-field">
-                                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
-
-                                <div class="form-group">
-                                    <div class="col-sm-9">
-                                        <input type="submit" class="btn btn-lg btn-primary" value="Update your coffee shop">
-                                    </div>
-                                </div>
-                            </form>
+                            <h2 class="text-center">Your account is not live!</h2>
+                            <p class="text-center">Sorry but your account isn't live. To find out why please email us at <a href="mailto:support@koolbeans.co.uk">support@koolbeans.co.uk</a> or call us.</p>
                         </div>
                     </div>
                 </div>

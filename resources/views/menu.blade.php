@@ -19,7 +19,7 @@
 
         <div class="collapse navbar-collapse @if (isset($home)) home-bg-overlay @endif" id="main-menu">
             @if(Route::getCurrentRoute() && Route::getCurrentRoute()->getAction() && strpos(Route::getCurrentRoute()->getAction()['controller'], 'WelcomeController@index') === false)
-            <form class="form-inline" action="{{ route('search') }}" method="post" id="search-form">
+            <form class="col-xs-12 col-sm-5 form-inline" action="{{ route('search') }}" method="post" id="search-form">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
                         <input id="query" type="text" name="query" class="form-control" placeholder="Search...">

@@ -111,6 +111,8 @@ Route::resource('posts', 'PostsController');
             ['as' => 'admin.coffee-shop.review', 'uses' => 'CoffeeShopsController@review']);
         route::get('coffeeshop/{coffee_shop}/enable',
             ['as' => 'admin.coffee-shop.enable', 'uses' => 'CoffeeShopsController@enable']);
+        Route::get('coffeeshop/{cofee_shop}/delete',
+            ['as' => 'admin.coffee-shop.delete', 'uses' => 'CoffeeShopsController@delete']);
         Route::get('products/{products}/enable',
             ['as' => 'admin.products.enable', 'uses' => 'ProductsController@enable']);
         Route::resource('products', 'ProductsController', ['except' => 'destroy']);

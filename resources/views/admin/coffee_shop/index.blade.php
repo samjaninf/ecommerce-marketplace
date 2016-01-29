@@ -37,7 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($shops as $shop)
+                    @foreach($shops as $shop)
                         <tr>
                             <td>{{ $shop->name }}</td>
                             <td>{{ $shop->location }}</td>
@@ -59,22 +59,21 @@
                                 @if ($shop->status != 'denied')
                                     <a href="{{ route('admin.coffee-shop.destroy', ['coffee_shop' => $shop]) }}"
                                        class="btn btn-xs btn-danger"
-                                       data-confirm="Deleting a coffee shop is impossible: it is too dangerous. However, you can still disable it. Are you sure you want to do that?"
+                                       data-confirm="Are you sure you want to do that?"
                                        data-method="delete">Disable</a>
-                                @else
+                                @elseif ($shop->status == 'published')
                                     <a href="{{ route('admin.coffee-shop.enable', ['coffee_shop' => $shop]) }}"
                                         class="btn btn-xs btn-primary"
                                         data-method="enable">Enable</a>
                                 @endif
+                                    <a href="{{ route('admin.coffee-shop.delete', ['coffee_shop' => $shop]) }}"
+                                        class="btn btn-xs btn-primary pull-right"
+                                        data-method="delete">Delete</a>  
+
                             </td>
                         </tr>
-                    @empty
-                        <tr class="danger">
-                            <td colspan="5">
-                                No coffee shop exist.
-                            </td>
-                        </tr>
-                    @endforelse
+    
+                    @endforeach
                     </tbody>
                 </table>
                 <div class="pull-right">

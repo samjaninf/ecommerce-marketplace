@@ -4,7 +4,7 @@ use Illuminate\Mail\Message;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\Http\Requests\UpdateCoffeeShopRequest;
 use Koolbeans\Repositories\CoffeeShopRepository;
-
+use Koolbeans\CoffeeShop;
 class CoffeeShopsController extends Controller
 {
     /**
@@ -25,7 +25,7 @@ class CoffeeShopsController extends Controller
      */
     public function index()
     {
-        $shops = $this->coffeeShopRepository->paginate(15);
+        $shops = CoffeeShop::where('status', '!=', 'deleted')->paginate(15);        $shops = CoffeeShop::where('status', '!=', 'deleted')->paginate(15);
 
         return view('admin.coffee_shop.index')->with('shops', $shops);
     }
@@ -150,9 +150,7 @@ class CoffeeShopsController extends Controller
     {
         $coffeeShop = $this->coffeeShopRepository->find($id);
         $coffeeShop->update(['status' => 'denied']);
-
-        $shops = $this->coffeeShopRepository->paginate(15);
-
+        $shops = CoffeeShop::where('status', '!=', 'deleted')->paginate(15);
         return view('admin.coffee_shop.index')->with('shops', $shops);
     }
     public function enable($id)
@@ -160,7 +158,14 @@ class CoffeeShopsController extends Controller
         $coffeeShop = $this->coffeeShopRepository->find($id);
         $coffeeShop->update(['status' => 'published']);
         
-        $shops = $this->coffeeShopRepository->paginate(15);
+        $shops = CoffeeShop::where('status', '!=', 'deleted')->paginate(15);
+        return view('admin.coffee_shop.index')->with('shops', $shops);
+    }
+    public function delete($id)
+    {
+        $coffeeShop = $this->coffeeShopRepository->find($id);
+        $coffeeShop->update(['status' => 'deleted']);
+        $shops = CoffeeShop::where('status', '!=', 'deleted')->paginate(15);
         return view('admin.coffee_shop.index')->with('shops', $shops);
     }
 }

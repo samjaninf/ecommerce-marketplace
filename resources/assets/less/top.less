@@ -6,13 +6,22 @@
   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.20);
   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.20);
   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.20);
-  z-index:1;
+  z-index:10;
   .home-bg-overlay {
     background: 0;
 
-    @media( max-width: @screen-xs-max) {
+    @media( max-width: @screen-sm-min) {
       background: rgba(0,0,0,0.5);
 
+    }
+  }
+  #main-menu {
+    @media ( max-width: @screen-sm-min) {
+      position: absolute;
+      z-index: 100;
+      left: -1px;
+      right: -1px;
+      padding: 0px 10px;
     }
   }
   .navbar {

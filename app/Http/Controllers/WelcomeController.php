@@ -91,7 +91,7 @@ class WelcomeController extends Controller
             }
         }
 
-        $offers = CoffeeShop::whereOfferActivated(true)->get();
+        $offers = Offer::where('finish_at', '>=', new \Carbon\Carbon())->get();
         while ($offers->count() < 4) {
             $offers->add(new CoffeeShop());
         }
