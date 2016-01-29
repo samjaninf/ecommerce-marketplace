@@ -372,7 +372,7 @@ class OrdersController extends Controller
             });
 
  
-        $tokens = $user->mobile_tokens;
+        $tokens = $coffeeShop->user->mobile_tokens;
         if ($tokens->isEmpty()) {
             \Mail::send('emails.no_active_token_found', ['user' => $coffeeShop->user],
                 function (Message $m) use ($coffeeShop) {
