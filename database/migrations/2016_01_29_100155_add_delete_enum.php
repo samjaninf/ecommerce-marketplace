@@ -13,7 +13,7 @@ class AddDeleteEnum extends Migration
     public function up()
     {
         Schema::table('coffee_shops', function (Blueprint $table) {
-           DB::statement("ALTER TABLE coffee_shops CHANGE COLUMN permissions status ENUM('requested', 'accepted', 'published', 'denied', 'deleted')");
+           DB::statement("ALTER TABLE coffee_shops CHANGE COLUMN status permissions ENUM('requested', 'accepted', 'published', 'denied', 'deleted')");
         });
     }
 
