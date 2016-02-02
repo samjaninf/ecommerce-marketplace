@@ -1,5 +1,8 @@
-(function($) {
-	$(document).on("keypress", ":input:not(textarea)", function(event) {
-	    return event.keyCode != 13;
-	});
-})(jQuery);
+jQuery(document).ready(function() {
+  jQuery('.coffee-signup').keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});

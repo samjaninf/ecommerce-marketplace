@@ -68,7 +68,7 @@
     <div class="row" style="margin-top: 20px">
         
             @include('shared/_form_errors')
-            <form class="form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
+            <form class="coffee-signup form-horizontal" method="post" action="{{ route('coffee-shop.applied') }}">
               <div class="col-lg-8">
                 @if(Auth::guest())
                     <div class="form-group @if($errors->any()) {{$errors->has('username') ? 'has-error' : 'has-success'}} @endif">

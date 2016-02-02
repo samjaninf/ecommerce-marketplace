@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="displayname">Display Name</label>
-                                        <input type="text" class="form-control" id="displayname" name="displayname" value="{{ current_user()->display_name }}"/>
+                                        <input type="text" class="form-control" id="displayname" name="displayname" value="{{ $displayname or current_user()->display_name }}"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
