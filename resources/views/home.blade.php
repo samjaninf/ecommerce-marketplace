@@ -177,6 +177,10 @@
                                         <input type="text" class="form-control" id="username" name="name" value="{{ $name or current_user()->name }}"/>
                                     </div>
                                     <div class="form-group">
+                                        <label for="displayname">Display Name</label>
+                                        <input type="text" class="form-control" id="displayname" name="displayname" value="{{ current_user()->display_name }}"/>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="text" class="form-control" id="email" name="email" value="{{ $email or current_user()->email }}"/>
                                     </div>

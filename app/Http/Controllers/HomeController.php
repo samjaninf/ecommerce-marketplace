@@ -137,8 +137,8 @@ SQL;
         $name = $request->input('name');
         $email = $request->input('email');
         $twitter = $request->input('twitter');
-        $fdrink = $request->input('drinl');
-
+        $fdrink = $request->input('drink');
+        $displayname = $request->input('displayname');
         if($fdrink) {
           \DB::table('users')
                       ->where('id', $user->id)
@@ -153,6 +153,11 @@ SQL;
           \DB::table('users')
                     ->where('id', $user->id)
                     ->update(['twitter' => $twitter]);
+        }
+        if ($displayname) {
+          \DB::table('users')
+                    ->where('id', $user->id)
+                    ->update(['display_name' => $displayname]);
         }
 
         $favourite = \DB::table('users')
@@ -178,7 +183,7 @@ SQL;
             ->limit(4)
             ->get();
 
-        return view('home', compact('orders'))->with('drinks', $drinks)->with('favourite', $favourite)->with('name', $name)->with('email', $email)->with('twitter', $twitter);
+        return view('home', compact('orders'))->with('drinks', $drinks)->with('favourite', $favourite)->with('name', $name)->with('email', $email)->with('twitter', $twitter)->with('displayname', $displayname);
     }
 
     public function profile()
