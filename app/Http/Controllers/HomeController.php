@@ -150,7 +150,7 @@ SQL;
                       ->update(['name' => $name]);
         }
         if($twitter) {
-          \DB::table('coffee_shops')
+          \DB::table('users')
                     ->where('id', $user->id)
                     ->update(['twitter' => $twitter]);
         }
