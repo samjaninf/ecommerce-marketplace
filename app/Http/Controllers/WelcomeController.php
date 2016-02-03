@@ -389,7 +389,7 @@ class WelcomeController extends Controller
     }
     public function pendingorders($id)
     {
-      $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id);
+      $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id)->all();
 
       return $orders;
     }
