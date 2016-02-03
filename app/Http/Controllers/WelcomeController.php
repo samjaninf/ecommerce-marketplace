@@ -398,7 +398,7 @@ class WelcomeController extends Controller
           if ( !isset ($lines[ $name  ])) {
             $lines[ $name ] = [];
           }
-
+          $size = $order->coffee_shop->getSizeDisplayName($line->size);
           if ( ! isset ($lines[ $name ][ $size ])) {
             $lines[ $name ][ $size ] = 0;
           }
@@ -412,7 +412,6 @@ class WelcomeController extends Controller
           'name'        => $order->user->name,
         ];
         array_push($return, $lines);
-
       }
       return $return;
     }
