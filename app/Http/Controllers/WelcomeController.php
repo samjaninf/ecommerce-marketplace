@@ -390,8 +390,7 @@ class WelcomeController extends Controller
     public function pendingorders($id)
     {
       $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id)->get();
-
-      return $orders;
+      return $orders + $id;
     }
     /**
      * @param int $id
