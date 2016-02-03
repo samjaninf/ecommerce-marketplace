@@ -387,7 +387,13 @@ class WelcomeController extends Controller
 
         return $return;
     }
+    public function pendingorders($id)
+    {
+      return 'eee';
+      // $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id);
 
+      // return $orders;
+    }
     /**
      * @param int $id
      *
@@ -400,14 +406,6 @@ class WelcomeController extends Controller
         $order->save();
 
         return '';
-    }
-
-    public function listOrders($id)
-    {
-      return 'helloworld';
-      // $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id);
-
-      // return $orders;
     }
     /**
      * @return \Illuminate\View\View

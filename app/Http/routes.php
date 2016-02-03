@@ -17,7 +17,7 @@ Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeContr
 Route::post('webhooks/push-token', 'WelcomeController@pushToken');
 Route::post('webhooks/auth', 'WelcomeController@auth');
 Route::post('webhooks/validate', 'WelcomeController@validateId');
-Route::post('webhooks/get-active-orders/{id}', 'WelcomeController@orderSent');
+Route::get('webhooks/get-active-orders/{id}', 'WelcomeController@pendingorders');
 Route::get('webhooks/validate/{token}', 'WelcomeController@validateToken');
 Route::get('webhooks/get-order/{id}', 'WelcomeController@getOrder');
 Route::post('webhooks/order-sent/{id}', 'WelcomeController@orderSent');
