@@ -404,10 +404,10 @@ class WelcomeController extends Controller
 
     public function activeOrders($id)
     {
+      return 49;
+      // $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id);
 
-      $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id);
-
-      return $orders;
+      // return $orders;
     }
     /**
      * @return \Illuminate\View\View
