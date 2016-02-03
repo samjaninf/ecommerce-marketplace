@@ -331,7 +331,7 @@ class WelcomeController extends Controller
     {
       if (\Auth::attempt($request->only(['email', 'password']))) {
 
-        return current_user()->id;
+        return current_user()->coffee_shop->id;
       }
       return response('Bad credentials.', 403);
     }
@@ -390,7 +390,7 @@ class WelcomeController extends Controller
     public function pendingorders($id)
     {
       $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id)->get();
-      return $orders . $id;
+      return $orders;
     }
     /**
      * @param int $id
