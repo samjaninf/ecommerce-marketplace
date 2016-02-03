@@ -411,7 +411,8 @@ class WelcomeController extends Controller
           'pickup_time' => $order->pickup_time,
           'name'        => $order->user->name,
         ];
-        array_push($return, $lines)
+        array_push($return, $lines);
+
       }
       return $return;
     }
