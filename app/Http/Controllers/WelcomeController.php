@@ -412,6 +412,7 @@ class WelcomeController extends Controller
           'name'        => $order->user->name,
         ];
         array_push($return, $lines);
+        $lines = [];
       }
       return $return;
     }
