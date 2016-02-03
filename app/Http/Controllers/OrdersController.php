@@ -18,7 +18,7 @@ use Session;
 use Stripe\Charge;
 use Stripe\Error\Card;
 use Jenssegers\Agent\Agent;
-
+use Koolbeans\MobileToken;
 class OrdersController extends Controller
 {
     /**
