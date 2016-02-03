@@ -390,7 +390,30 @@ class WelcomeController extends Controller
     public function pendingorders($id)
     {
       $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id)->get();
-      return $orders;
+      $lines = [];
+      $return = [];
+      foreach ($orders as $order) {
+        foreach ($order->order_lines as $line) {
+          $name = $order->coffee_shop->getNameFor($line->product);
+          if ( !isset ($lines[ $name  ])) {
+            $lines[ $name ] = [];
+          }
+
+          if ( ! isset ($lines[ $name ][ $size ])) {
+            $lines[ $name ][ $size ] = 0;
+          }
+
+          $lines [ $name ][ $size ] += 1;
+        }
+        $lines = [
+          'order_id'    => $order->id,
+          'products'    => $lines,
+          'pickup_time' => $order->pickup_time,
+          'name'        => $order->user->name,
+        ];
+        array_push($return, $lines)
+      }
+      return $return;
     }
     /**
      * @param int $id
