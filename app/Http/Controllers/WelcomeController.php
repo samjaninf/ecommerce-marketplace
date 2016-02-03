@@ -402,9 +402,9 @@ class WelcomeController extends Controller
         return '';
     }
 
-    public function activeOrders($id)
+    public function listOrders($id)
     {
-      return 49;
+      return 'helloworld';
       // $orders = Order::where('status', '!=', 'collected')->where('coffee_shop_id', $id);
 
       // return $orders;
