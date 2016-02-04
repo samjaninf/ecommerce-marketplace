@@ -46,9 +46,9 @@
     </div>
 
     <div class="social">
-        <a href="#"><i class="fa fa-facebook circle"></i></a>
+        <a href="https://www.facebook.com/KoolBeansUK"><i class="fa fa-facebook circle"></i></a>
         <a href="#"><i class="fa fa-instagram circle"></i></a>
-        <a href="#"><i class="fa fa-twitter circle"></i></a>
+        <a href="https://twitter.com/koolbeansuk"><i class="fa fa-twitter circle"></i></a>
     </div>
 
     <div class="copyright">
