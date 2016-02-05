@@ -295,13 +295,7 @@ class OrdersController extends Controller
 
         $previous = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->sum('amount');
         $amount   = $order->price;
-
-        \Mail::send('emails.order_received',
-            ['coffeeShop' => $coffeeShop, 'user' => current_user(), 'order' => $order],
-            function (Message $m) use ($coffeeShop) {
-                $m->to($coffeeShop->user->email, $coffeeShop->user->name)
-                    ->subject('You have received an order!');
-            });
+        
         try {
             if ( ! $user->charge($amount, array(
                 'currency'         => 'gbp',
@@ -328,7 +322,12 @@ class OrdersController extends Controller
                             'It should not happen unless you cannot afford your order. Please try again.',
             ]);
         }
-
+        \Mail::send('emails.order_received',
+            ['coffeeShop' => $coffeeShop, 'user' => current_user(), 'order' => $order],
+            function (Message $m) use ($coffeeShop) {
+                $m->to($coffeeShop->user->email, $coffeeShop->user->name)
+                    ->subject('You have received an order!');
+            });
         $user->transactions()->create(['amount' => $amount, 'charged' => true, 'coffee_shop_id' => $coffeeShopId]);
         $transactions = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->get();
 
