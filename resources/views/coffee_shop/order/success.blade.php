@@ -17,7 +17,7 @@
                     <thead>
                     <tr>
                         <th>Your order</th>
-                        <th>Total: £ {{$order->price / 100.}}</th>
+                        <th>Total: £{{ number_format((float)$order->price / 100, 2, '.', '') }}</th>
                     </tr>
                     </thead>
                     @foreach($order->order_lines as $line)
@@ -26,7 +26,7 @@
                                 {{$line->product->type == 'drink' ? $coffeeShop->getSizeDisplayName($line->size) : ''}}
                                 {{$coffeeShop->getNameFor($line->product)}}
                             </td>
-                            <td>£ {{$line->price / 100.}}</td>
+                            <td>£{{ number_format((float)$line->price / 100, 2, '.', '') }}</td>
                         </tr>
                     @endforeach
                 </table>

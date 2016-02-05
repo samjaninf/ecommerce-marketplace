@@ -347,15 +347,6 @@ class OrdersController extends Controller
 
         $charged = true;
 
-        \Mail::send('emails.payment_charged', [
-            'user'    => current_user(),
-            'amount'  => $amount / 100.,
-            'refund'  => $refund / 100.,
-            'initial' => '15.00',
-        ], function (Message $m) use ($user) {
-            $m->to($user->email, $user->name)->subject('You have been charged.');
-        });
-
         $order->paid = true;
         $order->save();
 

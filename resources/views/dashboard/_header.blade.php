@@ -11,17 +11,19 @@
         </div>
         <div class="row">
             <div class="col-xs-12 full-height">
-                @foreach($images as $i => $image)
-                    @if($i === 0)
-                        <img src="{{$coffeeShop->getUploadUrl() . '/' . $image->image}}"
-                             alt="Main image"
-                             class="secondary-gallery-image hide visible-xs-inline pull-left">
-                    @else
-                        <img src="{{$coffeeShop->getUploadUrl() . '/' . $image->image}}"
-                             alt="Secondary image"
-                             class="secondary-gallery-image hidden-xs pull-left">
-                    @endif
-                @endforeach
+                @if(isset($images))
+                    @foreach($images as $i => $image)
+                        @if($i === 0)
+                            <img src="{{$coffeeShop->getUploadUrl() . '/' . $image->image}}"
+                                 alt="Main image"
+                                 class="secondary-gallery-image hide visible-xs-inline pull-left">
+                        @else
+                            <img src="{{$coffeeShop->getUploadUrl() . '/' . $image->image}}"
+                                 alt="Secondary image"
+                                 class="secondary-gallery-image hidden-xs pull-left">
+                        @endif
+                    @endforeach
+                @endif
                 <div class="clearfix"></div>
                 <div class="pull-left">
                     <a href="{{ route('coffee-shop.gallery.index', ['coffee_shop' => $coffeeShop]) }}">
