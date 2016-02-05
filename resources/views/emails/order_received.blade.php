@@ -71,7 +71,7 @@
 	                                        <span style="font-size:15px"><span style="font-family:trebuchet ms,lucida grande,lucida sans unicode,lucida sans,tahoma,sans-serif">
 												{{ $coffeeShop->name }} You have received an order<br>
 												<br>order id: {{ $order->id }}
-												<br>Pickup Time: @if ($order->make_on_arriving === '1') Make on arrival @else {{ $order->pickup_time }} @endif
+												<br>Pickup Time: @if ($order->pickup_time === '00:00:00') Make on arrival @else {{ $order->pickup_time }} @endif	
 												<br>{{ $user->name }}<br>
 												Order Details:
 												<table>
