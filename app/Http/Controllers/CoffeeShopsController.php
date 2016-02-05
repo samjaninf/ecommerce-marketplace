@@ -112,6 +112,9 @@ class CoffeeShopsController extends Controller
 
         $coffeeShop = $this->coffeeShop->find($id);
 
+        $coffeeShop->views++;
+        $coffeeShop->save();
+        
         if ($coffeeShop->status === 'denied') {
             exit;
         }
