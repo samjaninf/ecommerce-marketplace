@@ -409,7 +409,7 @@ class WelcomeController extends Controller
         $orderCost = number_format((float)$order->price / 100, 2, '.', '');
         $lines = [
             'order_id'    => $order->id,
-            'products'    => $return,
+            'products'    => $lines,
             'pickup_time' => $order->pickup_time,
             'name'        => $order->user->name,
             'cost'        => $orderCost
