@@ -84,9 +84,9 @@
         <tr>
             <td>{{ $order->id }}</td>
             <td>@if ($order->pickup_time == '00:00:00') Make On Arrival @else {{ $order->pickup_time }} @endif</td>
-            <td>$order->coffee_shop->name</td>
-            <td>$order->coffee_shop->location</td>
-            <td>$order->coffee_shop->postal_code</td>
+            <td>{{ $order->coffee_shop->name }}</td>
+            <td>{{$order->coffee_shop->location }}</td>
+            <td>{{ $order->coffee_shop->postal_code }}</td>
         </tr>
     </table>
     <table>

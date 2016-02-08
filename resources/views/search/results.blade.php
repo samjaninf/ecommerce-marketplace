@@ -19,7 +19,7 @@
                 <div class="col-md-12">
                     <h2>No results found, do you know a good coffee shop?</h2>
                     <div class="col-xs-12">
-                        <form action="" method="post" enctype="text/plain">
+                        <form action="/" method="get" enctype="text/plain">
                             <div class="form-group">
                                 <label for="shopName">Coffee Shop:</label>
                                 <input type="text" class="form-control" id="shopName" placeholder="Shop Name...">
@@ -86,7 +86,7 @@
                         <div class="col-md-12">
                             <h2>No results found, do you know a good coffee shop?</h2>
                             <div class="col-xs-12">
-                                <form action="" method="post" enctype="text/plain">
+                                <form action="/" method="get" enctype="text/plain">
                                     <div class="form-group">
                                         <label for="shopName">Coffee Shop:</label>
                                         <input type="text" class="form-control" id="shopName" placeholder="Shop Name...">
