@@ -71,7 +71,24 @@
                                             <span style="font-size:15px"><span style="font-family:trebuchet ms,lucida grande,lucida sans unicode,lucida sans,tahoma,sans-serif">
     Thank you for your order!<br>
     Here is your receipt:<br><br>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Collection Time</th>
+                <th>Coffee Shop</th>
+                <th>Location</th>
+                <th>Post Code</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>{{ $order->id }}</td>
+            <td>@if ($order->pickup_time == '00:00:00') Make On Arrival @else {{ $order->pickup_time }} @endif</td>
+            <td>$order->coffee_shop->name</td>
+            <td>$order->coffee_shop->location</td>
+            <td>$order->coffee_shop->postal_code</td>
+        </tr>
+    </table>
     <table>
         <thead>
         <tr>

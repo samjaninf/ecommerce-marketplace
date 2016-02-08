@@ -377,12 +377,13 @@ class WelcomeController extends Controller
 
             $return[ $name ][ $size ] += 1;
         }
-
+        $orderCost = number_format((float)$order->price / 100, 2, '.', '');
         $return = [
             'order_id'    => $order->id,
             'products'    => $return,
             'pickup_time' => $order->pickup_time,
             'name'        => $order->user->name,
+            'cost'        => $orderCost
         ];
 
         return $return;
@@ -405,11 +406,13 @@ class WelcomeController extends Controller
 
           $lines [ $name ][ $size ] += 1;
         }
+        $orderCost = number_format((float)$order->price / 100, 2, '.', '');
         $lines = [
-          'order_id'    => $order->id,
-          'products'    => $lines,
-          'pickup_time' => $order->pickup_time,
-          'name'        => $order->user->name,
+            'order_id'    => $order->id,
+            'products'    => $return,
+            'pickup_time' => $order->pickup_time,
+            'name'        => $order->user->name,
+            'cost'        => $orderCost
         ];
         array_push($return, $lines);
         $lines = [];

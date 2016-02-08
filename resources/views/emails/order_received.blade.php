@@ -85,7 +85,7 @@
 													</tr>
 												@endforeach
 												</table>
-												<br>Price: {{ number_format($order->price / 100, 2, '.', ',') }}<br><br>
+												<br>Price: £{{ number_format($order->price / 100, 2, '.', ',') }}<br><br>
 
 												<a href="http://koolbeans.co.uk/" target="_blank" title="KoolBeans.co.uk">Log in to view the order</a><br>
 												<br>
