@@ -23,7 +23,7 @@
                             <h4>You had {{ $coffeeShop->views }} visitors in total!</h4>
                         </div>
                         <div class="col-xs-12">
-                            <h4>Your total sales for {{ $sales[0]->actual_date }} is £{{ number_format($sales [0]->price /100, 2, '.', ',') }}</h4>
+
                         </div>
                     </div>
                 @else
