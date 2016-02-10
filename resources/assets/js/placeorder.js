@@ -76,8 +76,8 @@
 						if (that) {
 							console.log('n');
 							//food only uses the "sm" value, no sizes
-							$('.sizes-select').html('');
-							$('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
+							that.parent().parent().siblings('.select').find('.sizes-select').html('');
+							that.parent().parent().siblings('.select').find('.sizes-select').append('<p style="font-size: 20px; padding: 10px">£' + priceToDecimal(product.pivot.sm) + '</p>');
 						} else {
 							console.log('y');
 							$('.sizes-select').html('');

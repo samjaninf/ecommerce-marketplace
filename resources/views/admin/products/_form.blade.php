@@ -1,3 +1,7 @@
+<div class="col-xs-12">
+  <h2>Please make sure atleast one tickbox is checked!</h2>
+  <h3>If none exists please add one! The product will fail to update otherwise!</h3>
+</div>
 <div class="form-group @if($errors->any()) {{$errors->has('type') ? 'has-error' : 'has-success'}} @endif">
     <label for="type" class="col-sm-2 control-label">Type:</label>
 
