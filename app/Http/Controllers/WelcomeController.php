@@ -300,7 +300,7 @@ class WelcomeController extends Controller
           'aboutshop'             => $request->input('aboutshop'),
           'shoplocation'          => $request->input('shoplocation')
         ], function (Message $m) {
-      $m->to('ed@koolbeans.co.uk', 'Ed Sparks')
+      $m->to('support@ecommerceworkroom.co.uk', 'Ed Sparks')
             ->subject('A coffee shop has been recommended!');
       });
       return redirect()->back()->with('thankyou', 'Thank you for your recommendation!');
