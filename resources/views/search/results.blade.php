@@ -19,20 +19,20 @@
                 <div class="col-md-12">
                     <h2>No results found, do you know a good coffee shop?</h2>
                     <div class="col-xs-12">
-                        <form action="/" method="get" enctype="text/plain">
+                        <form action="{{ route('recommend-coffee-shop') }}" method="post">
                             <div class="form-group">
-                                <label for="shopName">Coffee Shop:</label>
-                                <input type="text" class="form-control" id="shopName" placeholder="Shop Name...">
+                                <label for="shopname">Coffee Shop:</label>
+                                <input type="text" name="shopname" class="form-control" id="shopName" placeholder="Shop Name..." required>
                             </div>
                             <div class="form-group">
-                                <label for="location">Location:</label>
-                                <input type="text" class="form-control" id="location" placeholder="Location...">
+                                <label for="shoplocation">Location:</label>
+                                <input name="shoplocation" type="text" class="form-control" id="location" placeholder="Location...">
                             </div>
                             <div class="form-group">
-                                <label for="about">Why are you recommending this shop?</label>
-                                <textarea style="min-height: 100px;" class="form-control" name="about" id="about"></textarea>
+                                <label for="aboutshop">Why are you recommending this shop?</label>
+                                <textarea name="aboutshop" style="min-height: 100px;" class="form-control" name="about" id="about"></textarea>
                             </div>
-
+                            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -83,27 +83,27 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-md-12">
-                            <h2>No results found, do you know a good coffee shop?</h2>
-                            <div class="col-xs-12">
-                                <form action="/" method="get" enctype="text/plain">
-                                    <div class="form-group">
-                                        <label for="shopName">Coffee Shop:</label>
-                                        <input type="text" class="form-control" id="shopName" placeholder="Shop Name...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="location">Location:</label>
-                                        <input type="text" class="form-control" id="location" placeholder="Location...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="about">Why are you recommending this shop?</label>
-                                        <textarea style="min-height: 100px;" class="form-control" name="about" id="about"></textarea>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
+                <div class="col-md-12">
+                    <h2>No results found, do you know a good coffee shop?</h2>
+                    <div class="col-xs-12">
+                        <form action="{{ route('recommend-coffee-shop') }}" method="post">
+                            <div class="form-group">
+                                <label for="shopname">Coffee Shop:</label>
+                                <input type="text" name="shopname" class="form-control" id="shopName" placeholder="Shop Name..." required>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label for="shoplocation">Location:</label>
+                                <input name="shoplocation" type="text" class="form-control" id="location" placeholder="Location...">
+                            </div>
+                            <div class="form-group">
+                                <label for="aboutshop">Why are you recommending this shop?</label>
+                                <textarea name="aboutshop" style="min-height: 100px;" class="form-control" name="about" id="about"></textarea>
+                            </div>
+                            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
                     @endforelse
                 </div>
 

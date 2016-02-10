@@ -3,6 +3,7 @@
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Koolbeans\CoffeeShop;
 use Koolbeans\MobileToken;
 use Koolbeans\Offer;
@@ -12,7 +13,7 @@ use Koolbeans\Repositories\CoffeeShopRepository;
 use Koolbeans\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Jenssegers\Agent\Agent;
-
+use Koolbeans\Http\Requests\RecommendCoffeeShopRequest;
 class WelcomeController extends Controller
 {
 
@@ -292,7 +293,18 @@ class WelcomeController extends Controller
 
         return redirect()->back();
     }
-
+    public function recommend(RecommendCoffeeShopRequest $request) {
+      \Mail::send('emails.recommend', 
+        [ 
+          'shopname'              => $request->input('shopname'),
+          'aboutshop'             => $request->input('aboutshop'),
+          'shoplocation'          => $request->input('shoplocation')
+        ], function (Message $m) {
+      $m->to('ed@koolbeans.co.uk', 'Ed Sparks')
+            ->subject('A coffee shop has been recommended!');
+      });
+      return redirect()->back()->with('thankyou', 'Thank you for your recommendation!');
+    }
     /**
      * @param \Illuminate\Http\Request $request
      */

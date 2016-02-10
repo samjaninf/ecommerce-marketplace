@@ -30,13 +30,12 @@ Route::get('contact-us', 'WelcomeController@contactUs');
 Route::get('signup-faq', 'WelcomeController@signupfaq');
 Route::post('contact', 'WelcomeController@contact');
 Route::post('about', 'WelcomeController@updateAbout');
-
+Route::post('recommend-coffee-shop', ['as' => 'recommend-coffee-shop', 'uses' => 'WelcomeController@recommend']);
 Route::get('coffee-shop/apply', ['as' => 'coffee-shop.apply', 'uses' => 'CoffeeShopsController@apply']);
 Route::post('coffee-shop/apply', ['as' => 'coffee-shop.applied', 'uses' => 'CoffeeShopsController@storeApplication']);
-
-Route::group(['middleware' => 'auth'], function () {
 Route::resource('posts', 'PostsController');
 
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::post('home', ['as' => 'home.store', 'uses' => 'HomeController@store']);
