@@ -149,7 +149,6 @@ class WelcomeController extends Controller
                                      ->orWhere('postal_code', 'like', $query)
                                      ->first();
                     if ( ! $tmp) {
-                        $shops    = [];
                         $position = null;
                     }
                 }
