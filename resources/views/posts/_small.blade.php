@@ -7,7 +7,7 @@
             <a href="{{ route('posts.show', [$post->id]) }}">{{ $post->title }}</a>
         </div>
 
-        <div class="abstract">
+        <div class="hidden-xs abstract">
             <p>{{ \Illuminate\Support\Str::words($post->content, 40) }}</p>
         </div>
     </div>
