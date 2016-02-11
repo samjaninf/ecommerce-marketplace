@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <p>
-                    You've encountered a problem or reached a page that does not exist.<br>
+                    Opps, an error occured. We've been notified and will take a look. In the meantime why not search for a coffee shop?<br>
                     <br>
 
                     <a href="{{ URL::previous() }}" class="btn btn-primary">Go Back</a>
