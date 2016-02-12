@@ -138,6 +138,7 @@
                                             <span class="col-xs-12 col-sm-6">
                                                 <label style="width: 100%;">
                                                     <select id="product-drink-[0]" class="form-control count-product choose-product-select">
+                                                         {!! $food = false; !!}
                                                         @foreach($products as $product)
                                                             @if($coffeeShop->hasActivated($product))
                                                                 @if($product->type == 'drink')
@@ -145,7 +146,7 @@
                                                                         {{ $coffeeShop->getNameFor($product) }}
                                                                     </option>
                                                                 @else
-                                                                    {!! $food = false; !!}
+                                                                   
                                                                     @if ($food == false)
                                                                         {!! $food = true; !!}
                                                                         <option disabled>─────food─────</option>
@@ -206,7 +207,7 @@
                                         </div>
 
                                 @endif
-                                <a href="#" class="row btn btn-primary" id="add-product">Add Drink</a>
+                                <a href="#" class="row btn btn-primary" id="add-product">Add Item</a>
                             </div>
                         </div>
 

@@ -35,6 +35,9 @@ class IsCoffeeShopOwner
     public function handle($request, Closure $next)
     {
         $id = $request->route()->getParameter('coffee_shop');
+        if ($this->getUser()->role == 'admin') {
+            return $next($request);
+        }
 
         if ( ! $this->getUser()->isOwner() || ( $id !== null && $this->getUser()->coffee_shop->id != (int) $id )) {
             return redirect('/');

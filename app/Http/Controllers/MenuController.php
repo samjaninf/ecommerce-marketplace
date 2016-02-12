@@ -37,11 +37,11 @@ class MenuController extends Controller
     /**
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $drinks     = $this->productRepository->drinks();
         $food       = $this->productRepository->food();
-        $coffeeShop = current_user()->coffee_shop;
+        $coffeeShop = $this->coffeeShopRepository->find($request->coffee_shop);
         $drinkTypes = $this->productTypeRepository->drinks();
         $foodTypes  = $this->productTypeRepository->food();
         $offers     = $coffeeShop->offers()->with('details')->get();

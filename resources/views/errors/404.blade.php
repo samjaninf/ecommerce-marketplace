@@ -9,7 +9,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <h1>@yield('page-title')</h1>
+                <h1>Opps, an error occured.</h1>
             </div>
         </div>
 

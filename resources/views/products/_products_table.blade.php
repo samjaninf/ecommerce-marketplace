@@ -50,7 +50,7 @@
                         <a href="#"
                            class="change-price"
                            data-target="{{ route('coffee-shop.products.reprice', ['coffeeShop' => $coffeeShop, 'product' => $product, 'size' => $size]) }}">
-                            {{ current_user()->coffee_shop->priceFor($product, $size) }}
+                            {{ $coffeeShop->priceFor($product, $size) }}
                         </a>
                     </span>
                 </td>

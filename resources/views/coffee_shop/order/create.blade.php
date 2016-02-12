@@ -121,7 +121,7 @@
                                     </span>
                                 </label>
                             @endif
-                            <a href="#" class="row btn btn-primary" id="add-product">Add Drink</a>
+                            <a href="#" class="row btn btn-primary" id="add-product">Add Item</a>
                         </div>
                     </div>
 

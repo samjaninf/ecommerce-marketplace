@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
+Route::any('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
 
 Route::post('webhooks/push-token', 'WelcomeController@pushToken');

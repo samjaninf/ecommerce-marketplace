@@ -12,6 +12,7 @@
 			customTime.hide();
 		}
 	});
+	
 	customTime.on('change', function() {
 		jQuery('#custom-time-value').val($(this).val());
 	});
@@ -19,6 +20,7 @@
 	jQuery('.filter-toggle').on('click', function() {
 		jQuery('.dropdown-toggle').show();
 	});
+
 	jQuery('.dropdown-close').on('click', function() {
 		jQuery('.dropdown-toggle').hide();
 	});
@@ -118,7 +120,10 @@
 		var current = product.find('.count-product option:selected').text().replace(/\s/g, '');
 		var that = product.find('.choose-product-select');
 		createProductSizes(current, that);
-		product.insertAfter('.products-copy');
+		var container = $('.order_right');
+		//container.last('.full-width').in(product);
+		product.insertAfter(container.find('.full-width').last());
+		// product.insertAfter('.products-copy');
 
 	});
 

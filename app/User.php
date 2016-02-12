@@ -137,6 +137,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function hasValidCoffeeShop()
     {
+        if (current_user()->role == 'admin') {
+            return true;
+        }
         return $this->isOwner() && $this->coffee_shop->isValid();
     }
 
