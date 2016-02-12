@@ -1,4 +1,4 @@
-<nav class="navbar" @if (Route::current()->getName() != 'welcome') style="background: #fff;" @endif>
+<nav class="navbar" @if (Route::getCurrentRoute()->getName() != 'welcome') style="background: #fff;" @endif>
     <div class="container-fluid">
         <div class="navbar-header @if (isset($home)) home-bg-overlay @endif">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a style="padding: 5px 10px;" class="navbar-brand" href="/">
-                @if (Route::current()->getName() === 'welcome')
+                @if (Route::getCurrentRoute()->getName() === 'welcome')
                     <img src="/img/shared/logo-white.png" alt="Koolbeans">
                 @else
                     <img style="height: 45px; top: -10px;" src="/img/pages-logo.png" alt="Koolbeans">
@@ -33,7 +33,7 @@
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
             </form>
             @endif
-            @if (Route::current()->getName() === 'welcome')
+            @if (Route::getCurrentRoute()->getName() === 'welcome')
                 <ul class="nav navbar-nav navbar-right" style="margin: 30px 0px;">
             @else
                 <ul class="nav navbar-nav navbar-right">
