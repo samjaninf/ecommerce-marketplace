@@ -26,9 +26,9 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        \Mail::send('emails.exception', ['error' => $e ], function (Message $m) {
-            $m->to(['support@ecommerceworkroom.co.uk'], 'Neil Haffenden')->subject('An error occured on koolbeans!');
-        });
+        // \Mail::send('emails.exception', ['error' => $e ], function (Message $m) {
+        //     $m->to(['support@ecommerceworkroom.co.uk'], 'Neil Haffenden')->subject('An error occured on koolbeans!');
+        // });
         return parent::report($e);
     }
 
