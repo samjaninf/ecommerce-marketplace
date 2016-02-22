@@ -48,6 +48,14 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row order-lines">
+                        <div class="col-xs-8">
+                            Processing fee
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            20p
+                        </div>
+                    </div>
                     <div class="row order-total">
                         <div class="col-xs-4">
                             <a class="btn btn-primary" href="{{ URL::previous() }}">
@@ -60,7 +68,7 @@
                             @else 
                                 <p>Pickup time: {{ $order->pickup_time }}</p>
                             @endif
-                            <h3>Total: £{{ number_format((float)$total / 100, 2, '.', '') }}</h3>
+                            <h3>Total: £{{ number_format((float) ($total + 20) / 100, 2, '.', '') }}</h3>
                         </div>
                     </div>
                     <div class="row">

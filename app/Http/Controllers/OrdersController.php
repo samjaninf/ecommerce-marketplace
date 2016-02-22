@@ -248,7 +248,7 @@ class OrdersController extends Controller
             $order->order_lines()->save($line);
         }
 
-        $order->price = $order->order_lines()->sum('price');
+        $order->price = $order->order_lines()->sum('price') + 20;
         $order->save();
 
         return view('coffee_shop.order.review', ['order' => $order, 'coffeeShop' => $coffeeShop]);
@@ -294,7 +294,7 @@ class OrdersController extends Controller
         }
 
         $previous = $user->transactions()->where('charged', '=', false)->where('coffee_shop_id', '=', $coffeeShopId)->sum('amount');
-        $amount   = $order->price;
+        $amount   = $order->price + 20;
         
         try {
             if ( ! $user->charge($amount, array(
