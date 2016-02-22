@@ -303,7 +303,7 @@ class OrdersController extends Controller
                 'application_fee'  => '20',
                 'destination'      => $coffeeShop->stripe_user_id
             ),
-            array('stripe_account'   => 'ca_7hpAb8673Ng1S6KbWHCGTuwhNZVeJHkX')
+            array('stripe_account'   => config('services.stripe.client_id'))
             )) {
                 return view('coffee_shop.order.review', [
                     'order'      => $order,

@@ -31,7 +31,7 @@ return [
     ],
     'stripe'   => [
         'model'     => 'App\User',
-        'secret'    => 'sk_test_fNCMV9dZEwNvPs3wf2OBBohK',
+        'secret'    => 'sk_live_xATLLmS3513U0kgZISnLfTWA',
         'client_id' => 'ca_7hpAb8673Ng1S6KbWHCGTuwhNZVeJHkX'
     ],
     'xero'     => [
