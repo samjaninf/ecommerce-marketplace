@@ -300,7 +300,7 @@ class OrdersController extends Controller
             if ( ! $user->charge($amount, array(
                 'currency'         => 'gbp',
                 'customer' => $user->stripe_id,
-                'application_fee'  => '0.20',
+                'application_fee'  => '20',
                 'destination'      => $coffeeShop->stripe_user_id
             ),
             array('stripe_account'   => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L')
