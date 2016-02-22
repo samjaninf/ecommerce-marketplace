@@ -46,7 +46,7 @@ class WelcomeController extends Controller
 
           $token_request_body = array(
             'grant_type' => 'authorization_code',
-            'client_id' => 'ca_7hpA87d09JFpXVNWgswHbG4ZnzhMyZ2L',
+            'client_id' => config('services.stripe.client_id'),
             'code' => $code,
             'client_secret' => 'sk_test_fNCMV9dZEwNvPs3wf2OBBohK'
           );

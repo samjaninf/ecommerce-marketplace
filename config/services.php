@@ -30,8 +30,9 @@ return [
         'region' => 'us-east-1',
     ],
     'stripe'   => [
-        'model'  => 'App\User',
-        'secret' => 'sk_test_fNCMV9dZEwNvPs3wf2OBBohK',
+        'model'     => 'App\User',
+        'secret'    => 'sk_test_fNCMV9dZEwNvPs3wf2OBBohK',
+        'client_id' => 'ca_7hpAb8673Ng1S6KbWHCGTuwhNZVeJHkX'
     ],
     'xero'     => [
         'application_type'    => "Private",
