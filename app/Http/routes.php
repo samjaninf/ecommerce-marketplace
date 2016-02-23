@@ -28,6 +28,7 @@ Route::get('terms-of-use', 'WelcomeController@termsOfUse');
 route::get('coffee-shop-contract', 'WelcomeController@coffeeShopContract');
 Route::get('contact-us', 'WelcomeController@contactUs');
 Route::get('signup-faq', 'WelcomeController@signupfaq');
+Route::post('requestcallback', 'WelcomeController@requestcallback');
 Route::post('contact', 'WelcomeController@contact');
 Route::post('about', 'WelcomeController@updateAbout');
 Route::post('recommend-coffee-shop', ['as' => 'recommend-coffee-shop', 'uses' => 'WelcomeController@recommend']);

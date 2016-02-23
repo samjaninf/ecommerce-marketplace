@@ -14,6 +14,7 @@ use Koolbeans\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Jenssegers\Agent\Agent;
 use Koolbeans\Http\Requests\RecommendCoffeeShopRequest;
+use Koolbeans\Http\Requests\RequestCallbackRequest;
 class WelcomeController extends Controller
 {
 
@@ -481,5 +482,19 @@ class WelcomeController extends Controller
         }
 
         return response('', 403);
+    }
+    public function requestcallback(RequestCallbackRequest $request)
+    {
+      // \Mail::send('emails.request', 
+      //   [ 
+      //     'name'                => $request->input('rname'),
+      //     'coffeename'         => $request->input('rcname'),
+      //     'email'               => $request->input('remail'),
+      //     'number'              => $request->input('rphone')
+      //   ], function (Message $m) {
+      // $m->to('ed@koolbeans.co.uk', 'Ed Sparks')
+      //       ->subject('A coffee shop has requested a callback!');
+      // });
+      return redirect()->back()->with('thankyou', 'Thank you for your request, we will get back to you shortly!');
     }
 }

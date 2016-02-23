@@ -14,6 +14,9 @@
         <div class="col-xs-12 col-sm-offset-2 col-sm-8">
             <h1 class="text-center signup-header">
               Join KoolBeans for free & allow customers to discover your coffee shop & order ahead
+              @if(Session::has('thankyou'))
+                  <br/><br/>{{ Session::get('thankyou') }}
+              @endif
             </h1>
         </div>
       </div>
@@ -59,7 +62,7 @@ Standard fees (6% 'KoolBeans' Commission on sales + 1.4% 'Stripe' Transaction Fe
 </div>
 <div class="container main-content-padded">
     <div class="row text-center" style="margin-top: 20px;">
-      <a href="#" class="btn btn-primary btn-lg">Request A Callback</a>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#request-callback">Request A Callback</button>
     <div class="row" style="margin-top:20px">
       <div class="col-md-12 col-lg-8">
          <h4 class="text-center">View our <a href="/signup-faq">FAQ's</a></h4>
