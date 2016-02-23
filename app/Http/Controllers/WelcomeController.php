@@ -49,7 +49,7 @@ class WelcomeController extends Controller
             'grant_type' => 'authorization_code',
             'client_id' => config('services.stripe.client_id'),
             'code' => $code,
-            'client_secret' => condif('services.stripe.secret')
+            'client_secret' => config('services.stripe.secret')
           );
 
           $req = curl_init('https://connect.stripe.com/oauth/token');
