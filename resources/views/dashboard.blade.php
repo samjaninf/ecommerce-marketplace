@@ -14,7 +14,7 @@
             <div class="col-sm-9">
                 <div class="row">
                     <div class="col-xs-12">
-                        <h4><a class="btn btn-primary android" href="/app1.apk?r={{ time() }}">Download the android application</a></h4>
+                        <h4><a class="btn btn-primary android" href="https://play.google.com/store/apps/details?id=com.ionicframework.koolbeans44126">Download the android application</a></h4>
                     </div>
                 </div>
                 @if ( $coffeeShop->views > 10)    
