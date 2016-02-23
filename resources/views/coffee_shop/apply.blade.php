@@ -50,17 +50,21 @@
       <div class="row">
         <div class="col-xs-12 text-center">
           <img style="width: 100%; padding: 10px 0px; max-width: 800px;" src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
-          <h1 style="border-bottom: 0px;">Full sales amount less fees paid directly to your account</h1>
+          <h1 style="border-bottom: 0px;">Full sales amount less fees paid directly to your bank account
+Standard fees (6% 'KoolBeans' Commission on sales + 1.4% 'Stripe' Transaction Fee) No additional fees</h1>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="container main-content-padded">
+    <div class="row text-center" style="margin-top: 20px;">
+      <a href="#" class="btn btn-primary btn-lg">Request A Callback</a>
     <div class="row" style="margin-top:20px">
       <div class="col-md-12 col-lg-8">
          <h4 class="text-center">View our <a href="/signup-faq">FAQ's</a></h4>
       </div>
+
       <div class="col-xs-4 hidden-md hidden-sm hidden-xs">
         <h4 class="text-center">Drag pin to your location!</h4>
       </div>
