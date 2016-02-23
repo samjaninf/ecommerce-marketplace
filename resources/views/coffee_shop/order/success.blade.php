@@ -29,6 +29,10 @@
                             <td>£{{ number_format((float)$line->price / 100, 2, '.', '') }}</td>
                         </tr>
                     @endforeach
+                        <tr>
+                            <td>Processing fee</td>
+                            <td>20p</td>
+                        </tr>
                 </table>
 
                 <p class="offers">
