@@ -297,10 +297,15 @@ class OrdersController extends Controller
         $amount   = $order->price + 20;
         
         try {
+            if ($coffeeShop->offer === '14percent') {
+                $fee = 20;
+            } else {
+                $fee = number_format($amount * 0.06, 0, '.', '') + 20;
+            }
             if ( ! $user->charge($amount, array(
                 'currency'         => 'gbp',
                 'customer' => $user->stripe_id,
-                'application_fee'  => '20',
+                'application_fee'  => $fee,
                 'destination'      => $coffeeShop->stripe_user_id
             ),
             array('stripe_account'   => config('services.stripe.client_id'))
