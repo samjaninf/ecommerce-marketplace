@@ -53,8 +53,8 @@
       <div class="row">
         <div class="col-xs-12 text-center">
           <img style="width: 100%; padding: 10px 0px; max-width: 800px;" src="/img/welcome/fees.png" title="Fee's" alt="fee"/>
-          <h5 style="border-bottom: 0px;">Full sales amount less fees paid directly to your bank account
-Standard fees (6% 'KoolBeans' Commission on sales + 1.4% 'Stripe' Transaction Fee) No additional fees</h5>
+          <h3 style="border-bottom: 0px;">Full sales amount less fees paid directly to your bank account.<br />
+Standard fees (6% 'KoolBeans' Commission on sales + 1.4% 'Stripe' Transaction Fee) No additional fees</h3>
         </div>
       </div>
     </div>
