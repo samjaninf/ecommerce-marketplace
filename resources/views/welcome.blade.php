@@ -29,7 +29,7 @@
             <div class="row row-eq-height text-center">
                 <div class="col-xs-12 col-sm-6" id="deals">
                     <div class="row">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/eAeaQXfPD3M" frameborder="0" allowfullscreen></iframe>
+                        <iframe style="margin-top: 35px" width="560" height="315" src="https://www.youtube.com/embed/eAeaQXfPD3M" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6" id="news">
