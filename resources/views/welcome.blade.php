@@ -26,27 +26,10 @@
         </div>
 
         <div class="container-fluid" id="deals-and-news">
-            <div class="row row-eq-height">
+            <div class="row row-eq-height text-center">
                 <div class="col-xs-12 col-sm-6" id="deals">
                     <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <h2>Today’s offers</h2>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            @include('offers._short', ['offer' => $offers[0], 'bgNum' => 1])
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            @include('offers._short', ['offer' => $offers[1], 'bgNum' => 2])
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            @include('offers._short', ['offer' => $offers[2], 'bgNum' => 3])
-                        </div>
-                        <div class="hidden-xs hidden-sm hidden-md col-lg-6">
-                            @include('offers._short', ['offer' => $offers[3], 'bgNum' => 4])
-                        </div>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/eAeaQXfPD3M" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6" id="news">
