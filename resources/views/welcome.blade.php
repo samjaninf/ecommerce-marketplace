@@ -29,7 +29,9 @@
             <div class="row row-eq-height text-center">
                 <div class="col-xs-12 col-sm-6" id="deals">
                     <div class="row">
-                        <iframe style="margin-top: 35px" width="560" height="315" src="https://www.youtube.com/embed/eAeaQXfPD3M" frameborder="0" allowfullscreen></iframe>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe style="margin-top: 35px" class="embed-responsive-item" src="https://www.youtube.com/embed/eAeaQXfPD3M" frameborder="0" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6" id="news">
