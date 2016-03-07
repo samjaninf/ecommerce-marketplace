@@ -6,7 +6,8 @@ use Illuminate\Mail\Message;
 use Koolbeans\Http\Controllers\Controller;
 use Koolbeans\User;
 use Validator;
-
+use Koolbeans\Http\Controllers\Auth\URL;
+use Illuminate\Contracts\Auth\Guard;
 class AuthController extends Controller
 {
 
@@ -38,7 +39,7 @@ class AuthController extends Controller
      *
      * @param  array $data
      *
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return \Illumina|te\Contracts\Validation\Validator
      */
     public function validator(array $data)
     {
@@ -64,21 +65,15 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-
-    /**
-     * @return string
-     */
-    public function redirectPath()
+    public function authenticate(Request $request, Guard $auth)
     {
-        if ($this->getUser()->isOwner()) {
-            return '/';
+        if ($auth->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+                    echo '<pre>';
+        var_dump(\Session());
+        echo '</pre>';
+            // Authentication passed...
+            return 'cunt';
         }
-
-        if ($this->getUser()->role === 'admin') {
-            return '/admin/home';
-        }
-
-        return '/home';
     }
 
     /**

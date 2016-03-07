@@ -220,9 +220,14 @@
 
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
                      
-                        <div class="col-xs-12 col-sm-12 btn-panel ">
-                            <a href="{{ URL::previous() }}" class="btn btn-primary back-to-shop col-xs-4">Go Back</a>
-                            <button type="submit" class="btn btn-success proceed-to-checkout col-xs-7 col-xs-offset-1">Place Order & Pay</button>
+                        <div class="col-xs-12 col-sm-12 btn-panel text-center">
+                            @if (Auth::guest())
+                                <a href="{{ url('auth/register') }}" style="margin-left: 10px;" class="btn btn-primary back-to-shop col-xs-5">Register</a>
+                                <a href="{{ url('auth/login') }}" style="margin-right: 10px;" class="btn btn-success proceed-to-checkout col-xs-5 pull-right">Login</a>
+                            @else
+                                <a href="{{ URL::previous() }}" class="btn btn-primary back-to-shop col-xs-4">Go Back</a>
+                                <button type="submit" class="btn btn-success proceed-to-checkout col-xs-7 col-xs-offset-1">Place Order & Pay</button>
+                            @endif
                         </div>
                     </form>
                 </div>

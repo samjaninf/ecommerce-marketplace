@@ -5,6 +5,9 @@
 @stop
 
 @section('content')
+    @if (isset ($order))
+        {{ $order }}
+    @endif
     {{ current_user()->isOwner() }}
     <div class="{{ current_user()->isOwner() ? 'container-fluid' : 'container main-content-padded' }}">
         @if(current_user()->isOwner() )

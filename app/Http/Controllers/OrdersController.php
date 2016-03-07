@@ -52,9 +52,11 @@ class OrdersController extends Controller
             }
           
             $images = $coffeeShop->gallery()->orderBy('position')->limit(3)->get();
-
         }
         
+                    if (empty($images)) {
+                $images = new Collection;
+            }
         return view('order.index', compact('orders', 'coffeeShop'))->with([
             'images'     => $images,
             'firstImage' => $images->isEmpty() ? null : $images[0]->image,

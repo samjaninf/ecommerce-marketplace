@@ -13,6 +13,7 @@
 
 Route::any('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 Route::any('search/{query?}/{page?}', ['as' => 'search', 'uses' => 'WelcomeController@search']);
+Route::get('/auth/login', 'Auth\AuthController@authenticate');
 
 Route::post('webhooks/push-token', 'WelcomeController@pushToken');
 Route::post('webhooks/auth', 'WelcomeController@auth');

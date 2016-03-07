@@ -66,7 +66,7 @@ class CoffeeShopsController extends Controller
         $shop = $this->coffeeShop->newInstance($request->except(['username', 'email', 'password']));
         $shop->user()->associate($user);
         $shop->status = 'accepted';
-        if (DB::table('coffee_shops')->count() <= 100) {
+        if (\DB::table('coffee_shops')->count() <= 100) {
             $shop->offer = '14percent';
         }
         $shop->save();
